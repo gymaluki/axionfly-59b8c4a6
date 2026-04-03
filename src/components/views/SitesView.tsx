@@ -3,6 +3,7 @@ import { Copy, Check, Code2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SitesView = () => {
   const [projectName, setProjectName] = useState("");
@@ -52,7 +53,12 @@ ${features ? features.split(",").map((f) => `- ${f.trim()}`).join("\n") : "- Lan
   };
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="space-y-6"
+    >
       <div>
         <h2 className="text-2xl font-bold text-foreground">Fábrica de Sites</h2>
         <p className="text-muted-foreground text-sm mt-1">Gere prompts profissionais para criar sites no Lovable</p>
@@ -61,57 +67,52 @@ ${features ? features.split(",").map((f) => `- ${f.trim()}`).join("\n") : "- Lan
       <div className="grid md:grid-cols-3 gap-4">
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">Nome do Projeto</label>
-          <Input
-            placeholder="Ex: MeuNegócio"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            className="bg-secondary/50 border-border"
-          />
+          <Input placeholder="Ex: MeuNegócio" value={projectName} onChange={(e) => setProjectName(e.target.value)} className="bg-secondary/50 border-border" />
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">Nicho</label>
-          <Input
-            placeholder="Ex: Barbearia, Restaurante"
-            value={niche}
-            onChange={(e) => setNiche(e.target.value)}
-            className="bg-secondary/50 border-border"
-          />
+          <Input placeholder="Ex: Barbearia, Restaurante" value={niche} onChange={(e) => setNiche(e.target.value)} className="bg-secondary/50 border-border" />
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">Funcionalidades</label>
-          <Input
-            placeholder="Ex: Agendamento, Cardápio, Blog"
-            value={features}
-            onChange={(e) => setFeatures(e.target.value)}
-            className="bg-secondary/50 border-border"
-          />
+          <Input placeholder="Ex: Agendamento, Cardápio, Blog" value={features} onChange={(e) => setFeatures(e.target.value)} className="bg-secondary/50 border-border" />
         </div>
       </div>
 
-      <Button variant="neon" size="lg" onClick={handleGenerate} disabled={!projectName.trim() || !niche.trim()}>
-        <Sparkles className="w-4 h-4" />
-        Gerar Prompt Profissional
-      </Button>
+      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+        <Button variant="neon" size="lg" onClick={handleGenerate} disabled={!projectName.trim() || !niche.trim()}>
+          <Sparkles className="w-4 h-4" /> Gerar Prompt Profissional
+        </Button>
+      </motion.div>
 
-      {/* Terminal Output */}
-      <div className="terminal-bg p-5 min-h-[300px]">
-        {!prompt ? (
-          <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground space-y-3">
-            <Code2 className="w-10 h-10 opacity-30" />
-            <p className="text-sm font-sans">Preencha os campos e gere seu prompt</p>
-          </div>
-        ) : (
-          <pre className="whitespace-pre-wrap text-accent/90 text-sm leading-relaxed">{prompt}</pre>
-        )}
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={prompt ? "filled" : "empty"}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="terminal-bg p-5 min-h-[300px]"
+        >
+          {!prompt ? (
+            <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground space-y-3">
+              <Code2 className="w-10 h-10 opacity-30" />
+              <p className="text-sm font-sans">Preencha os campos e gere seu prompt</p>
+            </div>
+          ) : (
+            <pre className="whitespace-pre-wrap text-accent/90 text-sm leading-relaxed">{prompt}</pre>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
       {prompt && (
-        <Button variant="hero" size="lg" onClick={handleCopy} className="w-full">
-          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-          {copied ? "Copiado!" : "Copiar Prompt e Criar no Lovable"}
-        </Button>
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button variant="hero" size="lg" onClick={handleCopy} className="w-full">
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? "Copiado!" : "Copiar Prompt e Criar no Lovable"}
+          </Button>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
