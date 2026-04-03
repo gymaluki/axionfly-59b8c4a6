@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useCallback, useState } from "react"
+import { useEffect, useRef, useCallback } from "react"
 import createGlobe from "cobe"
 
 interface InteractiveMarker {
@@ -25,18 +25,54 @@ const defaultMarkers: InteractiveMarker[] = [
   { id: "oceania", location: [-33.87, 151.21], name: "Hamburgueria", users: 445 },
 ]
 
+// Convert lat/lon to 2D position on the canvas given current globe rotation
+function latLonToXY(
+  lat: number,
+  lon: number,
+  phi: number,
+  theta: number,
+  size: number
+): { x: number; y: number; visible: boolean } {
+  const latRad = (lat * Math.PI) / 180
+  const lonRad = (lon * Math.PI) / 180
+
+  // 3D point on unit sphere
+  const x0 = Math.cos(latRad) * Math.sin(lonRad)
+  const y0 = -Math.sin(latRad)
+  const z0 = Math.cos(latRad) * Math.cos(lonRad)
+
+  // Rotate around Y axis by phi
+  const x1 = x0 * Math.cos(phi) + z0 * Math.sin(phi)
+  const y1 = y0
+  const z1 = -x0 * Math.sin(phi) + z0 * Math.cos(phi)
+
+  // Rotate around X axis by theta
+  const x2 = x1
+  const y2 = y1 * Math.cos(theta) - z1 * Math.sin(theta)
+  const z2 = y1 * Math.sin(theta) + z1 * Math.cos(theta)
+
+  const r = size / 2
+  return {
+    x: r + x2 * r,
+    y: r + y2 * r,
+    visible: z2 > 0.15,
+  }
+}
+
 export function GlobeCdn({
   markers = defaultMarkers,
   className = "",
   speed = 0.003,
 }: GlobeInteractiveProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null)
   const dragOffset = useRef({ phi: 0, theta: 0 })
   const phiOffsetRef = useRef(0)
   const thetaOffsetRef = useRef(0)
   const isPausedRef = useRef(false)
-  const [expanded, setExpanded] = useState<string | null>(null)
+  const labelsRef = useRef<HTMLDivElement[]>([])
+  const currentPhiRef = useRef(0)
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY }
@@ -79,6 +115,24 @@ export function GlobeCdn({
     let animationId: number
     let phi = 0
 
+    function updateLabels(currentPhi: number, currentTheta: number) {
+      const size = canvas.offsetWidth
+      markers.forEach((m, i) => {
+        const label = labelsRef.current[i]
+        if (!label) return
+        const pos = latLonToXY(m.location[0], m.location[1], currentPhi, currentTheta, size)
+        if (pos.visible) {
+          label.style.opacity = "1"
+          label.style.filter = "none"
+          label.style.left = `${pos.x}px`
+          label.style.top = `${pos.y - 20}px`
+        } else {
+          label.style.opacity = "0"
+          label.style.filter = "blur(4px)"
+        }
+      })
+    }
+
     function init() {
       const width = canvas.offsetWidth
       if (width === 0 || globe) return
@@ -103,10 +157,11 @@ export function GlobeCdn({
 
       function animate() {
         if (!isPausedRef.current) phi += speed
-        globe!.update({
-          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-          theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
-        })
+        const currentPhi = phi + phiOffsetRef.current + dragOffset.current.phi
+        const currentTheta = 0.2 + thetaOffsetRef.current + dragOffset.current.theta
+        currentPhiRef.current = currentPhi
+        globe!.update({ phi: currentPhi, theta: currentTheta })
+        updateLabels(currentPhi, currentTheta)
         animationId = requestAnimationFrame(animate)
       }
       animate()
@@ -132,13 +187,7 @@ export function GlobeCdn({
   }, [markers, speed])
 
   return (
-    <div className={`relative aspect-square select-none ${className}`}>
-      <style>{`
-        @keyframes fade-slide-in {
-          from { opacity: 0; transform: translateY(-4px); }
-          to { opacity: 0.8; transform: translateY(0); }
-        }
-      `}</style>
+    <div ref={containerRef} className={`relative aspect-square select-none ${className}`}>
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
@@ -152,31 +201,27 @@ export function GlobeCdn({
           touchAction: "none",
         }}
       />
-      {markers.map((m) => (
+      {markers.map((m, i) => (
         <div
           key={m.id}
-          onClick={() => setExpanded(expanded === m.id ? null : m.id)}
+          ref={(el) => {
+            if (el) labelsRef.current[i] = el
+          }}
           style={{
             position: "absolute",
-            // @ts-expect-error CSS Anchor Positioning
-            positionAnchor: `--cobe-${m.id}`,
-            bottom: "anchor(top)",
-            left: "anchor(center)",
-            translate: "-50% 0",
-            marginBottom: 6,
+            transform: "translate(-50%, -100%)",
             display: "flex",
-            flexDirection: "column" as const,
+            flexDirection: "column",
             alignItems: "center",
-            padding: expanded === m.id ? "0.4rem 0.6rem" : "0.3rem 0.5rem",
+            padding: "0.3rem 0.5rem",
             background: "hsl(220 20% 8% / 0.9)",
             borderRadius: 3,
-            cursor: "pointer",
+            pointerEvents: "none",
             boxShadow: "0 2px 8px rgba(0,0,0,0.3), 0 0 12px hsl(217 91% 60% / 0.15)",
             border: "1px solid hsl(217 91% 60% / 0.3)",
-            opacity: `var(--cobe-visible-${m.id}, 0)`,
-            filter: `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
-            transition: "opacity 0.4s, filter 0.4s, transform 0.2s, padding 0.2s",
-            zoom: expanded === m.id ? 1.05 : 1,
+            opacity: 0,
+            transition: "opacity 0.3s, filter 0.3s",
+            whiteSpace: "nowrap",
           }}
         >
           <span
@@ -186,24 +231,21 @@ export function GlobeCdn({
               fontSize: "0.6rem",
               fontWeight: 600,
               letterSpacing: "0.08em",
-              textTransform: "uppercase" as const,
+              textTransform: "uppercase",
             }}
           >
             {m.name}
           </span>
-          {expanded === m.id && (
-            <span
-              className="text-muted-foreground"
-              style={{
-                fontFamily: "system-ui, sans-serif",
-                fontSize: "0.55rem",
-                marginTop: "0.15rem",
-                animation: "fade-slide-in 0.2s ease-out",
-              }}
-            >
-              {m.users.toLocaleString()} users
-            </span>
-          )}
+          <span
+            className="text-muted-foreground"
+            style={{
+              fontFamily: "system-ui, sans-serif",
+              fontSize: "0.5rem",
+              marginTop: "0.1rem",
+            }}
+          >
+            {m.users.toLocaleString()} users
+          </span>
         </div>
       ))}
     </div>
