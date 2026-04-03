@@ -385,6 +385,37 @@ const Index = () => {
           </div>
         </section>
 
+        {/* FAQ */}
+        <section className="container mx-auto px-4 py-20">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Perguntas <span className="gradient-text">Frequentes</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Tudo que você precisa saber sobre criar sites com IA na AxionFly.</p>
+          </motion.div>
+          <div className="max-w-2xl mx-auto space-y-4">
+            {faqItems.map(({ q, a }, i) => (
+              <motion.details
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i + 1}
+                className="glass rounded-xl group"
+              >
+                <summary className="flex items-center justify-between cursor-pointer p-5 text-foreground font-semibold list-none [&::-webkit-details-marker]:hidden">
+                  {q}
+                  <ArrowRight className="w-4 h-4 text-muted-foreground transition-transform duration-300 group-open:rotate-90 shrink-0 ml-4" />
+                </summary>
+                <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/30 pt-4">
+                  {a}
+                </div>
+              </motion.details>
+            ))}
+          </div>
+        </section>
+
         <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
           © 2026 AxionFly. Todos os direitos reservados.
         </footer>
