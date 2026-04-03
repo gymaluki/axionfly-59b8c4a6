@@ -6,6 +6,7 @@ import { HeroSection, LogosSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
+import PricingCards from "@/components/PricingCards";
 import { useRef } from "react";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
@@ -250,74 +251,7 @@ const Index = () => {
         {/* Testimonials */}
         <Testimonials />
 
-        {/* Pricing */}
-        <section id="pricing" className="container mx-auto px-4 py-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              O investimento se paga no{" "}
-              <span className="gradient-text">primeiro site vendido</span>
-            </h2>
-            <p className="text-muted-foreground">Sem surpresas. Sem taxa escondida. Venda e lucre.</p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            {/* Mensal */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1} whileHover={{ scale: 1.03, y: -4 }} className="glass rounded-2xl p-8 space-y-6 flex flex-col transition-shadow duration-300 hover:glow-cyan">
-              <div>
-                <h3 className="text-xl font-bold text-foreground">Mensal</h3>
-                <p className="text-muted-foreground text-sm mt-1">Teste sem compromisso. Cancele quando quiser.</p>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-black text-foreground">R$ 147</span>
-                <span className="text-muted-foreground">/ mês</span>
-              </div>
-              <ul className="space-y-3 flex-1">
-                {pricingFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Check className="w-4 h-4 text-accent shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button variant="outline" size="lg" className="w-full" asChild>
-                  <a href="">Assinar Agora</a>
-                </Button>
-              </motion.div>
-            </motion.div>
-
-            {/* Vitalício */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2} whileHover={{ scale: 1.03, y: -4 }} className="relative glass rounded-2xl p-8 space-y-6 flex flex-col neon-border transition-shadow duration-300 hover:glow-blue">
-              <div className="absolute -top-3 right-6 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
-                Mais Escolhido
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">Vitalício</h3>
-                <p className="text-muted-foreground text-sm mt-1">Pague uma vez. Use para sempre. Sem mensalidade.</p>
-              </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-black gradient-text">R$ 247</span>
-                <span className="text-muted-foreground">/ pagamento único</span>
-              </div>
-              <ul className="space-y-3 flex-1">
-                {pricingFeatures.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Check className="w-4 h-4 text-accent shrink-0" />
-                    {f}
-                  </li>
-                ))}
-                <li className="flex items-center gap-2 text-sm text-foreground font-medium">
-                  <Check className="w-4 h-4 text-accent shrink-0" />
-                  Todas as atualizações futuras incluídas
-                </li>
-              </ul>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button variant="neon" size="lg" className="w-full" asChild>
-                  <a href="">Garantir Acesso Vitalício</a>
-                </Button>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
+        <PricingCards />
 
         {/* FAQ */}
         <section className="container mx-auto px-4 py-20">

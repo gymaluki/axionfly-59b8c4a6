@@ -45,12 +45,21 @@ export function Header() {
 
 	return (
 		<header
-			className={cn('sticky top-0 z-50 w-full border-b border-transparent', {
-				'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg':
-					scrolled,
-			})}
+			className={cn(
+				'sticky top-0 z-50 mx-auto w-full max-w-5xl border-b border-transparent transition-all duration-500 ease-out md:rounded-md md:border',
+				{
+					'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg md:top-4 md:max-w-4xl md:shadow-lg':
+						scrolled && !open,
+					'bg-background/90': open,
+				},
+			)}
 		>
-			<nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
+			<nav
+				className={cn(
+					'flex w-full items-center justify-between px-4 transition-all duration-500 ease-out',
+					scrolled ? 'h-12 md:px-2' : 'h-14',
+				)}
+			>
 				<div className="flex items-center gap-5">
 					<a href="#" className="hover:opacity-80 transition-opacity flex items-center gap-2">
 						<div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
