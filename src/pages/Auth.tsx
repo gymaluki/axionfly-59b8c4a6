@@ -34,7 +34,8 @@ const Auth = () => {
       if (error) {
         toast.error(error.message);
       } else {
-        toast.success("Verifique seu email para confirmar o cadastro!");
+        toast.success("Conta criada com sucesso!");
+        navigate("/dashboard");
       }
     }
     setLoading(false);
