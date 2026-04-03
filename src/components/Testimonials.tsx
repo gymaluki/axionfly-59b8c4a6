@@ -6,41 +6,41 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.5, ease: [0, 0, 0.2, 1] as [number, number, number, number] },
+    transition: { delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
   }),
 };
 
 const testimonials = [
   {
     name: "Lucas Ferreira",
-    role: "Dono de Barbearia · SP",
+    role: "Criador de Sites · SP",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-    text: "Em 2 semanas fechei 14 novos clientes só com a prospecção do Maps. Paguei a ferramenta no primeiro dia.",
-    result: "+14 clientes em 2 semanas",
+    text: "Encontrei 30 barbearias sem site no Google Maps. Fechei 8 contratos na primeira semana. A ferramenta se pagou no primeiro cliente.",
+    result: "8 sites vendidos em 7 dias",
     stars: 5,
   },
   {
     name: "Camila Santos",
-    role: "Manicure Freelancer · RJ",
+    role: "Freelancer Digital · RJ",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face",
-    text: "Gerei um e-book de nail art em 30 segundos e usei como isca no Instagram. Ganhei 200 seguidores em 3 dias.",
-    result: "+200 seguidores em 3 dias",
+    text: "Criei um e-book de nail art em 30 segundos e usei como isca no Instagram. O tráfego qualificado triplicou.",
+    result: "+300% tráfego qualificado",
     stars: 5,
   },
   {
     name: "Rafael Oliveira",
-    role: "Agência Digital · MG",
+    role: "Dono de Agência · MG",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-    text: "A fábrica de sites cortou meu tempo de criação pela metade. Entrego mais rápido e cobro o mesmo valor.",
+    text: "A AxionFly cortou meu tempo de prospecção de 3 horas para 15 minutos. Agora entrego mais sites cobrando o mesmo.",
     result: "2x mais projetos/mês",
     stars: 5,
   },
   {
     name: "Juliana Costa",
-    role: "Dona de Pizzaria · PR",
+    role: "Web Designer · PR",
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
-    text: "Achei todos os fornecedores e concorrentes da minha região em minutos. Informação que antes levava dias.",
-    result: "Economia de 15h/semana",
+    text: "Achei pizzarias e hamburguerias sem presença online em minutos. O prompt gerou um site que o dono amou de primeira.",
+    result: "R$ 3.200 em 10 dias",
     stars: 5,
   },
 ];
@@ -60,7 +60,7 @@ export default function Testimonials() {
           Quem usa, <span className="gradient-text">não volta atrás</span>
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto">
-          Resultados reais de pessoas reais que já automatizaram seu crescimento.
+          Resultados reais de quem já vende sites com a AxionFly.
         </p>
       </motion.div>
 

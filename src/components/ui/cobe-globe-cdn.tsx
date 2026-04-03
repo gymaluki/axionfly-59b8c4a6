@@ -96,9 +96,9 @@ export function GlobeCdn({
         diffuse: 1.2,
         mapSamples: 16000,
         mapBrightness: 6,
-        baseColor: [0.12, 0.08, 0.22],
-        markerColor: [0.53, 0.33, 0.93],
-        glowColor: [0.25, 0.1, 0.45],
+        baseColor: [0.08, 0.1, 0.18],
+        markerColor: [0.25, 0.52, 0.96],
+        glowColor: [0.1, 0.15, 0.3],
         markers: markers.map((m) => ({ location: m.location, size: 0.06 })),
         opacity: 0.85,
       });
@@ -135,13 +135,13 @@ export function GlobeCdn({
 
   return (
     <div className={`relative aspect-square select-none ${className}`}>
-      {/* Purple ring glow */}
+      {/* Blue ring glow */}
       <div
         className="absolute inset-[-4%] rounded-full pointer-events-none z-10"
         style={{
-          border: "1.5px solid hsl(271 81% 56% / 0.4)",
+          border: "1.5px solid hsl(217 91% 60% / 0.35)",
           boxShadow:
-            "0 0 40px 8px hsl(271 81% 56% / 0.15), inset 0 0 40px 8px hsl(271 81% 56% / 0.08)",
+            "0 0 60px 12px hsl(217 91% 60% / 0.12), inset 0 0 60px 12px hsl(217 91% 60% / 0.06)",
         }}
       />
       <canvas
@@ -157,7 +157,7 @@ export function GlobeCdn({
           touchAction: "none",
         }}
       />
-      {/* Floating labels around globe */}
+      {/* Floating business labels */}
       {markers.slice(0, 6).map((m, i) => {
         const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
         const rx = 52;
@@ -172,7 +172,7 @@ export function GlobeCdn({
               left: `${left}%`,
               top: `${top}%`,
               transform: "translate(-50%, -50%)",
-              animationDelay: `${i * 0.5}s`,
+              animationDelay: `${i * 0.6}s`,
               animationDuration: "3s",
             }}
           >

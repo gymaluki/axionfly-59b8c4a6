@@ -1,34 +1,65 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp } from "lucide-react";
-import { motion, type Easing } from "framer-motion";
+import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
+import { motion, type Easing, useScroll, useTransform } from "framer-motion";
 import { Header } from "@/components/ui/header-3";
 import { Marquee } from "@/components/ui/marquee";
 import ShutterText from "@/components/ui/hero-shutter-text";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
+import { useRef } from "react";
 
-const ease: Easing = [0, 0, 0.2, 1];
+const ease: Easing = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease },
+    transition: { delay: i * 0.12, duration: 0.7, ease },
+  }),
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    transition: { delay: i * 0.1, duration: 0.6, ease },
   }),
 };
 
 const features = [
-  { icon: MapPin, title: "Prospecção Maps", desc: "Busque qualquer nicho no Google Maps e tenha nome, telefone e endereço prontos para contato. Zero trabalho manual." },
-  { icon: BookOpen, title: "Gerador de E-books", desc: "Cole o tema, clique em gerar. Em 30 segundos você tem um e-book completo para vender ou usar como isca digital." },
-  { icon: Code2, title: "Fábrica de Sites", desc: "Descreva o site dos sonhos e receba um prompt profissional pronto para colar no Lovable e criar na hora." },
+  {
+    icon: Code2,
+    title: "Criador de Sites IA",
+    desc: "Descreva o site que seu cliente precisa. A IA gera o prompt perfeito — você cola no Lovable e entrega um site profissional em minutos.",
+    tag: "PRINCIPAL",
+  },
+  {
+    icon: MapPin,
+    title: "Prospecção Google Maps",
+    desc: "A IA varre o Google Maps e encontra barbearias, clínicas, restaurantes — qualquer nicho. Nome, telefone e endereço prontos para você vender.",
+    tag: "AUTOMÁTICO",
+  },
+  {
+    icon: BookOpen,
+    title: "Gerador de E-books",
+    desc: "Crie e-books profissionais em 30 segundos. Use como isca digital ou venda diretamente. Conteúdo gerado por IA de verdade.",
+    tag: "RÁPIDO",
+  },
 ];
 
 const stats = [
-  { icon: Users, value: "2.300+", label: "Clientes ativos" },
-  { icon: TrendingUp, value: "R$ 4.2M", label: "Gerados pelos clientes" },
-  { icon: Zap, value: "47s", label: "Tempo médio de geração" },
+  { icon: Users, value: "2.300+", label: "Sites criados" },
+  { icon: TrendingUp, value: "R$ 4.2M", label: "Faturados pelos usuários" },
+  { icon: Zap, value: "47s", label: "Tempo médio de criação" },
+];
+
+const howItWorks = [
+  { step: "01", icon: Search, title: "IA busca clientes", desc: "Digite o nicho. A IA encontra negócios no Google Maps sem site profissional." },
+  { step: "02", icon: MousePointerClick, title: "Gere o site", desc: "Com um clique, o prompt do site é criado. Cole no Lovable e pronto." },
+  { step: "03", icon: Globe, title: "Venda e lucre", desc: "Entre em contato, mostre o site pronto e feche o contrato." },
 ];
 
 const partnerLogos = [
@@ -36,14 +67,18 @@ const partnerLogos = [
 ];
 
 const pricingFeatures = [
-  "Prospecção Maps ilimitada",
+  "Criador de Sites IA ilimitado",
+  "Prospecção Google Maps automática",
   "Gerador de E-books com IA",
-  "Fábrica de Sites (Prompts)",
   "Suporte prioritário",
 ];
 
 const Index = () => {
   const navigate = useNavigate();
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
     <div className="min-h-screen bg-background overflow-hidden relative">
@@ -52,11 +87,10 @@ const Index = () => {
         aria-hidden="true"
         className="fixed inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: `linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, hsl(var(--border) / 0.25) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.25) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
-      {/* Radial fade over grid */}
       <div
         aria-hidden="true"
         className="fixed inset-0 pointer-events-none z-0"
@@ -68,35 +102,53 @@ const Index = () => {
       <div className="relative z-10">
         <Header />
 
-        {/* Hero with Shutter Text + Globe */}
-        <section className="container mx-auto px-4 pt-20 pb-8 md:pt-28 md:pb-16">
+        {/* Hero */}
+        <motion.section
+          ref={heroRef}
+          style={{ opacity: heroOpacity, y: heroY }}
+          className="container mx-auto px-4 pt-20 pb-8 md:pt-28 md:pb-16"
+        >
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left: Text */}
             <div className="space-y-6">
-              <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary border border-primary/20">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, ease }}
+                className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary border border-primary/20"
+              >
                 <Sparkles className="w-3.5 h-3.5" />
-                Prospecção automática via Google Maps
+                Plataforma de criação de sites com IA
               </motion.div>
 
-              <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={1} className="space-y-2">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.7, ease }}
+                className="space-y-2"
+              >
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-[1.1]">
-                  Encontre clientes em
+                  Crie sites e venda para
                 </h1>
                 <ShutterText
-                  words={["BARBEARIAS", "PIZZARIAS", "MANICURES", "DENTISTAS", "ACADEMIAS", "CLÍNICAS"]}
+                  words={["BARBEARIAS", "PIZZARIAS", "MANICURES", "DENTISTAS", "ACADEMIAS", "CLÍNICAS", "PET SHOPS", "RESTAURANTES"]}
                   interval={2200}
                 />
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed pt-2">
-                  de forma <span className="text-foreground font-semibold">100% automatizada</span>.
-                  O Google Maps faz o trabalho pesado. Você só fecha o contrato.
+                  A IA encontra negócios <span className="text-foreground font-semibold">sem site</span> no Google Maps.
+                  Você cria o site em minutos e <span className="text-foreground font-semibold">fecha o contrato</span>.
                 </p>
               </motion.div>
 
-              <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={2} className="flex flex-col sm:flex-row gap-3 pt-2">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6, ease }}
+                className="flex flex-col sm:flex-row gap-3 pt-2"
+              >
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
                   <Button variant="neon" size="lg" onClick={() => navigate("/auth")}>
                     <Zap className="w-4 h-4 mr-1" />
-                    Começar Agora — É Grátis
+                    Criar Meu Primeiro Site
                   </Button>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
@@ -107,11 +159,11 @@ const Index = () => {
               </motion.div>
             </div>
 
-            {/* Right: Globe */}
+            {/* Globe */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 0.7, rotate: -5 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="hidden md:flex items-center justify-center"
             >
               <div className="w-full max-w-md relative">
@@ -120,7 +172,7 @@ const Index = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Partner Logos Marquee */}
         <section className="py-12 border-y border-border/30">
@@ -134,7 +186,7 @@ const Index = () => {
           </Marquee>
         </section>
 
-        {/* Social Proof Stats */}
+        {/* Stats */}
         <section className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {stats.map(({ icon: Icon, value, label }, i) => (
@@ -143,9 +195,10 @@ const Index = () => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                variants={fadeUp}
+                variants={scaleIn}
                 custom={i}
-                className="text-center space-y-2 p-6 rounded-xl glass"
+                whileHover={{ scale: 1.05 }}
+                className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
               >
                 <Icon className="w-6 h-6 text-primary mx-auto" />
                 <p className="text-3xl font-black text-foreground">{value}</p>
@@ -155,17 +208,52 @@ const Index = () => {
           </div>
         </section>
 
+        {/* How It Works */}
+        <section className="container mx-auto px-4 py-20">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Como funciona a <span className="gradient-text">AxionFly</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">3 passos simples. Da prospecção ao contrato fechado.</p>
+          </motion.div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto relative">
+            {/* Connection line */}
+            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            {howItWorks.map(({ step, icon: Icon, title, desc }, i) => (
+              <motion.div
+                key={step}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i + 1}
+                className="text-center space-y-4 relative"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto relative"
+                >
+                  <Icon className="w-7 h-7 text-primary" />
+                  <span className="absolute -top-2 -right-2 text-[10px] font-bold bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center">{step}</span>
+                </motion.div>
+                <h3 className="text-lg font-bold text-foreground">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
         {/* Features */}
         <section className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Três máquinas de resultado.{" "}
+              Três máquinas de lucro.{" "}
               <span className="gradient-text">Uma plataforma.</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">Cada ferramenta foi construída para eliminar o trabalho que trava seu crescimento.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto">Cada ferramenta elimina o trabalho que trava seu faturamento.</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6">
-            {features.map(({ icon: Icon, title, desc }, i) => (
+            {features.map(({ icon: Icon, title, desc, tag }, i) => (
               <motion.div
                 key={title}
                 initial="hidden"
@@ -173,40 +261,53 @@ const Index = () => {
                 viewport={{ once: true }}
                 variants={fadeUp}
                 custom={i + 1}
-                whileHover={{ scale: 1.03, y: -4 }}
-                className="glass rounded-2xl p-6 space-y-4 hover:neon-border transition-all duration-300 group cursor-pointer"
+                whileHover={{ scale: 1.04, y: -6 }}
+                className="glass rounded-2xl p-6 space-y-4 hover:neon-border transition-all duration-300 group cursor-pointer relative overflow-hidden"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <Icon className="w-6 h-6 text-primary" />
+                <div className="absolute top-3 right-3">
+                  <span className="text-[9px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded-full border border-primary/20">{tag}</span>
                 </div>
+                <motion.div
+                  whileHover={{ rotate: 10 }}
+                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                >
+                  <Icon className="w-6 h-6 text-primary" />
+                </motion.div>
                 <h3 className="text-xl font-bold text-foreground">{title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{desc}</p>
+                <p className="text-muted-foreground leading-relaxed text-sm">{desc}</p>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* CTA mid-page */}
+        {/* CTA */}
         <section className="container mx-auto px-4 py-16">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeUp}
+            variants={scaleIn}
             custom={0}
-            className="glass rounded-2xl p-8 md:p-12 text-center space-y-5 neon-border max-w-3xl mx-auto"
+            className="glass rounded-2xl p-8 md:p-12 text-center space-y-5 neon-border max-w-3xl mx-auto relative overflow-hidden"
           >
-            <Sparkles className="w-8 h-8 text-primary mx-auto" />
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              Seu concorrente já automatizou. E você?
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="relative z-10"
+            >
+              <Sparkles className="w-8 h-8 text-primary mx-auto" />
+            </motion.div>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground relative z-10">
+              Enquanto você lê isso, alguém está vendendo sites com IA.
             </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto">
-              Cada dia sem automação é dinheiro deixado na mesa. Configure tudo em 5 minutos, sem precisar de experiência técnica.
+            <p className="text-muted-foreground max-w-lg mx-auto relative z-10">
+              Cada dia sem a AxionFly é dinheiro na mesa do seu concorrente. Configure em 5 minutos. Sem experiência técnica.
             </p>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="relative z-10">
               <Button variant="neon" size="lg" onClick={() => navigate("/auth")}>
                 <Zap className="w-4 h-4 mr-1" />
-                Quero Automatizar Agora
+                Quero Vender Sites com IA
               </Button>
             </motion.div>
           </motion.div>
@@ -219,10 +320,10 @@ const Index = () => {
         <section id="pricing" className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Investimento que se paga no{" "}
-              <span className="gradient-text">primeiro cliente</span>
+              O investimento se paga no{" "}
+              <span className="gradient-text">primeiro site vendido</span>
             </h2>
-            <p className="text-muted-foreground">Sem surpresas. Sem taxa escondida. Comece e fature.</p>
+            <p className="text-muted-foreground">Sem surpresas. Sem taxa escondida. Venda e lucre.</p>
           </motion.div>
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
             {/* Mensal */}
@@ -251,7 +352,7 @@ const Index = () => {
             </motion.div>
 
             {/* Vitalício */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2} whileHover={{ scale: 1.03, y: -4 }} className="relative glass rounded-2xl p-8 space-y-6 flex flex-col neon-border transition-shadow duration-300 hover:glow-purple">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2} whileHover={{ scale: 1.03, y: -4 }} className="relative glass rounded-2xl p-8 space-y-6 flex flex-col neon-border transition-shadow duration-300 hover:glow-blue">
               <div className="absolute -top-3 right-6 bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
                 Mais Escolhido
               </div>
@@ -285,7 +386,7 @@ const Index = () => {
         </section>
 
         <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
-          © 2026 ScaleAI. Todos os direitos reservados.
+          © 2026 AxionFly. Todos os direitos reservados.
         </footer>
       </div>
     </div>
