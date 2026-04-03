@@ -93,14 +93,14 @@ export function GlobeCdn({
         phi: 0,
         theta: 0.2,
         dark: 1,
-        diffuse: 1.2,
-        mapSamples: 16000,
-        mapBrightness: 6,
-        baseColor: [0.08, 0.1, 0.18],
-        markerColor: [0.25, 0.52, 0.96],
-        glowColor: [0.1, 0.15, 0.3],
-        markers: markers.map((m) => ({ location: m.location, size: 0.06 })),
-        opacity: 0.85,
+        diffuse: 2,
+        mapSamples: 20000,
+        mapBrightness: 8,
+        baseColor: [0.15, 0.18, 0.3],
+        markerColor: [0.38, 0.58, 1],
+        glowColor: [0.12, 0.18, 0.4],
+        markers: markers.map((m) => ({ location: m.location, size: 0.07 })),
+        opacity: 0.9,
       });
 
       function animate() {
