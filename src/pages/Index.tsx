@@ -28,7 +28,7 @@ const Index = () => {
           ✨ Em construção
         </div>
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground max-w-3xl mx-auto leading-tight">
-          Algo incrível está{" "}
+          Hoje incrível está{" "}
           <span className="gradient-text">chegando</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto">
