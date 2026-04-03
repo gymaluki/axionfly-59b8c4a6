@@ -153,7 +153,10 @@ export function GlobeCdn({
         markerElevation: 0,
         markers: markers.map((m) => ({ location: m.location, size: 0.025 })),
         opacity: 0.85,
+        
       })
+
+      canvas.style.opacity = "1"
 
       function animate() {
         if (!isPausedRef.current) phi += speed
@@ -165,9 +168,9 @@ export function GlobeCdn({
         animationId = requestAnimationFrame(animate)
       }
       animate()
-      setTimeout(() => canvas && (canvas.style.opacity = "1"))
     }
 
+    // Try init immediately, otherwise wait for resize
     if (canvas.offsetWidth > 0) {
       init()
     } else {
@@ -180,7 +183,13 @@ export function GlobeCdn({
       ro.observe(canvas)
     }
 
+    // Fallback: retry after a short delay
+    const fallbackTimer = setTimeout(() => {
+      if (!globe && canvas.offsetWidth > 0) init()
+    }, 500)
+
     return () => {
+      clearTimeout(fallbackTimer)
       if (animationId) cancelAnimationFrame(animationId)
       if (globe) globe.destroy()
     }
