@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { Search, MessageCircle, Star } from "lucide-react";
+import { Search, MessageCircle, Star, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 
-const quickFilters = ["Barbearias", "Pizzarias", "Manicures", "Dentistas", "Academias"];
+const quickFilters = [
+  { label: "Barbearias", emoji: "💈" },
+  { label: "Pizzarias", emoji: "🍕" },
+  { label: "Manicures", emoji: "💅" },
+  { label: "Dentistas", emoji: "🦷" },
+  { label: "Academias", emoji: "🏋️" },
+];
 
 const mockResults = [
   { name: "Barbearia Premium", address: "Rua Augusta, 1200 - São Paulo", rating: 4.8 },
@@ -21,6 +27,16 @@ const staggerItem = {
     transition: { delay: i * 0.08, duration: 0.4, ease: [0, 0, 0.2, 1] as [number, number, number, number] },
   }),
 };
+
+const GoogleMapsLogo = () => (
+  <svg viewBox="0 0 92.3 132.3" className="w-5 h-5 shrink-0">
+    <path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z" />
+    <path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z" />
+    <path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3z" />
+    <path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3z" />
+    <path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63 0-7.7-1.9-14.9-5.2-21.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2z" />
+  </svg>
+);
 
 const ProspeccaoView = () => {
   const [search, setSearch] = useState("");
@@ -39,9 +55,15 @@ const ProspeccaoView = () => {
       transition={{ duration: 0.4 }}
       className="space-y-6"
     >
-      <div>
-        <h2 className="text-2xl font-bold text-foreground">Prospecção de Clientes</h2>
-        <p className="text-muted-foreground text-sm mt-1">Encontre leads qualificados via Google Maps</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-foreground">Prospecção de Clientes</h2>
+          <p className="text-muted-foreground text-sm mt-1">Encontre leads qualificados via Google Maps</p>
+        </div>
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50 border border-border">
+          <GoogleMapsLogo />
+          <span className="text-xs text-muted-foreground font-medium">Powered by Google Maps</span>
+        </div>
       </div>
 
       <div className="relative">
@@ -50,19 +72,19 @@ const ProspeccaoView = () => {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {quickFilters.map((f) => (
+        {quickFilters.map(({ label, emoji }) => (
           <motion.button
-            key={f}
-            onClick={() => handleFilterClick(f)}
+            key={label}
+            onClick={() => handleFilterClick(label)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-              activeFilter === f
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+              activeFilter === label
                 ? "bg-primary text-primary-foreground glow-purple"
                 : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
             }`}
           >
-            {f}
+            <span>{emoji}</span> {label}
           </motion.button>
         ))}
       </div>
@@ -88,7 +110,12 @@ const ProspeccaoView = () => {
                   variants={staggerItem}
                   className="border-b border-border/50 hover:bg-secondary/30 transition-colors"
                 >
-                  <td className="px-4 py-3 font-medium text-foreground">{r.name}</td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                      <span className="font-medium text-foreground">{r.name}</span>
+                    </div>
+                  </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground hidden md:table-cell">{r.address}</td>
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center gap-1 text-sm text-accent font-medium">
