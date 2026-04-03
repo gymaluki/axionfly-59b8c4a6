@@ -1,0 +1,60 @@
+import { MapPin, BookOpen, Code2, LogOut } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type View = "prospeccao" | "ebooks" | "sites";
+
+interface DashboardSidebarProps {
+  active: View;
+  onNavigate: (view: View) => void;
+  onSignOut: () => void;
+  userEmail?: string;
+}
+
+const navItems: { id: View; label: string; icon: React.ElementType }[] = [
+  { id: "prospeccao", label: "Prospecção Maps", icon: MapPin },
+  { id: "ebooks", label: "Gerador de E-books", icon: BookOpen },
+  { id: "sites", label: "Fábrica de Sites", icon: Code2 },
+];
+
+const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail }: DashboardSidebarProps) => {
+  return (
+    <aside className="w-64 shrink-0 border-r border-border bg-sidebar flex flex-col min-h-screen">
+      <div className="p-5 border-b border-border">
+        <span className="text-lg font-bold gradient-text">ScaleAI</span>
+      </div>
+
+      <nav className="flex-1 p-3 space-y-1">
+        {navItems.map(({ id, label, icon: Icon }) => (
+          <button
+            key={id}
+            onClick={() => onNavigate(id)}
+            className={cn(
+              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+              active === id
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+            )}
+          >
+            <Icon className="w-4 h-4" />
+            {label}
+          </button>
+        ))}
+      </nav>
+
+      <div className="p-4 border-t border-border space-y-3">
+        {userEmail && (
+          <p className="text-xs text-muted-foreground truncate">{userEmail}</p>
+        )}
+        <button
+          onClick={onSignOut}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+        >
+          <LogOut className="w-4 h-4" />
+          Sair
+        </button>
+      </div>
+    </aside>
+  );
+};
+
+export default DashboardSidebar;
