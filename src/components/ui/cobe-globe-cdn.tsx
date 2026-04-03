@@ -153,7 +153,7 @@ export function GlobeCdn({
         markerElevation: 0,
         markers: markers.map((m) => ({ location: m.location, size: 0.025 })),
         opacity: 0.85,
-        onRender: () => {},
+        
       })
 
       canvas.style.opacity = "1"
