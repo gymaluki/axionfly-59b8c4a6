@@ -212,6 +212,9 @@ const Index = () => {
           </motion.div>
         </section>
 
+        {/* Testimonials */}
+        <Testimonials />
+
         {/* Pricing */}
         <section id="pricing" className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
