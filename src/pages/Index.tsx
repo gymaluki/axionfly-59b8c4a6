@@ -206,19 +206,12 @@ const Index = () => {
               ))}
             </div>
             {/* Globe */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={slideFromRight}
-              custom={0}
-              className="flex items-center justify-center"
-            >
+            <div className="flex items-center justify-center">
               <div className="w-full max-w-md relative">
                 <GlobeCdn speed={0.008} />
                 <div className="absolute inset-0 rounded-full bg-primary/5 blur-3xl -z-10" />
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
