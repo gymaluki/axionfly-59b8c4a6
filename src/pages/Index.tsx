@@ -1,31 +1,52 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
-import { motion, type Easing, useScroll, useTransform } from "framer-motion";
-import { HeroSection, LogosSection } from "@/components/ui/hero-1";
+import { motion, type Easing } from "framer-motion";
+import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
 import PricingCards from "@/components/PricingCards";
-import { useRef } from "react";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 60, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.7, ease },
+    filter: "blur(0px)",
+    transition: { delay: i * 0.15, duration: 0.9, ease },
   }),
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.9 },
+  hidden: { opacity: 0, scale: 0.8, filter: "blur(6px)" },
   visible: (i: number) => ({
     opacity: 1,
     scale: 1,
-    transition: { delay: i * 0.1, duration: 0.6, ease },
+    filter: "blur(0px)",
+    transition: { delay: i * 0.12, duration: 0.8, ease },
+  }),
+};
+
+const slideFromLeft = {
+  hidden: { opacity: 0, x: -80, filter: "blur(6px)" },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: { delay: i * 0.15, duration: 0.9, ease },
+  }),
+};
+
+const slideFromRight = {
+  hidden: { opacity: 0, x: 80, filter: "blur(6px)" },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: { delay: i * 0.15, duration: 0.9, ease },
   }),
 };
 
@@ -62,13 +83,6 @@ const howItWorks = [
   { step: "03", icon: Globe, title: "Venda e lucre", desc: "Entre em contato, mostre o site pronto e feche o contrato." },
 ];
 
-const pricingFeatures = [
-  "Criador de Sites IA ilimitado",
-  "Prospecção Google Maps automática",
-  "Gerador de E-books com IA",
-  "Suporte prioritário",
-];
-
 const faqItems = [
   { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você descreve o que precisa e a IA faz todo o trabalho técnico. Zero código." },
   { q: "Como funciona a prospecção no Google Maps?", a: "Nossa IA varre o Google Maps automaticamente, encontra negócios do nicho que você escolher (barbearias, restaurantes, clínicas, etc.) e entrega nome, telefone e endereço — tudo pronto para você entrar em contato e oferecer um site." },
@@ -83,7 +97,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-hidden relative">
-      {/* Grid Background — shutter-text style */}
+      {/* Grid Background */}
       <div
         aria-hidden="true"
         className="fixed inset-0 pointer-events-none z-0 opacity-[0.07]"
@@ -92,20 +106,12 @@ const Index = () => {
           backgroundSize: "clamp(20px, 5vw, 60px) clamp(20px, 5vw, 60px)",
         }}
       />
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{
-          background: "radial-gradient(ellipse at center, transparent 20%, hsl(var(--background)) 70%)",
-        }}
-      />
 
       <div className="relative z-10">
         <Header />
 
-        {/* New Hero */}
+        {/* Hero */}
         <HeroSection />
-        <LogosSection />
 
         {/* Stats */}
         <section className="container mx-auto px-4 py-16">
@@ -115,10 +121,10 @@ const Index = () => {
                 key={label}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.3 }}
                 variants={scaleIn}
                 custom={i}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.08, y: -4 }}
                 className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
               >
                 <Icon className="w-6 h-6 text-primary mx-auto" />
@@ -131,7 +137,7 @@ const Index = () => {
 
         {/* How It Works */}
         <section className="container mx-auto px-4 py-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-3">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Como funciona a <span className="gradient-text">AxionFly</span>
             </h2>
@@ -144,13 +150,13 @@ const Index = () => {
                 key={step}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.3 }}
                 variants={fadeUp}
                 custom={i + 1}
                 className="text-center space-y-4 relative"
               >
                 <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileHover={{ scale: 1.15, rotate: 8 }}
                   className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto relative"
                 >
                   <Icon className="w-7 h-7 text-primary" />
@@ -165,7 +171,7 @@ const Index = () => {
 
         {/* Features + Globe */}
         <section className="container mx-auto px-4 py-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Três máquinas de lucro.{" "}
               <span className="gradient-text">Uma plataforma.</span>
@@ -179,8 +185,8 @@ const Index = () => {
                   key={title}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeUp}
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={slideFromLeft}
                   custom={i + 1}
                   whileHover={{ scale: 1.04, y: -6 }}
                   className="glass rounded-2xl p-6 space-y-4 hover:neon-border transition-all duration-300 group cursor-pointer relative overflow-hidden"
@@ -201,10 +207,11 @@ const Index = () => {
             </div>
             {/* Globe */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.7 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={slideFromRight}
+              custom={0}
               className="flex items-center justify-center"
             >
               <div className="w-full max-w-md relative">
@@ -220,7 +227,7 @@ const Index = () => {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={scaleIn}
             custom={0}
             className="glass rounded-2xl p-8 md:p-12 text-center space-y-5 neon-border max-w-3xl mx-auto relative overflow-hidden"
@@ -255,7 +262,7 @@ const Index = () => {
 
         {/* FAQ */}
         <section className="container mx-auto px-4 py-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Perguntas <span className="gradient-text">Frequentes</span>
             </h2>
@@ -267,7 +274,7 @@ const Index = () => {
                 key={i}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.3 }}
                 variants={fadeUp}
                 custom={i + 1}
                 className="glass rounded-xl group"
