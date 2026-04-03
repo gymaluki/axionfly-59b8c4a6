@@ -83,13 +83,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-hidden relative">
-      {/* Grid Background */}
+      {/* Grid Background — shutter-text style */}
       <div
         aria-hidden="true"
-        className="fixed inset-0 pointer-events-none z-0"
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.07]"
         style={{
-          backgroundImage: `linear-gradient(to right, hsl(var(--border) / 0.25) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.25) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
+          backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+          backgroundSize: "clamp(20px, 5vw, 60px) clamp(20px, 5vw, 60px)",
         }}
       />
       <div

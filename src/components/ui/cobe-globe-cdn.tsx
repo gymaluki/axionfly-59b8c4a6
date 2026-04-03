@@ -17,16 +17,16 @@ interface GlobeCdnProps {
 }
 
 const defaultMarkers: BusinessMarker[] = [
-  { id: "m1", location: [38.95, -77.45], label: "Barbearia Premium", emoji: "💈" },
-  { id: "m2", location: [37.62, -122.38], label: "Pizzaria Napoli", emoji: "🍕" },
-  { id: "m3", location: [49.01, 2.55], label: "Manicure Studio", emoji: "💅" },
-  { id: "m4", location: [35.55, 139.78], label: "Restaurante Zen", emoji: "🍽️" },
-  { id: "m5", location: [-33.95, 151.18], label: "Hamburgueria Top", emoji: "🍔" },
-  { id: "m6", location: [-23.43, -46.47], label: "Academia Fit", emoji: "🏋️" },
-  { id: "m7", location: [1.36, 103.99], label: "Clínica Dental", emoji: "🦷" },
-  { id: "m8", location: [59.65, 17.93], label: "Pet Shop Happy", emoji: "🐾" },
-  { id: "m9", location: [53.43, -6.25], label: "Salão Beauty", emoji: "✨" },
-  { id: "m10", location: [19.09, 72.87], label: "Padaria Artesanal", emoji: "🥖" },
+  { id: "m1", location: [38.95, -77.45], label: "Barbearia", emoji: "💈" },
+  { id: "m2", location: [37.62, -122.38], label: "Pizzaria", emoji: "🍕" },
+  { id: "m3", location: [49.01, 2.55], label: "Manicure", emoji: "💅" },
+  { id: "m4", location: [35.55, 139.78], label: "Restaurante", emoji: "🍽️" },
+  { id: "m5", location: [-33.95, 151.18], label: "Hamburgueria", emoji: "🍔" },
+  { id: "m6", location: [-23.43, -46.47], label: "Academia", emoji: "🏋️" },
+  { id: "m7", location: [1.36, 103.99], label: "Clínica", emoji: "🦷" },
+  { id: "m8", location: [59.65, 17.93], label: "Pet Shop", emoji: "🐾" },
+  { id: "m9", location: [53.43, -6.25], label: "Salão", emoji: "✨" },
+  { id: "m10", location: [19.09, 72.87], label: "Padaria", emoji: "🥖" },
 ];
 
 export function GlobeCdn({
