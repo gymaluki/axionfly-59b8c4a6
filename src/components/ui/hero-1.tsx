@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { RocketIcon, ArrowRightIcon, Zap } from "lucide-react";
-import { LogoCloud } from "@/components/ui/logo-cloud-3";
 import { useNavigate } from "react-router-dom";
 import ShutterText from "@/components/ui/hero-shutter-text";
 
@@ -18,28 +17,8 @@ export function HeroSection() {
 				<div className="absolute inset-0 -top-14 isolate -z-10 bg-[radial-gradient(35%_80%_at_49%_0%,hsl(var(--foreground)/.08),transparent)]" />
 			</div>
 
-			{/* X Bold Faded Borders */}
-			<div
-				aria-hidden="true"
-				className="absolute inset-0 mx-auto hidden min-h-screen w-full max-w-5xl lg:block"
-			>
-				<div className="absolute inset-y-0 left-0 z-10 h-full w-px bg-foreground/15" style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }} />
-				<div className="absolute inset-y-0 right-0 z-10 h-full w-px bg-foreground/15" style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }} />
-			</div>
-
 			{/* main content */}
 			<div className="relative flex flex-col items-center justify-center gap-5 pt-32 pb-20">
-				{/* X Content Faded Borders */}
-				<div
-					aria-hidden="true"
-					className="absolute inset-0 -z-[1] size-full overflow-hidden"
-				>
-					<div className="absolute inset-y-0 left-4 w-px bg-gradient-to-b from-transparent via-border to-border md:left-8" />
-					<div className="absolute inset-y-0 right-4 w-px bg-gradient-to-b from-transparent via-border to-border md:right-8" />
-					<div className="absolute inset-y-0 left-8 w-px bg-gradient-to-b from-transparent via-border/50 to-border/50 md:left-12" />
-					<div className="absolute inset-y-0 right-8 w-px bg-gradient-to-b from-transparent via-border/50 to-border/50 md:right-12" />
-				</div>
-
 				<a
 					className={cn(
 						"group mx-auto flex w-fit items-center gap-3 rounded-full border border-border bg-card px-3 py-1 shadow",
@@ -84,25 +63,3 @@ export function HeroSection() {
 		</section>
 	);
 }
-
-export function LogosSection() {
-	return (
-		<section className="relative space-y-4 border-t border-border/50 pt-6 pb-10">
-			<h2 className="text-center font-medium text-lg text-muted-foreground tracking-tight md:text-xl">
-				Integrado com <span className="text-foreground">ferramentas top</span>
-			</h2>
-			<div className="relative z-10 mx-auto max-w-4xl">
-				<LogoCloud logos={logos} />
-			</div>
-		</section>
-	);
-}
-
-const logos = [
-	{ src: "https://storage.efferd.com/logo/nvidia-wordmark.svg", alt: "Nvidia Logo" },
-	{ src: "https://storage.efferd.com/logo/supabase-wordmark.svg", alt: "Supabase Logo" },
-	{ src: "https://storage.efferd.com/logo/openai-wordmark.svg", alt: "OpenAI Logo" },
-	{ src: "https://storage.efferd.com/logo/vercel-wordmark.svg", alt: "Vercel Logo" },
-	{ src: "https://storage.efferd.com/logo/github-wordmark.svg", alt: "GitHub Logo" },
-	{ src: "https://storage.efferd.com/logo/claude-wordmark.svg", alt: "Claude AI Logo" },
-];
