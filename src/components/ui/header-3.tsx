@@ -17,12 +17,6 @@ import {
 	BookOpen,
 	Code2,
 	Zap,
-	BarChart,
-	Users,
-	Star,
-	FileText,
-	Shield,
-	HelpCircle,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -58,8 +52,11 @@ export function Header() {
 		>
 			<nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
 				<div className="flex items-center gap-5">
-					<a href="#" className="hover:opacity-80 transition-opacity">
-						<span className="text-xl font-bold gradient-text">ScaleAI</span>
+					<a href="#" className="hover:opacity-80 transition-opacity flex items-center gap-2">
+						<div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+							<Zap className="w-4 h-4 text-primary-foreground" />
+						</div>
+						<span className="text-xl font-bold text-foreground">Axion<span className="text-primary">Fly</span></span>
 					</a>
 					<NavigationMenu className="hidden md:flex">
 						<NavigationMenuList>
@@ -177,28 +174,22 @@ function ListItem({
 
 const productLinks: LinkItem[] = [
 	{
-		title: 'Prospecção Maps',
+		title: 'Criador de Sites IA',
 		href: '#',
-		description: 'Encontre clientes via Google Maps em segundos',
+		description: 'Crie sites profissionais com prompts inteligentes',
+		icon: Code2,
+	},
+	{
+		title: 'Prospecção Google Maps',
+		href: '#',
+		description: 'IA encontra barbearias, clínicas, restaurantes automaticamente',
 		icon: MapPin,
 	},
 	{
 		title: 'Gerador de E-books',
 		href: '#',
-		description: 'Crie e-books profissionais com IA',
+		description: 'Crie e-books profissionais com IA em segundos',
 		icon: BookOpen,
-	},
-	{
-		title: 'Fábrica de Sites',
-		href: '#',
-		description: 'Gere prompts para criar sites completos',
-		icon: Code2,
-	},
-	{
-		title: 'Automação IA',
-		href: '#',
-		description: 'Automatize tarefas repetitivas',
-		icon: Zap,
 	},
 ];
 

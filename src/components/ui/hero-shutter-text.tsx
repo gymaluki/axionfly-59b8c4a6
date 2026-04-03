@@ -47,7 +47,7 @@ export default function ShutterText({
                 {char === " " ? "\u00A0" : char}
               </motion.span>
 
-              {/* Top slice */}
+              {/* Top slice — blue */}
               <motion.span
                 initial={{ x: "-100%", opacity: 0 }}
                 animate={{ x: "100%", opacity: [0, 1, 0] }}
@@ -58,7 +58,7 @@ export default function ShutterText({
                 {char}
               </motion.span>
 
-              {/* Bottom slice */}
+              {/* Bottom slice — cyan */}
               <motion.span
                 initial={{ x: "-100%", opacity: 0 }}
                 animate={{ x: "100%", opacity: [0, 1, 0] }}
