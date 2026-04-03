@@ -6,6 +6,7 @@ import { HeroSection, LogosSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
+import PricingCards from "@/components/PricingCards";
 import { useRef } from "react";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
