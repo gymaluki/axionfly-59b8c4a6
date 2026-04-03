@@ -141,6 +141,7 @@ export function GlobePulse({
     let globe: ReturnType<typeof createGlobe> | null = null
     let currentWidth = 0
     let phi = 0
+    let animationFrameId = 0
 
     const initGlobe = () => {
       const nextWidth = Math.round(container.offsetWidth)
@@ -175,20 +176,30 @@ export function GlobePulse({
         arcWidth: 0.35,
         arcHeight: 0.16,
         opacity: 0.95,
-        onRender: (state) => {
-          if (!isPausedRef.current) phi += speed
-
-          state.width = currentWidth
-          state.height = currentWidth
-          state.phi = phi + phiOffsetRef.current + dragOffset.current.phi
-          state.theta = 0.25 + thetaOffsetRef.current + dragOffset.current.theta
-        },
       })
 
       canvas.style.opacity = "1"
     }
 
-    const frame = window.requestAnimationFrame(initGlobe)
+    const animate = () => {
+      if (globe) {
+        if (!isPausedRef.current) phi += speed
+
+        globe.update({
+          width: currentWidth,
+          height: currentWidth,
+          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
+          theta: 0.25 + thetaOffsetRef.current + dragOffset.current.theta,
+        })
+      }
+
+      animationFrameId = window.requestAnimationFrame(animate)
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      initGlobe()
+      animate()
+    })
     const resizeObserver = new ResizeObserver(() => {
       if (Math.round(container.offsetWidth) !== currentWidth) initGlobe()
     })
@@ -197,6 +208,7 @@ export function GlobePulse({
 
     return () => {
       window.cancelAnimationFrame(frame)
+      window.cancelAnimationFrame(animationFrameId)
       resizeObserver.disconnect()
       globe?.destroy()
     }
