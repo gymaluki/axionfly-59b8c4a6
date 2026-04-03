@@ -66,6 +66,15 @@ const partnerLogos = [
   "Google Maps", "WhatsApp Business", "Lovable", "Stripe", "OpenAI", "Vercel",
 ];
 
+const faqItems = [
+  { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você descreve o que precisa e a IA faz todo o trabalho técnico. Zero código." },
+  { q: "Como funciona a prospecção no Google Maps?", a: "Nossa IA varre o Google Maps automaticamente, encontra negócios do nicho que você escolher (barbearias, restaurantes, clínicas, etc.) e entrega nome, telefone e endereço — tudo pronto para você entrar em contato e oferecer um site." },
+  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, sua margem de lucro é altíssima." },
+  { q: "A IA cria sites para qualquer tipo de negócio?", a: "Sim! Barbearias, pizzarias, clínicas, pet shops, academias, restaurantes, salões de beleza — qualquer nicho de negócio local. A IA se adapta ao segmento automaticamente." },
+  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA, prospecção automática no Google Maps, gerador de e-books e todas as atualizações futuras. Pague uma vez, use para sempre." },
+  { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
+];
+
 const pricingFeatures = [
   "Criador de Sites IA ilimitado",
   "Prospecção Google Maps automática",
