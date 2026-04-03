@@ -1,52 +1,36 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import createGlobe from "cobe";
 
-interface CdnMarker {
+interface BusinessMarker {
   id: string;
   location: [number, number];
-  region: string;
-}
-
-interface CdnArc {
-  id: string;
-  from: [number, number];
-  to: [number, number];
+  label: string;
+  emoji: string;
 }
 
 interface GlobeCdnProps {
-  markers?: CdnMarker[];
-  arcs?: CdnArc[];
+  markers?: BusinessMarker[];
   className?: string;
   speed?: number;
 }
 
-const defaultMarkers: CdnMarker[] = [
-  { id: "cdn-iad", location: [38.95, -77.45], region: "iad1" },
-  { id: "cdn-sfo", location: [37.62, -122.38], region: "sfo1" },
-  { id: "cdn-cdg", location: [49.01, 2.55], region: "cdg1" },
-  { id: "cdn-hnd", location: [35.55, 139.78], region: "hnd1" },
-  { id: "cdn-syd", location: [-33.95, 151.18], region: "syd1" },
-  { id: "cdn-gru", location: [-23.43, -46.47], region: "gru1" },
-  { id: "cdn-sin", location: [1.36, 103.99], region: "sin1" },
-  { id: "cdn-arn", location: [59.65, 17.93], region: "arn1" },
-  { id: "cdn-dub", location: [53.43, -6.25], region: "dub1" },
-  { id: "cdn-bom", location: [19.09, 72.87], region: "bom1" },
-];
-
-const defaultArcs: CdnArc[] = [
-  { id: "cdn-arc-1", from: [38.95, -77.45], to: [49.01, 2.55] },
-  { id: "cdn-arc-2", from: [37.62, -122.38], to: [35.55, 139.78] },
-  { id: "cdn-arc-3", from: [49.01, 2.55], to: [1.36, 103.99] },
-  { id: "cdn-arc-4", from: [38.95, -77.45], to: [-23.43, -46.47] },
-  { id: "cdn-arc-5", from: [35.55, 139.78], to: [-33.95, 151.18] },
-  { id: "cdn-arc-6", from: [49.01, 2.55], to: [19.09, 72.87] },
+const defaultMarkers: BusinessMarker[] = [
+  { id: "m1", location: [38.95, -77.45], label: "Barbearia Premium", emoji: "💈" },
+  { id: "m2", location: [37.62, -122.38], label: "Pizzaria Napoli", emoji: "🍕" },
+  { id: "m3", location: [49.01, 2.55], label: "Manicure Studio", emoji: "💅" },
+  { id: "m4", location: [35.55, 139.78], label: "Restaurante Zen", emoji: "🍽️" },
+  { id: "m5", location: [-33.95, 151.18], label: "Hamburgueria Top", emoji: "🍔" },
+  { id: "m6", location: [-23.43, -46.47], label: "Academia Fit", emoji: "🏋️" },
+  { id: "m7", location: [1.36, 103.99], label: "Clínica Dental", emoji: "🦷" },
+  { id: "m8", location: [59.65, 17.93], label: "Pet Shop Happy", emoji: "🐾" },
+  { id: "m9", location: [53.43, -6.25], label: "Salão Beauty", emoji: "✨" },
+  { id: "m10", location: [19.09, 72.87], label: "Padaria Artesanal", emoji: "🥖" },
 ];
 
 export function GlobeCdn({
   markers = defaultMarkers,
-  arcs = defaultArcs,
   className = "",
   speed = 0.003,
 }: GlobeCdnProps) {
@@ -109,14 +93,14 @@ export function GlobeCdn({
         phi: 0,
         theta: 0.2,
         dark: 1,
-        diffuse: 1.5,
+        diffuse: 1.2,
         mapSamples: 16000,
         mapBrightness: 6,
-        baseColor: [0.15, 0.1, 0.25],
+        baseColor: [0.12, 0.08, 0.22],
         markerColor: [0.53, 0.33, 0.93],
-        glowColor: [0.2, 0.1, 0.4],
-        markers: markers.map((m) => ({ location: m.location, size: 0.03 })),
-        opacity: 0.7,
+        glowColor: [0.25, 0.1, 0.45],
+        markers: markers.map((m) => ({ location: m.location, size: 0.06 })),
+        opacity: 0.85,
       });
 
       function animate() {
@@ -147,10 +131,19 @@ export function GlobeCdn({
       if (animationId) cancelAnimationFrame(animationId);
       if (globe) globe.destroy();
     };
-  }, [markers, arcs, speed]);
+  }, [markers, speed]);
 
   return (
     <div className={`relative aspect-square select-none ${className}`}>
+      {/* Purple ring glow */}
+      <div
+        className="absolute inset-[-4%] rounded-full pointer-events-none z-10"
+        style={{
+          border: "1.5px solid hsl(271 81% 56% / 0.4)",
+          boxShadow:
+            "0 0 40px 8px hsl(271 81% 56% / 0.15), inset 0 0 40px 8px hsl(271 81% 56% / 0.08)",
+        }}
+      />
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
@@ -164,6 +157,32 @@ export function GlobeCdn({
           touchAction: "none",
         }}
       />
+      {/* Floating labels around globe */}
+      {markers.slice(0, 6).map((m, i) => {
+        const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+        const rx = 52;
+        const ry = 48;
+        const left = 50 + rx * Math.cos(angle);
+        const top = 50 + ry * Math.sin(angle);
+        return (
+          <div
+            key={m.id}
+            className="absolute pointer-events-none z-20 animate-pulse"
+            style={{
+              left: `${left}%`,
+              top: `${top}%`,
+              transform: "translate(-50%, -50%)",
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: "3s",
+            }}
+          >
+            <div className="flex items-center gap-1.5 bg-card/80 backdrop-blur-sm border border-primary/30 rounded-full px-2.5 py-1 shadow-lg whitespace-nowrap">
+              <span className="text-xs">{m.emoji}</span>
+              <span className="text-[10px] font-medium text-foreground">{m.label}</span>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
