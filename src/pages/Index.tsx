@@ -66,6 +66,15 @@ const partnerLogos = [
   "Google Maps", "WhatsApp Business", "Lovable", "Stripe", "OpenAI", "Vercel",
 ];
 
+const faqItems = [
+  { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você descreve o que precisa e a IA faz todo o trabalho técnico. Zero código." },
+  { q: "Como funciona a prospecção no Google Maps?", a: "Nossa IA varre o Google Maps automaticamente, encontra negócios do nicho que você escolher (barbearias, restaurantes, clínicas, etc.) e entrega nome, telefone e endereço — tudo pronto para você entrar em contato e oferecer um site." },
+  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, sua margem de lucro é altíssima." },
+  { q: "A IA cria sites para qualquer tipo de negócio?", a: "Sim! Barbearias, pizzarias, clínicas, pet shops, academias, restaurantes, salões de beleza — qualquer nicho de negócio local. A IA se adapta ao segmento automaticamente." },
+  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA, prospecção automática no Google Maps, gerador de e-books e todas as atualizações futuras. Pague uma vez, use para sempre." },
+  { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
+];
+
 const pricingFeatures = [
   "Criador de Sites IA ilimitado",
   "Prospecção Google Maps automática",
@@ -382,6 +391,37 @@ const Index = () => {
                 </Button>
               </motion.div>
             </motion.div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="container mx-auto px-4 py-20">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              Perguntas <span className="gradient-text">Frequentes</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">Tudo que você precisa saber sobre criar sites com IA na AxionFly.</p>
+          </motion.div>
+          <div className="max-w-2xl mx-auto space-y-4">
+            {faqItems.map(({ q, a }, i) => (
+              <motion.details
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i + 1}
+                className="glass rounded-xl group"
+              >
+                <summary className="flex items-center justify-between cursor-pointer p-5 text-foreground font-semibold list-none [&::-webkit-details-marker]:hidden">
+                  {q}
+                  <ArrowRight className="w-4 h-4 text-muted-foreground transition-transform duration-300 group-open:rotate-90 shrink-0 ml-4" />
+                </summary>
+                <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/30 pt-4">
+                  {a}
+                </div>
+              </motion.details>
+            ))}
           </div>
         </section>
 
