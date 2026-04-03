@@ -3,76 +3,36 @@
 import { useEffect, useRef, useCallback } from "react"
 import createGlobe from "cobe"
 
-interface InteractiveMarker {
+interface PulseMarker {
   id: string
   location: [number, number]
-  name: string
-  users: number
+  delay: number
 }
 
-interface GlobeInteractiveProps {
-  markers?: InteractiveMarker[]
+interface GlobeCdnProps {
+  markers?: PulseMarker[]
   className?: string
   speed?: number
 }
 
-const defaultMarkers: InteractiveMarker[] = [
-  { id: "hq", location: [37.78, -122.44], name: "Barbearia", users: 1420 },
-  { id: "eu", location: [52.52, 13.41], name: "Manicure", users: 892 },
-  { id: "asia", location: [35.68, 139.65], name: "Restaurante", users: 2103 },
-  { id: "latam", location: [-23.55, -46.63], name: "Academia", users: 567 },
-  { id: "mena", location: [25.2, 55.27], name: "Clínica", users: 734 },
-  { id: "oceania", location: [-33.87, 151.21], name: "Hamburgueria", users: 445 },
+const defaultMarkers: PulseMarker[] = [
+  { id: "pulse-1", location: [51.51, -0.13], delay: 0 },
+  { id: "pulse-2", location: [40.71, -74.01], delay: 0.5 },
+  { id: "pulse-3", location: [35.68, 139.65], delay: 1 },
+  { id: "pulse-4", location: [-33.87, 151.21], delay: 1.5 },
 ]
-
-// Convert lat/lon to 2D position on the canvas given current globe rotation
-function latLonToXY(
-  lat: number,
-  lon: number,
-  phi: number,
-  theta: number,
-  size: number
-): { x: number; y: number; visible: boolean } {
-  const latRad = (lat * Math.PI) / 180
-  const lonRad = (lon * Math.PI) / 180
-
-  // 3D point on unit sphere
-  const x0 = Math.cos(latRad) * Math.sin(lonRad)
-  const y0 = -Math.sin(latRad)
-  const z0 = Math.cos(latRad) * Math.cos(lonRad)
-
-  // Rotate around Y axis by phi
-  const x1 = x0 * Math.cos(phi) + z0 * Math.sin(phi)
-  const y1 = y0
-  const z1 = -x0 * Math.sin(phi) + z0 * Math.cos(phi)
-
-  // Rotate around X axis by theta
-  const x2 = x1
-  const y2 = y1 * Math.cos(theta) - z1 * Math.sin(theta)
-  const z2 = y1 * Math.sin(theta) + z1 * Math.cos(theta)
-
-  const r = size / 2
-  return {
-    x: r + x2 * r,
-    y: r + y2 * r,
-    visible: z2 > 0.15,
-  }
-}
 
 export function GlobeCdn({
   markers = defaultMarkers,
   className = "",
   speed = 0.003,
-}: GlobeInteractiveProps) {
+}: GlobeCdnProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null)
   const dragOffset = useRef({ phi: 0, theta: 0 })
   const phiOffsetRef = useRef(0)
   const thetaOffsetRef = useRef(0)
   const isPausedRef = useRef(false)
-  const labelsRef = useRef<HTMLDivElement[]>([])
-  const currentPhiRef = useRef(0)
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY }
@@ -115,27 +75,9 @@ export function GlobeCdn({
     let animationId: number
     let phi = 0
 
-    function updateLabels(currentPhi: number, currentTheta: number) {
-      const size = canvas.offsetWidth
-      markers.forEach((m, i) => {
-        const label = labelsRef.current[i]
-        if (!label) return
-        const pos = latLonToXY(m.location[0], m.location[1], currentPhi, currentTheta, size)
-        if (pos.visible) {
-          label.style.opacity = "1"
-          label.style.filter = "none"
-          label.style.left = `${pos.x}px`
-          label.style.top = `${pos.y - 20}px`
-        } else {
-          label.style.opacity = "0"
-          label.style.filter = "blur(4px)"
-        }
-      })
-    }
-
     function init() {
-      const width = canvas.offsetWidth
-      if (width === 0 || globe) return
+      if (globe) return
+      const width = canvas.offsetWidth || 400
 
       globe = createGlobe(canvas, {
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
@@ -144,33 +86,33 @@ export function GlobeCdn({
         phi: 0,
         theta: 0.2,
         dark: 1,
-        diffuse: 2,
-        mapSamples: 20000,
-        mapBrightness: 8,
-        baseColor: [0.15, 0.1, 0.35],
-        markerColor: [0.25, 0.52, 0.96],
-        glowColor: [0.1, 0.15, 0.3],
+        diffuse: 1.5,
+        mapSamples: 16000,
+        mapBrightness: 10,
+        baseColor: [0.5, 0.5, 0.5],
+        markerColor: [0.2, 0.8, 0.9],
+        glowColor: [0.05, 0.05, 0.05],
         markerElevation: 0,
-        markers: markers.map((m) => ({ location: m.location, size: 0.025 })),
-        opacity: 0.85,
-        
+        markers: markers.map((m) => ({ location: m.location, size: 0.025, id: m.id })),
+        arcs: [],
+        arcColor: [0.3, 0.85, 0.95],
+        arcWidth: 0.5,
+        arcHeight: 0.25,
+        opacity: 0.7,
       })
-
-      canvas.style.opacity = "1"
 
       function animate() {
         if (!isPausedRef.current) phi += speed
-        const currentPhi = phi + phiOffsetRef.current + dragOffset.current.phi
-        const currentTheta = 0.2 + thetaOffsetRef.current + dragOffset.current.theta
-        currentPhiRef.current = currentPhi
-        globe!.update({ phi: currentPhi, theta: currentTheta })
-        updateLabels(currentPhi, currentTheta)
+        globe!.update({
+          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
+          theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
+        })
         animationId = requestAnimationFrame(animate)
       }
       animate()
+      canvas.style.opacity = "1"
     }
 
-    // Try init immediately, otherwise wait for resize
     if (canvas.offsetWidth > 0) {
       init()
     } else {
@@ -183,20 +125,23 @@ export function GlobeCdn({
       ro.observe(canvas)
     }
 
-    // Fallback: retry after a short delay
-    const fallbackTimer = setTimeout(() => {
-      if (!globe && canvas.offsetWidth > 0) init()
-    }, 500)
+    const fallback = setTimeout(() => init(), 500)
 
     return () => {
-      clearTimeout(fallbackTimer)
+      clearTimeout(fallback)
       if (animationId) cancelAnimationFrame(animationId)
       if (globe) globe.destroy()
     }
   }, [markers, speed])
 
   return (
-    <div ref={containerRef} className={`relative aspect-square select-none ${className}`}>
+    <div className={`relative aspect-square select-none ${className}`}>
+      <style>{`
+        @keyframes pulse-expand {
+          0% { transform: scaleX(0.3) scaleY(0.3); opacity: 0.8; }
+          100% { transform: scaleX(1.5) scaleY(1.5); opacity: 0; }
+        }
+      `}</style>
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
@@ -210,51 +155,56 @@ export function GlobeCdn({
           touchAction: "none",
         }}
       />
-      {markers.map((m, i) => (
+      {markers.map((m) => (
         <div
           key={m.id}
-          ref={(el) => {
-            if (el) labelsRef.current[i] = el
-          }}
           style={{
             position: "absolute",
-            transform: "translate(-50%, -100%)",
+            // @ts-expect-error CSS Anchor Positioning
+            positionAnchor: `--cobe-${m.id}`,
+            bottom: "anchor(center)",
+            left: "anchor(center)",
+            translate: "-50% 50%",
+            width: 40,
+            height: 40,
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
-            padding: "0.3rem 0.5rem",
-            background: "hsl(220 20% 8% / 0.9)",
-            borderRadius: 3,
-            pointerEvents: "none",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.3), 0 0 12px hsl(217 91% 60% / 0.15)",
-            border: "1px solid hsl(217 91% 60% / 0.3)",
-            opacity: 0,
-            transition: "opacity 0.3s, filter 0.3s",
-            whiteSpace: "nowrap",
+            justifyContent: "center",
+            pointerEvents: "none" as const,
+            opacity: `var(--cobe-visible-${m.id}, 0)`,
+            filter: `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
+            transition: "opacity 0.4s, filter 0.4s",
           }}
         >
           <span
-            className="text-primary-foreground"
             style={{
-              fontFamily: "monospace",
-              fontSize: "0.6rem",
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
+              position: "absolute",
+              inset: 0,
+              border: "2px solid #33ccdd",
+              borderRadius: "50%",
+              opacity: 0,
+              animation: `pulse-expand 2s ease-out infinite ${m.delay}s`,
             }}
-          >
-            {m.name}
-          </span>
+          />
           <span
-            className="text-muted-foreground"
             style={{
-              fontFamily: "system-ui, sans-serif",
-              fontSize: "0.5rem",
-              marginTop: "0.1rem",
+              position: "absolute",
+              inset: 0,
+              border: "2px solid #33ccdd",
+              borderRadius: "50%",
+              opacity: 0,
+              animation: `pulse-expand 2s ease-out infinite ${m.delay + 0.5}s`,
             }}
-          >
-            {m.users.toLocaleString()} users
-          </span>
+          />
+          <span
+            style={{
+              width: 10,
+              height: 10,
+              background: "#33ccdd",
+              borderRadius: "50%",
+              boxShadow: "0 0 0 3px #111, 0 0 0 5px #33ccdd",
+            }}
+          />
         </div>
       ))}
     </div>
