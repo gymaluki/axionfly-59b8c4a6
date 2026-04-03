@@ -2,9 +2,8 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
 import { motion, type Easing, useScroll, useTransform } from "framer-motion";
+import { HeroSection, LogosSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
-import { Marquee } from "@/components/ui/marquee";
-import ShutterText from "@/components/ui/hero-shutter-text";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
 import { useRef } from "react";
@@ -62,8 +61,11 @@ const howItWorks = [
   { step: "03", icon: Globe, title: "Venda e lucre", desc: "Entre em contato, mostre o site pronto e feche o contrato." },
 ];
 
-const partnerLogos = [
-  "Google Maps", "WhatsApp Business", "Lovable", "Stripe", "OpenAI", "Vercel",
+const pricingFeatures = [
+  "Criador de Sites IA ilimitado",
+  "Prospecção Google Maps automática",
+  "Gerador de E-books com IA",
+  "Suporte prioritário",
 ];
 
 const faqItems = [
@@ -75,19 +77,8 @@ const faqItems = [
   { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
 ];
 
-const pricingFeatures = [
-  "Criador de Sites IA ilimitado",
-  "Prospecção Google Maps automática",
-  "Gerador de E-books com IA",
-  "Suporte prioritário",
-];
-
 const Index = () => {
   const navigate = useNavigate();
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
     <div className="min-h-screen bg-background overflow-hidden relative">
@@ -111,89 +102,9 @@ const Index = () => {
       <div className="relative z-10">
         <Header />
 
-        {/* Hero */}
-        <motion.section
-          ref={heroRef}
-          style={{ opacity: heroOpacity, y: heroY }}
-          className="container mx-auto px-4 pt-20 pb-8 md:pt-28 md:pb-16"
-        >
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, ease }}
-                className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary border border-primary/20"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                Plataforma de criação de sites com IA
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15, duration: 0.7, ease }}
-                className="space-y-2"
-              >
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-foreground leading-[1.1]">
-                  Crie sites e venda para
-                </h1>
-                <ShutterText
-                  words={["BARBEARIAS", "PIZZARIAS", "MANICURES", "DENTISTAS", "ACADEMIAS", "CLÍNICAS", "PET SHOPS", "RESTAURANTES"]}
-                  interval={2200}
-                />
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed pt-2">
-                  A IA encontra negócios <span className="text-foreground font-semibold">sem site</span> no Google Maps.
-                  Você cria o site em minutos e <span className="text-foreground font-semibold">fecha o contrato</span>.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6, ease }}
-                className="flex flex-col sm:flex-row gap-3 pt-2"
-              >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                  <Button variant="neon" size="lg" onClick={() => navigate("/auth")}>
-                    <Zap className="w-4 h-4 mr-1" />
-                    Criar Meu Primeiro Site
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                  <Button variant="outline" size="lg" onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>
-                    Ver Planos <ArrowRight className="w-4 h-4 ml-1" />
-                  </Button>
-                </motion.div>
-              </motion.div>
-            </div>
-
-            {/* Globe */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.7, rotate: -5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden md:flex items-center justify-center"
-            >
-              <div className="w-full max-w-md relative">
-                <GlobeCdn speed={0.004} />
-                <div className="absolute inset-0 rounded-full bg-primary/5 blur-3xl -z-10" />
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* Partner Logos Marquee */}
-        <section className="py-12 border-y border-border/30">
-          <p className="text-center text-xs text-muted-foreground uppercase tracking-widest mb-6">Integrado com as ferramentas que você já usa</p>
-          <Marquee duration={30} pauseOnHover fade fadeAmount={15}>
-            {partnerLogos.map((name) => (
-              <span key={name} className="mx-10 text-lg font-semibold text-muted-foreground/60 hover:text-foreground transition-colors whitespace-nowrap">
-                {name}
-              </span>
-            ))}
-          </Marquee>
-        </section>
+        {/* New Hero */}
+        <HeroSection />
+        <LogosSection />
 
         {/* Stats */}
         <section className="container mx-auto px-4 py-16">
@@ -226,7 +137,6 @@ const Index = () => {
             <p className="text-muted-foreground max-w-xl mx-auto">3 passos simples. Da prospecção ao contrato fechado.</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto relative">
-            {/* Connection line */}
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             {howItWorks.map(({ step, icon: Icon, title, desc }, i) => (
               <motion.div
@@ -252,7 +162,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Features */}
+        {/* Features + Globe */}
         <section className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
@@ -261,31 +171,46 @@ const Index = () => {
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">Cada ferramenta elimina o trabalho que trava seu faturamento.</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {features.map(({ icon: Icon, title, desc, tag }, i) => (
-              <motion.div
-                key={title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i + 1}
-                whileHover={{ scale: 1.04, y: -6 }}
-                className="glass rounded-2xl p-6 space-y-4 hover:neon-border transition-all duration-300 group cursor-pointer relative overflow-hidden"
-              >
-                <div className="absolute top-3 right-3">
-                  <span className="text-[9px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded-full border border-primary/20">{tag}</span>
-                </div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid gap-6">
+              {features.map(({ icon: Icon, title, desc, tag }, i) => (
                 <motion.div
-                  whileHover={{ rotate: 10 }}
-                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                  key={title}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  custom={i + 1}
+                  whileHover={{ scale: 1.04, y: -6 }}
+                  className="glass rounded-2xl p-6 space-y-4 hover:neon-border transition-all duration-300 group cursor-pointer relative overflow-hidden"
                 >
-                  <Icon className="w-6 h-6 text-primary" />
+                  <div className="absolute top-3 right-3">
+                    <span className="text-[9px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded-full border border-primary/20">{tag}</span>
+                  </div>
+                  <motion.div
+                    whileHover={{ rotate: 10 }}
+                    className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                  >
+                    <Icon className="w-6 h-6 text-primary" />
+                  </motion.div>
+                  <h3 className="text-xl font-bold text-foreground">{title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{desc}</p>
                 </motion.div>
-                <h3 className="text-xl font-bold text-foreground">{title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">{desc}</p>
-              </motion.div>
-            ))}
+              ))}
+            </div>
+            {/* Globe */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.7 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center justify-center"
+            >
+              <div className="w-full max-w-md relative">
+                <GlobeCdn speed={0.004} />
+                <div className="absolute inset-0 rounded-full bg-primary/5 blur-3xl -z-10" />
+              </div>
+            </motion.div>
           </div>
         </section>
 
