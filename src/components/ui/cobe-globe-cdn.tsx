@@ -3,74 +3,40 @@
 import { useEffect, useRef, useCallback, useState } from "react"
 import createGlobe from "cobe"
 
-interface CdnMarker {
+interface InteractiveMarker {
   id: string
   location: [number, number]
-  region: string
+  name: string
+  users: number
 }
 
-interface CdnArc {
-  id: string
-  from: [number, number]
-  to: [number, number]
-}
-
-interface GlobeCdnProps {
-  markers?: CdnMarker[]
-  arcs?: CdnArc[]
+interface GlobeInteractiveProps {
+  markers?: InteractiveMarker[]
   className?: string
   speed?: number
 }
 
-const defaultMarkers: CdnMarker[] = [
-  { id: "cdn-iad", location: [38.95, -77.45], region: "Barbearia" },
-  { id: "cdn-sfo", location: [37.62, -122.38], region: "Pizzaria" },
-  { id: "cdn-cdg", location: [49.01, 2.55], region: "Manicure" },
-  { id: "cdn-hnd", location: [35.55, 139.78], region: "Restaurante" },
-  { id: "cdn-syd", location: [-33.95, 151.18], region: "Hamburgueria" },
-  { id: "cdn-gru", location: [-23.43, -46.47], region: "Academia" },
-  { id: "cdn-sin", location: [1.36, 103.99], region: "Clínica" },
-  { id: "cdn-arn", location: [59.65, 17.93], region: "Pet Shop" },
-  { id: "cdn-dub", location: [53.43, -6.25], region: "Salão" },
-  { id: "cdn-bom", location: [19.09, 72.87], region: "Padaria" },
-]
-
-const defaultArcs: CdnArc[] = [
-  { id: "cdn-arc-1", from: [38.95, -77.45], to: [49.01, 2.55] },
-  { id: "cdn-arc-2", from: [37.62, -122.38], to: [35.55, 139.78] },
-  { id: "cdn-arc-3", from: [49.01, 2.55], to: [1.36, 103.99] },
-  { id: "cdn-arc-4", from: [38.95, -77.45], to: [-23.43, -46.47] },
-  { id: "cdn-arc-5", from: [35.55, 139.78], to: [-33.95, 151.18] },
-  { id: "cdn-arc-6", from: [49.01, 2.55], to: [19.09, 72.87] },
+const defaultMarkers: InteractiveMarker[] = [
+  { id: "hq", location: [37.78, -122.44], name: "Barbearia", users: 1420 },
+  { id: "eu", location: [52.52, 13.41], name: "Manicure", users: 892 },
+  { id: "asia", location: [35.68, 139.65], name: "Restaurante", users: 2103 },
+  { id: "latam", location: [-23.55, -46.63], name: "Academia", users: 567 },
+  { id: "mena", location: [25.2, 55.27], name: "Clínica", users: 734 },
+  { id: "oceania", location: [-33.87, 151.21], name: "Hamburgueria", users: 445 },
 ]
 
 export function GlobeCdn({
   markers = defaultMarkers,
-  arcs = defaultArcs,
   className = "",
   speed = 0.003,
-}: GlobeCdnProps) {
+}: GlobeInteractiveProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null)
   const dragOffset = useRef({ phi: 0, theta: 0 })
   const phiOffsetRef = useRef(0)
   const thetaOffsetRef = useRef(0)
   const isPausedRef = useRef(false)
-  const [traffic, setTraffic] = useState(() =>
-    defaultArcs.map((a, i) => ({ id: a.id, value: [420, 380, 290, 185, 156, 134][i] || 100 }))
-  )
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTraffic((data) =>
-        data.map((t) => ({
-          ...t,
-          value: Math.max(50, t.value + Math.floor(Math.random() * 21) - 10),
-        }))
-      )
-    }, 250)
-    return () => clearInterval(interval)
-  }, [])
+  const [expanded, setExpanded] = useState<string | null>(null)
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY }
@@ -130,8 +96,8 @@ export function GlobeCdn({
         baseColor: [0.15, 0.1, 0.35],
         markerColor: [0.25, 0.52, 0.96],
         glowColor: [0.1, 0.15, 0.3],
-        markerElevation: 0.02,
-        markers: markers.map((m) => ({ location: m.location, size: 0.012 })),
+        markerElevation: 0,
+        markers: markers.map((m) => ({ location: m.location, size: 0.025 })),
         opacity: 0.85,
       })
 
@@ -163,52 +129,16 @@ export function GlobeCdn({
       if (animationId) cancelAnimationFrame(animationId)
       if (globe) globe.destroy()
     }
-  }, [markers, arcs, speed])
-
-  const pyramidFaceStyle = (nth: number): React.CSSProperties => {
-    const transforms = [
-      "rotateY(0deg) translateZ(4px) rotateX(19.5deg)",
-      "rotateY(120deg) translateZ(4px) rotateX(19.5deg)",
-      "rotateY(240deg) translateZ(4px) rotateX(19.5deg)",
-      "rotateX(-90deg) rotateZ(60deg) translateY(4px)",
-    ]
-    const colors = [
-      "hsl(217 91% 60%)",
-      "hsl(217 91% 45%)",
-      "hsl(217 91% 35%)",
-      "hsl(217 91% 50%)",
-    ]
-    return {
-      position: "absolute",
-      left: -0.5,
-      top: 0,
-      width: 0,
-      height: 0,
-      borderLeft: "6.5px solid transparent",
-      borderRight: "6.5px solid transparent",
-      borderBottom: `13px solid ${colors[nth]}`,
-      transformOrigin: "center bottom",
-      transform: transforms[nth],
-    }
-  }
+  }, [markers, speed])
 
   return (
     <div className={`relative aspect-square select-none ${className}`}>
       <style>{`
-        @keyframes pyramid-spin {
-          0% { transform: rotateX(20deg) rotateY(0deg); }
-          100% { transform: rotateX(20deg) rotateY(360deg); }
+        @keyframes fade-slide-in {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 0.8; transform: translateY(0); }
         }
       `}</style>
-      {/* Blue ring glow */}
-      <div
-        className="absolute inset-[-4%] rounded-full pointer-events-none z-10"
-        style={{
-          border: "1.5px solid hsl(217 91% 60% / 0.35)",
-          boxShadow:
-            "0 0 60px 12px hsl(217 91% 60% / 0.12), inset 0 0 60px 12px hsl(217 91% 60% / 0.06)",
-        }}
-      />
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
@@ -225,6 +155,7 @@ export function GlobeCdn({
       {markers.map((m) => (
         <div
           key={m.id}
+          onClick={() => setExpanded(expanded === m.id ? null : m.id)}
           style={{
             position: "absolute",
             // @ts-expect-error CSS Anchor Positioning
@@ -232,66 +163,47 @@ export function GlobeCdn({
             bottom: "anchor(top)",
             left: "anchor(center)",
             translate: "-50% 0",
+            marginBottom: 6,
             display: "flex",
             flexDirection: "column" as const,
             alignItems: "center",
-            gap: 6,
-            pointerEvents: "none" as const,
+            padding: expanded === m.id ? "0.4rem 0.6rem" : "0.3rem 0.5rem",
+            background: "hsl(220 20% 8% / 0.9)",
+            borderRadius: 3,
+            cursor: "pointer",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.3), 0 0 12px hsl(217 91% 60% / 0.15)",
+            border: "1px solid hsl(217 91% 60% / 0.3)",
             opacity: `var(--cobe-visible-${m.id}, 0)`,
             filter: `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
-            transition: "opacity 0.3s, filter 0.3s",
+            transition: "opacity 0.4s, filter 0.4s, transform 0.2s, padding 0.2s",
+            zoom: expanded === m.id ? 1.05 : 1,
           }}
         >
-          <div
-            style={{
-              width: 12,
-              height: 12,
-              position: "relative",
-              transformStyle: "preserve-3d" as const,
-              animation: "pyramid-spin 4s linear infinite",
-            }}
-          >
-            {[0, 1, 2, 3].map((n) => (
-              <div key={n} style={pyramidFaceStyle(n)} />
-            ))}
-          </div>
           <span
-            className="font-mono text-primary-foreground bg-primary/90 shadow-lg"
+            className="text-primary-foreground"
             style={{
-              fontSize: "0.55rem",
-              padding: "2px 6px",
-              borderRadius: 3,
-              letterSpacing: "0.05em",
-              whiteSpace: "nowrap" as const,
+              fontFamily: "monospace",
+              fontSize: "0.6rem",
+              fontWeight: 600,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase" as const,
             }}
           >
-            {m.region}
+            {m.name}
           </span>
-        </div>
-      ))}
-      {traffic.map((t) => (
-        <div
-          key={t.id}
-          style={{
-            position: "absolute",
-            // @ts-expect-error CSS Anchor Positioning
-            positionAnchor: `--cobe-arc-${t.id}`,
-            bottom: "anchor(top)",
-            left: "anchor(center)",
-            translate: "-50% 0",
-            fontFamily: "monospace",
-            fontSize: "0.5rem",
-            padding: "3px 8px",
-            borderRadius: 4,
-            whiteSpace: "nowrap" as const,
-            pointerEvents: "none" as const,
-            opacity: `var(--cobe-visible-arc-${t.id}, 0)`,
-            filter: `blur(calc((1 - var(--cobe-visible-arc-${t.id}, 0)) * 8px))`,
-            transition: "opacity 0.3s, filter 0.3s",
-          }}
-          className="text-foreground bg-card border border-border shadow-lg"
-        >
-          {t.value}k req/s
+          {expanded === m.id && (
+            <span
+              className="text-muted-foreground"
+              style={{
+                fontFamily: "system-ui, sans-serif",
+                fontSize: "0.55rem",
+                marginTop: "0.15rem",
+                animation: "fade-slide-in 0.2s ease-out",
+              }}
+            >
+              {m.users.toLocaleString()} users
+            </span>
+          )}
         </div>
       ))}
     </div>
