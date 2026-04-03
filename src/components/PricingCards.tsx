@@ -1,14 +1,16 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, type Easing } from "framer-motion";
 import { Check, Sparkles, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const ease: Easing = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    transition: { delay: i * 0.12, duration: 0.7, ease },
   }),
 };
 
