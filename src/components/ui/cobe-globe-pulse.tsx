@@ -168,8 +168,8 @@ export function GlobePulse({
           size: 0.08,
         })),
         arcs: markers.map((marker, index) => ({
-          start: marker.location,
-          end: markers[(index + 1) % markers.length]?.location ?? marker.location,
+          from: marker.location,
+          to: markers[(index + 1) % markers.length]?.location ?? marker.location,
         })),
         arcColor: colors.arc,
         arcWidth: 0.35,
