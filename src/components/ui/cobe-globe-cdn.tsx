@@ -101,7 +101,6 @@ export function GlobeCdn({
         glowColor: [0.12, 0.18, 0.4],
         markers: markers.map((m) => ({ location: m.location, size: 0.07 })),
         opacity: 0.9,
-        onRender: () => {},
       });
 
       function animate() {
