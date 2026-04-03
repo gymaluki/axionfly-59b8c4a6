@@ -2,52 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @layer base {
   :root {
-    --background: 220 20% 6%;
+    --background: 222 47% 4%;
     --foreground: 210 20% 95%;
 
-    --card: 220 18% 10%;
+    --card: 222 40% 7%;
     --card-foreground: 210 20% 95%;
 
-    --popover: 220 18% 10%;
+    --popover: 222 40% 7%;
     --popover-foreground: 210 20% 95%;
 
-    --primary: 263 70% 50%;
+    --primary: 271 81% 56%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 16% 16%;
+    --secondary: 222 30% 12%;
     --secondary-foreground: 210 20% 90%;
 
-    --muted: 220 14% 14%;
+    --muted: 222 25% 10%;
     --muted-foreground: 215 14% 55%;
 
-    --accent: 263 70% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 187 92% 69%;
+    --accent-foreground: 222 47% 4%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 14% 18%;
-    --input: 220 14% 18%;
-    --ring: 263 70% 50%;
+    --border: 222 20% 14%;
+    --input: 222 20% 14%;
+    --ring: 271 81% 56%;
 
     --radius: 0.75rem;
 
-    --gradient-primary: linear-gradient(135deg, hsl(263 70% 50%), hsl(280 80% 55%));
-    --gradient-surface: linear-gradient(180deg, hsl(220 18% 10%), hsl(220 20% 7%));
-    --shadow-glow: 0 0 40px -10px hsl(263 70% 50% / 0.3);
+    --neon-purple: 271 81% 56%;
+    --neon-cyan: 187 92% 69%;
 
-    --sidebar-background: 220 20% 8%;
+    --gradient-primary: linear-gradient(135deg, hsl(271 81% 56%), hsl(187 92% 69%));
+    --gradient-surface: linear-gradient(180deg, hsl(222 40% 7%), hsl(222 47% 4%));
+    --shadow-glow-purple: 0 0 30px -5px hsl(271 81% 56% / 0.4);
+    --shadow-glow-cyan: 0 0 30px -5px hsl(187 92% 69% / 0.3);
+
+    --sidebar-background: 222 47% 5%;
     --sidebar-foreground: 210 20% 90%;
-    --sidebar-primary: 263 70% 50%;
+    --sidebar-primary: 271 81% 56%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 16% 14%;
+    --sidebar-accent: 222 30% 10%;
     --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 220 14% 18%;
-    --sidebar-ring: 263 70% 50%;
+    --sidebar-border: 222 20% 14%;
+    --sidebar-ring: 271 81% 56%;
   }
 }
 
@@ -72,7 +76,20 @@
     @apply bg-card/60 backdrop-blur-xl border border-border/50;
   }
 
-  .glow {
-    box-shadow: var(--shadow-glow);
+  .glow-purple {
+    box-shadow: var(--shadow-glow-purple);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .neon-border {
+    border-color: hsl(var(--neon-purple));
+    box-shadow: 0 0 15px -3px hsl(271 81% 56% / 0.5), inset 0 0 15px -3px hsl(271 81% 56% / 0.1);
+  }
+
+  .terminal-bg {
+    @apply bg-[hsl(222,47%,3%)] border border-border rounded-xl font-mono text-sm;
   }
 }

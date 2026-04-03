@@ -1,12 +1,18 @@
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import DashboardSidebar from "@/components/DashboardSidebar";
+import ProspeccaoView from "@/components/views/ProspeccaoView";
+import EbooksView from "@/components/views/EbooksView";
+import SitesView from "@/components/views/SitesView";
+
+type View = "prospeccao" | "ebooks" | "sites";
 
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
+  const [activeView, setActiveView] = useState<View>("prospeccao");
 
   useEffect(() => {
     if (!loading && !user) {
@@ -25,37 +31,20 @@ const Dashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b border-border">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4">
-          <h1 className="text-xl font-bold gradient-text">Dashboard</h1>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <User className="w-4 h-4" />
-              {user.email}
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={async () => {
-                await signOut();
-                navigate("/");
-              }}
-            >
-              <LogOut className="w-4 h-4" />
-              Sair
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-12">
-        <div className="glass rounded-2xl p-8 text-center space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground">Bem-vindo! 🎉</h2>
-          <p className="text-muted-foreground">
-            Seu dashboard está pronto. Me conte o que você quer construir!
-          </p>
-        </div>
+    <div className="flex min-h-screen bg-background">
+      <DashboardSidebar
+        active={activeView}
+        onNavigate={setActiveView}
+        onSignOut={async () => {
+          await signOut();
+          navigate("/");
+        }}
+        userEmail={user.email}
+      />
+      <main className="flex-1 p-6 md:p-8 overflow-auto">
+        {activeView === "prospeccao" && <ProspeccaoView />}
+        {activeView === "ebooks" && <EbooksView />}
+        {activeView === "sites" && <SitesView />}
       </main>
     </div>
   );
