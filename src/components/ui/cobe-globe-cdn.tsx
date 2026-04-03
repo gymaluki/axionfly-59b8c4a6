@@ -189,6 +189,7 @@ export function GlobeCdn({
     }, 500)
 
     return () => {
+      clearTimeout(fallbackTimer)
       if (animationId) cancelAnimationFrame(animationId)
       if (globe) globe.destroy()
     }

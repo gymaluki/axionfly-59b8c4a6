@@ -215,7 +215,7 @@ const Index = () => {
               className="flex items-center justify-center"
             >
               <div className="w-full max-w-md relative">
-                <GlobeCdn speed={0.004} />
+                <GlobeCdn speed={0.008} />
                 <div className="absolute inset-0 rounded-full bg-primary/5 blur-3xl -z-10" />
               </div>
             </motion.div>
