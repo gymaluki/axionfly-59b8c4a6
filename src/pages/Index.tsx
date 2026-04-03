@@ -6,6 +6,7 @@ import { Header } from "@/components/ui/header-3";
 import { Marquee } from "@/components/ui/marquee";
 import ShutterText from "@/components/ui/hero-shutter-text";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
+import Testimonials from "@/components/Testimonials";
 
 const ease: Easing = [0, 0, 0.2, 1];
 
@@ -210,6 +211,9 @@ const Index = () => {
             </motion.div>
           </motion.div>
         </section>
+
+        {/* Testimonials */}
+        <Testimonials />
 
         {/* Pricing */}
         <section id="pricing" className="container mx-auto px-4 py-20">
