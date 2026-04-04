@@ -6,7 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
-import DesignGuide from "./pages/DesignGuide";
+import DesignStylesGuide from "./pages/DesignStylesGuide";
+import FontsGuide from "./pages/FontsGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,7 +22,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/guia-design" element={<DesignGuide />} />
+          <Route path="/guia-design" element={<DesignStylesGuide />} />
+          <Route path="/guia-fontes" element={<FontsGuide />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
