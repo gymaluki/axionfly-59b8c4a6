@@ -129,7 +129,7 @@ export default function PricingCards() {
         "Suporte prioritário",
       ],
       buttonText: "Assinar Agora",
-      buttonHref: "",
+      buttonHref: "https://go.perfectpay.com.br/PPU38CQA06U",
       isPopular: false,
       index: 1,
     },
