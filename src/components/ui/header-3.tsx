@@ -183,15 +183,15 @@ function ListItem({
 
 const productLinks: LinkItem[] = [
 	{
-		title: 'Criador de Sites IA',
+		title: 'Fábrica de Sites IA',
 		href: '#',
-		description: 'Crie sites profissionais com prompts inteligentes',
+		description: 'Crie sites profissionais personalizados em minutos',
 		icon: Code2,
 	},
 	{
-		title: 'Prospecção Google Maps',
+		title: 'Busca de Leads',
 		href: '#',
-		description: 'IA encontra barbearias, clínicas, restaurantes automaticamente',
+		description: 'Encontre leads qualificados com nome, telefone e nicho',
 		icon: MapPin,
 	},
 	{

@@ -57,7 +57,7 @@ const Dashboard = () => {
         }}
         userEmail={user.email}
       />
-      <main className="flex-1 p-6 md:p-8 overflow-auto">
+      <main className="flex-1 p-6 md:p-8 overflow-auto relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeView}
