@@ -11,9 +11,9 @@ interface DashboardSidebarProps {
 }
 
 const navItems: { id: View; label: string; icon: React.ElementType }[] = [
-  { id: "prospeccao", label: "Prospecção Maps", icon: MapPin },
-  { id: "ebooks", label: "Gerador de E-books", icon: BookOpen },
   { id: "sites", label: "Fábrica de Sites", icon: Code2 },
+  { id: "prospeccao", label: "Busca de Leads", icon: MapPin },
+  { id: "ebooks", label: "Gerador de E-books", icon: BookOpen },
 ];
 
 const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail }: DashboardSidebarProps) => {
