@@ -217,6 +217,12 @@ const ProspeccaoView = () => {
               </SelectContent>
             </Select>
           </div>
+          <div className="flex items-end">
+            <Button type="submit" variant="neon" disabled={loading || !activeFilter} className="w-full h-10">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+              Buscar Leads
+            </Button>
+          </div>
         </div>
       </form>
 
