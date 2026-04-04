@@ -18,6 +18,14 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none z-0 opacity-[0.07]"
+          style={{
+            backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+            backgroundSize: "clamp(20px, 5vw, 60px) clamp(20px, 5vw, 60px)",
+          }}
+        />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
