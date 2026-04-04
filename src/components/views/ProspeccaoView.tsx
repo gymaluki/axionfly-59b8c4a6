@@ -2,6 +2,13 @@ import { useState } from "react";
 import { Search, MessageCircle, ExternalLink, MapPin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { motion, AnimatePresence } from "framer-motion";
 import { firecrawlApi } from "@/lib/api/firecrawl";
 import { toast } from "sonner";
@@ -15,6 +22,23 @@ const quickFilters = [
   { label: "Pet Shops", emoji: "🐾" },
   { label: "Restaurantes", emoji: "🍽️" },
   { label: "Mecânicas", emoji: "🔧" },
+  { label: "Salões", emoji: "💇" },
+  { label: "Imobiliárias", emoji: "🏠" },
+  { label: "Advogados", emoji: "⚖️" },
+  { label: "Contadores", emoji: "📊" },
+];
+
+const estados = [
+  { sigla: "AC", nome: "Acre" }, { sigla: "AL", nome: "Alagoas" }, { sigla: "AP", nome: "Amapá" },
+  { sigla: "AM", nome: "Amazonas" }, { sigla: "BA", nome: "Bahia" }, { sigla: "CE", nome: "Ceará" },
+  { sigla: "DF", nome: "Distrito Federal" }, { sigla: "ES", nome: "Espírito Santo" },
+  { sigla: "GO", nome: "Goiás" }, { sigla: "MA", nome: "Maranhão" }, { sigla: "MT", nome: "Mato Grosso" },
+  { sigla: "MS", nome: "Mato Grosso do Sul" }, { sigla: "MG", nome: "Minas Gerais" },
+  { sigla: "PA", nome: "Pará" }, { sigla: "PB", nome: "Paraíba" }, { sigla: "PR", nome: "Paraná" },
+  { sigla: "PE", nome: "Pernambuco" }, { sigla: "PI", nome: "Piauí" }, { sigla: "RJ", nome: "Rio de Janeiro" },
+  { sigla: "RN", nome: "Rio Grande do Norte" }, { sigla: "RS", nome: "Rio Grande do Sul" },
+  { sigla: "RO", nome: "Rondônia" }, { sigla: "RR", nome: "Roraima" }, { sigla: "SC", nome: "Santa Catarina" },
+  { sigla: "SP", nome: "São Paulo" }, { sigla: "SE", nome: "Sergipe" }, { sigla: "TO", nome: "Tocantins" },
 ];
 
 interface SearchResult {
@@ -32,22 +56,37 @@ const staggerItem = {
 };
 
 const ProspeccaoView = () => {
-  const [search, setSearch] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
   const [activeFilter, setActiveFilter] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [key, setKey] = useState(0);
 
-  const doSearch = async (query: string) => {
-    if (!query.trim()) return;
+  const buildLocation = () => {
+    const parts: string[] = [];
+    if (cidade.trim()) parts.push(cidade.trim());
+    if (estado) {
+      const est = estados.find(e => e.sigla === estado);
+      if (est) parts.push(est.nome);
+    }
+    parts.push("Brasil");
+    return parts.join(", ");
+  };
+
+  const doSearch = async (nicho: string) => {
+    if (!nicho.trim()) return;
+    const location = buildLocation();
+    const query = `${nicho} em ${location} contato telefone endereço`;
+
     setLoading(true);
     setSearched(true);
     setResults([]);
 
     try {
-      const response = await firecrawlApi.search(`${query} negócios locais contato telefone endereço`, {
-        limit: 10,
+      const response = await firecrawlApi.search(query, {
+        limit: 15,
         lang: "pt-br",
         country: "br",
       });
@@ -73,14 +112,13 @@ const ProspeccaoView = () => {
 
   const handleFilterClick = (label: string) => {
     setActiveFilter(label);
-    const region = search.trim() ? ` em ${search.trim()}` : "";
-    doSearch(`${label}${region}`);
+    doSearch(label);
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const filter = activeFilter || "negócios";
-    doSearch(`${filter} em ${search.trim()}`);
+    doSearch(filter);
   };
 
   const extractDomain = (url: string) => {
@@ -94,47 +132,69 @@ const ProspeccaoView = () => {
       transition={{ duration: 0.4 }}
       className="space-y-6"
     >
-      <div className="flex items-start justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-foreground">Prospecção de Clientes</h2>
-          <p className="text-muted-foreground text-sm mt-1">Encontre leads na web por nicho e região</p>
-        </div>
+      <div>
+        <h2 className="text-2xl font-bold text-foreground">Prospecção de Clientes</h2>
+        <p className="text-muted-foreground text-sm mt-1">Encontre leads por nicho, cidade e estado — 100% Brasil</p>
       </div>
 
-      <form onSubmit={handleSearch} className="flex gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Digite a região... Ex: São Paulo, Centro"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 bg-secondary/50 border-border h-11"
-          />
+      {/* Filtros de localização */}
+      <form onSubmit={handleSearch} className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-muted-foreground">Estado</label>
+            <Select value={estado} onValueChange={setEstado}>
+              <SelectTrigger className="bg-secondary/50 border-border h-10">
+                <SelectValue placeholder="Todos os estados" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todos os estados</SelectItem>
+                {estados.map(e => (
+                  <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-muted-foreground">Cidade / Bairro</label>
+            <Input
+              placeholder="Ex: Campinas, Centro, Zona Sul"
+              value={cidade}
+              onChange={(e) => setCidade(e.target.value)}
+              className="bg-secondary/50 border-border h-10"
+            />
+          </div>
+          <div className="flex items-end">
+            <Button type="submit" variant="neon" disabled={loading || !activeFilter} className="w-full h-10">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+              Buscar Leads
+            </Button>
+          </div>
         </div>
-        <Button type="submit" variant="neon" disabled={loading} className="h-11">
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-          Buscar
-        </Button>
       </form>
 
-      <div className="flex flex-wrap gap-2">
-        {quickFilters.map(({ label, emoji }) => (
-          <motion.button
-            key={label}
-            onClick={() => handleFilterClick(label)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
-              activeFilter === label
-                ? "bg-primary text-primary-foreground glow-purple"
-                : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
-            }`}
-          >
-            <span>{emoji}</span> {label}
-          </motion.button>
-        ))}
+      {/* Nichos */}
+      <div>
+        <label className="text-xs font-medium text-muted-foreground mb-2 block">Selecione o nicho</label>
+        <div className="flex flex-wrap gap-2">
+          {quickFilters.map(({ label, emoji }) => (
+            <motion.button
+              key={label}
+              onClick={() => handleFilterClick(label)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                activeFilter === label
+                  ? "bg-primary text-primary-foreground glow-purple"
+                  : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+              }`}
+            >
+              <span>{emoji}</span> {label}
+            </motion.button>
+          ))}
+        </div>
       </div>
 
+      {/* Resultados */}
       <div className="glass rounded-xl overflow-hidden">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16 gap-4">
@@ -215,7 +275,7 @@ const ProspeccaoView = () => {
         ) : (
           <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
             <Search className="w-10 h-10 opacity-30" />
-            <p className="text-sm">Selecione um nicho ou digite uma região para buscar leads</p>
+            <p className="text-sm">Selecione um nicho e uma região para buscar leads</p>
           </div>
         )}
       </div>
