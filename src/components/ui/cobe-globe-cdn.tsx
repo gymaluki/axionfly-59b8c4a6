@@ -148,24 +148,26 @@ export function GlobeCdn({
           arcWidth: 0.7,
           arcHeight: 0.18,
           opacity: 0.9,
-          onRender: (state) => {
-            if (!isPausedRef.current) {
-              phi += speed;
-            }
-
-            state.phi = phi + phiOffsetRef.current + dragOffset.current.phi;
-            state.theta = 0.18 + thetaOffsetRef.current + dragOffset.current.theta;
-          },
         });
+
+        const animate = () => {
+          if (!globe) return;
+
+          if (!isPausedRef.current) {
+            phi += speed;
+          }
+
+          globe.update({
+            phi: phi + phiOffsetRef.current + dragOffset.current.phi,
+            theta: 0.18 + thetaOffsetRef.current + dragOffset.current.theta,
+          });
+
+          animationId = window.requestAnimationFrame(animate);
+        };
 
         canvas.style.opacity = "1";
         setStatus("ready");
-
-        const keepAlive = () => {
-          animationId = window.requestAnimationFrame(keepAlive);
-        };
-
-        keepAlive();
+        animate();
       } catch {
         canvas.style.opacity = "0";
         setStatus("fallback");
