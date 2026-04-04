@@ -189,6 +189,22 @@ export function GlobeCdn({
             width: 10, height: 10, background: "#33ccdd", borderRadius: "50%",
             boxShadow: "0 0 0 3px #111, 0 0 0 5px #33ccdd",
           }} />
+          {m.label && (
+            <span style={{
+              position: "absolute",
+              bottom: "calc(100% + 6px)",
+              left: "50%",
+              transform: "translateX(-50%)",
+              whiteSpace: "nowrap",
+              fontSize: 10,
+              fontWeight: 600,
+              color: "#33ccdd",
+              textShadow: "0 0 6px rgba(51,204,221,0.5), 0 1px 3px rgba(0,0,0,0.8)",
+              letterSpacing: "0.02em",
+            }}>
+              {m.label}
+            </span>
+          )}
         </div>
       ))}
     </div>
