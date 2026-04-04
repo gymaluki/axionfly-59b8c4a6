@@ -141,9 +141,9 @@ const Index = () => {
         <section className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Como funciona a <span className="gradient-text">AxionFly</span>
+              Da prospecção ao contrato em <span className="gradient-text">3 passos</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">3 passos simples. Da prospecção ao contrato fechado.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto">Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto relative">
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
