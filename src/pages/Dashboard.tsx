@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-type View = "prospeccao" | "ebooks" | "sites";
+type View = "prospeccao" | "ebooks" | "sites" | "vendas";
 
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
