@@ -204,19 +204,18 @@ const ProspeccaoView = () => {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Cidade / Bairro</label>
-            <Input
-              placeholder="Ex: Campinas, Centro, Zona Sul"
-              value={cidade}
-              onChange={(e) => setCidade(e.target.value)}
-              className="bg-secondary/50 border-border h-10"
-            />
-          </div>
-          <div className="flex items-end">
-            <Button type="submit" variant="neon" disabled={loading || !activeFilter} className="w-full h-10">
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-              Buscar Leads
-            </Button>
+            <label className="text-xs font-medium text-muted-foreground">Cidade</label>
+            <Select value={cidade} onValueChange={setCidade} disabled={!estado || estado === "todos" || loadingCidades}>
+              <SelectTrigger className="bg-secondary/50 border-border h-10">
+                <SelectValue placeholder={loadingCidades ? "Carregando cidades..." : !estado || estado === "todos" ? "Selecione um estado primeiro" : "Selecione a cidade"} />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                <SelectItem value="todas">Todas as cidades</SelectItem>
+                {cidades.map(c => (
+                  <SelectItem key={c} value={c}>{c}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </form>
