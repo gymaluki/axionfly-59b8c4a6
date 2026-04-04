@@ -17,10 +17,14 @@ interface GlobeCdnProps {
 }
 
 const defaultMarkers: PulseMarker[] = [
-  { id: "pulse-1", location: [51.51, -0.13], delay: 0 },
-  { id: "pulse-2", location: [40.71, -74.01], delay: 0.5 },
-  { id: "pulse-3", location: [35.68, 139.65], delay: 1 },
-  { id: "pulse-4", location: [-33.87, 151.21], delay: 1.5 },
+  { id: "pulse-1", location: [51.51, -0.13], delay: 0, label: "Barbearia" },
+  { id: "pulse-2", location: [40.71, -74.01], delay: 0.5, label: "Pizzaria" },
+  { id: "pulse-3", location: [35.68, 139.65], delay: 1, label: "Academia" },
+  { id: "pulse-4", location: [-33.87, 151.21], delay: 1.5, label: "Mecânica" },
+  { id: "pulse-5", location: [-23.55, -46.63], delay: 0.8, label: "Manicure" },
+  { id: "pulse-6", location: [48.85, 2.35], delay: 1.2, label: "Petshop" },
+  { id: "pulse-7", location: [19.43, -99.13], delay: 0.3, label: "Restaurante" },
+  { id: "pulse-8", location: [55.75, 37.62], delay: 1.8, label: "Clínica" },
 ]
 
 export function GlobeCdn({
