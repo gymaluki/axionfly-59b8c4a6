@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Search, MessageCircle, Star, MapPin } from "lucide-react";
+import { Search, MessageCircle, ExternalLink, MapPin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
+import { firecrawlApi } from "@/lib/api/firecrawl";
+import { toast } from "sonner";
 
 const quickFilters = [
   { label: "Barbearias", emoji: "💈" },
@@ -10,15 +12,16 @@ const quickFilters = [
   { label: "Manicures", emoji: "💅" },
   { label: "Dentistas", emoji: "🦷" },
   { label: "Academias", emoji: "🏋️" },
+  { label: "Pet Shops", emoji: "🐾" },
+  { label: "Restaurantes", emoji: "🍽️" },
+  { label: "Mecânicas", emoji: "🔧" },
 ];
 
-const mockResults = [
-  { name: "Barbearia Premium", address: "Rua Augusta, 1200 - São Paulo", rating: 4.8 },
-  { name: "Studio Hair & Co", address: "Av. Paulista, 900 - São Paulo", rating: 4.6 },
-  { name: "Barber Kings", address: "Rua Oscar Freire, 340 - São Paulo", rating: 4.9 },
-  { name: "Corte & Arte", address: "Rua Consolação, 2100 - São Paulo", rating: 4.3 },
-  { name: "Dom Barber", address: "Av. Rebouças, 500 - São Paulo", rating: 4.7 },
-];
+interface SearchResult {
+  url: string;
+  title: string;
+  description: string;
+}
 
 const staggerItem = {
   hidden: { opacity: 0, x: -20 },
@@ -28,24 +31,60 @@ const staggerItem = {
   }),
 };
 
-const GoogleMapsLogo = () => (
-  <svg viewBox="0 0 92.3 132.3" className="w-5 h-5 shrink-0">
-    <path fill="#1a73e8" d="M60.2 2.2C55.8.8 51 0 46.1 0 32 0 19.3 6.4 10.8 16.5l21.8 18.3L60.2 2.2z" />
-    <path fill="#ea4335" d="M10.8 16.5C4.1 24.5 0 34.9 0 46.1c0 8.7 1.7 15.7 4.6 22l28-33.3-21.8-18.3z" />
-    <path fill="#4285f4" d="M46.2 28.5c9.8 0 17.7 7.9 17.7 17.7 0 4.3-1.6 8.3-4.2 11.4 0 0 13.9-16.6 27.5-32.7-5.6-10.8-15.3-19-27-22.7L32.6 34.8c3.3-3.8 8.1-6.3 13.6-6.3z" />
-    <path fill="#fbbc04" d="M46.2 63.8c-9.8 0-17.7-7.9-17.7-17.7 0-4.3 1.5-8.3 4.1-11.3l-28 33.3c4.8 10.6 12.8 19.2 21 29.9l34.1-40.5c-3.3 3.9-8.1 6.3-13.5 6.3z" />
-    <path fill="#34a853" d="M59.1 109.2c15.4-24.1 33.3-35 33.3-63 0-7.7-1.9-14.9-5.2-21.3L25.6 98c2.6 3.4 5.3 7.3 7.9 11.3 9.4 14.5 6.8 23.1 12.8 23.1s3.4-8.7 12.8-23.2z" />
-  </svg>
-);
-
 const ProspeccaoView = () => {
   const [search, setSearch] = useState("");
-  const [activeFilter, setActiveFilter] = useState("Barbearias");
+  const [activeFilter, setActiveFilter] = useState("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [searched, setSearched] = useState(false);
   const [key, setKey] = useState(0);
 
-  const handleFilterClick = (f: string) => {
-    setActiveFilter(f);
-    setKey((k) => k + 1);
+  const doSearch = async (query: string) => {
+    if (!query.trim()) return;
+    setLoading(true);
+    setSearched(true);
+    setResults([]);
+
+    try {
+      const response = await firecrawlApi.search(`${query} negócios locais contato telefone endereço`, {
+        limit: 10,
+        lang: "pt-br",
+        country: "br",
+      });
+
+      if (response.success && response.data) {
+        const mapped: SearchResult[] = (response.data as any[]).map((item: any) => ({
+          url: item.url || "",
+          title: item.title || "Sem título",
+          description: item.description || "",
+        }));
+        setResults(mapped);
+        setKey((k) => k + 1);
+      } else {
+        toast.error(response.error || "Erro na busca");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Erro ao buscar leads. Verifique a conexão com o Firecrawl.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFilterClick = (label: string) => {
+    setActiveFilter(label);
+    const region = search.trim() ? ` em ${search.trim()}` : "";
+    doSearch(`${label}${region}`);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const filter = activeFilter || "negócios";
+    doSearch(`${filter} em ${search.trim()}`);
+  };
+
+  const extractDomain = (url: string) => {
+    try { return new URL(url).hostname.replace("www.", ""); } catch { return url; }
   };
 
   return (
@@ -58,18 +97,25 @@ const ProspeccaoView = () => {
       <div className="flex items-start justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Prospecção de Clientes</h2>
-          <p className="text-muted-foreground text-sm mt-1">Encontre leads qualificados via Google Maps</p>
-        </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary/50 border border-border">
-          <GoogleMapsLogo />
-          <span className="text-xs text-muted-foreground font-medium">Powered by Google Maps</span>
+          <p className="text-muted-foreground text-sm mt-1">Encontre leads na web por nicho e região</p>
         </div>
       </div>
 
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <Input placeholder="Buscar região... Ex: São Paulo, Centro" value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 bg-secondary/50 border-border h-11" />
-      </div>
+      <form onSubmit={handleSearch} className="flex gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Digite a região... Ex: São Paulo, Centro"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-10 bg-secondary/50 border-border h-11"
+          />
+        </div>
+        <Button type="submit" variant="neon" disabled={loading} className="h-11">
+          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+          Buscar
+        </Button>
+      </form>
 
       <div className="flex flex-wrap gap-2">
         {quickFilters.map(({ label, emoji }) => (
@@ -90,48 +136,88 @@ const ProspeccaoView = () => {
       </div>
 
       <div className="glass rounded-xl overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-border">
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Negócio</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell">Endereço</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Avaliação</th>
-              <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ação</th>
-            </tr>
-          </thead>
-          <AnimatePresence mode="wait">
-            <motion.tbody key={key}>
-              {mockResults.map((r, i) => (
-                <motion.tr
-                  key={r.name}
-                  custom={i}
-                  initial="hidden"
-                  animate="visible"
-                  variants={staggerItem}
-                  className="border-b border-border/50 hover:bg-secondary/30 transition-colors"
-                >
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
-                      <span className="font-medium text-foreground">{r.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground hidden md:table-cell">{r.address}</td>
-                  <td className="px-4 py-3">
-                    <span className="inline-flex items-center gap-1 text-sm text-accent font-medium">
-                      <Star className="w-3.5 h-3.5 fill-accent" /> {r.rating}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <Button size="sm" variant="hero" className="gap-1.5">
-                      <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
-                    </Button>
-                  </td>
-                </motion.tr>
-              ))}
-            </motion.tbody>
-          </AnimatePresence>
-        </table>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-16 gap-4">
+            <motion.div
+              animate={{ scale: [1, 1.15, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center"
+            >
+              <Search className="w-5 h-5 text-primary" />
+            </motion.div>
+            <p className="text-muted-foreground text-sm">Buscando leads...</p>
+          </div>
+        ) : results.length > 0 ? (
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Negócio</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell">Descrição</th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações</th>
+              </tr>
+            </thead>
+            <AnimatePresence mode="wait">
+              <motion.tbody key={key}>
+                {results.map((r, i) => (
+                  <motion.tr
+                    key={r.url + i}
+                    custom={i}
+                    initial="hidden"
+                    animate="visible"
+                    variants={staggerItem}
+                    className="border-b border-border/50 hover:bg-secondary/30 transition-colors"
+                  >
+                    <td className="px-4 py-3">
+                      <div className="flex items-start gap-2">
+                        <MapPin className="w-3.5 h-3.5 text-primary shrink-0 mt-1" />
+                        <div>
+                          <span className="font-medium text-foreground block">{r.title}</span>
+                          <span className="text-xs text-muted-foreground">{extractDomain(r.url)}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-muted-foreground hidden md:table-cell max-w-xs truncate">
+                      {r.description || "—"}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex gap-2 justify-end">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => window.open(r.url, "_blank")}
+                          className="gap-1.5"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" /> Visitar
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="hero"
+                          onClick={() => {
+                            const msg = encodeURIComponent(`Olá! Vi seu negócio online e gostaria de apresentar uma proposta. Podemos conversar?`);
+                            window.open(`https://wa.me/?text=${msg}`, "_blank");
+                          }}
+                          className="gap-1.5"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
+                        </Button>
+                      </div>
+                    </td>
+                  </motion.tr>
+                ))}
+              </motion.tbody>
+            </AnimatePresence>
+          </table>
+        ) : searched ? (
+          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
+            <Search className="w-10 h-10 opacity-30" />
+            <p className="text-sm">Nenhum resultado encontrado. Tente outro nicho ou região.</p>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
+            <Search className="w-10 h-10 opacity-30" />
+            <p className="text-sm">Selecione um nicho ou digite uma região para buscar leads</p>
+          </div>
+        )}
       </div>
     </motion.div>
   );
