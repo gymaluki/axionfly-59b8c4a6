@@ -61,11 +61,19 @@ export function Header() {
 				)}
 			>
 				<div className="flex items-center gap-5">
-					<a href="#" className="hover:opacity-80 transition-opacity flex items-center gap-2">
-						<div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-							<Zap className="w-4 h-4 text-primary-foreground" />
-						</div>
-						<span className="text-xl font-bold text-foreground">Axion<span className="text-primary">Fly</span></span>
+					<a href="#" className="hover:opacity-80 transition-all flex items-center gap-2">
+						<img
+							src={axionflyLogo}
+							alt="AxionFly"
+							className={cn(
+								'transition-all duration-500',
+								scrolled ? 'w-6 h-6' : 'w-8 h-8',
+							)}
+						/>
+						<span className={cn(
+							'font-bold text-foreground transition-all duration-500',
+							scrolled ? 'text-lg' : 'text-xl',
+						)}>Axion<span className="text-primary">Fly</span></span>
 					</a>
 					<NavigationMenu className="hidden md:flex">
 						<NavigationMenuList>
