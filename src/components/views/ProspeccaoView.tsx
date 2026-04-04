@@ -132,7 +132,7 @@ const ProspeccaoView = () => {
 
   const handleFilterClick = (label: string) => {
     setActiveFilter(label);
-    doSearch(label);
+    // Apenas seleciona o nicho, não busca automaticamente
   };
 
   const handleSearch = (e: React.FormEvent) => {
