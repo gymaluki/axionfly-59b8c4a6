@@ -312,7 +312,16 @@ const SitesView = () => {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
+            <div className="flex items-center gap-2">
+              <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
+              <button
+                type="button"
+                onClick={() => navigate("/guia-design")}
+                className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+              >
+                Ver exemplos <ExternalLink className="w-3 h-3" />
+              </button>
+            </div>
             <Select value={font} onValueChange={setFont}>
               <SelectTrigger className="bg-secondary/50 border-border">
                 <SelectValue placeholder="Selecione a fonte (opcional)" />
