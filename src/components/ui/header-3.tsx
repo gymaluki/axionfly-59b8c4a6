@@ -46,12 +46,11 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'sticky top-0 z-50 mx-auto w-full max-w-5xl border-b border-transparent transition-all duration-500 ease-out md:rounded-md md:border',
-				{
-					'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg md:top-4 md:max-w-4xl md:shadow-lg':
-						scrolled && !open,
-					'bg-background/90': open,
-				},
+				'sticky top-0 z-50 mx-auto w-full border-b border-transparent transition-all duration-500 ease-out',
+				scrolled && !open
+					? 'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg shadow-lg'
+					: '',
+				open ? 'bg-background/90' : '',
 			)}
 		>
 			<nav
