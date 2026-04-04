@@ -67,14 +67,13 @@ const SitesView = () => {
       features.trim()
     );
 
-    setPrompt(generated);
-  };
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(prompt);
+    navigator.clipboard.writeText(generated);
     setCopied(true);
-    toast.success("Prompt copiado! Cole no Lovable para criar seu site.");
-    setTimeout(() => setCopied(false), 2000);
+    toast.success("Tudo pronto! Cole na plataforma para criar seu site.");
+    setTimeout(() => {
+      setCopied(false);
+      window.open("https://lovable.dev/projects/create", "_blank");
+    }, 1200);
   };
 
   return (
