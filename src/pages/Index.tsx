@@ -180,21 +180,8 @@ const Index = () => {
         {/* Stats */}
         <section className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {stats.map(({ icon: Icon, value, label }, i) => (
-              <motion.div
-                key={label}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={scaleIn}
-                custom={i}
-                whileHover={{ scale: 1.08, y: -4 }}
-                className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
-              >
-                <Icon className="w-6 h-6 text-primary mx-auto" />
-                <p className="text-3xl font-black text-foreground">{value}</p>
-                <p className="text-sm text-muted-foreground">{label}</p>
-              </motion.div>
+            {stats.map((stat, i) => (
+              <AnimatedStat key={stat.label} {...stat} index={i} />
             ))}
           </div>
         </section>
