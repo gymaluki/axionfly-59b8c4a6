@@ -175,10 +175,10 @@ const Index = () => {
         <section className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Três máquinas de lucro.{" "}
-              <span className="gradient-text">Uma plataforma.</span>
+              Três ferramentas de lucro.{" "}
+              <span className="gradient-text">Uma plataforma completa.</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">Cada ferramenta elimina o trabalho que trava seu faturamento.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto">20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.</p>
           </motion.div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="grid gap-6">
