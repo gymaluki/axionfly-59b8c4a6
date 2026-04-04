@@ -25,6 +25,15 @@ const defaultMarkers: PulseMarker[] = [
   { id: "pulse-6", location: [48.85, 2.35], delay: 1.2, label: "Petshop" },
   { id: "pulse-7", location: [19.43, -99.13], delay: 0.3, label: "Restaurante" },
   { id: "pulse-8", location: [55.75, 37.62], delay: 1.8, label: "Clínica" },
+  { id: "pulse-9", location: [37.77, -122.42], delay: 0.6, label: "Hamburgueria" },
+  { id: "pulse-10", location: [-22.91, -43.17], delay: 1.1, label: "Açaiteria" },
+  { id: "pulse-11", location: [34.05, -118.24], delay: 1.4, label: "Lava-Rápido" },
+  { id: "pulse-12", location: [28.61, 77.21], delay: 0.2, label: "Assist. Técnica" },
+  { id: "pulse-13", location: [1.35, 103.82], delay: 0.9, label: "Advocacia" },
+  { id: "pulse-14", location: [-15.79, -47.88], delay: 1.6, label: "Imobiliária" },
+  { id: "pulse-15", location: [41.39, 2.17], delay: 0.4, label: "Salão de Beleza" },
+  { id: "pulse-16", location: [52.52, 13.41], delay: 1.3, label: "Contabilidade" },
+  { id: "pulse-17", location: [25.27, 55.30], delay: 0.7, label: "Sobrancelhas" },
 ]
 
 export function GlobeCdn({
