@@ -13,7 +13,7 @@ type View = "prospeccao" | "ebooks" | "sites";
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState<View>("prospeccao");
+  const [activeView, setActiveView] = useState<View>("sites");
 
   useEffect(() => {
     if (!loading && !user) {
