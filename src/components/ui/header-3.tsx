@@ -100,7 +100,7 @@ export function Header() {
 				</div>
 				<div className="hidden items-center gap-2 md:flex">
 					<Button variant="ghost" onClick={() => navigate('/auth')}>Entrar</Button>
-					<Button variant="neon" onClick={() => navigate('/auth')}>Começar Grátis</Button>
+					<Button variant="neon" onClick={() => navigate('/auth')}>Acessar Plataforma</Button>
 				</div>
 				<Button
 					size="icon"
@@ -127,7 +127,7 @@ export function Header() {
 					<Button variant="outline" className="w-full bg-transparent" onClick={() => navigate('/auth')}>
 						Entrar
 					</Button>
-					<Button variant="neon" className="w-full" onClick={() => navigate('/auth')}>Começar Grátis</Button>
+					<Button variant="neon" className="w-full" onClick={() => navigate('/auth')}>Acessar Plataforma</Button>
 				</div>
 			</MobileMenu>
 		</header>

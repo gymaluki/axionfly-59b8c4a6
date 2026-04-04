@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Check, Sparkles, Info } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Check, Sparkles, Info, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -170,6 +171,7 @@ const designStyles = [
 ];
 
 const SitesView = () => {
+  const navigate = useNavigate();
   const [projectName, setProjectName] = useState("");
   const [niche, setNiche] = useState("");
   const [address, setAddress] = useState("");
@@ -285,6 +287,13 @@ const SitesView = () => {
               >
                 <Info className="w-4 h-4" />
               </button>
+              <button
+                type="button"
+                onClick={() => navigate("/guia-design")}
+                className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+              >
+                Ver guia completo <ExternalLink className="w-3 h-3" />
+              </button>
             </div>
             <Select value={designStyle} onValueChange={setDesignStyle}>
               <SelectTrigger className="bg-secondary/50 border-border">
@@ -303,7 +312,16 @@ const SitesView = () => {
             )}
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
+            <div className="flex items-center gap-2">
+              <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
+              <button
+                type="button"
+                onClick={() => navigate("/guia-design")}
+                className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+              >
+                Ver exemplos <ExternalLink className="w-3 h-3" />
+              </button>
+            </div>
             <Select value={font} onValueChange={setFont}>
               <SelectTrigger className="bg-secondary/50 border-border">
                 <SelectValue placeholder="Selecione a fonte (opcional)" />
