@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { useAccessControl } from "@/hooks/useAccessControl";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import DashboardSidebar from "@/components/DashboardSidebar";
@@ -7,11 +8,14 @@ import ProspeccaoView from "@/components/views/ProspeccaoView";
 import EbooksView from "@/components/views/EbooksView";
 import SitesView from "@/components/views/SitesView";
 import { AnimatePresence, motion } from "framer-motion";
+import { ShieldX } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type View = "prospeccao" | "ebooks" | "sites";
 
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
+  const { hasAccess, loading: accessLoading } = useAccessControl(user);
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<View>("sites");
 
@@ -21,7 +25,7 @@ const Dashboard = () => {
     }
   }, [user, loading, navigate]);
 
-  if (loading) {
+  if (loading || accessLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <motion.div
@@ -36,6 +40,35 @@ const Dashboard = () => {
   }
 
   if (!user) return null;
+
+  // Block access if not paid and not admin
+  if (!hasAccess) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center space-y-6 max-w-md"
+        >
+          <div className="w-16 h-16 rounded-2xl bg-destructive/10 flex items-center justify-center mx-auto">
+            <ShieldX className="w-8 h-8 text-destructive" />
+          </div>
+          <h1 className="text-2xl font-bold text-foreground">Acesso Restrito</h1>
+          <p className="text-muted-foreground">
+            Você precisa adquirir um plano para acessar a plataforma. Após o pagamento, seu acesso será liberado automaticamente.
+          </p>
+          <div className="flex gap-3 justify-center">
+            <Button variant="outline" onClick={async () => { await signOut(); navigate("/"); }}>
+              Voltar
+            </Button>
+            <Button variant="neon" onClick={() => navigate("/#pricing")}>
+              Ver Planos
+            </Button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-background relative">
