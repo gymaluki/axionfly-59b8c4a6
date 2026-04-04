@@ -73,6 +73,36 @@ const nicheTemplates: Record<string, NicheTemplate> = {
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para um lava-rápido premium chamado "${name}". Tema escuro e sofisticado com acentos em ${primary || "azul neon e ciano"}, cor secundária ${secondary || "cinza escuro metálico"}. Tipografia moderna e bold para títulos e clean para corpo. Seções: Navbar fixa com logo, links (Início, Serviços, Planos, Contato) e botão "Agendar Agora". Hero fullscreen com imagem cinematográfica de carro sendo lavado com jatos de água, título "Seu carro merece brilhar como novo", subtítulo sobre lavagem profissional, CTAs "Agendar Lavagem" e "Ver Serviços", estatísticas (5.000+ carros lavados, 4.9 avaliação, 100% satisfação). Seção Serviços com 6 cards (Lavagem Completa, Polimento Espelhado, Cristalização, Higienização Interna, Enceramento Premium, Express Wash) com ícones e descrições. Seção Planos & Preços com 3 cards (Básico R$49, Premium R$129 — mais popular, VIP R$249) com lista de itens inclusos e botão CTA. Seção Contato com formulário (nome, telefone, e-mail, mensagem) e informações (telefone, endereço, horário). Footer com logo, copyright e redes sociais. Animações suaves com Framer Motion. Design responsivo e cinematográfico.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
+  assistencia: {
+    label: "🔧 Assistência Técnica",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site de uma página (landing page) para uma assistência técnica de celulares e computadores chamada "${name}". Tema escuro com acentos em ${primary || "azul elétrico"} e ${secondary || "verde-azulado"}, fonte Space Grotesk para títulos e Inter para corpo. Seções: Header fixo com navegação e botão "Orçamento Grátis". Hero com imagem de fundo de bancada de reparo, título "Seu dispositivo em mãos expertas", subtítulo sobre agilidade e garantia, dois botões CTA, e 3 cards destacando Reparo Rápido (24h), Garantia (90 dias) e Peças Originais. Seção Serviços com 8 cards: Troca de Tela, Troca de Bateria, Reparo por Líquidos, Manutenção de PC, Recuperação de Dados, Upgrade de Hardware, Problemas de Rede e Reparo de Notebooks. Seção Sobre Nós com texto institucional, 6 diferenciais com check icons, e 4 cards de estatísticas (5.000+ dispositivos, 98% satisfação, 10+ anos, 90 dias garantia). Seção Contato com formulário (nome, telefone, tipo de dispositivo, descrição) e 4 cards de informações (telefone, e-mail, endereço, horário). Footer minimalista. Animações de entrada com Framer Motion (fade-in, slide), efeitos de hover com glow, gradientes e glassmorphism. Design system com tokens semânticos em CSS HSL. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  academia: {
+    label: "🏋️ Academia",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site landing page para uma academia chamada "${name}". Tema escuro e energético com acentos em ${primary || "vermelho e laranja"}, cor secundária ${secondary || "cinza escuro"}. Tipografia bold e impactante para títulos e clean para corpo. Seções: Navbar fixa com logo e botão "Matricule-se". Hero fullscreen com imagem de treino, título motivacional, CTAs "Comece Agora" e "Ver Planos", estatísticas (2.000+ alunos, 4.8 avaliação, 15+ modalidades). Seção Modalidades com cards (Musculação, CrossFit, Yoga, Funcional, Spinning, Luta). Seção Planos com 3 opções (Básico, Premium, VIP) com preços e benefícios. Seção Sobre com história e diferenciais. Contato com formulário e informações. Footer. Animações com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  advogado: {
+    label: "⚖️ Escritório de Advocacia",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site landing page para um escritório de advocacia chamado "${name}". Visual sóbrio e profissional com fundo escuro, acentos em ${primary || "dourado"} e ${secondary || "azul marinho"}. Tipografia Playfair Display para títulos e Inter para corpo. Seções: Navbar fixa com logo e botão "Consulta Grátis". Hero com título sobre justiça e confiança, CTAs. Seção Áreas de Atuação com cards (Direito Civil, Trabalhista, Criminal, Empresarial, Família, Imobiliário). Seção Sobre com foto do escritório, anos de experiência, estatísticas (2.000+ casos, 95% sucesso). Seção Depoimentos. Contato com formulário e informações. Footer elegante. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  imobiliaria: {
+    label: "🏠 Imobiliária",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site landing page para uma imobiliária chamada "${name}". Visual moderno e sofisticado com fundo claro, acentos em ${primary || "azul escuro"} e ${secondary || "dourado"}. Tipografia elegante para títulos e clean para corpo. Seções: Navbar fixa com logo e botão "Fale Conosco". Hero com busca de imóveis, título "Encontre o imóvel dos seus sonhos". Seção Destaques com 4 cards de imóveis (foto, preço, metragem, quartos). Seção Serviços (Compra, Venda, Aluguel, Consultoria). Seção Sobre com estatísticas (500+ imóveis, 10+ anos, 98% satisfação). Contato com formulário. Footer. Animações suaves. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  salaobeleza: {
+    label: "💇 Salão de Beleza",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site landing page para um salão de beleza chamado "${name}". Visual elegante e feminino com tons de ${primary || "rosa e dourado"}, cor secundária ${secondary || "nude e creme"}. Tipografia sofisticada para títulos e clean para corpo. Seções: Navbar fixa com logo e botão "Agendar". Hero com imagem glamourosa, título sobre beleza e autoestima. Seção Serviços com cards (Corte, Coloração, Escova, Manicure, Pedicure, Tratamentos Capilares). Seção Sobre com história e diferenciais. Depoimentos. Contato com formulário e informações. Footer elegante. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  contabilidade: {
+    label: "📊 Contabilidade",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site landing page para um escritório de contabilidade chamado "${name}". Visual profissional e confiável com fundo escuro, acentos em ${primary || "verde escuro"} e ${secondary || "azul"}. Tipografia moderna para títulos e Inter para corpo. Seções: Navbar fixa com logo e botão "Consultoria Grátis". Hero com título sobre gestão financeira, CTAs. Seção Serviços com cards (Abertura de Empresa, Imposto de Renda, Folha de Pagamento, Planejamento Tributário, BPO Financeiro, Consultoria). Seção Sobre com estatísticas (1.000+ empresas, 15+ anos). Depoimentos. Contato. Footer. Animações suaves. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
 };
 
 const SitesView = () => {
