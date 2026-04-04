@@ -88,7 +88,7 @@ const Auth = () => {
               {isLogin ? "Entrar" : "Criar conta"}
             </h1>
             <p className="text-muted-foreground text-sm">
-              {isLogin ? "Bem-vindo de volta ao ScaleAI" : "Comece a escalar agora"}
+              {isLogin ? "Bem-vindo de volta à AxionFly" : "Comece a criar sites com IA agora"}
             </p>
           </div>
 

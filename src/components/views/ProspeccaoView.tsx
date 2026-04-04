@@ -188,7 +188,7 @@ const ProspeccaoView = () => {
 
       {/* Filtros de localização */}
       <form onSubmit={handleSearch} className="space-y-3">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-muted-foreground">Estado</label>
             <Select value={estado} onValueChange={setEstado}>

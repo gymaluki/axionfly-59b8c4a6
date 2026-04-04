@@ -54,19 +54,19 @@ const features = [
   {
     icon: Code2,
     title: "Fábrica de Sites IA",
-    desc: "Escolha o nicho, personalize cores e nome — a IA monta o site completo em minutos. Pronto pra vender.",
+    desc: "Escolha entre 20+ nichos (barbearias, pizzarias, clínicas, academias...), personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Pronto pra vender.",
     tag: "PRINCIPAL",
   },
   {
     icon: MapPin,
-    title: "Busca de Leads Qualificados",
-    desc: "Encontre leads qualificados através do nosso sistema de busca no Google. Receba nome, telefone, nicho e endereço — tudo pronto pra prospectar.",
-    tag: "AUTOMÁTICO",
+    title: "Busca de Leads por Estado e Cidade",
+    desc: "Selecione qualquer estado e cidade do Brasil. O sistema busca negócios no Google e entrega nome, telefone e endereço — tudo pronto pra prospectar e fechar contrato.",
+    tag: "27 ESTADOS",
   },
   {
     icon: BookOpen,
-    title: "Gerador de E-books",
-    desc: "Crie e-books profissionais em 30 segundos. Use como isca digital ou venda diretamente. Conteúdo gerado por IA de verdade.",
+    title: "Gerador de E-books com IA",
+    desc: "Crie e-books profissionais em 30 segundos. Use como isca digital para atrair clientes ou venda diretamente. Conteúdo gerado por IA de verdade.",
     tag: "RÁPIDO",
   },
 ];
@@ -78,18 +78,20 @@ const stats = [
 ];
 
 const howItWorks = [
-  { step: "01", icon: Search, title: "Encontre leads", desc: "Digite o nicho. O sistema busca negócios no Google e entrega nome, telefone e endereço." },
-  { step: "02", icon: MousePointerClick, title: "Crie o site", desc: "Escolha o tipo de negócio, personalize e gere o site profissional em minutos." },
-  { step: "03", icon: Globe, title: "Venda e lucre", desc: "Entre em contato com o lead, mostre o site pronto e feche o contrato." },
+  { step: "01", icon: Search, title: "Encontre o cliente ideal", desc: "Escolha o estado, a cidade e o nicho. O sistema busca negócios sem site e entrega nome, telefone e endereço." },
+  { step: "02", icon: MousePointerClick, title: "Crie o site sob medida", desc: "Selecione o nicho, escolha entre 6 estilos de design (conversão, catálogo, local-first...), personalize fontes e cores. Site pronto em minutos." },
+  { step: "03", icon: Globe, title: "Apresente e feche o contrato", desc: "Entre em contato pelo WhatsApp, mostre o site já pronto e feche o contrato. Sem programar uma linha de código." },
 ];
 
 const faqItems = [
-  { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você descreve o que precisa e a IA faz todo o trabalho técnico. Zero código." },
-  { q: "Como funciona a prospecção no Google Maps?", a: "Nossa IA varre o Google Maps automaticamente, encontra negócios do nicho que você escolher (barbearias, restaurantes, clínicas, etc.) e entrega nome, telefone e endereço — tudo pronto para você entrar em contato e oferecer um site." },
-  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, sua margem de lucro é altíssima." },
-  { q: "A IA cria sites para qualquer tipo de negócio?", a: "Sim! Barbearias, pizzarias, clínicas, pet shops, academias, restaurantes, salões de beleza — qualquer nicho de negócio local. A IA se adapta ao segmento automaticamente." },
-  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA, prospecção automática no Google Maps, gerador de e-books e todas as atualizações futuras. Pague uma vez, use para sempre." },
+  { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você só preenche o nome do negócio, escolhe o nicho, as cores e o estilo de design — a IA faz todo o trabalho técnico. Zero código, zero complicação." },
+  { q: "Quais tipos de site posso criar?", a: "São mais de 20 nichos prontos: barbearias, pizzarias, hamburguerias, clínicas, pet shops, academias, restaurantes, salões de beleza, escritórios de advocacia, imobiliárias, contabilidades, estúdios de estética, escolas de idiomas e muito mais. E você ainda escolhe entre 6 estilos de design: Landing Page de Conversão, Catálogo/E-commerce, Local-First, Institucional Moderno, Lifestyle e Cardápio Digital." },
+  { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o nicho de negócio. O sistema busca automaticamente no Google e entrega nome, telefone e endereço — tudo pronto para você entrar em contato pelo WhatsApp e oferecer um site." },
+  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
+  { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes (Playfair Display, Inter, Poppins, Oswald...) e 6 estilos de design diferentes. Cada site sai único e profissional." },
+  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos), busca de leads em todos os estados do Brasil, gerador de e-books com IA e todas as atualizações futuras. Pague uma vez, use para sempre." },
   { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
+  { q: "Funciona em qualquer cidade do Brasil?", a: "Sim! A busca de leads cobre todos os 27 estados e todas as cidades do Brasil. Basta selecionar o estado e a cidade para encontrar negócios sem site na sua região." },
 ];
 
 const Index = () => {
@@ -139,9 +141,9 @@ const Index = () => {
         <section className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Como funciona a <span className="gradient-text">AxionFly</span>
+              Da prospecção ao contrato em <span className="gradient-text">3 passos</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">3 passos simples. Da prospecção ao contrato fechado.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto">Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto relative">
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -173,10 +175,10 @@ const Index = () => {
         <section className="container mx-auto px-4 py-20">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Três máquinas de lucro.{" "}
-              <span className="gradient-text">Uma plataforma.</span>
+              Três ferramentas de lucro.{" "}
+              <span className="gradient-text">Uma plataforma completa.</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">Cada ferramenta elimina o trabalho que trava seu faturamento.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto">20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.</p>
           </motion.div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="grid gap-6">
@@ -233,10 +235,10 @@ const Index = () => {
               <Sparkles className="w-8 h-8 text-primary mx-auto" />
             </motion.div>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground relative z-10">
-              Enquanto você lê isso, alguém está vendendo sites com IA.
+              Enquanto você lê isso, alguém está faturando com sites criados por IA.
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto relative z-10">
-              Cada dia sem a AxionFly é dinheiro na mesa do seu concorrente. Configure em 5 minutos. Sem experiência técnica.
+              20+ nichos prontos, busca de clientes em qualquer cidade do Brasil, sites profissionais em minutos. Configure em 5 minutos e comece a vender hoje.
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="relative z-10">
               <Button variant="neon" size="lg" onClick={() => navigate("/auth")}>

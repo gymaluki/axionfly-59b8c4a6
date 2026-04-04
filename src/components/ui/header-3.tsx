@@ -191,19 +191,19 @@ function ListItem({
 const productLinks: LinkItem[] = [
 	{
 		title: 'Fábrica de Sites IA',
-		href: '#',
+		href: '/auth',
 		description: 'Crie sites profissionais personalizados em minutos',
 		icon: Code2,
 	},
 	{
 		title: 'Busca de Leads',
-		href: '#',
+		href: '/auth',
 		description: 'Encontre leads qualificados com nome, telefone e nicho',
 		icon: MapPin,
 	},
 	{
 		title: 'Gerador de E-books',
-		href: '#',
+		href: '/auth',
 		description: 'Crie e-books profissionais com IA em segundos',
 		icon: BookOpen,
 	},
