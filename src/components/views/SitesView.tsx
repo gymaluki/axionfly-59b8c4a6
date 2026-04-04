@@ -48,6 +48,8 @@ const nicheTemplates: Record<string, NicheTemplate> = {
 const SitesView = () => {
   const [projectName, setProjectName] = useState("");
   const [niche, setNiche] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
   const [primaryColor, setPrimaryColor] = useState("");
   const [secondaryColor, setSecondaryColor] = useState("");
   const [features, setFeatures] = useState("");
