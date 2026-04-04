@@ -109,8 +109,8 @@ const ProspeccaoView = () => {
 
   const buildLocation = () => {
     const parts: string[] = [];
-    if (cidade.trim()) parts.push(cidade.trim());
-    if (estado) {
+    if (cidade && cidade !== "todas") parts.push(cidade);
+    if (estado && estado !== "todos") {
       const est = estados.find(e => e.sigla === estado);
       if (est) parts.push(est.nome);
     }
