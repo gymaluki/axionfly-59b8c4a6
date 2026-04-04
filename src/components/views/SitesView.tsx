@@ -316,7 +316,7 @@ const SitesView = () => {
               <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
               <button
                 type="button"
-                onClick={() => navigate("/guia-design")}
+                onClick={() => navigate("/guia-fontes")}
                 className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
               >
                 Ver exemplos <ExternalLink className="w-3 h-3" />
