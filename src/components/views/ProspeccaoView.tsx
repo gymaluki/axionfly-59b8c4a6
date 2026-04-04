@@ -45,7 +45,21 @@ interface SearchResult {
   url: string;
   title: string;
   description: string;
+  phone: string | null;
 }
+
+const extractPhone = (text: string): string | null => {
+  // Matches Brazilian phone formats: (XX) XXXXX-XXXX, (XX) XXXX-XXXX, XX XXXXXXXXX, +55...
+  const patterns = [
+    /\(?\d{2}\)?\s*9?\d{4}[-.\s]?\d{4}/,
+    /\+55\s*\(?\d{2}\)?\s*9?\d{4}[-.\s]?\d{4}/,
+  ];
+  for (const p of patterns) {
+    const match = text.match(p);
+    if (match) return match[0].trim();
+  }
+  return null;
+};
 
 const staggerItem = {
   hidden: { opacity: 0, x: -20 },
