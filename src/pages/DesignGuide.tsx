@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, type Easing } from "framer-motion";
 
-const designStyles = [
+const ease: Easing = [0.16, 1, 0.3, 1];
   {
     value: "conversao",
     label: "🎯 Design de Conversão (Landing Page)",
