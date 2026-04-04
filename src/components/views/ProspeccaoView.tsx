@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, MessageCircle, ExternalLink, MapPin, Loader2, Phone } from "lucide-react";
+import { Search, MessageCircle, MapPin, Loader2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -132,7 +132,7 @@ const ProspeccaoView = () => {
 
   const handleFilterClick = (label: string) => {
     setActiveFilter(label);
-    doSearch(label);
+    // Apenas seleciona o nicho, não busca automaticamente
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -275,10 +275,13 @@ const ProspeccaoView = () => {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => window.open(r.url, "_blank")}
+                          onClick={() => {
+                            const query = encodeURIComponent(r.title);
+                            window.open(`https://www.google.com/maps/search/${query}`, "_blank");
+                          }}
                           className="gap-1.5"
                         >
-                          <ExternalLink className="w-3.5 h-3.5" /> Visitar
+                          <MapPin className="w-3.5 h-3.5" /> Maps
                         </Button>
                         <Button
                           size="sm"
