@@ -53,14 +53,14 @@ const slideFromRight = {
 const features = [
   {
     icon: Code2,
-    title: "Criador de Sites IA",
-    desc: "Descreva o site que seu cliente precisa. A IA gera o prompt perfeito — você cola no Lovable e entrega um site profissional em minutos.",
+    title: "Fábrica de Sites IA",
+    desc: "Escolha o nicho, personalize cores e nome — a IA monta o site completo em minutos. Pronto pra vender.",
     tag: "PRINCIPAL",
   },
   {
     icon: MapPin,
-    title: "Prospecção Google Maps",
-    desc: "A IA varre o Google Maps e encontra barbearias, clínicas, restaurantes — qualquer nicho. Nome, telefone e endereço prontos para você vender.",
+    title: "Busca de Leads Qualificados",
+    desc: "Encontre leads qualificados através do nosso sistema de busca no Google. Receba nome, telefone, nicho e endereço — tudo pronto pra prospectar.",
     tag: "AUTOMÁTICO",
   },
   {
