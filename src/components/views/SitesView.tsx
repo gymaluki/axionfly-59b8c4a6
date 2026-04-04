@@ -61,12 +61,15 @@ const SitesView = () => {
     const template = nicheTemplates[niche];
     if (!template) return;
 
-    const generated = template.buildPrompt(
+    let generated = template.buildPrompt(
       projectName.trim(),
       primaryColor.trim(),
       secondaryColor.trim(),
       features.trim()
     );
+
+    if (address.trim()) generated += ` Endereço do estabelecimento: ${address.trim()}.`;
+    if (phone.trim()) generated += ` Telefone: ${phone.trim()}.`;
 
     navigator.clipboard.writeText(generated);
     setCopied(true);
