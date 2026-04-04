@@ -287,6 +287,13 @@ const SitesView = () => {
               >
                 <Info className="w-4 h-4" />
               </button>
+              <button
+                type="button"
+                onClick={() => navigate("/guia-design")}
+                className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+              >
+                Ver guia completo <ExternalLink className="w-3 h-3" />
+              </button>
             </div>
             <Select value={designStyle} onValueChange={setDesignStyle}>
               <SelectTrigger className="bg-secondary/50 border-border">
