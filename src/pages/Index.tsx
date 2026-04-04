@@ -107,7 +107,7 @@ function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
 }) {
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const count = useCountUp(value, 1800, inView);
+  const count = useCountUp(value, 1200, inView);
 
   useEffect(() => {
     const el = ref.current;
