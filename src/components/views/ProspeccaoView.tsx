@@ -167,7 +167,12 @@ const ProspeccaoView = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const filter = activeFilter || "negócios";
-    doSearch(filter);
+    if (!estado || estado === "todos") {
+      // Busca em todo o Brasil
+      doSearch(filter);
+    } else {
+      doSearch(filter);
+    }
   };
 
   const extractDomain = (url: string) => {

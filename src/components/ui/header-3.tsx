@@ -127,7 +127,7 @@ export function Header() {
 					<Button variant="outline" className="w-full bg-transparent" onClick={() => navigate('/auth')}>
 						Entrar
 					</Button>
-					<Button variant="neon" className="w-full" onClick={() => navigate('/auth')}>Começar Grátis</Button>
+					<Button variant="neon" className="w-full" onClick={() => navigate('/auth')}>Acessar Plataforma</Button>
 				</div>
 			</MobileMenu>
 		</header>
