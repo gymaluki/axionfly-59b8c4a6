@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { motion, type Easing } from "framer-motion";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
+
+const designStyles = [
   {
     value: "conversao",
     label: "🎯 Design de Conversão (Landing Page)",
@@ -34,7 +36,7 @@ const ease: Easing = [0.16, 1, 0.3, 1];
     desc: "Passa autoridade e profissionalismo através de uma estrutura organizada, fotos da equipe ou do estabelecimento e uma seção de \"Quem Somos\". Utiliza cores sólidas e fontes serifadas para transmitir confiança e tradição.",
     ideal: "Imobiliárias, escritórios de advocacia e empresas de engenharia.",
     visual: "Layout estruturado, fotos corporativas, paleta sóbria (azul marinho, cinza, dourado), tipografia serifada para títulos.",
-    preview: "bg-gradient-to-b from-[hsl(220,30%,15%)] to-background",
+    preview: "bg-gradient-to-b from-muted/40 to-background",
   },
   {
     value: "lifestyle",
@@ -42,7 +44,7 @@ const ease: Easing = [0.16, 1, 0.3, 1];
     desc: "Foca menos em texto e mais em vender uma \"experiência\" ou \"estilo de vida\". Utiliza fotos ambientadas e vídeos em tela cheia que mostram o produto em uso. Design elegante com margens amplas.",
     ideal: "Cafeterias gourmet, spas, hotéis e marcas de decoração.",
     visual: "Fotos full-width, muito espaço em branco, tipografia fina e elegante, paleta suave (nude, bege, verde-oliva).",
-    preview: "bg-gradient-to-br from-[hsl(40,20%,12%)] to-background",
+    preview: "bg-gradient-to-br from-accent/10 to-background",
   },
   {
     value: "cardapio-digital",
