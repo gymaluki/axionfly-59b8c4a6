@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, MessageCircle, MapPin, Loader2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,16 +72,45 @@ const staggerItem = {
 const ProspeccaoView = () => {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
+  const [cidades, setCidades] = useState<string[]>([]);
+  const [loadingCidades, setLoadingCidades] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [key, setKey] = useState(0);
 
+  // Buscar cidades do IBGE quando o estado muda
+  useEffect(() => {
+    if (!estado || estado === "todos") {
+      setCidades([]);
+      setCidade("");
+      return;
+    }
+
+    const fetchCidades = async () => {
+      setLoadingCidades(true);
+      setCidade("");
+      try {
+        const res = await fetch(
+          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios?orderBy=nome`
+        );
+        const data = await res.json();
+        setCidades(data.map((m: any) => m.nome));
+      } catch {
+        setCidades([]);
+      } finally {
+        setLoadingCidades(false);
+      }
+    };
+
+    fetchCidades();
+  }, [estado]);
+
   const buildLocation = () => {
     const parts: string[] = [];
-    if (cidade.trim()) parts.push(cidade.trim());
-    if (estado) {
+    if (cidade && cidade !== "todas") parts.push(cidade);
+    if (estado && estado !== "todos") {
       const est = estados.find(e => e.sigla === estado);
       if (est) parts.push(est.nome);
     }
@@ -159,7 +188,7 @@ const ProspeccaoView = () => {
 
       {/* Filtros de localização */}
       <form onSubmit={handleSearch} className="space-y-3">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-muted-foreground">Estado</label>
             <Select value={estado} onValueChange={setEstado}>
@@ -175,13 +204,18 @@ const ProspeccaoView = () => {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Cidade / Bairro</label>
-            <Input
-              placeholder="Ex: Campinas, Centro, Zona Sul"
-              value={cidade}
-              onChange={(e) => setCidade(e.target.value)}
-              className="bg-secondary/50 border-border h-10"
-            />
+            <label className="text-xs font-medium text-muted-foreground">Cidade</label>
+            <Select value={cidade} onValueChange={setCidade} disabled={!estado || estado === "todos" || loadingCidades}>
+              <SelectTrigger className="bg-secondary/50 border-border h-10">
+                <SelectValue placeholder={loadingCidades ? "Carregando cidades..." : !estado || estado === "todos" ? "Selecione um estado primeiro" : "Selecione a cidade"} />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                <SelectItem value="todas">Todas as cidades</SelectItem>
+                {cidades.map(c => (
+                  <SelectItem key={c} value={c}>{c}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex items-end">
             <Button type="submit" variant="neon" disabled={loading || !activeFilter} className="w-full h-10">
