@@ -4,7 +4,7 @@ import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, Trend
 import { motion, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
-import { GlobeStickers } from "@/components/ui/cobe-globe-stickers";
+import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
 import PricingCards from "@/components/PricingCards";
 
@@ -208,7 +208,7 @@ const Index = () => {
             {/* Globe */}
             <div className="flex items-center justify-center">
               <div className="w-full max-w-md relative">
-                <GlobeStickers className="w-full" speed={0.008} />
+                <GlobeCdn className="w-full" speed={0.008} />
               </div>
             </div>
           </div>
