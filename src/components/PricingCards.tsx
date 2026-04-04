@@ -147,7 +147,7 @@ export default function PricingCards() {
         "Todas as atualizações futuras incluídas",
       ],
       buttonText: "Garantir Acesso Vitalício",
-      buttonHref: "",
+      buttonHref: "https://go.perfectpay.com.br/PPU38CQA071",
       isPopular: true,
       index: 2,
     },
