@@ -47,17 +47,17 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'sticky top-0 z-50 mx-auto w-full border-b border-transparent transition-all duration-500 ease-out',
+				'sticky top-0 z-50 mx-auto w-full border-b transition-all duration-500 ease-out',
 				scrolled && !open
-					? 'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg shadow-lg'
-					: '',
+					? 'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg shadow-lg max-w-4xl md:top-4 md:rounded-xl'
+					: 'border-transparent max-w-full',
 				open ? 'bg-background/90' : '',
 			)}
 		>
 			<nav
 				className={cn(
 					'flex w-full items-center justify-between px-4 transition-all duration-500 ease-out',
-					scrolled ? 'h-12 md:px-2' : 'h-14',
+					scrolled ? 'h-11 md:px-3' : 'h-14',
 				)}
 			>
 				<div className="flex items-center gap-5">
