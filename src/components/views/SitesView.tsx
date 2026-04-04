@@ -171,6 +171,7 @@ const designStyles = [
 ];
 
 const SitesView = () => {
+  const navigate = useNavigate();
   const [projectName, setProjectName] = useState("");
   const [niche, setNiche] = useState("");
   const [address, setAddress] = useState("");
