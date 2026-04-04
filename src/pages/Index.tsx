@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
@@ -72,10 +73,71 @@ const features = [
 ];
 
 const stats = [
-  { icon: Users, value: "2.300+", label: "Sites criados" },
-  { icon: TrendingUp, value: "+1 Mi", label: "Faturados pelos usuários" },
-  { icon: Zap, value: "5 min", label: "Tempo médio de criação" },
+  { icon: Users, value: 2300, label: "Sites criados", prefix: "", suffix: "+" },
+  { icon: TrendingUp, value: 1, label: "Faturados pelos usuários", prefix: "+", suffix: " Mi" },
+  { icon: Zap, value: 5, label: "Tempo médio de criação", prefix: "", suffix: " min" },
 ];
+
+function useCountUp(end: number, duration = 2000, start = false) {
+  const [count, setCount] = useState(0);
+  const rafRef = useRef<number>();
+
+  useEffect(() => {
+    if (!start) return;
+    const startTime = performance.now();
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * end));
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [end, duration, start]);
+
+  return count;
+}
+
+function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
+  icon: any; value: number; label: string; prefix: string; suffix: string; index: number;
+}) {
+  const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const count = useCountUp(value, 1800, inView);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setInView(true); obs.disconnect(); }
+    }, { threshold: 0.3 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={scaleIn}
+      custom={index}
+      whileHover={{ scale: 1.08, y: -4 }}
+      className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
+    >
+      <Icon className="w-6 h-6 text-primary mx-auto" />
+      <p className="text-3xl font-black text-foreground tabular-nums">
+        {prefix}{count.toLocaleString("pt-BR")}{suffix}
+      </p>
+      <p className="text-sm text-muted-foreground">{label}</p>
+    </motion.div>
+  );
+}
 
 const howItWorks = [
   { step: "01", icon: Search, title: "Encontre o cliente ideal", desc: "Escolha o estado, a cidade e o nicho. O sistema busca negócios sem site e entrega nome, telefone e endereço." },
@@ -118,21 +180,8 @@ const Index = () => {
         {/* Stats */}
         <section className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {stats.map(({ icon: Icon, value, label }, i) => (
-              <motion.div
-                key={label}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={scaleIn}
-                custom={i}
-                whileHover={{ scale: 1.08, y: -4 }}
-                className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
-              >
-                <Icon className="w-6 h-6 text-primary mx-auto" />
-                <p className="text-3xl font-black text-foreground">{value}</p>
-                <p className="text-sm text-muted-foreground">{label}</p>
-              </motion.div>
+            {stats.map((stat, i) => (
+              <AnimatedStat key={stat.label} {...stat} index={i} />
             ))}
           </div>
         </section>
