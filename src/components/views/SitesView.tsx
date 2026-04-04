@@ -93,7 +93,7 @@ const SitesView = () => {
       {/* Gerador Personalizado */}
       <div className="space-y-5">
         <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-          <Code2 className="w-5 h-5 text-primary" />
+          <Sparkles className="w-5 h-5 text-primary" />
           Gerador de Prompt
         </h3>
 
