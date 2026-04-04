@@ -7,11 +7,12 @@ import DashboardSidebar from "@/components/DashboardSidebar";
 import ProspeccaoView from "@/components/views/ProspeccaoView";
 import EbooksView from "@/components/views/EbooksView";
 import SitesView from "@/components/views/SitesView";
+import VendasView from "@/components/views/VendasView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-type View = "prospeccao" | "ebooks" | "sites";
+type View = "prospeccao" | "ebooks" | "sites" | "vendas";
 
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
@@ -102,6 +103,7 @@ const Dashboard = () => {
             {activeView === "prospeccao" && <ProspeccaoView />}
             {activeView === "ebooks" && <EbooksView />}
             {activeView === "sites" && <SitesView />}
+            {activeView === "vendas" && <VendasView />}
           </motion.div>
         </AnimatePresence>
       </main>
