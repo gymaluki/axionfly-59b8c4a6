@@ -156,47 +156,16 @@ const SitesView = () => {
 
         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button
-            variant="neon"
+            variant="hero"
             size="lg"
             onClick={handleGenerate}
             disabled={!projectName.trim() || !niche}
+            className="w-full"
           >
-            <Sparkles className="w-4 h-4" /> Gerar Prompt Profissional
+            {copied ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+            {copied ? "Copiado! Redirecionando..." : "Criar Meu Site com IA"}
           </Button>
         </motion.div>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={prompt ? "filled" : "empty"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="terminal-bg p-5 min-h-[200px]"
-          >
-            {!prompt ? (
-              <div className="flex flex-col items-center justify-center h-[200px] text-muted-foreground space-y-3">
-                <Code2 className="w-10 h-10 opacity-30" />
-                <p className="text-sm font-sans">Selecione o nicho, preencha os campos e gere seu prompt</p>
-              </div>
-            ) : (
-              <pre className="whitespace-pre-wrap text-accent/90 text-sm leading-relaxed">{prompt}</pre>
-            )}
-          </motion.div>
-        </AnimatePresence>
-
-        {prompt && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Button variant="hero" size="lg" onClick={handleCopy} className="w-full">
-              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              {copied ? "Copiado!" : "Copiar Prompt e Criar no Lovable"}
-            </Button>
-          </motion.div>
-        )}
       </div>
     </motion.div>
   );
