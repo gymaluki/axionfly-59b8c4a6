@@ -4,7 +4,7 @@ import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, Trend
 import { motion, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
-import { GlobeStickers } from "@/components/ui/cobe-globe-stickers";
+import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
 import PricingCards from "@/components/PricingCards";
 

@@ -1,29 +1,52 @@
 "use client"
 
-import { useEffect, useRef, useCallback } from "react"
+import { useEffect, useRef, useCallback, useState } from "react"
 import createGlobe from "cobe"
 
-interface PulseMarker {
+interface CdnMarker {
   id: string
   location: [number, number]
-  delay: number
+  region: string
+}
+
+interface CdnArc {
+  id: string
+  from: [number, number]
+  to: [number, number]
 }
 
 interface GlobeCdnProps {
-  markers?: PulseMarker[]
+  markers?: CdnMarker[]
+  arcs?: CdnArc[]
   className?: string
   speed?: number
 }
 
-const defaultMarkers: PulseMarker[] = [
-  { id: "pulse-1", location: [51.51, -0.13], delay: 0 },
-  { id: "pulse-2", location: [40.71, -74.01], delay: 0.5 },
-  { id: "pulse-3", location: [35.68, 139.65], delay: 1 },
-  { id: "pulse-4", location: [-33.87, 151.21], delay: 1.5 },
+const defaultMarkers: CdnMarker[] = [
+  { id: "cdn-iad", location: [38.95, -77.45], region: "iad1" },
+  { id: "cdn-sfo", location: [37.62, -122.38], region: "sfo1" },
+  { id: "cdn-cdg", location: [49.01, 2.55], region: "cdg1" },
+  { id: "cdn-hnd", location: [35.55, 139.78], region: "hnd1" },
+  { id: "cdn-syd", location: [-33.95, 151.18], region: "syd1" },
+  { id: "cdn-gru", location: [-23.43, -46.47], region: "gru1" },
+  { id: "cdn-sin", location: [1.36, 103.99], region: "sin1" },
+  { id: "cdn-arn", location: [59.65, 17.93], region: "arn1" },
+  { id: "cdn-dub", location: [53.43, -6.25], region: "dub1" },
+  { id: "cdn-bom", location: [19.09, 72.87], region: "bom1" },
+]
+
+const defaultArcs: CdnArc[] = [
+  { id: "cdn-arc-1", from: [38.95, -77.45], to: [49.01, 2.55] },
+  { id: "cdn-arc-2", from: [37.62, -122.38], to: [35.55, 139.78] },
+  { id: "cdn-arc-3", from: [49.01, 2.55], to: [1.36, 103.99] },
+  { id: "cdn-arc-4", from: [38.95, -77.45], to: [-23.43, -46.47] },
+  { id: "cdn-arc-5", from: [35.55, 139.78], to: [-33.95, 151.18] },
+  { id: "cdn-arc-6", from: [49.01, 2.55], to: [19.09, 72.87] },
 ]
 
 export function GlobeCdn({
   markers = defaultMarkers,
+  arcs = defaultArcs,
   className = "",
   speed = 0.003,
 }: GlobeCdnProps) {
@@ -33,6 +56,21 @@ export function GlobeCdn({
   const phiOffsetRef = useRef(0)
   const thetaOffsetRef = useRef(0)
   const isPausedRef = useRef(false)
+  const [traffic, setTraffic] = useState(() =>
+    defaultArcs.map((a, i) => ({ id: a.id, value: [420, 380, 290, 185, 156, 134][i] || 100 }))
+  )
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTraffic((data) =>
+        data.map((t) => ({
+          ...t,
+          value: Math.max(50, t.value + Math.floor(Math.random() * 21) - 10),
+        }))
+      )
+    }, 250)
+    return () => clearInterval(interval)
+  }, [])
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY }
@@ -76,29 +114,22 @@ export function GlobeCdn({
     let phi = 0
 
     function init() {
-      if (globe) return
-      const width = canvas.offsetWidth || 400
+      const width = canvas.offsetWidth
+      if (width === 0 || globe) return
 
       globe = createGlobe(canvas, {
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-        width,
-        height: width,
-        phi: 0,
-        theta: 0.2,
-        dark: 1,
-        diffuse: 1.5,
-        mapSamples: 16000,
-        mapBrightness: 10,
-        baseColor: [0.5, 0.5, 0.5],
-        markerColor: [0.2, 0.8, 0.9],
-        glowColor: [0.05, 0.05, 0.05],
-        markerElevation: 0,
-        markers: markers.map((m) => ({ location: m.location, size: 0.025, id: m.id })),
-        arcs: [],
-        arcColor: [0.3, 0.85, 0.95],
-        arcWidth: 0.5,
-        arcHeight: 0.25,
-        opacity: 0.7,
+        width, height: width,
+        phi: 0, theta: 0.2, dark: 1, diffuse: 1.5,
+        mapSamples: 16000, mapBrightness: 6,
+        baseColor: [0.15, 0.15, 0.2],
+        markerColor: [0.2, 0.5, 1],
+        glowColor: [0.05, 0.08, 0.15],
+        markerElevation: 0.02,
+        markers: markers.map((m) => ({ location: m.location, size: 0.012, id: m.id })),
+        arcs: arcs.map((a) => ({ from: a.from, to: a.to, id: a.id })),
+        arcColor: [0.3, 0.6, 1],
+        arcWidth: 0.5, arcHeight: 0.25, opacity: 0.7,
       })
 
       function animate() {
@@ -110,7 +141,7 @@ export function GlobeCdn({
         animationId = requestAnimationFrame(animate)
       }
       animate()
-      canvas.style.opacity = "1"
+      setTimeout(() => canvas && (canvas.style.opacity = "1"))
     }
 
     if (canvas.offsetWidth > 0) {
@@ -125,34 +156,50 @@ export function GlobeCdn({
       ro.observe(canvas)
     }
 
-    const fallback = setTimeout(() => init(), 500)
-
     return () => {
-      clearTimeout(fallback)
       if (animationId) cancelAnimationFrame(animationId)
       if (globe) globe.destroy()
     }
-  }, [markers, speed])
+  }, [markers, arcs, speed])
+
+  const pyramidFaceStyle = (nth: number): React.CSSProperties => {
+    const transforms = [
+      "rotateY(0deg) translateZ(4px) rotateX(19.5deg)",
+      "rotateY(120deg) translateZ(4px) rotateX(19.5deg)",
+      "rotateY(240deg) translateZ(4px) rotateX(19.5deg)",
+      "rotateX(-90deg) rotateZ(60deg) translateY(4px)",
+    ]
+    const colors = [
+      "hsl(217, 91%, 60%)",
+      "hsl(217, 91%, 45%)",
+      "hsl(217, 91%, 35%)",
+      "hsl(217, 91%, 50%)",
+    ]
+    return {
+      position: "absolute", left: -0.5, top: 0,
+      width: 0, height: 0,
+      borderLeft: "6.5px solid transparent",
+      borderRight: "6.5px solid transparent",
+      borderBottom: `13px solid ${colors[nth]}`,
+      transformOrigin: "center bottom",
+      transform: transforms[nth],
+    }
+  }
 
   return (
     <div className={`relative aspect-square select-none ${className}`}>
       <style>{`
-        @keyframes pulse-expand {
-          0% { transform: scaleX(0.3) scaleY(0.3); opacity: 0.8; }
-          100% { transform: scaleX(1.5) scaleY(1.5); opacity: 0; }
+        @keyframes pyramid-spin {
+          0% { transform: rotateX(20deg) rotateY(0deg); }
+          100% { transform: rotateX(20deg) rotateY(360deg); }
         }
       `}</style>
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
         style={{
-          width: "100%",
-          height: "100%",
-          cursor: "grab",
-          opacity: 0,
-          transition: "opacity 1.2s ease",
-          borderRadius: "50%",
-          touchAction: "none",
+          width: "100%", height: "100%", cursor: "grab", opacity: 0,
+          transition: "opacity 1.2s ease", borderRadius: "50%", touchAction: "none",
         }}
       />
       {markers.map((m) => (
@@ -162,49 +209,60 @@ export function GlobeCdn({
             position: "absolute",
             // @ts-expect-error CSS Anchor Positioning
             positionAnchor: `--cobe-${m.id}`,
-            bottom: "anchor(center)",
+            bottom: "anchor(top)",
             left: "anchor(center)",
-            translate: "-50% 50%",
-            width: 40,
-            height: 40,
+            translate: "-50% 0",
             display: "flex",
+            flexDirection: "column" as const,
             alignItems: "center",
-            justifyContent: "center",
+            gap: 6,
             pointerEvents: "none" as const,
             opacity: `var(--cobe-visible-${m.id}, 0)`,
             filter: `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
-            transition: "opacity 0.4s, filter 0.4s",
+            transition: "opacity 0.3s, filter 0.3s",
           }}
         >
-          <span
-            style={{
-              position: "absolute",
-              inset: 0,
-              border: "2px solid #33ccdd",
-              borderRadius: "50%",
-              opacity: 0,
-              animation: `pulse-expand 2s ease-out infinite ${m.delay}s`,
-            }}
-          />
-          <span
-            style={{
-              position: "absolute",
-              inset: 0,
-              border: "2px solid #33ccdd",
-              borderRadius: "50%",
-              opacity: 0,
-              animation: `pulse-expand 2s ease-out infinite ${m.delay + 0.5}s`,
-            }}
-          />
-          <span
-            style={{
-              width: 10,
-              height: 10,
-              background: "#33ccdd",
-              borderRadius: "50%",
-              boxShadow: "0 0 0 3px #111, 0 0 0 5px #33ccdd",
-            }}
-          />
+          <div style={{
+            width: 12, height: 12, position: "relative",
+            transformStyle: "preserve-3d" as const,
+            animation: "pyramid-spin 4s linear infinite",
+          }}>
+            {[0, 1, 2, 3].map((n) => (
+              <div key={n} style={pyramidFaceStyle(n)} />
+            ))}
+          </div>
+          <span style={{
+            fontFamily: "monospace", fontSize: "0.55rem", color: "#fff",
+            background: "hsl(217, 91%, 50%)", padding: "2px 6px", borderRadius: 3,
+            letterSpacing: "0.05em", whiteSpace: "nowrap" as const,
+            boxShadow: "0 1px 3px rgba(0,0,0,0.4)",
+          }}>{m.region}</span>
+        </div>
+      ))}
+      {traffic.map((t) => (
+        <div
+          key={t.id}
+          style={{
+            position: "absolute",
+            // @ts-expect-error CSS Anchor Positioning
+            positionAnchor: `--cobe-arc-${t.id}`,
+            bottom: "anchor(top)",
+            left: "anchor(center)",
+            translate: "-50% 0",
+            fontFamily: "monospace",
+            fontSize: "0.5rem",
+            color: "#fff",
+            background: "rgba(0,0,0,0.7)",
+            padding: "3px 8px",
+            borderRadius: 4,
+            whiteSpace: "nowrap" as const,
+            pointerEvents: "none" as const,
+            opacity: `var(--cobe-visible-arc-${t.id}, 0)`,
+            filter: `blur(calc((1 - var(--cobe-visible-arc-${t.id}, 0)) * 8px))`,
+            transition: "opacity 0.3s, filter 0.3s",
+          }}
+        >
+          {t.value}k req/s
         </div>
       ))}
     </div>
