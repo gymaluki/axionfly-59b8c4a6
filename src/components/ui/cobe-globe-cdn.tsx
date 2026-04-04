@@ -1,213 +1,183 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
-import { useCallback, useEffect, useRef, useState } from "react";
-import createGlobe from "cobe";
+import { useEffect, useRef, useCallback } from "react"
+import createGlobe from "cobe"
 
-interface GlobeCdnProps {
-  className?: string;
-  speed?: number;
+interface PulseMarker {
+  id: string
+  location: [number, number]
+  delay: number
 }
 
-const businessMarkers = [
-  { location: [-23.55, -46.63] as [number, number], label: "Barbearia SP", size: 0.08 },
-  { location: [-22.91, -43.17] as [number, number], label: "Pizzaria RJ", size: 0.07 },
-  { location: [-19.92, -43.94] as [number, number], label: "Clínica BH", size: 0.06 },
-  { location: [-12.97, -38.51] as [number, number], label: "Restaurante Salvador", size: 0.06 },
-  { location: [-25.43, -49.27] as [number, number], label: "Pet Shop Curitiba", size: 0.05 },
-  { location: [-3.72, -38.52] as [number, number], label: "Academia Fortaleza", size: 0.05 },
-  { location: [-15.78, -47.93] as [number, number], label: "Salão Brasília", size: 0.06 },
-  { location: [-30.03, -51.23] as [number, number], label: "Hamburgueria POA", size: 0.05 },
-  { location: [40.71, -74.01] as [number, number], label: "Barber NYC", size: 0.04 },
-  { location: [51.51, -0.13] as [number, number], label: "Restaurant London", size: 0.04 },
-];
+interface GlobeCdnProps {
+  markers?: PulseMarker[]
+  className?: string
+  speed?: number
+}
 
-export function GlobeCdn({ className, speed = 0.005 }: GlobeCdnProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
-  const dragOffset = useRef({ phi: 0, theta: 0 });
-  const phiOffsetRef = useRef(0);
-  const thetaOffsetRef = useRef(0);
-  const isPausedRef = useRef(false);
-  const [globeReady, setGlobeReady] = useState(false);
+const defaultMarkers: PulseMarker[] = [
+  { id: "pulse-1", location: [51.51, -0.13], delay: 0 },
+  { id: "pulse-2", location: [40.71, -74.01], delay: 0.5 },
+  { id: "pulse-3", location: [35.68, 139.65], delay: 1 },
+  { id: "pulse-4", location: [-33.87, 151.21], delay: 1.5 },
+]
 
-  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
-    pointerInteracting.current = { x: e.clientX, y: e.clientY };
-    if (canvasRef.current) canvasRef.current.style.cursor = "grabbing";
-    isPausedRef.current = true;
-  }, []);
+export function GlobeCdn({
+  markers = defaultMarkers,
+  className = "",
+  speed = 0.003,
+}: GlobeCdnProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const pointerInteracting = useRef<{ x: number; y: number } | null>(null)
+  const dragOffset = useRef({ phi: 0, theta: 0 })
+  const phiOffsetRef = useRef(0)
+  const thetaOffsetRef = useRef(0)
+  const isPausedRef = useRef(false)
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    pointerInteracting.current = { x: e.clientX, y: e.clientY }
+    if (canvasRef.current) canvasRef.current.style.cursor = "grabbing"
+    isPausedRef.current = true
+  }, [])
 
   const handlePointerUp = useCallback(() => {
     if (pointerInteracting.current !== null) {
-      phiOffsetRef.current += dragOffset.current.phi;
-      thetaOffsetRef.current += dragOffset.current.theta;
-      dragOffset.current = { phi: 0, theta: 0 };
+      phiOffsetRef.current += dragOffset.current.phi
+      thetaOffsetRef.current += dragOffset.current.theta
+      dragOffset.current = { phi: 0, theta: 0 }
     }
-    pointerInteracting.current = null;
-    if (canvasRef.current) canvasRef.current.style.cursor = "grab";
-    isPausedRef.current = false;
-  }, []);
+    pointerInteracting.current = null
+    if (canvasRef.current) canvasRef.current.style.cursor = "grab"
+    isPausedRef.current = false
+  }, [])
 
   useEffect(() => {
-    const onMove = (e: PointerEvent) => {
-      if (!pointerInteracting.current) return;
-      dragOffset.current = {
-        phi: (e.clientX - pointerInteracting.current.x) / 300,
-        theta: (e.clientY - pointerInteracting.current.y) / 1000,
-      };
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerup", handlePointerUp, { passive: true });
+    const handlePointerMove = (e: PointerEvent) => {
+      if (pointerInteracting.current !== null) {
+        dragOffset.current = {
+          phi: (e.clientX - pointerInteracting.current.x) / 300,
+          theta: (e.clientY - pointerInteracting.current.y) / 1000,
+        }
+      }
+    }
+    window.addEventListener("pointermove", handlePointerMove, { passive: true })
+    window.addEventListener("pointerup", handlePointerUp, { passive: true })
     return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", handlePointerUp);
-    };
-  }, [handlePointerUp]);
+      window.removeEventListener("pointermove", handlePointerMove)
+      window.removeEventListener("pointerup", handlePointerUp)
+    }
+  }, [handlePointerUp])
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvasRef.current) return
+    const canvas = canvasRef.current
+    let globe: ReturnType<typeof createGlobe> | null = null
+    let animationId: number
+    let phi = 0
 
-    let globe: ReturnType<typeof createGlobe> | null = null;
-    let animationId = 0;
-    let phi = 0;
+    function init() {
+      const width = canvas.offsetWidth
+      if (width === 0 || globe) return
 
-    const init = () => {
-      const width = canvas.offsetWidth;
-      if (!width || globe) return;
+      globe = createGlobe(canvas, {
+        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        width, height: width,
+        phi: 0, theta: 0.2, dark: 1, diffuse: 1.5,
+        mapSamples: 16000, mapBrightness: 10,
+        baseColor: [0.5, 0.5, 0.5],
+        markerColor: [0.2, 0.8, 0.9],
+        glowColor: [0.05, 0.05, 0.05],
+        markerElevation: 0,
+        markers: markers.map((m) => ({ location: m.location, size: 0.025, id: m.id })),
+        arcs: [], arcColor: [0.3, 0.85, 0.95],
+        arcWidth: 0.5, arcHeight: 0.25, opacity: 0.7,
+      })
 
-      try {
-        globe = createGlobe(canvas, {
-          devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-          width,
-          height: width,
-          phi: 0,
-          theta: 0.25,
-          dark: 1,
-          diffuse: 1.2,
-          mapSamples: 16000,
-          mapBrightness: 4,
-          baseColor: [0.12, 0.14, 0.22],
-          markerColor: [0.1, 0.6, 1],
-          glowColor: [0.06, 0.1, 0.2],
-          markerElevation: 0.05,
-          markers: businessMarkers.map((m) => ({
-            location: m.location,
-            size: m.size,
-          })),
-          opacity: 0.85,
-        });
-
-        const animate = () => {
-          if (!globe) return;
-          if (!isPausedRef.current) phi += speed;
-          globe.update({
-            phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-            theta: 0.25 + thetaOffsetRef.current + dragOffset.current.theta,
-          });
-          animationId = window.requestAnimationFrame(animate);
-        };
-
-        setGlobeReady(true);
-        animate();
-      } catch {
-        setGlobeReady(false);
+      function animate() {
+        if (!isPausedRef.current) phi += speed
+        globe!.update({
+          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
+          theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
+        })
+        animationId = requestAnimationFrame(animate)
       }
-    };
+      animate()
+      setTimeout(() => canvas && (canvas.style.opacity = "1"))
+    }
 
-    const timeout = setTimeout(() => {
-      if (canvas.offsetWidth > 0) {
-        init();
-      } else {
-        const ro = new ResizeObserver((entries) => {
-          if (entries[0]?.contentRect.width) {
-            ro.disconnect();
-            init();
-          }
-        });
-        ro.observe(canvas);
-      }
-    }, 100);
+    if (canvas.offsetWidth > 0) {
+      init()
+    } else {
+      const ro = new ResizeObserver((entries) => {
+        if (entries[0]?.contentRect.width > 0) {
+          ro.disconnect()
+          init()
+        }
+      })
+      ro.observe(canvas)
+    }
+
+    const fallback = setTimeout(() => init(), 500)
 
     return () => {
-      clearTimeout(timeout);
-      if (animationId) cancelAnimationFrame(animationId);
-      globe?.destroy();
-    };
-  }, [speed]);
+      clearTimeout(fallback)
+      if (animationId) cancelAnimationFrame(animationId)
+      if (globe) globe.destroy()
+    }
+  }, [markers, speed])
 
   return (
-    <div className={cn("relative aspect-square w-full select-none", className)}>
-      {/* CSS fallback globe - always visible behind canvas */}
-      <div className="absolute inset-0 rounded-full overflow-hidden">
-        <div
-          className="absolute inset-0 rounded-full"
-          style={{
-            background: "radial-gradient(circle at 35% 35%, hsl(217 91% 20% / 0.6), hsl(217 91% 8% / 0.9) 55%, transparent 72%)",
-            boxShadow: "inset 0 0 60px hsl(217 91% 60% / 0.08), 0 0 80px hsl(217 91% 50% / 0.15)",
-          }}
-        />
-        <div
-          className="absolute inset-[2%] rounded-full border border-primary/10"
-          style={{
-            background: "radial-gradient(circle at 40% 30%, hsl(217 91% 25% / 0.3), transparent 60%)",
-          }}
-        />
-        {/* Grid lines to simulate globe wireframe */}
-        <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full opacity-20">
-          <ellipse cx="100" cy="100" rx="96" ry="96" fill="none" stroke="hsl(217 91% 60%)" strokeWidth="0.5" />
-          <ellipse cx="100" cy="100" rx="70" ry="96" fill="none" stroke="hsl(217 91% 60%)" strokeWidth="0.3" />
-          <ellipse cx="100" cy="100" rx="40" ry="96" fill="none" stroke="hsl(217 91% 60%)" strokeWidth="0.3" />
-          <ellipse cx="100" cy="100" rx="96" ry="40" fill="none" stroke="hsl(217 91% 60%)" strokeWidth="0.3" transform="rotate(0 100 100)" />
-          <line x1="4" y1="100" x2="196" y2="100" stroke="hsl(217 91% 60%)" strokeWidth="0.3" />
-          <line x1="100" y1="4" x2="100" y2="196" stroke="hsl(217 91% 60%)" strokeWidth="0.3" />
-        </svg>
-      </div>
-
-      {/* Business marker dots on fallback */}
-      {!globeReady && (
-        <div className="absolute inset-0">
-          {[
-            { top: "35%", left: "38%", label: "Barbearia SP" },
-            { top: "30%", left: "42%", label: "Pizzaria RJ" },
-            { top: "28%", left: "35%", label: "Clínica BH" },
-            { top: "22%", left: "40%", label: "Restaurante SSA" },
-            { top: "40%", left: "36%", label: "Pet Shop CWB" },
-            { top: "18%", left: "38%", label: "Academia FOR" },
-            { top: "25%", left: "37%", label: "Salão BSB" },
-            { top: "45%", left: "34%", label: "Hamburgueria POA" },
-          ].map((dot, i) => (
-            <div
-              key={i}
-              className="absolute group"
-              style={{ top: dot.top, left: dot.left }}
-            >
-              <span className="block h-2 w-2 rounded-full bg-primary shadow-[0_0_12px_hsl(var(--primary)/0.8)] animate-pulse" />
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 whitespace-nowrap rounded bg-background/90 px-2 py-0.5 text-[10px] font-medium text-foreground opacity-0 group-hover:opacity-100 transition-opacity border border-border/50 backdrop-blur-sm">
-                {dot.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* WebGL canvas (renders real globe when GPU available) */}
+    <div className={`relative aspect-square select-none ${className}`}>
+      <style>{`
+        @keyframes pulse-expand {
+          0% { transform: scaleX(0.3) scaleY(0.3); opacity: 0.8; }
+          100% { transform: scaleX(1.5) scaleY(1.5); opacity: 0; }
+        }
+      `}</style>
       <canvas
         ref={canvasRef}
         onPointerDown={handlePointerDown}
-        className={cn(
-          "absolute inset-0 h-full w-full rounded-full transition-opacity duration-1000",
-          globeReady ? "opacity-100" : "opacity-0",
-        )}
-        style={{ cursor: "grab", touchAction: "none" }}
+        style={{
+          width: "100%", height: "100%", cursor: "grab", opacity: 0,
+          transition: "opacity 1.2s ease", borderRadius: "50%", touchAction: "none",
+        }}
       />
-
-      {/* Label */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-        <span className="rounded-full border border-primary/20 bg-background/80 px-3 py-1.5 text-[10px] font-semibold tracking-[0.15em] text-primary/90 backdrop-blur-sm uppercase">
-          {globeReady ? "🌍 Globo interativo" : "🌍 Comércios mapeados"}
-        </span>
-      </div>
+      {markers.map((m) => (
+        <div
+          key={m.id}
+          style={{
+            position: "absolute",
+            // @ts-expect-error CSS Anchor Positioning
+            positionAnchor: `--cobe-${m.id}`,
+            bottom: "anchor(center)",
+            left: "anchor(center)",
+            translate: "-50% 50%",
+            width: 40, height: 40,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none" as const,
+            opacity: `var(--cobe-visible-${m.id}, 0)`,
+            filter: `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
+            transition: "opacity 0.4s, filter 0.4s",
+          }}
+        >
+          <span style={{
+            position: "absolute", inset: 0,
+            border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
+            animation: `pulse-expand 2s ease-out infinite ${m.delay}s`,
+          }} />
+          <span style={{
+            position: "absolute", inset: 0,
+            border: "2px solid #33ccdd", borderRadius: "50%", opacity: 0,
+            animation: `pulse-expand 2s ease-out infinite ${m.delay + 0.5}s`,
+          }} />
+          <span style={{
+            width: 10, height: 10, background: "#33ccdd", borderRadius: "50%",
+            boxShadow: "0 0 0 3px #111, 0 0 0 5px #33ccdd",
+          }} />
+        </div>
+      ))}
     </div>
-  );
+  )
 }
