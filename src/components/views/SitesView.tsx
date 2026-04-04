@@ -51,7 +51,6 @@ const SitesView = () => {
   const [primaryColor, setPrimaryColor] = useState("");
   const [secondaryColor, setSecondaryColor] = useState("");
   const [features, setFeatures] = useState("");
-  const [prompt, setPrompt] = useState("");
   const [copied, setCopied] = useState(false);
 
   const handleGenerate = () => {
