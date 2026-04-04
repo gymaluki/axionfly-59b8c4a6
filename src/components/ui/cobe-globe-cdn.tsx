@@ -118,28 +118,27 @@ export function GlobeCdn({
       if (width === 0 || globe) return
 
       globe = createGlobe(canvas, {
-        devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-        width, height: width,
-        phi: 0, theta: 0.2, dark: 1, diffuse: 1.5,
-        mapSamples: 16000, mapBrightness: 6,
-        baseColor: [0.15, 0.15, 0.2],
-        markerColor: [0.2, 0.5, 1],
-        glowColor: [0.05, 0.08, 0.15],
-        markerElevation: 0.02,
-        markers: markers.map((m) => ({ location: m.location, size: 0.012, id: m.id })),
-        arcs: arcs.map((a) => ({ from: a.from, to: a.to, id: a.id })),
-        arcColor: [0.3, 0.6, 1],
-        arcWidth: 0.5, arcHeight: 0.25, opacity: 0.7,
+      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      width, height: width,
+      phi: 0, theta: 0.2, dark: 0, diffuse: 1.5,
+      mapSamples: 16000, mapBrightness: 10,
+      baseColor: [1, 1, 1],
+      markerColor: [0, 0, 0],
+      glowColor: [0.94, 0.93, 0.91],
+      markerElevation: 0.02,
+      markers: markers.map((m) => ({ location: m.location, size: 0.012, id: m.id })),
+      arcs: arcs.map((a) => ({ from: a.from, to: a.to, id: a.id })),
+      arcColor: [0, 0, 0],
+      arcWidth: 0.5, arcHeight: 0.25, opacity: 0.7,
+    })
+    function animate() {
+      if (!isPausedRef.current) phi += speed
+      globe!.update({
+        phi: phi + phiOffsetRef.current + dragOffset.current.phi,
+        theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
       })
-
-      function animate() {
-        if (!isPausedRef.current) phi += speed
-        globe!.update({
-          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-          theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
-        })
-        animationId = requestAnimationFrame(animate)
-      }
+      animationId = requestAnimationFrame(animate)
+    }
       animate()
       setTimeout(() => canvas && (canvas.style.opacity = "1"))
     }
@@ -169,12 +168,7 @@ export function GlobeCdn({
       "rotateY(240deg) translateZ(4px) rotateX(19.5deg)",
       "rotateX(-90deg) rotateZ(60deg) translateY(4px)",
     ]
-    const colors = [
-      "hsl(217, 91%, 60%)",
-      "hsl(217, 91%, 45%)",
-      "hsl(217, 91%, 35%)",
-      "hsl(217, 91%, 50%)",
-    ]
+    const colors = ["#111", "#333", "#555", "#222"]
     return {
       position: "absolute", left: -0.5, top: 0,
       width: 0, height: 0,
@@ -232,10 +226,10 @@ export function GlobeCdn({
             ))}
           </div>
           <span style={{
-            fontFamily: "monospace", fontSize: "0.55rem", color: "#fff",
-            background: "hsl(217, 91%, 50%)", padding: "2px 6px", borderRadius: 3,
+            fontFamily: "monospace", fontSize: "0.55rem", color: "#000",
+            background: "#fff", padding: "2px 6px", borderRadius: 3,
             letterSpacing: "0.05em", whiteSpace: "nowrap" as const,
-            boxShadow: "0 1px 3px rgba(0,0,0,0.4)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
           }}>{m.region}</span>
         </div>
       ))}
@@ -252,7 +246,7 @@ export function GlobeCdn({
             fontFamily: "monospace",
             fontSize: "0.5rem",
             color: "#fff",
-            background: "rgba(0,0,0,0.7)",
+            background: "#000",
             padding: "3px 8px",
             borderRadius: 4,
             whiteSpace: "nowrap" as const,
