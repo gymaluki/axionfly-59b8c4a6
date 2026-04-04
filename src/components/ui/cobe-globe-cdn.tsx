@@ -1,25 +1,26 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useCallback, useState } from "react"
-import createGlobe from "cobe"
+import { cn } from "@/lib/utils";
+import { useCallback, useEffect, useRef, useState } from "react";
+import createGlobe from "cobe";
 
 interface CdnMarker {
-  id: string
-  location: [number, number]
-  region: string
+  id: string;
+  location: [number, number];
+  region: string;
 }
 
 interface CdnArc {
-  id: string
-  from: [number, number]
-  to: [number, number]
+  id: string;
+  from: [number, number];
+  to: [number, number];
 }
 
 interface GlobeCdnProps {
-  markers?: CdnMarker[]
-  arcs?: CdnArc[]
-  className?: string
-  speed?: number
+  markers?: CdnMarker[];
+  arcs?: CdnArc[];
+  className?: string;
+  speed?: number;
 }
 
 const defaultMarkers: CdnMarker[] = [
@@ -33,7 +34,7 @@ const defaultMarkers: CdnMarker[] = [
   { id: "cdn-arn", location: [59.65, 17.93], region: "arn1" },
   { id: "cdn-dub", location: [53.43, -6.25], region: "dub1" },
   { id: "cdn-bom", location: [19.09, 72.87], region: "bom1" },
-]
+];
 
 const defaultArcs: CdnArc[] = [
   { id: "cdn-arc-1", from: [38.95, -77.45], to: [49.01, 2.55] },
@@ -42,228 +43,210 @@ const defaultArcs: CdnArc[] = [
   { id: "cdn-arc-4", from: [38.95, -77.45], to: [-23.43, -46.47] },
   { id: "cdn-arc-5", from: [35.55, 139.78], to: [-33.95, 151.18] },
   { id: "cdn-arc-6", from: [49.01, 2.55], to: [19.09, 72.87] },
-]
+];
+
+const fallbackDots = [
+  { top: "22%", left: "34%" },
+  { top: "28%", left: "68%" },
+  { top: "43%", left: "55%" },
+  { top: "57%", left: "28%" },
+  { top: "64%", left: "72%" },
+  { top: "72%", left: "46%" },
+];
 
 export function GlobeCdn({
   markers = defaultMarkers,
   arcs = defaultArcs,
-  className = "",
+  className,
   speed = 0.003,
 }: GlobeCdnProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const pointerInteracting = useRef<{ x: number; y: number } | null>(null)
-  const dragOffset = useRef({ phi: 0, theta: 0 })
-  const phiOffsetRef = useRef(0)
-  const thetaOffsetRef = useRef(0)
-  const isPausedRef = useRef(false)
-  const [traffic, setTraffic] = useState(() =>
-    defaultArcs.map((a, i) => ({ id: a.id, value: [420, 380, 290, 185, 156, 134][i] || 100 }))
-  )
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
+  const dragOffset = useRef({ phi: 0, theta: 0 });
+  const phiOffsetRef = useRef(0);
+  const thetaOffsetRef = useRef(0);
+  const isPausedRef = useRef(false);
+  const [status, setStatus] = useState<"loading" | "ready" | "fallback">("loading");
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTraffic((data) =>
-        data.map((t) => ({
-          ...t,
-          value: Math.max(50, t.value + Math.floor(Math.random() * 21) - 10),
-        }))
-      )
-    }, 250)
-    return () => clearInterval(interval)
-  }, [])
-
-  const handlePointerDown = useCallback((e: React.PointerEvent) => {
-    pointerInteracting.current = { x: e.clientX, y: e.clientY }
-    if (canvasRef.current) canvasRef.current.style.cursor = "grabbing"
-    isPausedRef.current = true
-  }, [])
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
+    pointerInteracting.current = { x: e.clientX, y: e.clientY };
+    if (canvasRef.current) canvasRef.current.style.cursor = "grabbing";
+    isPausedRef.current = true;
+  }, []);
 
   const handlePointerUp = useCallback(() => {
     if (pointerInteracting.current !== null) {
-      phiOffsetRef.current += dragOffset.current.phi
-      thetaOffsetRef.current += dragOffset.current.theta
-      dragOffset.current = { phi: 0, theta: 0 }
+      phiOffsetRef.current += dragOffset.current.phi;
+      thetaOffsetRef.current += dragOffset.current.theta;
+      dragOffset.current = { phi: 0, theta: 0 };
     }
-    pointerInteracting.current = null
-    if (canvasRef.current) canvasRef.current.style.cursor = "grab"
-    isPausedRef.current = false
-  }, [])
+
+    pointerInteracting.current = null;
+
+    if (canvasRef.current) {
+      canvasRef.current.style.cursor = "grab";
+    }
+
+    isPausedRef.current = false;
+  }, []);
 
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
-      if (pointerInteracting.current !== null) {
-        dragOffset.current = {
-          phi: (e.clientX - pointerInteracting.current.x) / 300,
-          theta: (e.clientY - pointerInteracting.current.y) / 1000,
-        }
-      }
-    }
-    window.addEventListener("pointermove", handlePointerMove, { passive: true })
-    window.addEventListener("pointerup", handlePointerUp, { passive: true })
+      if (pointerInteracting.current === null) return;
+
+      dragOffset.current = {
+        phi: (e.clientX - pointerInteracting.current.x) / 300,
+        theta: (e.clientY - pointerInteracting.current.y) / 1000,
+      };
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerup", handlePointerUp, { passive: true });
+
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove)
-      window.removeEventListener("pointerup", handlePointerUp)
-    }
-  }, [handlePointerUp])
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [handlePointerUp]);
 
   useEffect(() => {
-    if (!canvasRef.current) return
-    const canvas = canvasRef.current
-    let globe: ReturnType<typeof createGlobe> | null = null
-    let animationId: number
-    let phi = 0
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    function init() {
-      const width = canvas.offsetWidth
-      if (width === 0 || globe) return
+    let globe: ReturnType<typeof createGlobe> | null = null;
+    let animationId = 0;
+    let phi = 0;
+
+    const init = () => {
+      const width = canvas.offsetWidth;
+      if (!width || globe) return;
 
       try {
         globe = createGlobe(canvas, {
           devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-          width, height: width,
-          phi: 0, theta: 0.2, dark: 1, diffuse: 1.5,
-          mapSamples: 16000, mapBrightness: 6,
-          baseColor: [0.3, 0.3, 0.4],
-          markerColor: [0.4, 0.7, 1],
-          glowColor: [0.05, 0.05, 0.15],
-          markerElevation: 0.02,
-          markers: markers.map((m) => ({ location: m.location, size: 0.012, id: m.id })),
-          arcs: arcs.map((a) => ({ from: a.from, to: a.to, id: a.id })),
-          arcColor: [0.3, 0.6, 1],
-          arcWidth: 0.5, arcHeight: 0.25, opacity: 0.7,
-        })
+          width,
+          height: width,
+          phi: 0,
+          theta: 0.18,
+          dark: 1,
+          diffuse: 1.4,
+          mapSamples: 12000,
+          mapBrightness: 3,
+          baseColor: [0.16, 0.18, 0.28],
+          markerColor: [0.24, 0.62, 1],
+          glowColor: [0.08, 0.12, 0.22],
+          markerElevation: 0.04,
+          markers: markers.map((marker) => ({
+            location: marker.location,
+            size: 0.1,
+          })),
+          arcs: arcs.map((arc) => ({
+            from: arc.from,
+            to: arc.to,
+          })),
+          arcColor: [0.24, 0.62, 1],
+          arcWidth: 0.7,
+          arcHeight: 0.18,
+          opacity: 0.9,
+          onRender: (state) => {
+            if (!isPausedRef.current) {
+              phi += speed;
+            }
 
-        function animate() {
-          if (!isPausedRef.current) phi += speed
-          globe!.update({
-            phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-            theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
-          })
-          animationId = requestAnimationFrame(animate)
-        }
-        animate()
-      } catch (e) {
-        console.warn("Globe WebGL init failed:", e)
+            state.phi = phi + phiOffsetRef.current + dragOffset.current.phi;
+            state.theta = 0.18 + thetaOffsetRef.current + dragOffset.current.theta;
+          },
+        });
+
+        canvas.style.opacity = "1";
+        setStatus("ready");
+
+        const keepAlive = () => {
+          animationId = window.requestAnimationFrame(keepAlive);
+        };
+
+        keepAlive();
+      } catch {
+        canvas.style.opacity = "0";
+        setStatus("fallback");
       }
-      canvas.style.opacity = "1"
-    }
+    };
 
     if (canvas.offsetWidth > 0) {
-      init()
+      init();
     } else {
-      const ro = new ResizeObserver((entries) => {
-        if (entries[0]?.contentRect.width > 0) {
-          ro.disconnect()
-          init()
+      const resizeObserver = new ResizeObserver((entries) => {
+        if (entries[0]?.contentRect.width) {
+          resizeObserver.disconnect();
+          init();
         }
-      })
-      ro.observe(canvas)
+      });
+
+      resizeObserver.observe(canvas);
+
+      return () => {
+        resizeObserver.disconnect();
+        if (animationId) window.cancelAnimationFrame(animationId);
+        globe?.destroy();
+      };
     }
 
     return () => {
-      if (animationId) cancelAnimationFrame(animationId)
-      if (globe) globe.destroy()
-    }
-  }, [markers, arcs, speed])
+      if (animationId) window.cancelAnimationFrame(animationId);
+      globe?.destroy();
+    };
+  }, [arcs, markers, speed]);
 
-  const pyramidFaceStyle = (nth: number): React.CSSProperties => {
-    const transforms = [
-      "rotateY(0deg) translateZ(4px) rotateX(19.5deg)",
-      "rotateY(120deg) translateZ(4px) rotateX(19.5deg)",
-      "rotateY(240deg) translateZ(4px) rotateX(19.5deg)",
-      "rotateX(-90deg) rotateZ(60deg) translateY(4px)",
-    ]
-    const colors = ["#111", "#333", "#555", "#222"]
-    return {
-      position: "absolute", left: -0.5, top: 0,
-      width: 0, height: 0,
-      borderLeft: "6.5px solid transparent",
-      borderRight: "6.5px solid transparent",
-      borderBottom: `13px solid ${colors[nth]}`,
-      transformOrigin: "center bottom",
-      transform: transforms[nth],
-    }
-  }
+  const statusLabel =
+    status === "ready"
+      ? "Rede global ativa"
+      : status === "fallback"
+        ? "Visualização simplificada ativa"
+        : "Carregando globo...";
 
   return (
-    <div className={`relative aspect-square select-none ${className}`}>
-      <style>{`
-        @keyframes pyramid-spin {
-          0% { transform: rotateX(20deg) rotateY(0deg); }
-          100% { transform: rotateX(20deg) rotateY(360deg); }
-        }
-      `}</style>
-      <canvas
-        ref={canvasRef}
-        onPointerDown={handlePointerDown}
-        style={{
-          width: "100%", height: "100%", cursor: "grab", opacity: 0,
-          transition: "opacity 1.2s ease", borderRadius: "50%", touchAction: "none",
-        }}
-      />
-      {markers.map((m) => (
-        <div
-          key={m.id}
-          style={{
-            position: "absolute",
-            // @ts-expect-error CSS Anchor Positioning
-            positionAnchor: `--cobe-${m.id}`,
-            bottom: "anchor(top)",
-            left: "anchor(center)",
-            translate: "-50% 0",
-            display: "flex",
-            flexDirection: "column" as const,
-            alignItems: "center",
-            gap: 6,
-            pointerEvents: "none" as const,
-            opacity: `var(--cobe-visible-${m.id}, 0)`,
-            filter: `blur(calc((1 - var(--cobe-visible-${m.id}, 0)) * 8px))`,
-            transition: "opacity 0.3s, filter 0.3s",
-          }}
-        >
-          <div style={{
-            width: 12, height: 12, position: "relative",
-            transformStyle: "preserve-3d" as const,
-            animation: "pyramid-spin 4s linear infinite",
-          }}>
-            {[0, 1, 2, 3].map((n) => (
-              <div key={n} style={pyramidFaceStyle(n)} />
-            ))}
-          </div>
-          <span style={{
-            fontFamily: "monospace", fontSize: "0.55rem", color: "#000",
-            background: "#fff", padding: "2px 6px", borderRadius: 3,
-            letterSpacing: "0.05em", whiteSpace: "nowrap" as const,
-            boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-          }}>{m.region}</span>
-        </div>
+    <div
+      className={cn(
+        "relative aspect-square min-h-[320px] w-full select-none overflow-hidden rounded-full border border-border/40 bg-background/60 shadow-[0_0_70px_hsl(var(--primary)/0.12)]",
+        className,
+      )}
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.18), transparent 42%), radial-gradient(circle at 50% 50%, hsl(var(--foreground) / 0.08), transparent 72%)",
+      }}
+    >
+      <div className="absolute inset-[7%] rounded-full border border-primary/20" />
+      <div className="absolute inset-[18%] rounded-full border border-primary/10" />
+      <div className="absolute left-1/2 top-[8%] h-[84%] w-px -translate-x-1/2 bg-border/30" />
+      <div className="absolute left-[8%] top-1/2 h-px w-[84%] -translate-y-1/2 bg-border/30" />
+      <div className="absolute inset-[12%] rounded-full border border-border/20" />
+
+      {fallbackDots.map((dot, index) => (
+        <span
+          key={`${dot.left}-${dot.top}-${index}`}
+          className="absolute h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_22px_hsl(var(--primary)/0.9)]"
+          style={{ left: dot.left, top: dot.top }}
+        />
       ))}
-      {traffic.map((t) => (
-        <div
-          key={t.id}
+
+      <div className="absolute inset-0 opacity-100 transition-opacity duration-700">
+        <canvas
+          ref={canvasRef}
+          onPointerDown={handlePointerDown}
+          className="absolute inset-0 h-full w-full rounded-full transition-opacity duration-1000"
           style={{
-            position: "absolute",
-            // @ts-expect-error CSS Anchor Positioning
-            positionAnchor: `--cobe-arc-${t.id}`,
-            bottom: "anchor(top)",
-            left: "anchor(center)",
-            translate: "-50% 0",
-            fontFamily: "monospace",
-            fontSize: "0.5rem",
-            color: "#fff",
-            background: "#000",
-            padding: "3px 8px",
-            borderRadius: 4,
-            whiteSpace: "nowrap" as const,
-            pointerEvents: "none" as const,
-            opacity: `var(--cobe-visible-arc-${t.id}, 0)`,
-            filter: `blur(calc((1 - var(--cobe-visible-arc-${t.id}, 0)) * 8px))`,
-            transition: "opacity 0.3s, filter 0.3s",
+            cursor: "grab",
+            opacity: status === "ready" ? 1 : 0,
+            touchAction: "none",
           }}
-        >
-          {t.value}k req/s
-        </div>
-      ))}
+        />
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
+        <span className="rounded-full border border-primary/20 bg-background/80 px-4 py-2 text-xs font-semibold tracking-[0.18em] text-foreground backdrop-blur-sm">
+          {statusLabel}
+        </span>
+      </div>
     </div>
-  )
+  );
 }

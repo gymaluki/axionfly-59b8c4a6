@@ -38,7 +38,7 @@ export function HeroSection() {
 					</h1>
 					<div className="flex justify-center">
 						<ShutterText
-							words={["BARBEARIAS", "HAMBURGUERIAS", "ACADEMIAS", "DENTISTAS", "CLÍNICAS", "RESTAURANTES"]}
+							words={["BARBEARIAS", "PIZZARIAS", "HAMBURGUERIAS", "ACADEMIAS", "CLÍNICAS", "RESTAURANTES"]}
 							interval={2200}
 						/>
 					</div>
