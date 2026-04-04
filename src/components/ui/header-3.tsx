@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import axionflyLogo from '@/assets/axionfly-logo.png';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { createPortal } from 'react-dom';
@@ -16,7 +17,6 @@ import {
 	MapPin,
 	BookOpen,
 	Code2,
-	Zap,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,25 +46,33 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'sticky top-0 z-50 mx-auto w-full border-b border-transparent transition-all duration-500 ease-out',
+				'sticky top-0 z-50 mx-auto w-full border-b transition-all duration-500 ease-out',
 				scrolled && !open
-					? 'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg shadow-lg'
-					: '',
+					? 'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg shadow-lg max-w-4xl md:top-4 md:rounded-xl'
+					: 'border-transparent max-w-full',
 				open ? 'bg-background/90' : '',
 			)}
 		>
 			<nav
 				className={cn(
 					'flex w-full items-center justify-between px-4 transition-all duration-500 ease-out',
-					scrolled ? 'h-12 md:px-2' : 'h-14',
+					scrolled ? 'h-11 md:px-3' : 'h-14',
 				)}
 			>
 				<div className="flex items-center gap-5">
-					<a href="#" className="hover:opacity-80 transition-opacity flex items-center gap-2">
-						<div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-							<Zap className="w-4 h-4 text-primary-foreground" />
-						</div>
-						<span className="text-xl font-bold text-foreground">Axion<span className="text-primary">Fly</span></span>
+					<a href="#" className="hover:opacity-80 transition-all flex items-center gap-2">
+						<img
+							src={axionflyLogo}
+							alt="AxionFly"
+							className={cn(
+								'transition-all duration-500',
+								scrolled ? 'w-6 h-6' : 'w-8 h-8',
+							)}
+						/>
+						<span className={cn(
+							'font-bold text-foreground transition-all duration-500',
+							scrolled ? 'text-lg' : 'text-xl',
+						)}>Axion<span className="text-primary">Fly</span></span>
 					</a>
 					<NavigationMenu className="hidden md:flex">
 						<NavigationMenuList>
