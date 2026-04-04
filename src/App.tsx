@@ -21,7 +21,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/guia-design" element={<DesignGuide />} />
+          <Route path="/guia-design" element={<DesignStylesGuide />} />
+          <Route path="/guia-fontes" element={<FontsGuide />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
