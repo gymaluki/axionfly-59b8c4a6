@@ -149,7 +149,7 @@ const SitesView = () => {
           </div>
         </div>
 
-
+        <div className="grid md:grid-cols-3 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Cor Principal</label>
             <Input
