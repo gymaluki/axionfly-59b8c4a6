@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, MessageCircle, ExternalLink, MapPin, Loader2 } from "lucide-react";
+import { Search, MessageCircle, ExternalLink, MapPin, Loader2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -45,7 +45,21 @@ interface SearchResult {
   url: string;
   title: string;
   description: string;
+  phone: string | null;
 }
+
+const extractPhone = (text: string): string | null => {
+  // Matches Brazilian phone formats: (XX) XXXXX-XXXX, (XX) XXXX-XXXX, XX XXXXXXXXX, +55...
+  const patterns = [
+    /\(?\d{2}\)?\s*9?\d{4}[-.\s]?\d{4}/,
+    /\+55\s*\(?\d{2}\)?\s*9?\d{4}[-.\s]?\d{4}/,
+  ];
+  for (const p of patterns) {
+    const match = text.match(p);
+    if (match) return match[0].trim();
+  }
+  return null;
+};
 
 const staggerItem = {
   hidden: { opacity: 0, x: -20 },
@@ -89,14 +103,20 @@ const ProspeccaoView = () => {
         limit: 15,
         lang: "pt-br",
         country: "br",
+        scrapeOptions: { formats: ["markdown"] },
       });
 
       if (response.success && response.data) {
-        const mapped: SearchResult[] = (response.data as any[]).map((item: any) => ({
-          url: item.url || "",
-          title: item.title || "Sem título",
-          description: item.description || "",
-        }));
+        const mapped: SearchResult[] = (response.data as any[]).map((item: any) => {
+          const allText = `${item.description || ""} ${item.markdown || ""}`;
+          const phone = extractPhone(allText);
+          return {
+            url: item.url || "",
+            title: item.title || "Sem título",
+            description: item.description || "",
+            phone,
+          };
+        });
         setResults(mapped);
         setKey((k) => k + 1);
       } else {
@@ -212,7 +232,8 @@ const ProspeccaoView = () => {
             <thead>
               <tr className="border-b border-border">
                 <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Negócio</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell">Descrição</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden lg:table-cell">Descrição</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Telefone</th>
                 <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações</th>
               </tr>
             </thead>
@@ -236,8 +257,18 @@ const ProspeccaoView = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground hidden md:table-cell max-w-xs truncate">
+                    <td className="px-4 py-3 text-sm text-muted-foreground hidden lg:table-cell max-w-xs truncate">
                       {r.description || "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      {r.phone ? (
+                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                          <Phone className="w-3.5 h-3.5 text-green-500" />
+                          {r.phone}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">—</span>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-right">
                       <div className="flex gap-2 justify-end">
@@ -253,8 +284,10 @@ const ProspeccaoView = () => {
                           size="sm"
                           variant="hero"
                           onClick={() => {
+                            const phoneNum = r.phone ? r.phone.replace(/\D/g, "") : "";
+                            const fullNum = phoneNum.startsWith("55") ? phoneNum : `55${phoneNum}`;
                             const msg = encodeURIComponent(`Olá! Vi seu negócio online e gostaria de apresentar uma proposta. Podemos conversar?`);
-                            window.open(`https://wa.me/?text=${msg}`, "_blank");
+                            window.open(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`, "_blank");
                           }}
                           className="gap-1.5"
                         >
