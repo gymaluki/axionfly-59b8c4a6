@@ -103,14 +103,20 @@ const ProspeccaoView = () => {
         limit: 15,
         lang: "pt-br",
         country: "br",
+        scrapeOptions: { formats: ["markdown"] },
       });
 
       if (response.success && response.data) {
-        const mapped: SearchResult[] = (response.data as any[]).map((item: any) => ({
-          url: item.url || "",
-          title: item.title || "Sem título",
-          description: item.description || "",
-        }));
+        const mapped: SearchResult[] = (response.data as any[]).map((item: any) => {
+          const allText = `${item.description || ""} ${item.markdown || ""}`;
+          const phone = extractPhone(allText);
+          return {
+            url: item.url || "",
+            title: item.title || "Sem título",
+            description: item.description || "",
+            phone,
+          };
+        });
         setResults(mapped);
         setKey((k) => k + 1);
       } else {
