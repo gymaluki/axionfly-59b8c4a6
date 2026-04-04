@@ -72,11 +72,40 @@ const staggerItem = {
 const ProspeccaoView = () => {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
+  const [cidades, setCidades] = useState<string[]>([]);
+  const [loadingCidades, setLoadingCidades] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [key, setKey] = useState(0);
+
+  // Buscar cidades do IBGE quando o estado muda
+  useEffect(() => {
+    if (!estado || estado === "todos") {
+      setCidades([]);
+      setCidade("");
+      return;
+    }
+
+    const fetchCidades = async () => {
+      setLoadingCidades(true);
+      setCidade("");
+      try {
+        const res = await fetch(
+          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios?orderBy=nome`
+        );
+        const data = await res.json();
+        setCidades(data.map((m: any) => m.nome));
+      } catch {
+        setCidades([]);
+      } finally {
+        setLoadingCidades(false);
+      }
+    };
+
+    fetchCidades();
+  }, [estado]);
 
   const buildLocation = () => {
     const parts: string[] = [];
