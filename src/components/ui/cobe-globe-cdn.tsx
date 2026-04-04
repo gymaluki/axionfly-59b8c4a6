@@ -117,30 +117,35 @@ export function GlobeCdn({
       const width = canvas.offsetWidth
       if (width === 0 || globe) return
 
-      globe = createGlobe(canvas, {
-      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
-      width, height: width,
-      phi: 0, theta: 0.2, dark: 0, diffuse: 1.5,
-      mapSamples: 16000, mapBrightness: 10,
-      baseColor: [1, 1, 1],
-      markerColor: [0, 0, 0],
-      glowColor: [0.94, 0.93, 0.91],
-      markerElevation: 0.02,
-      markers: markers.map((m) => ({ location: m.location, size: 0.012, id: m.id })),
-      arcs: arcs.map((a) => ({ from: a.from, to: a.to, id: a.id })),
-      arcColor: [0, 0, 0],
-      arcWidth: 0.5, arcHeight: 0.25, opacity: 0.7,
-    })
-    function animate() {
-      if (!isPausedRef.current) phi += speed
-      globe!.update({
-        phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-        theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
-      })
-      animationId = requestAnimationFrame(animate)
-    }
-      animate()
-      setTimeout(() => canvas && (canvas.style.opacity = "1"))
+      try {
+        globe = createGlobe(canvas, {
+          devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+          width, height: width,
+          phi: 0, theta: 0.2, dark: 1, diffuse: 1.5,
+          mapSamples: 16000, mapBrightness: 6,
+          baseColor: [0.3, 0.3, 0.4],
+          markerColor: [0.4, 0.7, 1],
+          glowColor: [0.05, 0.05, 0.15],
+          markerElevation: 0.02,
+          markers: markers.map((m) => ({ location: m.location, size: 0.012, id: m.id })),
+          arcs: arcs.map((a) => ({ from: a.from, to: a.to, id: a.id })),
+          arcColor: [0.3, 0.6, 1],
+          arcWidth: 0.5, arcHeight: 0.25, opacity: 0.7,
+        })
+
+        function animate() {
+          if (!isPausedRef.current) phi += speed
+          globe!.update({
+            phi: phi + phiOffsetRef.current + dragOffset.current.phi,
+            theta: 0.2 + thetaOffsetRef.current + dragOffset.current.theta,
+          })
+          animationId = requestAnimationFrame(animate)
+        }
+        animate()
+      } catch (e) {
+        console.warn("Globe WebGL init failed:", e)
+      }
+      canvas.style.opacity = "1"
     }
 
     if (canvas.offsetWidth > 0) {
