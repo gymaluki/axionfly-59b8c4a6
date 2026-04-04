@@ -11,16 +11,16 @@ interface DashboardSidebarProps {
 }
 
 const navItems: { id: View; label: string; icon: React.ElementType }[] = [
-  { id: "prospeccao", label: "Prospecção Maps", icon: MapPin },
-  { id: "ebooks", label: "Gerador de E-books", icon: BookOpen },
   { id: "sites", label: "Fábrica de Sites", icon: Code2 },
+  { id: "prospeccao", label: "Busca de Leads", icon: MapPin },
+  { id: "ebooks", label: "Gerador de E-books", icon: BookOpen },
 ];
 
 const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail }: DashboardSidebarProps) => {
   return (
     <aside className="w-64 shrink-0 border-r border-border bg-sidebar flex flex-col min-h-screen">
       <div className="p-5 border-b border-border">
-        <span className="text-lg font-bold gradient-text">ScaleAI</span>
+        <span className="text-lg font-bold text-foreground">Axion<span className="text-primary">Fly</span></span>
       </div>
 
       <nav className="flex-1 p-3 space-y-1">

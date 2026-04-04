@@ -53,14 +53,14 @@ const slideFromRight = {
 const features = [
   {
     icon: Code2,
-    title: "Criador de Sites IA",
-    desc: "Descreva o site que seu cliente precisa. A IA gera o prompt perfeito — você cola no Lovable e entrega um site profissional em minutos.",
+    title: "Fábrica de Sites IA",
+    desc: "Escolha o nicho, personalize cores e nome — a IA monta o site completo em minutos. Pronto pra vender.",
     tag: "PRINCIPAL",
   },
   {
     icon: MapPin,
-    title: "Prospecção Google Maps",
-    desc: "A IA varre o Google Maps e encontra barbearias, clínicas, restaurantes — qualquer nicho. Nome, telefone e endereço prontos para você vender.",
+    title: "Busca de Leads Qualificados",
+    desc: "Encontre leads qualificados através do nosso sistema de busca no Google. Receba nome, telefone, nicho e endereço — tudo pronto pra prospectar.",
     tag: "AUTOMÁTICO",
   },
   {
@@ -78,9 +78,9 @@ const stats = [
 ];
 
 const howItWorks = [
-  { step: "01", icon: Search, title: "IA busca clientes", desc: "Digite o nicho. A IA encontra negócios no Google Maps sem site profissional." },
-  { step: "02", icon: MousePointerClick, title: "Gere o site", desc: "Com um clique, o prompt do site é criado. Cole no Lovable e pronto." },
-  { step: "03", icon: Globe, title: "Venda e lucre", desc: "Entre em contato, mostre o site pronto e feche o contrato." },
+  { step: "01", icon: Search, title: "Encontre leads", desc: "Digite o nicho. O sistema busca negócios no Google e entrega nome, telefone e endereço." },
+  { step: "02", icon: MousePointerClick, title: "Crie o site", desc: "Escolha o tipo de negócio, personalize e gere o site profissional em minutos." },
+  { step: "03", icon: Globe, title: "Venda e lucre", desc: "Entre em contato com o lead, mostre o site pronto e feche o contrato." },
 ];
 
 const faqItems = [

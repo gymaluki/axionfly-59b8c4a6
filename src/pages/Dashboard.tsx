@@ -13,7 +13,7 @@ type View = "prospeccao" | "ebooks" | "sites";
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState<View>("prospeccao");
+  const [activeView, setActiveView] = useState<View>("sites");
 
   useEffect(() => {
     if (!loading && !user) {
@@ -38,7 +38,16 @@ const Dashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background relative">
+      {/* Grid Background */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+        }}
+      />
       <DashboardSidebar
         active={activeView}
         onNavigate={setActiveView}
@@ -48,7 +57,7 @@ const Dashboard = () => {
         }}
         userEmail={user.email}
       />
-      <main className="flex-1 p-6 md:p-8 overflow-auto">
+      <main className="flex-1 p-6 md:p-8 overflow-auto relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeView}
