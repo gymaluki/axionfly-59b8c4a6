@@ -73,8 +73,8 @@ const features = [
 
 const stats = [
   { icon: Users, value: "2.300+", label: "Sites criados" },
-  { icon: TrendingUp, value: "R$ 4.2M", label: "Faturados pelos usuários" },
-  { icon: Zap, value: "47s", label: "Tempo médio de criação" },
+  { icon: TrendingUp, value: "+1 Mi", label: "Faturados pelos usuários" },
+  { icon: Zap, value: "5 min", label: "Tempo médio de criação" },
 ];
 
 const howItWorks = [

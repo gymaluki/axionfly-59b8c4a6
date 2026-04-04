@@ -48,6 +48,8 @@ const nicheTemplates: Record<string, NicheTemplate> = {
 const SitesView = () => {
   const [projectName, setProjectName] = useState("");
   const [niche, setNiche] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
   const [primaryColor, setPrimaryColor] = useState("");
   const [secondaryColor, setSecondaryColor] = useState("");
   const [features, setFeatures] = useState("");
@@ -59,12 +61,15 @@ const SitesView = () => {
     const template = nicheTemplates[niche];
     if (!template) return;
 
-    const generated = template.buildPrompt(
+    let generated = template.buildPrompt(
       projectName.trim(),
       primaryColor.trim(),
       secondaryColor.trim(),
       features.trim()
     );
+
+    if (address.trim()) generated += ` Endereço do estabelecimento: ${address.trim()}.`;
+    if (phone.trim()) generated += ` Telefone: ${phone.trim()}.`;
 
     navigator.clipboard.writeText(generated);
     setCopied(true);
@@ -120,6 +125,27 @@ const SitesView = () => {
                 ))}
               </SelectContent>
             </Select>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Endereço</label>
+            <Input
+              placeholder="Ex: Rua das Flores, 123 - Centro"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="bg-secondary/50 border-border"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Telefone / WhatsApp</label>
+            <Input
+              placeholder="Ex: (11) 99999-9999"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="bg-secondary/50 border-border"
+            />
           </div>
         </div>
 
