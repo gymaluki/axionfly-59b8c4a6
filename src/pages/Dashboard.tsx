@@ -103,6 +103,7 @@ const Dashboard = () => {
             {activeView === "prospeccao" && <ProspeccaoView />}
             {activeView === "ebooks" && <EbooksView />}
             {activeView === "sites" && <SitesView />}
+            {activeView === "vendas" && <VendasView />}
           </motion.div>
         </AnimatePresence>
       </main>
