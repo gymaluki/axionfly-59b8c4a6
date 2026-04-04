@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, MessageCircle, ExternalLink, MapPin, Loader2 } from "lucide-react";
+import { Search, MessageCircle, ExternalLink, MapPin, Loader2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
