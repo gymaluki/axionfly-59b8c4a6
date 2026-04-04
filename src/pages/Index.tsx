@@ -73,9 +73,9 @@ const features = [
 ];
 
 const stats = [
-  { icon: Users, value: 2300, label: "Sites criados", prefix: "", suffix: "+" },
-  { icon: TrendingUp, value: 1, label: "Faturados pelos usuários", prefix: "+", suffix: " Mi" },
-  { icon: Zap, value: 5, label: "Tempo médio de criação", prefix: "", suffix: " min" },
+  { icon: Users, value: 5000, label: "Usuários cadastrados", prefix: "", suffix: "+" },
+  { icon: TrendingUp, value: 2, label: "Faturados pelos usuários", prefix: "+", suffix: " Mi" },
+  { icon: Zap, value: 10, label: "Tempo médio de criação", prefix: "", suffix: " min" },
 ];
 
 function useCountUp(end: number, duration = 2000, start = false) {
@@ -107,7 +107,7 @@ function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
 }) {
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const count = useCountUp(value, 1800, inView);
+  const count = useCountUp(value, 1200, inView);
 
   useEffect(() => {
     const el = ref.current;
