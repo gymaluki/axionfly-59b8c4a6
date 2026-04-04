@@ -235,10 +235,10 @@ const Index = () => {
               <Sparkles className="w-8 h-8 text-primary mx-auto" />
             </motion.div>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground relative z-10">
-              Enquanto você lê isso, alguém está vendendo sites com IA.
+              Enquanto você lê isso, alguém está faturando com sites criados por IA.
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto relative z-10">
-              Cada dia sem a AxionFly é dinheiro na mesa do seu concorrente. Configure em 5 minutos. Sem experiência técnica.
+              20+ nichos prontos, busca de clientes em qualquer cidade do Brasil, sites profissionais em minutos. Configure em 5 minutos e comece a vender hoje.
             </p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="relative z-10">
               <Button variant="neon" size="lg" onClick={() => navigate("/auth")}>
