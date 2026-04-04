@@ -7,6 +7,7 @@ interface PulseMarker {
   id: string
   location: [number, number]
   delay: number
+  label?: string
 }
 
 interface GlobeCdnProps {
