@@ -208,7 +208,7 @@ const Index = () => {
             {/* Globe */}
             <div className="flex items-center justify-center">
               <div className="w-full max-w-md relative">
-                <GlobeStickers className="w-full" speed={0.008} />
+                <GlobeCdn className="w-full" speed={0.008} />
               </div>
             </div>
           </div>
