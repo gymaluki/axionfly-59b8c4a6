@@ -34,6 +34,9 @@ const defaultMarkers: PulseMarker[] = [
   { id: "pulse-15", location: [41.39, 2.17], delay: 0.4, label: "Salão de Beleza" },
   { id: "pulse-16", location: [52.52, 13.41], delay: 1.3, label: "Contabilidade" },
   { id: "pulse-17", location: [25.27, 55.30], delay: 0.7, label: "Sobrancelhas" },
+  { id: "pulse-18", location: [43.65, -79.38], delay: 1.0, label: "Estética" },
+  { id: "pulse-19", location: [-12.97, -38.51], delay: 0.15, label: "Marmitaria" },
+  { id: "pulse-20", location: [59.33, 18.07], delay: 1.7, label: "Escola de Idiomas" },
 ]
 
 export function GlobeCdn({
