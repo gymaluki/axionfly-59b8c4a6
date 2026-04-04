@@ -128,7 +128,28 @@ const SitesView = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Endereço</label>
+            <Input
+              placeholder="Ex: Rua das Flores, 123 - Centro"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="bg-secondary/50 border-border"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Telefone / WhatsApp</label>
+            <Input
+              placeholder="Ex: (11) 99999-9999"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="bg-secondary/50 border-border"
+            />
+          </div>
+        </div>
+
+
           <div className="space-y-2">
             <label className="text-sm font-medium text-foreground">Cor Principal</label>
             <Input
