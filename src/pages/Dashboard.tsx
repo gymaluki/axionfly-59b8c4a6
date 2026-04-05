@@ -11,8 +11,42 @@ import VendasView from "@/components/views/VendasView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Component, type ErrorInfo, type ReactNode } from "react";
 
 type View = "prospeccao" | "ebooks" | "sites" | "vendas";
+
+class DashboardViewErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("Dashboard view render error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex min-h-[60vh] items-center justify-center px-4">
+          <div className="text-center space-y-3 max-w-md">
+            <div className="w-14 h-14 rounded-2xl bg-destructive/10 flex items-center justify-center mx-auto">
+              <ShieldX className="w-7 h-7 text-destructive" />
+            </div>
+            <h2 className="text-xl font-bold text-foreground">Não foi possível carregar esta área</h2>
+            <p className="text-sm text-muted-foreground">Atualize a página e tente novamente.</p>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
@@ -92,20 +126,22 @@ const Dashboard = () => {
         userEmail={user.email}
       />
       <main className="flex-1 p-6 md:p-8 overflow-auto relative z-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeView}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.3 }}
-          >
-            {activeView === "prospeccao" && <ProspeccaoView />}
-            {activeView === "ebooks" && <EbooksView />}
-            {activeView === "sites" && <SitesView />}
-            {activeView === "vendas" && <VendasView />}
-          </motion.div>
-        </AnimatePresence>
+        <DashboardViewErrorBoundary>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeView}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.3 }}
+            >
+              {activeView === "prospeccao" && <ProspeccaoView />}
+              {activeView === "ebooks" && <EbooksView />}
+              {activeView === "sites" && <SitesView />}
+              {activeView === "vendas" && <VendasView />}
+            </motion.div>
+          </AnimatePresence>
+        </DashboardViewErrorBoundary>
       </main>
     </div>
   );
