@@ -167,7 +167,7 @@ const Index = () => {
           className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
           style={{
             backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
-            backgroundSize: "40px 40px",
+            backgroundSize: "60px 60px",
           }}
         />
 
