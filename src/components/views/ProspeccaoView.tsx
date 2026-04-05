@@ -61,6 +61,13 @@ const extractPhone = (text: string): string | null => {
   return null;
 };
 
+const openExternalLink = (url: string) => {
+  const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+  if (newWindow) {
+    newWindow.opener = null;
+  }
+};
+
 const staggerItem = {
   hidden: { opacity: 0, x: -20 },
   visible: (i: number) => ({
@@ -316,7 +323,7 @@ const ProspeccaoView = () => {
                           variant="outline"
                           onClick={() => {
                             const query = encodeURIComponent(r.title);
-                            window.open(`https://www.google.com/maps/search/${query}`, "_blank");
+                            openExternalLink(`https://www.google.com/maps/search/${query}`);
                           }}
                           className="gap-1.5"
                         >
@@ -329,7 +336,7 @@ const ProspeccaoView = () => {
                             const phoneNum = r.phone ? r.phone.replace(/\D/g, "") : "";
                             const fullNum = phoneNum.startsWith("55") ? phoneNum : `55${phoneNum}`;
                             const msg = encodeURIComponent(`Olá! Vi seu negócio online e gostaria de apresentar uma proposta. Podemos conversar?`);
-                            window.open(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`, "_blank");
+                            openExternalLink(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`);
                           }}
                           className="gap-1.5"
                         >

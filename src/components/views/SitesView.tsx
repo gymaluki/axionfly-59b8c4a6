@@ -236,13 +236,21 @@ const SitesView = () => {
     if (address.trim()) generated += ` Endereço do estabelecimento: ${address.trim()}.`;
     if (phone.trim()) generated += ` Telefone: ${phone.trim()}.`;
 
-    navigator.clipboard.writeText(generated);
-    setCopied(true);
-    toast.success("Tudo pronto! Cole na plataforma para criar seu site.");
-    setTimeout(() => {
-      setCopied(false);
-      window.open("https://lovable.dev/projects/create", "_blank");
-    }, 1200);
+    navigator.clipboard.writeText(generated)
+      .catch(() => {
+        toast.error("Não consegui copiar automaticamente. Você ainda pode gerar e colar manualmente.");
+      })
+      .finally(() => {
+        setCopied(true);
+        toast.success("Tudo pronto! Cole na plataforma para criar seu site.");
+        setTimeout(() => {
+          setCopied(false);
+          const newWindow = window.open("https://lovable.dev/projects/create", "_blank", "noopener,noreferrer");
+          if (newWindow) {
+            newWindow.opener = null;
+          }
+        }, 1200);
+      });
   };
 
   const selectedDesignInfo = designStyles.find((s) => s.value === designStyle);
