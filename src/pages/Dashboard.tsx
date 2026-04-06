@@ -135,7 +135,6 @@ const Dashboard = () => {
               transition={{ duration: 0.3 }}
             >
               {activeView === "prospeccao" && <ProspeccaoView />}
-              {activeView === "ebooks" && <EbooksView />}
               {activeView === "sites" && <SitesView />}
               {activeView === "vendas" && <VendasView />}
             </motion.div>

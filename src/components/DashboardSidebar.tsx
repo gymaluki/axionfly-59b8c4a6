@@ -1,7 +1,7 @@
-import { MapPin, BookOpen, Code2, LogOut, ShoppingBag } from "lucide-react";
+import { MapPin, Code2, LogOut, ShoppingBag, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-type View = "prospeccao" | "ebooks" | "sites" | "vendas";
+type View = "prospeccao" | "sites" | "vendas";
 
 interface DashboardSidebarProps {
   active: View;
@@ -11,9 +11,8 @@ interface DashboardSidebarProps {
 }
 
 const navItems: { id: View; label: string; icon: React.ElementType }[] = [
-  { id: "sites", label: "Fábrica de Sites", icon: Code2 },
+  { id: "sites", label: "Criador de Sites", icon: Code2 },
   { id: "prospeccao", label: "Busca de Leads", icon: MapPin },
-  { id: "ebooks", label: "Gerador de E-books", icon: BookOpen },
   { id: "vendas", label: "Minhas Vendas", icon: ShoppingBag },
 ];
 
