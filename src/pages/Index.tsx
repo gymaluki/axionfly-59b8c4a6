@@ -358,46 +358,6 @@ const Index = () => {
           <FeaturesCarousel />
         </section>
 
-        {/* ═══════════ CTA ═══════════ */}
-        <section className="container mx-auto px-4 py-20">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={scaleIn}
-            custom={0}
-            className="glass rounded-3xl p-10 md:p-16 text-center space-y-6 neon-border max-w-3xl mx-auto relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.08] via-transparent to-accent/[0.05] pointer-events-none" />
-            <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="relative z-10"
-            >
-              <Sparkles className="w-10 h-10 text-primary mx-auto drop-shadow-[0_0_15px_hsl(var(--primary)/0.5)]" />
-            </motion.div>
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground relative z-10 tracking-tight">
-              Enquanto você lê isso, alguém está{" "}
-              <span className="gradient-text">faturando com sites</span> criados por IA.
-            </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto relative z-10 text-lg">
-              20+ nichos prontos, busca de clientes em qualquer cidade do Brasil, sites profissionais em minutos. Configure em 5 minutos e comece a vender hoje.
-            </p>
-            <motion.div 
-              whileHover={{ scale: 1.08 }} 
-              whileTap={{ scale: 0.95 }} 
-              transition={springTransition}
-              className="relative z-10"
-            >
-              <Button variant="neon" size="lg" onClick={() => navigate("/auth")}>
-                <Zap className="w-4 h-4 mr-1" />
-                Quero Vender Sites com IA
-              </Button>
-            </motion.div>
-          </motion.div>
-        </section>
 
         {/* ═══════════ FEEDBACKS ═══════════ */}
         <div id="feedbacks">
