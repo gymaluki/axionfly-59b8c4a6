@@ -1,6 +1,5 @@
 import { motion, type Easing } from "framer-motion";
 import { Check, Sparkles, Shield } from "lucide-react";
-import lovableLogo from "@/assets/lovable-logo.png";
 import googleMapsLogo from "@/assets/google-maps-logo.png";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
@@ -14,18 +13,39 @@ const fadeUp = {
   }),
 };
 
+function LovableLogo({ className }: { className?: string }) {
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      <svg width="32" height="32" viewBox="0 0 256 256" fill="none">
+        <defs>
+          <linearGradient id="heart-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#FF6B6B" />
+            <stop offset="50%" stopColor="#C850C0" />
+            <stop offset="100%" stopColor="#4158D0" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M128 224s-96-64-96-128c0-35.3 28.7-64 64-64 20.4 0 38.6 9.5 50.3 24.4C155.7 41.5 171.6 32 192 32c35.3 0 64 28.7 64 64 0 64-128 128-128 128z"
+          fill="url(#heart-grad)"
+        />
+      </svg>
+      <span className="text-2xl font-bold text-foreground">Lovable</span>
+    </div>
+  );
+}
+
 const partners = [
   {
     name: "Lovable",
-    logo: lovableLogo,
-    logoClass: "h-10 invert",
+    logo: null,
+    logoClass: "",
     title: "Parceria com Lovable",
     description: "Integração completa com a plataforma Lovable para desenvolvimento acelerado",
     badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
     badgeTitle: "Bônus Exclusivo!",
     badgeText: (
       <>
-        <span className="text-primary font-bold">10 créditos grátis</span> na Lovable ao usar a ZOD
+        <span className="text-primary font-bold">15 créditos grátis</span> na Lovable ao usar a AXIONFLY
       </>
     ),
     benefits: [
@@ -89,11 +109,16 @@ export default function LovablePartnership() {
           >
             {/* Logo */}
             <div className="flex justify-center py-4">
-              <img
-                src={partner.logo}
-                alt={`Logo ${partner.name}`}
-                className={partner.logoClass}
-              />
+              {partner.name === "Lovable" ? (
+                <LovableLogo />
+              ) : (
+                <img
+                  src={partner.logo!}
+                  alt={`Logo ${partner.name}`}
+                  className={partner.logoClass}
+                  loading="lazy"
+                />
+              )}
             </div>
 
             {/* Title */}
