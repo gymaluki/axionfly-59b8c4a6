@@ -1,5 +1,7 @@
 import { motion, type Easing } from "framer-motion";
 import { Check, Sparkles, Shield } from "lucide-react";
+import lovableLogo from "@/assets/lovable-logo.png";
+import googleMapsLogo from "@/assets/google-maps-logo.png";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
@@ -15,20 +17,8 @@ const fadeUp = {
 const partners = [
   {
     name: "Lovable",
-    logo: (
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-red-500 flex items-center justify-center">
-          <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-            <path
-              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-              fill="currentColor"
-              className="text-pink-400"
-            />
-          </svg>
-        </div>
-        <span className="text-2xl font-bold text-foreground">Lovable</span>
-      </div>
-    ),
+    logo: lovableLogo,
+    logoClass: "h-10 brightness-0 invert",
     title: "Parceria com Lovable",
     description: "Integração completa com a plataforma Lovable para desenvolvimento acelerado",
     badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
@@ -46,24 +36,15 @@ const partners = [
   },
   {
     name: "Google Maps",
-    logo: (
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-secondary/80 flex items-center justify-center">
-          <svg viewBox="0 0 24 24" className="w-6 h-6">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="hsl(4, 90%, 58%)" />
-            <circle cx="12" cy="9" r="2.5" fill="hsl(0, 0%, 100%)" />
-          </svg>
-        </div>
-        <span className="text-2xl font-bold text-foreground">Google Maps</span>
-      </div>
-    ),
+    logo: googleMapsLogo,
+    logoClass: "h-14",
     title: "Parceria com Google",
     description: "Potencializado pela infraestrutura e dados do Google Maps para prospecção",
     badgeIcon: <Shield className="w-4 h-4 text-primary" />,
     badgeTitle: "Tecnologia Google",
-    badgeText: "Busca avançada e dados geolocalizados de classe mundial",
+    badgeText: "IA avançada e infraestrutura de classe mundial",
     benefits: [
-      "Google Maps e geolocalização",
+      "Google AI e Machine Learning",
       "Infraestrutura cloud confiável",
       "Escalabilidade garantida",
     ],
@@ -107,7 +88,13 @@ export default function LovablePartnership() {
             }}
           >
             {/* Logo */}
-            <div className="flex justify-center">{partner.logo}</div>
+            <div className="flex justify-center py-4">
+              <img
+                src={partner.logo}
+                alt={`Logo ${partner.name}`}
+                className={partner.logoClass}
+              />
+            </div>
 
             {/* Title */}
             <div className="text-center space-y-2">
