@@ -216,7 +216,7 @@ const Index = () => {
           </div>
         </div>
 
-        {/* ═══════════ FERRAMENTAS (Features + Globe) ═══════════ */}
+        {/* ═══════════ FUNCIONALIDADES (Features + Globe) ═══════════ */}
         <section className="container mx-auto px-4 py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
           
@@ -324,13 +324,18 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ CAROUSEL ═══════════ */}
+        {/* ═══════════ FEEDBACKS ═══════════ */}
+        <div id="feedbacks">
+          <Testimonials />
+        </div>
+
+        {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section>
           <SectionPill>Conheça Área de Membros</SectionPill>
           <FeaturesCarousel />
         </section>
 
-        {/* ═══════════ STATS ═══════════ */}
+        {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
         <section className="container mx-auto px-4 py-16 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
           <motion.div
@@ -346,14 +351,10 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* ═══════════ FEEDBACKS ═══════════ */}
-        <div id="feedbacks">
-          <Testimonials />
-        </div>
-
         {/* ═══════════ PLANOS ═══════════ */}
         <PricingCards />
 
+        {/* ═══════════ PARCERIAS ═══════════ */}
         <LovablePartnership />
 
         {/* ═══════════ CTA FINAL ═══════════ */}
