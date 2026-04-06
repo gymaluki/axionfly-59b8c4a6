@@ -18,7 +18,7 @@ const partners = [
   {
     name: "Lovable",
     logo: lovableLogo,
-    logoClass: "h-10 brightness-0 invert",
+    logoClass: "h-10 invert",
     title: "Parceria com Lovable",
     description: "Integração completa com a plataforma Lovable para desenvolvimento acelerado",
     badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
