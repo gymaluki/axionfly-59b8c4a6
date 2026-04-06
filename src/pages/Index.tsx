@@ -13,45 +13,55 @@ import LovablePartnership from "@/components/LovablePartnership";
 import FeaturesCarousel from "@/components/FeaturesCarousel";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
+const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 60, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 80, filter: "blur(12px)", scale: 0.96 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { delay: i * 0.15, duration: 0.9, ease },
+    scale: 1,
+    transition: { delay: i * 0.12, duration: 1, ease },
   }),
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8, filter: "blur(6px)" },
+  hidden: { opacity: 0, scale: 0.7, filter: "blur(10px)", rotateX: 15 },
   visible: (i: number) => ({
     opacity: 1,
     scale: 1,
     filter: "blur(0px)",
-    transition: { delay: i * 0.12, duration: 0.8, ease },
+    rotateX: 0,
+    transition: { delay: i * 0.1, duration: 0.9, ease },
   }),
 };
 
 const slideFromLeft = {
-  hidden: { opacity: 0, x: -80, filter: "blur(6px)" },
+  hidden: { opacity: 0, x: -120, filter: "blur(10px)", rotateY: 8 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
     filter: "blur(0px)",
-    transition: { delay: i * 0.15, duration: 0.9, ease },
+    rotateY: 0,
+    transition: { delay: i * 0.15, duration: 1, ease },
   }),
 };
 
 const slideFromRight = {
-  hidden: { opacity: 0, x: 80, filter: "blur(6px)" },
+  hidden: { opacity: 0, x: 120, filter: "blur(10px)", rotateY: -8 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
     filter: "blur(0px)",
-    transition: { delay: i * 0.15, duration: 0.9, ease },
+    rotateY: 0,
+    transition: { delay: i * 0.15, duration: 1, ease },
   }),
+};
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
 const features = [
