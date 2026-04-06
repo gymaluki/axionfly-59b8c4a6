@@ -49,7 +49,7 @@ export function Header() {
 				'fixed left-1/2 z-50 w-[calc(100%-1rem)] -translate-x-1/2 border transition-all duration-500 ease-out',
 				scrolled && !open
 					? 'top-3 max-w-4xl rounded-xl border-border bg-background/95 shadow-lg supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg'
-					: 'top-0 max-w-full rounded-none border-transparent bg-background/85 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
+					: 'top-0 max-w-6xl rounded-none border-transparent bg-background/85 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
 				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
 			)}
 		>
