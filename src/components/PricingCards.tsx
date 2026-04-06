@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Briefcase, BarChart3, Globe, Zap, BookOpen, MapPin, Users, RefreshCw } from "lucide-react";
+import { Check, Sparkles, Briefcase, BarChart3, Globe, Zap, MapPin, Users, RefreshCw, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
