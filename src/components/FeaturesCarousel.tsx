@@ -126,12 +126,12 @@ export default function FeaturesCarousel() {
             >
               {/* Blue tint overlay */}
               <div
-                className="absolute inset-0 z-10 pointer-events-none mix-blend-color opacity-60"
-                style={{ background: "hsl(var(--primary))" }}
+                className="absolute inset-0 z-10 pointer-events-none mix-blend-multiply opacity-50"
+                style={{ background: "hsl(217 91% 35%)" }}
               />
               <div
-                className="absolute inset-0 z-10 pointer-events-none opacity-25"
-                style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.3) 0%, hsl(var(--background)) 100%)" }}
+                className="absolute inset-0 z-10 pointer-events-none opacity-20"
+                style={{ background: "linear-gradient(180deg, hsl(217 91% 30% / 0.4) 0%, hsl(var(--background)) 100%)" }}
               />
               <img
                 src={slide.src}
