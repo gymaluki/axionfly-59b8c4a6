@@ -1,12 +1,16 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 
+const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
+
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 60, filter: "blur(10px)", scale: 0.96 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+    filter: "blur(0px)",
+    scale: 1,
+    transition: { delay: i * 0.1, duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
   }),
 };
 
