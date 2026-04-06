@@ -59,15 +59,11 @@ export function Header() {
 					scrolled ? 'h-9 px-2 md:px-2 gap-1' : 'h-14 px-4 gap-5',
 				)}
 			>
-				{/* Brand name — hidden when scrolled */}
+				{/* Spacer — hidden when scrolled */}
 				<div className={cn(
-					'flex items-center gap-2 transition-all duration-700 overflow-hidden',
-					scrolled ? 'w-0 opacity-0' : 'w-auto opacity-100',
-				)}>
-					<a href="#" className="hover:opacity-80 transition-all flex items-center shrink-0">
-						<span className="text-lg font-bold text-foreground">AxionFly</span>
-					</a>
-				</div>
+					'transition-all duration-700 overflow-hidden',
+					scrolled ? 'w-0' : 'w-0',
+				)} />
 
 				{/* Nav links — always visible on desktop */}
 				<NavigationMenu className="hidden md:flex">
