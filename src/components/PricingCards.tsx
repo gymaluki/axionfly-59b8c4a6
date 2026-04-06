@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
-const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
+const springTransition = { type: "spring" as const, stiffness: 300, damping: 20, mass: 0.8 };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40, filter: "blur(8px)" },
