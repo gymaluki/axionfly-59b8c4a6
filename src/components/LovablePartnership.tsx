@@ -83,7 +83,7 @@ export default function LovablePartnership() {
         className="text-center mb-12 space-y-3"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Nossas <span className="gradient-text">Parcerias</span>
+          Nossas <span className="gradient-text">Parcerias Oficiais</span>
         </h2>
         <p className="text-muted-foreground">
           Conectados com as melhores tecnologias do mercado
