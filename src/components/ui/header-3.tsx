@@ -64,13 +64,12 @@ export function Header() {
 					'flex items-center gap-2 transition-all duration-700 overflow-hidden',
 					scrolled ? 'w-0 opacity-0' : 'w-auto opacity-100',
 				)}>
-					<a href="#" className="hover:opacity-80 transition-all flex items-center gap-2 shrink-0">
+					<a href="#" className="hover:opacity-80 transition-all flex items-center shrink-0">
 						<img
 							src={axionflyLogo}
 							alt="AxionFly"
 							className="w-8 h-8 transition-all duration-500"
 						/>
-						<span className="font-bold text-foreground text-xl whitespace-nowrap">Axion<span className="text-primary">Fly</span></span>
 					</a>
 				</div>
 

@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
-const springTransition = { type: "spring" as const, stiffness: 300, damping: 20, mass: 0.8 };
+const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40, filter: "blur(8px)" },
@@ -45,8 +45,8 @@ function PricingCard({
       viewport={{ once: true }}
       variants={fadeUp}
       custom={index}
-      whileHover={{ scale: 1.03, y: -6, transition: springTransition }}
-      className="relative flex w-full max-w-sm flex-col rounded-2xl p-8 transition-all duration-500 neon-border glow-blue"
+      whileHover={{ scale: 1.03, y: -6, transition: hoverTransition }}
+      className="relative flex w-full max-w-sm flex-col rounded-2xl p-8 transition-transform duration-150 neon-border glow-blue will-change-transform"
       style={{
         backgroundColor: "hsl(var(--card))",
         backgroundImage: "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)",
@@ -86,7 +86,7 @@ function PricingCard({
       </div>
 
       {/* CTA */}
-      <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+      <motion.div whileHover={{ scale: 1.02, transition: hoverTransition }} whileTap={{ scale: 0.98, transition: hoverTransition }}>
         <Button variant={isHighlight ? "neon" : "outline"} size="lg" className="w-full text-base" asChild>
           <a href={buttonHref}>{buttonText}</a>
         </Button>
