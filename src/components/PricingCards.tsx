@@ -1,6 +1,7 @@
 import { motion, type Easing } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, Sparkles, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import googleMapsLogo from "@/assets/google-maps-logo.png";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
