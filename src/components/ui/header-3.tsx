@@ -206,7 +206,7 @@ function ListItem({
 
 const productLinks: LinkItem[] = [
 	{
-		title: 'Fábrica de Sites IA',
+		title: 'Criador de Sites',
 		href: '/auth',
 		description: 'Crie sites profissionais personalizados em minutos',
 		icon: Code2,
@@ -216,12 +216,6 @@ const productLinks: LinkItem[] = [
 		href: '/auth',
 		description: 'Encontre leads qualificados com nome, telefone e nicho',
 		icon: MapPin,
-	},
-	{
-		title: 'Gerador de E-books',
-		href: '/auth',
-		description: 'Crie e-books profissionais com IA em segundos',
-		icon: BookOpen,
 	},
 ];
 

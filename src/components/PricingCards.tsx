@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Briefcase, BarChart3, Globe, Zap, BookOpen, MapPin, Users, RefreshCw } from "lucide-react";
+import { Check, Sparkles, Briefcase, BarChart3, Globe, Zap, MapPin, Users, RefreshCw, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
@@ -136,9 +136,8 @@ export default function PricingCards() {
       priceDescription: "/ mês",
       icon: <Sparkles className="w-5 h-5 text-primary" />,
       features: [
-        { text: "Criador de Sites IA ilimitado (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
+        { text: "Criador de Sites com IA (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
         { text: "Prospecção automática via Google Maps", icon: <MapPin className="w-3 h-3 text-primary" /> },
-        { text: "Gerador de E-books com IA", icon: <BookOpen className="w-3 h-3 text-primary" /> },
         { text: "Dashboard de acompanhamento de lucros", icon: <BarChart3 className="w-3 h-3 text-primary" /> },
         { text: "Parceria oficial com Lovable", icon: <Zap className="w-3 h-3 text-primary" /> },
         { text: "Suporte prioritário", icon: <Users className="w-3 h-3 text-primary" /> },
@@ -155,13 +154,12 @@ export default function PricingCards() {
       priceDescription: "/ pagamento único",
       icon: <Briefcase className="w-5 h-5 text-primary" />,
       features: [
-        { text: "Criador de Sites IA ilimitado (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
+        { text: "Criador de Sites com IA (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
         { text: "Prospecção automática via Google Maps", icon: <MapPin className="w-3 h-3 text-primary" /> },
-        { text: "Gerador de E-books com IA", icon: <BookOpen className="w-3 h-3 text-primary" /> },
         { text: "Dashboard de acompanhamento de lucros", icon: <BarChart3 className="w-3 h-3 text-primary" /> },
         { text: "Parceria oficial com Lovable", icon: <Zap className="w-3 h-3 text-primary" /> },
         { text: "Suporte prioritário", icon: <Users className="w-3 h-3 text-primary" /> },
-        { text: "6 estilos de design exclusivos", icon: <Sparkles className="w-3 h-3 text-primary" /> },
+        { text: "6 estilos de design exclusivos", icon: <Code2 className="w-3 h-3 text-primary" /> },
         { text: "Todas as atualizações futuras incluídas", icon: <RefreshCw className="w-3 h-3 text-primary" /> },
       ],
       buttonText: "Garantir Acesso Vitalício",

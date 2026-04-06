@@ -263,7 +263,7 @@ const SitesView = () => {
       className="space-y-8"
     >
       <div>
-        <h2 className="text-2xl font-bold text-foreground">Fábrica de Sites</h2>
+        <h2 className="text-2xl font-bold text-foreground">Criador de Sites</h2>
         <p className="text-muted-foreground text-sm mt-1">
           Preencha os dados do seu projeto e crie seu site profissional com IA em segundos
         </p>

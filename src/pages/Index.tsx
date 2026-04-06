@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3 } from "lucide-react";
 import { motion, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
@@ -86,7 +86,7 @@ function SectionPill({ children }: { children: React.ReactNode }) {
 const features = [
   {
     icon: Code2,
-    title: "Fábrica de Sites IA",
+    title: "Criador de Sites com IA",
     desc: "Escolha entre 20+ nichos, personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Pronto pra vender.",
     tag: "PRINCIPAL",
   },
@@ -97,10 +97,10 @@ const features = [
     tag: "27 ESTADOS",
   },
   {
-    icon: BookOpen,
-    title: "Gerador de E-books",
-    desc: "Crie e-books profissionais em 30 segundos. Use como isca digital ou venda diretamente. Conteúdo gerado por IA de verdade.",
-    tag: "RÁPIDO",
+    icon: BarChart3,
+    title: "Dashboard de Vendas",
+    desc: "Acompanhe seus lucros, clientes atendidos e sites criados em um painel completo. Tenha controle total do seu negócio.",
+    tag: "GESTÃO",
   },
 ];
 
@@ -197,7 +197,7 @@ const faqItems = [
   { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o nicho de negócio. O sistema busca automaticamente e entrega nome, telefone e endereço — tudo pronto para você prospectar." },
   { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
   { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes e 6 estilos de design diferentes. Cada site sai único e profissional." },
-  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos), busca de leads em todos os estados do Brasil, gerador de e-books com IA e todas as atualizações futuras. Pague uma vez, use para sempre." },
+  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos), busca de leads em todos os estados do Brasil, dashboard de vendas e todas as atualizações futuras. Pague uma vez, use para sempre." },
   { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
   { q: "Funciona em qualquer cidade do Brasil?", a: "Sim! A busca de leads cobre todos os 27 estados e todas as cidades do Brasil. Basta selecionar o estado e a cidade para encontrar negócios sem site na sua região." },
 ];
@@ -358,46 +358,6 @@ const Index = () => {
           <FeaturesCarousel />
         </section>
 
-        {/* ═══════════ CTA ═══════════ */}
-        <section className="container mx-auto px-4 py-20">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={scaleIn}
-            custom={0}
-            className="glass rounded-3xl p-10 md:p-16 text-center space-y-6 neon-border max-w-3xl mx-auto relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.08] via-transparent to-accent/[0.05] pointer-events-none" />
-            <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="relative z-10"
-            >
-              <Sparkles className="w-10 h-10 text-primary mx-auto drop-shadow-[0_0_15px_hsl(var(--primary)/0.5)]" />
-            </motion.div>
-            <h2 className="text-2xl md:text-4xl font-bold text-foreground relative z-10 tracking-tight">
-              Enquanto você lê isso, alguém está{" "}
-              <span className="gradient-text">faturando com sites</span> criados por IA.
-            </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto relative z-10 text-lg">
-              20+ nichos prontos, busca de clientes em qualquer cidade do Brasil, sites profissionais em minutos. Configure em 5 minutos e comece a vender hoje.
-            </p>
-            <motion.div 
-              whileHover={{ scale: 1.08 }} 
-              whileTap={{ scale: 0.95 }} 
-              transition={springTransition}
-              className="relative z-10"
-            >
-              <Button variant="neon" size="lg" onClick={() => navigate("/auth")}>
-                <Zap className="w-4 h-4 mr-1" />
-                Quero Vender Sites com IA
-              </Button>
-            </motion.div>
-          </motion.div>
-        </section>
 
         {/* ═══════════ FEEDBACKS ═══════════ */}
         <div id="feedbacks">
