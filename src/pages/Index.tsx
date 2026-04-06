@@ -178,7 +178,12 @@ const Index = () => {
         <Header />
 
         {/* Hero */}
-        <HeroSection />
+        <div className="relative w-full min-h-[90vh]">
+          <IsoLevelWarp color="59, 130, 246" density={45} speed={1.2} />
+          <div className="relative z-10">
+            <HeroSection />
+          </div>
+        </div>
 
         {/* Stats */}
         <section className="container mx-auto px-4 py-16">
