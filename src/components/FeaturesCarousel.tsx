@@ -127,7 +127,7 @@ export default function FeaturesCarousel() {
               {/* Blue tint overlay */}
               <div
                 className="absolute inset-0 z-10 pointer-events-none mix-blend-multiply opacity-70"
-                style={{ background: "hsl(217 91% 20%)" }}
+                style={{ background: "hsl(225 73% 30%)" }}
               />
               <div
                 className="absolute inset-0 z-10 pointer-events-none opacity-20"
