@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3 } from "lucide-react";
 import { motion, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
