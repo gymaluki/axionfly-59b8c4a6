@@ -8,6 +8,7 @@ import { Header } from "@/components/ui/header-3";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
 import PricingCards from "@/components/PricingCards";
+import LovablePartnership from "@/components/LovablePartnership";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
@@ -302,6 +303,8 @@ const Index = () => {
         <Testimonials />
 
         <PricingCards />
+
+        <LovablePartnership />
 
         {/* FAQ */}
         <section className="container mx-auto px-4 py-20">
