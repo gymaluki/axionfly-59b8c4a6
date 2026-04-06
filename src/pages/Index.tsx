@@ -212,15 +212,16 @@ const Index = () => {
         </section>
 
         {/* How It Works */}
-        <section className="container mx-auto px-4 py-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <section className="container mx-auto px-4 py-24 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04)_0%,transparent_70%)] pointer-events-none" />
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-20 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
               Da prospecção ao contrato em <span className="gradient-text">3 passos</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.</p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto relative">
-            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto relative">
+            <div className="hidden md:block absolute top-16 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             {howItWorks.map(({ step, icon: Icon, title, desc }, i) => (
               <motion.div
                 key={step}
@@ -229,17 +230,19 @@ const Index = () => {
                 viewport={{ once: true, amount: 0.3 }}
                 variants={fadeUp}
                 custom={i + 1}
-                className="text-center space-y-4 relative"
+                whileHover={{ y: -12, transition: springTransition }}
+                className="text-center space-y-5 relative group"
               >
                 <motion.div
-                  whileHover={{ scale: 1.15, rotate: 8 }}
-                  className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto relative"
+                  whileHover={{ scale: 1.2, rotate: 12, boxShadow: "0 0 40px -8px hsl(var(--primary) / 0.5)" }}
+                  transition={springTransition}
+                  className="w-20 h-20 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto relative backdrop-blur-sm"
                 >
-                  <Icon className="w-7 h-7 text-primary" />
-                  <span className="absolute -top-2 -right-2 text-[10px] font-bold bg-primary text-primary-foreground rounded-full w-5 h-5 flex items-center justify-center">{step}</span>
+                  <Icon className="w-8 h-8 text-primary" />
+                  <span className="absolute -top-2 -right-2 text-[10px] font-bold bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center shadow-lg shadow-primary/30">{step}</span>
                 </motion.div>
-                <h3 className="text-lg font-bold text-foreground">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                <h3 className="text-xl font-bold text-foreground">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{desc}</p>
               </motion.div>
             ))}
           </div>
