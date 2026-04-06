@@ -161,6 +161,28 @@ export default function PricingCards() {
           <PricingCard key={plan.planName} {...plan} />
         ))}
       </div>
+
+      {/* Parcerias */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeUp}
+        custom={3}
+        className="mt-14 flex flex-col items-center gap-4"
+      >
+        <p className="text-sm text-muted-foreground font-medium">Parcerias oficiais</p>
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 backdrop-blur-sm">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-semibold text-foreground">Lovable</span>
+          </div>
+          <div className="flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 backdrop-blur-sm">
+            <img src={googleMapsLogo} alt="Google Maps" className="h-5 w-5 object-contain" />
+            <span className="text-sm font-semibold text-foreground">Google Maps</span>
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 }
