@@ -46,14 +46,10 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ scale: 1.03, y: -6, transition: springTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-2xl p-8 transition-all duration-500 ${
-        isHighlight ? "neon-border glow-blue" : "border border-border/50 hover:border-border"
-      }`}
+      className="relative flex w-full max-w-sm flex-col rounded-2xl p-8 transition-all duration-500 neon-border glow-blue"
       style={{
         backgroundColor: "hsl(var(--card))",
-        backgroundImage: isHighlight
-          ? "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)"
-          : undefined,
+        backgroundImage: "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)",
       }}
     >
       {/* Title */}
