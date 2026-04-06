@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import ProspeccaoView from "@/components/views/ProspeccaoView";
-import EbooksView from "@/components/views/EbooksView";
 import SitesView from "@/components/views/SitesView";
 import VendasView from "@/components/views/VendasView";
 import { AnimatePresence, motion } from "framer-motion";
@@ -13,7 +12,7 @@ import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
-type View = "prospeccao" | "ebooks" | "sites" | "vendas";
+type View = "prospeccao" | "sites" | "vendas";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
