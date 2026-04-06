@@ -58,8 +58,8 @@ const partners = [
     name: "Google Maps",
     logo: googleMapsLogo,
     logoClass: "h-14",
-    title: "Parceria com Google",
-    description: "Potencializado pela infraestrutura e dados do Google Maps para prospecção",
+    title: "Parceria Oficial com Google Maps",
+    description: "Potencializado pela infraestrutura e dados do Google Maps para prospecção de negócios",
     badgeIcon: <Shield className="w-4 h-4 text-primary" />,
     badgeTitle: "Tecnologia Google",
     badgeText: "IA avançada e infraestrutura de classe mundial",
@@ -83,7 +83,7 @@ export default function LovablePartnership() {
         className="text-center mb-12 space-y-3"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          Nossas <span className="gradient-text">Parcerias</span>
+          Nossas <span className="gradient-text">Parcerias Oficiais</span>
         </h2>
         <p className="text-muted-foreground">
           Conectados com as melhores tecnologias do mercado
