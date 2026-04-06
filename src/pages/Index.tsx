@@ -284,22 +284,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ STATS ═══════════ */}
-        <section className="container mx-auto px-4 py-16 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
-          >
-            {stats.map((stat, i) => (
-              <AnimatedStat key={stat.label} {...stat} index={i} />
-            ))}
-          </motion.div>
-        </section>
-
         {/* ═══════════ ETAPAS (How It Works) ═══════════ */}
         <section id="etapas" className="container mx-auto px-4 py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04)_0%,transparent_70%)] pointer-events-none" />
@@ -344,6 +328,22 @@ const Index = () => {
         <section>
           <SectionPill>Conheça Área de Membros</SectionPill>
           <FeaturesCarousel />
+        </section>
+
+        {/* ═══════════ STATS ═══════════ */}
+        <section className="container mx-auto px-4 py-16 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
+          >
+            {stats.map((stat, i) => (
+              <AnimatedStat key={stat.label} {...stat} index={i} />
+            ))}
+          </motion.div>
         </section>
 
         {/* ═══════════ FEEDBACKS ═══════════ */}
