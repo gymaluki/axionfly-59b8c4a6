@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3 } from "lucide-react";
-import { motion, type Easing } from "framer-motion";
+import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3 } from "lucide-react";
+import { motion, useInView, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
 import { BackgroundPaths } from "@/components/ui/background-paths";
@@ -17,52 +17,48 @@ const ease: Easing = [0.16, 1, 0.3, 1];
 const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 80, filter: "blur(12px)", scale: 0.96 },
+  hidden: { opacity: 0, y: 60, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    scale: 1,
-    transition: { delay: i * 0.12, duration: 1, ease },
+    transition: { delay: i * 0.12, duration: 0.8, ease },
   }),
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.7, filter: "blur(10px)", rotateX: 15 },
+  hidden: { opacity: 0, scale: 0.8, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,
     scale: 1,
     filter: "blur(0px)",
-    rotateX: 0,
-    transition: { delay: i * 0.1, duration: 0.9, ease },
+    transition: { delay: i * 0.1, duration: 0.7, ease },
   }),
 };
 
 const slideFromLeft = {
-  hidden: { opacity: 0, x: -120, filter: "blur(10px)", rotateY: 8 },
+  hidden: { opacity: 0, x: -80, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
     filter: "blur(0px)",
-    rotateY: 0,
-    transition: { delay: i * 0.15, duration: 1, ease },
+    transition: { delay: i * 0.15, duration: 0.8, ease },
   }),
 };
 
 const slideFromRight = {
-  hidden: { opacity: 0, x: 120, filter: "blur(10px)", rotateY: -8 },
+  hidden: { opacity: 0, x: 80, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
     filter: "blur(0px)",
-    rotateY: 0,
-    transition: { delay: i * 0.15, duration: 1, ease },
+    transition: { delay: i * 0.15, duration: 0.8, ease },
   }),
 };
 
 const staggerContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
 };
 
 /* ── Section Pill ── */
@@ -115,9 +111,10 @@ function useCountUp(end: number, duration = 2000, start = false) {
   const rafRef = useRef<number>();
 
   useEffect(() => {
-    if (!start) return;
-    const startTime = performance.now();
+    if (!start) { setCount(0); return; }
+    let startTime: number | null = null;
     const animate = (now: number) => {
+      if (!startTime) startTime = now;
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
@@ -136,19 +133,9 @@ function useCountUp(end: number, duration = 2000, start = false) {
 function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
   icon: any; value: number; label: string; prefix: string; suffix: string; index: number;
 }) {
-  const [inView, setInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const count = useCountUp(value, 1200, inView);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setInView(true); obs.disconnect(); }
-    }, { threshold: 0.3 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const count = useCountUp(value, 1500, isInView);
 
   return (
     <motion.div
@@ -158,7 +145,7 @@ function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
       viewport={{ once: true, amount: 0.3 }}
       variants={scaleIn}
       custom={index}
-      whileHover={{ scale: 1.08, y: -4 }}
+      whileHover={{ scale: 1.06, y: -4, transition: springTransition }}
       className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
     >
       <Icon className="w-6 h-6 text-primary mx-auto" />
@@ -221,7 +208,7 @@ const Index = () => {
         <Header />
 
         {/* ═══════════ HERO ═══════════ */}
-        <div className="relative w-full min-h-[90vh]">
+        <div id="inicio" className="relative w-full min-h-[90vh]">
           <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
           <BackgroundPaths />
           <div className="relative z-10">
@@ -274,6 +261,14 @@ const Index = () => {
                 whileHover={{ y: -8, transition: springTransition }}
                 className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 space-y-5 relative group hover:border-primary/30 transition-all duration-500"
               >
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                <motion.div
+                  whileHover={{ rotate: 8, scale: 1.1 }}
+                  transition={springTransition}
+                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300"
+                >
+                  <Icon className="w-6 h-6 text-primary" />
+                </motion.div>
                 <span className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-4 py-1 text-xs font-medium text-muted-foreground">
                   {step}
                 </span>
@@ -358,7 +353,6 @@ const Index = () => {
           <FeaturesCarousel />
         </section>
 
-
         {/* ═══════════ FEEDBACKS ═══════════ */}
         <div id="feedbacks">
           <Testimonials />
@@ -368,6 +362,50 @@ const Index = () => {
         <PricingCards />
 
         <LovablePartnership />
+
+        {/* ═══════════ CTA FINAL ═══════════ */}
+        <section className="container mx-auto px-4 py-20 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06)_0%,transparent_60%)] pointer-events-none" />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUp}
+            custom={0}
+            className="text-center space-y-6 max-w-2xl mx-auto"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+              Comece agora e venda seu{" "}
+              <span className="gradient-text">primeiro site hoje</span>
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Escolha o plano ideal e comece a faturar com sites profissionais criados por IA.
+            </p>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              custom={1}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+            >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                <Button variant="neon" size="lg" className="rounded-full px-10 text-base" asChild>
+                  <a href="https://go.perfectpay.com.br/PPU38CQA071">
+                    <Zap className="w-4 h-4 mr-2" />
+                    Assinar agora
+                  </a>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
+                <Button variant="outline" size="lg" className="rounded-full px-10 text-base" onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>
+                  Ver Planos
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </section>
 
         {/* ═══════════ FAQ ═══════════ */}
         <section id="faq" className="container mx-auto px-4 py-20">
