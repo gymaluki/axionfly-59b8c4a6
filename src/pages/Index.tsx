@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
 import { motion, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
+import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
 import { Header } from "@/components/ui/header-3";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
