@@ -262,13 +262,6 @@ const Index = () => {
                 className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 space-y-5 relative group hover:border-primary/30 transition-all duration-500"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
-                <motion.div
-                  whileHover={{ rotate: 8, scale: 1.1 }}
-                  transition={springTransition}
-                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300"
-                >
-                  <Icon className="w-6 h-6 text-primary" />
-                </motion.div>
                 <span className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-4 py-1 text-xs font-medium text-muted-foreground">
                   {step}
                 </span>
