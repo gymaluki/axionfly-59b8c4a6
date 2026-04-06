@@ -190,7 +190,8 @@ const Index = () => {
 
         {/* Hero */}
         <div className="relative w-full min-h-[90vh]">
-          <IsoLevelWarp color="59, 130, 246" density={45} speed={1.2} />
+          <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
+          <BackgroundPaths />
           <div className="relative z-10">
             <HeroSection />
           </div>
