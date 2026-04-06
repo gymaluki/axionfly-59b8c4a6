@@ -1,15 +1,17 @@
 import React from "react";
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Briefcase } from "lucide-react";
+import { Check, Sparkles, Briefcase, BarChart3, Globe, Zap, BookOpen, MapPin, Users, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
+const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 40, filter: "blur(8px)" },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: { delay: i * 0.12, duration: 0.7, ease },
   }),
 };
@@ -19,7 +21,7 @@ interface PricingCardProps {
   description: string;
   price: string;
   priceDescription: string;
-  features: string[];
+  features: { text: string; icon: React.ReactNode }[];
   icon: React.ReactNode;
   isPopular?: boolean;
   buttonText: string;
@@ -46,8 +48,8 @@ function PricingCard({
       viewport={{ once: true }}
       variants={fadeUp}
       custom={index}
-      whileHover={{ scale: 1.03, y: -4 }}
-      className={`relative rounded-2xl p-6 flex flex-col w-full max-w-sm transition-all duration-300 ${
+      whileHover={{ scale: 1.03, y: -6, transition: springTransition }}
+      className={`relative rounded-2xl p-7 flex flex-col w-full max-w-sm transition-all duration-500 ${
         isPopular
           ? "neon-border glow-blue"
           : "border border-border/50 hover:border-border"
@@ -56,15 +58,19 @@ function PricingCard({
         backgroundColor: "hsl(var(--card))",
         backgroundImage:
           isPopular
-            ? "radial-gradient(at 0% 100%, hsl(217 91% 60% / 0.08) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(199 89% 48% / 0.08) 0px, transparent 60%)"
+            ? "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)"
             : undefined,
       }}
     >
       {isPopular && (
         <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
-          <span className="bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap">
+          <motion.span
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap shadow-lg shadow-primary/30"
+          >
             MAIS ESCOLHIDO
-          </span>
+          </motion.span>
         </div>
       )}
 
@@ -89,17 +95,24 @@ function PricingCard({
 
       <ul className="space-y-3 text-sm text-muted-foreground flex-1">
         {features.map((feature, idx) => (
-          <li key={idx} className="flex items-start gap-3">
-            <div className="flex items-center justify-center w-4 h-4 mt-0.5 bg-primary rounded-full shrink-0">
-              <Check className="w-2.5 h-2.5 text-primary-foreground" />
+          <motion.li
+            key={idx}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 + idx * 0.06, duration: 0.4, ease }}
+            className="flex items-start gap-3"
+          >
+            <div className="flex items-center justify-center w-5 h-5 mt-0.5 bg-primary/20 rounded-full shrink-0">
+              {feature.icon}
             </div>
-            <span>{feature}</span>
-          </li>
+            <span>{feature.text}</span>
+          </motion.li>
         ))}
       </ul>
 
       <div className="mt-6">
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
           <Button
             variant={isPopular ? "neon" : "outline"}
             size="lg"
@@ -118,15 +131,17 @@ export default function PricingCards() {
   const plans: PricingCardProps[] = [
     {
       planName: "Mensal",
-      description: "Teste sem compromisso",
+      description: "Para quem quer testar sem compromisso",
       price: "R$ 147",
       priceDescription: "/ mês",
-      icon: <Sparkles className="w-5 h-5 text-accent" />,
+      icon: <Sparkles className="w-5 h-5 text-primary" />,
       features: [
-        "Criador de Sites IA ilimitado",
-        "Prospecção Google Maps automática",
-        "Gerador de E-books com IA",
-        "Suporte prioritário",
+        { text: "Criador de Sites IA ilimitado (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
+        { text: "Prospecção automática via Google Maps", icon: <MapPin className="w-3 h-3 text-primary" /> },
+        { text: "Gerador de E-books com IA", icon: <BookOpen className="w-3 h-3 text-primary" /> },
+        { text: "Dashboard de acompanhamento de lucros", icon: <BarChart3 className="w-3 h-3 text-primary" /> },
+        { text: "Parceria oficial com Lovable", icon: <Zap className="w-3 h-3 text-primary" /> },
+        { text: "Suporte prioritário", icon: <Users className="w-3 h-3 text-primary" /> },
       ],
       buttonText: "Assinar Agora",
       buttonHref: "https://go.perfectpay.com.br/PPU38CQA06U",
@@ -140,11 +155,14 @@ export default function PricingCards() {
       priceDescription: "/ pagamento único",
       icon: <Briefcase className="w-5 h-5 text-primary" />,
       features: [
-        "Criador de Sites IA ilimitado",
-        "Prospecção Google Maps automática",
-        "Gerador de E-books com IA",
-        "Suporte prioritário",
-        "Todas as atualizações futuras incluídas",
+        { text: "Criador de Sites IA ilimitado (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
+        { text: "Prospecção automática via Google Maps", icon: <MapPin className="w-3 h-3 text-primary" /> },
+        { text: "Gerador de E-books com IA", icon: <BookOpen className="w-3 h-3 text-primary" /> },
+        { text: "Dashboard de acompanhamento de lucros", icon: <BarChart3 className="w-3 h-3 text-primary" /> },
+        { text: "Parceria oficial com Lovable", icon: <Zap className="w-3 h-3 text-primary" /> },
+        { text: "Suporte prioritário", icon: <Users className="w-3 h-3 text-primary" /> },
+        { text: "6 estilos de design exclusivos", icon: <Sparkles className="w-3 h-3 text-primary" /> },
+        { text: "Todas as atualizações futuras incluídas", icon: <RefreshCw className="w-3 h-3 text-primary" /> },
       ],
       buttonText: "Garantir Acesso Vitalício",
       buttonHref: "https://go.perfectpay.com.br/PPU38CQA071",
@@ -177,7 +195,7 @@ export default function PricingCards() {
           Escolha o plano ideal para você. Comece seu negócio com a liberdade de crescer ainda mais.
         </p>
       </motion.div>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-3xl mx-auto">
+      <div className="flex flex-col md:flex-row items-stretch justify-center gap-8 max-w-3xl mx-auto">
         {plans.map((plan) => (
           <PricingCard key={plan.planName} {...plan} />
         ))}

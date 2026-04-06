@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 
 const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
 
@@ -17,34 +17,30 @@ const fadeUp = {
 const testimonials = [
   {
     name: "Estter Oliveira",
-    role: "Criadora de Sites · SP",
+    role: "São Paulo · SP",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face",
     text: "Criar sites pra comércio e já ter os clientes pra poder vender é a melhor coisa já feita, sensacional!",
-    result: "Vendas na primeira semana",
     stars: 5,
   },
   {
     name: "Igor Freitosa",
-    role: "Freelancer Digital · RJ",
+    role: "Rio de Janeiro · RJ",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
     text: "Adorei demais, hoje mesmo já vendi até pra uma amiga minha que tem barbearia.",
-    result: "Venda no mesmo dia",
     stars: 5,
   },
   {
     name: "Raphael Calderon",
-    role: "Empreendedor Digital · MG",
+    role: "Belo Horizonte · MG",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
     text: "Fácil, prático e incrível. Vale o investimento!",
-    result: "ROI no primeiro cliente",
     stars: 5,
   },
   {
     name: "O Nostalgista",
-    role: "Criador de Conteúdo · PR",
+    role: "Curitiba · PR",
     avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
     text: "Parabéns aos criadores da ferramenta, fiz as minhas primeiras vendas online e consegui juntar uma boa grana.",
-    result: "Primeiras vendas online",
     stars: 5,
   },
 ];
@@ -72,7 +68,7 @@ export default function Testimonials() {
           Quem usa, <span className="gradient-text">não volta atrás</span>
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-          Resultados reais de quem já vende sites com a AxionFly.
+          Resultados reais de quem já usa a AxionFly.
         </p>
       </motion.div>
 
@@ -94,6 +90,7 @@ export default function Testimonials() {
             className="glass rounded-2xl p-7 space-y-4 transition-all duration-500 hover:neon-border relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <Quote className="w-5 h-5 text-primary/30 absolute top-4 right-4" />
             <div className="flex items-center gap-3">
               <img
                 src={t.avatar}
@@ -107,14 +104,19 @@ export default function Testimonials() {
               </div>
               <div className="ml-auto flex gap-0.5">
                 {Array.from({ length: t.stars }).map((_, s) => (
-                  <Star key={s} className="w-3.5 h-3.5 fill-accent text-accent" />
+                  <motion.div
+                    key={s}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + s * 0.08, type: "spring", stiffness: 200 }}
+                  >
+                    <Star className="w-3.5 h-3.5 fill-primary text-primary" />
+                  </motion.div>
                 ))}
               </div>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">"{t.text}"</p>
-            <div className="inline-flex items-center gap-1.5 bg-primary/10 border border-primary/20 rounded-full px-3 py-1">
-              <span className="text-xs font-semibold text-primary">{t.result}</span>
-            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed relative z-10">"{t.text}"</p>
           </motion.div>
         ))}
       </div>
