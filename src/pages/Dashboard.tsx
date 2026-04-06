@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAccessControl } from "@/hooks/useAccessControl";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import ProspeccaoView from "@/components/views/ProspeccaoView";
 import SitesView from "@/components/views/SitesView";
@@ -11,6 +10,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { supabase } from "@/integrations/supabase/client";
 
 type View = "prospeccao" | "sites" | "vendas";
 
@@ -47,17 +48,37 @@ class DashboardViewErrorBoundary extends Component<
   }
 }
 
+const viewTitles: Record<View, string> = {
+  sites: "Criador de Sites",
+  prospeccao: "Busca de Leads",
+  vendas: "Minhas Vendas",
+};
+
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
   const { hasAccess, loading: accessLoading } = useAccessControl(user);
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<View>("sites");
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
     if (!loading && !user) {
       navigate("/auth");
     }
   }, [user, loading, navigate]);
+
+  // Fetch profile display name
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("user_id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.display_name) setUserName(data.display_name);
+      });
+  }, [user]);
 
   if (loading || accessLoading) {
     return (
@@ -75,7 +96,6 @@ const Dashboard = () => {
 
   if (!user) return null;
 
-  // Block access if not paid and not admin
   if (!hasAccess) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -105,43 +125,55 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-background relative">
-      {/* Grid Background */}
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
-      <DashboardSidebar
-        active={activeView}
-        onNavigate={setActiveView}
-        onSignOut={async () => {
-          await signOut();
-          navigate("/");
-        }}
-        userEmail={user.email}
-      />
-      <main className="flex-1 p-6 md:p-8 overflow-auto relative z-10">
-        <DashboardViewErrorBoundary>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeView}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.3 }}
-            >
-              {activeView === "prospeccao" && <ProspeccaoView />}
-              {activeView === "sites" && <SitesView />}
-              {activeView === "vendas" && <VendasView />}
-            </motion.div>
-          </AnimatePresence>
-        </DashboardViewErrorBoundary>
-      </main>
-    </div>
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-background relative">
+        {/* Grid Background */}
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
+          style={{
+            backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+            backgroundSize: "40px 40px",
+          }}
+        />
+
+        <DashboardSidebar
+          active={activeView}
+          onNavigate={setActiveView}
+          onSignOut={async () => {
+            await signOut();
+            navigate("/");
+          }}
+          userEmail={user.email}
+          userName={userName}
+        />
+
+        <div className="flex-1 flex flex-col relative z-10">
+          <header className="h-14 flex items-center gap-4 border-b border-border px-4 bg-background/80 backdrop-blur-sm sticky top-0 z-20">
+            <SidebarTrigger />
+            <h1 className="text-lg font-semibold text-foreground">{viewTitles[activeView]}</h1>
+          </header>
+
+          <main className="flex-1 p-6 md:p-8 overflow-auto">
+            <DashboardViewErrorBoundary>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeView}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {activeView === "prospeccao" && <ProspeccaoView />}
+                  {activeView === "sites" && <SitesView />}
+                  {activeView === "vendas" && <VendasView />}
+                </motion.div>
+              </AnimatePresence>
+            </DashboardViewErrorBoundary>
+          </main>
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 
