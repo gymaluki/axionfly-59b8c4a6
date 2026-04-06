@@ -68,7 +68,7 @@ export default function Testimonials() {
           Resultados reais de quem já usa a AxionFly.
         </p>
         <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-          Quem usa, <span className="gradient-text">não volta atrás</span>
+          Resultados reais de quem já usa a <span className="gradient-text">AxionFly</span>
         </h2>
       </motion.div>
 
