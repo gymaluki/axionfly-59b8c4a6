@@ -216,62 +216,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* ═══════════ STATS ═══════════ */}
-        <section className="container mx-auto px-4 py-16 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
-          >
-            {stats.map((stat, i) => (
-              <AnimatedStat key={stat.label} {...stat} index={i} />
-            ))}
-          </motion.div>
-        </section>
-
-        {/* ═══════════ ETAPAS (How It Works) ═══════════ */}
-        <section id="etapas" className="container mx-auto px-4 py-24 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04)_0%,transparent_70%)] pointer-events-none" />
-          
-          <SectionPill>Veja como começar - Simples e Fácil</SectionPill>
-          
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-20 space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              Como começar a <span className="gradient-text">vender sites</span>{" "}
-              <br className="hidden md:block" />
-              com a AxionFly?
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {howItWorks.map(({ step, icon: Icon, title, desc }, i) => (
-              <motion.div
-                key={step}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={fadeUp}
-                custom={i + 1}
-                whileHover={{ y: -8, transition: springTransition }}
-                className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 space-y-5 relative group hover:border-primary/30 transition-all duration-500"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
-                <span className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-4 py-1 text-xs font-medium text-muted-foreground">
-                  {step}
-                </span>
-                <h3 className="text-xl font-bold text-foreground">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
         {/* ═══════════ FERRAMENTAS (Features + Globe) ═══════════ */}
         <section className="container mx-auto px-4 py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
@@ -282,7 +226,7 @@ const Index = () => {
             <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
               Comece de forma simples.{" "}
               <br className="hidden md:block" />
-              Escale com <span className="gradient-text">automações precisas!</span>
+              Escale com <span className="gradient-text">sites prontos e prospecção automática</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
               20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.
@@ -337,6 +281,62 @@ const Index = () => {
                 <GlobeCdn className="w-full" speed={0.008} />
               </div>
             </motion.div>
+          </div>
+        </section>
+
+        {/* ═══════════ STATS ═══════════ */}
+        <section className="container mx-auto px-4 py-16 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
+          >
+            {stats.map((stat, i) => (
+              <AnimatedStat key={stat.label} {...stat} index={i} />
+            ))}
+          </motion.div>
+        </section>
+
+        {/* ═══════════ ETAPAS (How It Works) ═══════════ */}
+        <section id="etapas" className="container mx-auto px-4 py-24 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04)_0%,transparent_70%)] pointer-events-none" />
+          
+          <SectionPill>Veja como começar - Simples e Fácil</SectionPill>
+          
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-20 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+              Como começar a <span className="gradient-text">vender sites</span>{" "}
+              <br className="hidden md:block" />
+              com a AxionFly?
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+              Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {howItWorks.map(({ step, icon: Icon, title, desc }, i) => (
+              <motion.div
+                key={step}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={fadeUp}
+                custom={i + 1}
+                whileHover={{ y: -8, transition: springTransition }}
+                className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 space-y-5 relative group hover:border-primary/30 transition-all duration-500"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                <span className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-4 py-1 text-xs font-medium text-muted-foreground">
+                  {step}
+                </span>
+                <h3 className="text-xl font-bold text-foreground">{title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+              </motion.div>
+            ))}
           </div>
         </section>
 

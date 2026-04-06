@@ -149,7 +149,7 @@ export default function PricingCards() {
         <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-5xl">
           Comece de forma simples.{" "}
           <br className="hidden md:block" />
-          Escale com <span className="gradient-text">automações precisas!</span>
+          Escale com <span className="gradient-text">sites prontos e prospecção automática</span>
         </h2>
         <p className="mx-auto max-w-xl text-lg text-muted-foreground">
           Escolha o plano ideal para você e comece seu negócio com liberdade para crescer ainda mais.
