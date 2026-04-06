@@ -75,23 +75,39 @@ export function Header() {
 						)}>Axion<span className="text-primary">Fly</span></span>
 					</a>
 					<NavigationMenu className="hidden md:flex">
-						<NavigationMenuList>
+						<NavigationMenuList className="gap-1">
 							<NavigationMenuItem>
-								<NavigationMenuTrigger className="bg-transparent text-muted-foreground hover:text-foreground">Ferramentas</NavigationMenuTrigger>
-								<NavigationMenuContent className="bg-background p-1 pr-1.5">
-									<ul className="bg-popover grid w-[400px] grid-cols-1 gap-2 rounded-md border border-border p-2 shadow-lg">
-										{productLinks.map((item, i) => (
-											<li key={i}>
-												<ListItem {...item} />
-											</li>
-										))}
-									</ul>
-								</NavigationMenuContent>
+								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+									<a href="#inicio" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
+										Início
+									</a>
+								</NavigationMenuLink>
 							</NavigationMenuItem>
 							<NavigationMenuItem>
 								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-									<a href="#pricing" className="rounded-md p-2">
-										Preços
+									<a href="#etapas" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
+										Etapas
+									</a>
+								</NavigationMenuLink>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+									<a href="#pricing" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
+										Planos
+									</a>
+								</NavigationMenuLink>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+									<a href="#feedbacks" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
+										Feedbacks
+									</a>
+								</NavigationMenuLink>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+									<a href="#faq" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
+										FAQ
 									</a>
 								</NavigationMenuLink>
 							</NavigationMenuItem>
