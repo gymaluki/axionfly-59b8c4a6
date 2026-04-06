@@ -141,6 +141,8 @@ export default function PricingCards() {
         { text: "Dashboard de acompanhamento de lucros", icon: <BarChart3 className="w-3 h-3 text-primary" /> },
         { text: "Parceria oficial com Lovable", icon: <Zap className="w-3 h-3 text-primary" /> },
         { text: "Suporte prioritário", icon: <Users className="w-3 h-3 text-primary" /> },
+        { text: "6 estilos de design exclusivos", icon: <Code2 className="w-3 h-3 text-primary" /> },
+        { text: "Todas as atualizações futuras incluídas", icon: <RefreshCw className="w-3 h-3 text-primary" /> },
       ],
       buttonText: "Assinar Agora",
       buttonHref: "https://go.perfectpay.com.br/PPU38CQA06U",
@@ -151,7 +153,7 @@ export default function PricingCards() {
       planName: "Vitalício",
       description: "Pague uma vez. Use para sempre.",
       price: "R$ 247",
-      priceDescription: "/ pagamento único",
+      priceDescription: "/ custo único",
       icon: <Briefcase className="w-5 h-5 text-primary" />,
       features: [
         { text: "Criador de Sites com IA (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
