@@ -16,16 +16,26 @@ import { toast } from "sonner";
 const quickFilters = [
   { label: "Barbearias", emoji: "💈" },
   { label: "Pizzarias", emoji: "🍕" },
+  { label: "Hamburguerias", emoji: "🍔" },
   { label: "Manicures", emoji: "💅" },
   { label: "Dentistas", emoji: "🦷" },
+  { label: "Clínicas", emoji: "🏥" },
   { label: "Academias", emoji: "🏋️" },
   { label: "Pet Shops", emoji: "🐾" },
   { label: "Restaurantes", emoji: "🍽️" },
   { label: "Mecânicas", emoji: "🔧" },
-  { label: "Salões", emoji: "💇" },
+  { label: "Salões de Beleza", emoji: "💇" },
+  { label: "Estética", emoji: "✨" },
   { label: "Imobiliárias", emoji: "🏠" },
   { label: "Advogados", emoji: "⚖️" },
   { label: "Contadores", emoji: "📊" },
+  { label: "Escolas de Idiomas", emoji: "🌍" },
+  { label: "Padarias", emoji: "🥖" },
+  { label: "Farmácias", emoji: "💊" },
+  { label: "Óticas", emoji: "👓" },
+  { label: "Floricultura", emoji: "🌸" },
+  { label: "Lava Jato", emoji: "🚗" },
+  { label: "Fotógrafos", emoji: "📸" },
 ];
 
 const estados = [
