@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick } from "lucide-react";
 import { motion, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
+import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
 import { Header } from "@/components/ui/header-3";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
@@ -177,7 +178,12 @@ const Index = () => {
         <Header />
 
         {/* Hero */}
-        <HeroSection />
+        <div className="relative w-full min-h-[90vh]">
+          <IsoLevelWarp color="59, 130, 246" density={45} speed={1.2} />
+          <div className="relative z-10">
+            <HeroSection />
+          </div>
+        </div>
 
         {/* Stats */}
         <section className="container mx-auto px-4 py-16">
