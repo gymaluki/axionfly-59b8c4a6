@@ -33,7 +33,7 @@ export function HeroSection() {
 
 				<div className="fade-in slide-in-from-bottom-10 animate-in fill-mode-backwards text-center delay-100 duration-500 ease-out space-y-3">
 					<h1 className="text-balance text-4xl font-black tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.08]">
-						Crie Sites com IA e Venda para
+						Crie Sites Feitos por IA e Venda para
 					</h1>
 					<div className="flex justify-center">
 						<ShutterText
