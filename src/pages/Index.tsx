@@ -173,11 +173,11 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden relative">
+    <div className="min-h-screen bg-background overflow-hidden relative" style={{ perspective: "1200px" }}>
       {/* Grid Background */}
         <div
           aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]"
+          className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
           style={{
             backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
