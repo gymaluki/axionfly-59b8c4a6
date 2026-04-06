@@ -76,12 +76,11 @@ export default function FeaturesCarousel() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center space-y-3"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Conheça o poder da{" "}
-            <span className="gradient-text">AxionFly</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+            Aulas <span className="gradient-text">Premium e Exclusivas</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Ferramentas integradas para prospectar, criar e vender — tudo com IA.
+          <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+            Conteúdo exclusivo para você dominar a criação e venda de sites com IA.
           </p>
         </motion.div>
       </div>
