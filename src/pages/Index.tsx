@@ -9,6 +9,7 @@ import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
 import PricingCards from "@/components/PricingCards";
 import LovablePartnership from "@/components/LovablePartnership";
+import FeaturesCarousel from "@/components/FeaturesCarousel";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
@@ -300,6 +301,9 @@ const Index = () => {
         </section>
 
         {/* Testimonials */}
+        {/* Features Carousel */}
+        <FeaturesCarousel />
+
         <Testimonials />
 
         <PricingCards />
