@@ -48,7 +48,7 @@ export function Header() {
 			className={cn(
 				'fixed left-1/2 z-50 -translate-x-1/2 border transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
 				scrolled && !open
-					? 'top-3 w-[calc(100%-2rem)] max-w-3xl rounded-2xl border-border bg-background/90 shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] supports-[backdrop-filter]:bg-background/40 backdrop-blur-xl'
+					? 'top-2 w-auto max-w-fit rounded-full border-border bg-background/90 shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] supports-[backdrop-filter]:bg-background/40 backdrop-blur-xl'
 					: 'top-0 w-full max-w-full rounded-none border-transparent bg-background/80 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
 				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
 			)}
@@ -56,67 +56,72 @@ export function Header() {
 			<nav
 				className={cn(
 					'flex w-full items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
-					scrolled ? 'h-10 px-4 md:px-4' : 'h-14 px-4',
+					scrolled ? 'h-9 px-2 md:px-2 gap-1' : 'h-14 px-4 gap-5',
 				)}
 			>
-				<div className="flex items-center gap-5">
-					<a href="#" className="hover:opacity-80 transition-all flex items-center gap-2">
+				{/* Logo + name — hidden when scrolled */}
+				<div className={cn(
+					'flex items-center gap-2 transition-all duration-700 overflow-hidden',
+					scrolled ? 'w-0 opacity-0' : 'w-auto opacity-100',
+				)}>
+					<a href="#" className="hover:opacity-80 transition-all flex items-center gap-2 shrink-0">
 						<img
 							src={axionflyLogo}
 							alt="AxionFly"
-							className={cn(
-								'transition-all duration-500',
-								scrolled ? 'w-6 h-6' : 'w-8 h-8',
-							)}
+							className="w-8 h-8 transition-all duration-500"
 						/>
-						<span className={cn(
-							'font-bold text-foreground transition-all duration-500',
-							scrolled ? 'text-lg' : 'text-xl',
-						)}>Axion<span className="text-primary">Fly</span></span>
+						<span className="font-bold text-foreground text-xl whitespace-nowrap">Axion<span className="text-primary">Fly</span></span>
 					</a>
-					<NavigationMenu className="hidden md:flex">
-						<NavigationMenuList className="gap-1">
-							<NavigationMenuItem>
-								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-									<a href="#inicio" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
-										Início
-									</a>
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-									<a href="#etapas" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
-										Etapas
-									</a>
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-									<a href="#pricing" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
-										Planos
-									</a>
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-									<a href="#feedbacks" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
-										Feedbacks
-									</a>
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-							<NavigationMenuItem>
-								<NavigationMenuLink className="px-4 text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-									<a href="#faq" className="rounded-md p-2 font-medium uppercase tracking-wide text-xs">
-										FAQ
-									</a>
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-						</NavigationMenuList>
-					</NavigationMenu>
 				</div>
-				<div className="hidden items-center gap-2 md:flex">
-					<Button variant="ghost" onClick={() => navigate('/auth')}>Entrar</Button>
-					<Button variant="neon" onClick={() => navigate('/auth')}>Acessar Plataforma</Button>
+
+				{/* Nav links — always visible on desktop */}
+				<NavigationMenu className="hidden md:flex">
+					<NavigationMenuList className={cn('transition-all duration-500', scrolled ? 'gap-0' : 'gap-1')}>
+						<NavigationMenuItem>
+							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+								<a href="#inicio" className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+									Início
+								</a>
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+								<a href="#etapas" className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+									Etapas
+								</a>
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+								<a href="#pricing" className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+									Planos
+								</a>
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+								<a href="#feedbacks" className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+									Feedbacks
+								</a>
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
+								<a href="#faq" className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+									FAQ
+								</a>
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+					</NavigationMenuList>
+				</NavigationMenu>
+
+				{/* Right side buttons */}
+				<div className={cn(
+					'hidden items-center gap-2 md:flex transition-all duration-700',
+					scrolled ? 'gap-1' : 'gap-2',
+				)}>
+					<Button variant="ghost" size={scrolled ? 'sm' : 'default'} onClick={() => navigate('/auth')}>Entrar</Button>
+					<Button variant="neon" size={scrolled ? 'sm' : 'default'} onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>Ver Planos</Button>
 				</div>
 				<Button
 					size="icon"
