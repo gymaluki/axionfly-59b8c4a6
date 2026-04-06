@@ -193,7 +193,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden relative" style={{ perspective: "1200px" }}>
+    <div className="min-h-screen bg-background overflow-hidden relative">
       {/* Grid Background */}
       <div
         aria-hidden="true"
