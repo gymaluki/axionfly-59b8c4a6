@@ -86,7 +86,7 @@ function SectionPill({ children }: { children: React.ReactNode }) {
 const features = [
   {
     icon: Code2,
-    title: "Fábrica de Sites IA",
+    title: "Criador de Sites com IA",
     desc: "Escolha entre 20+ nichos, personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Pronto pra vender.",
     tag: "PRINCIPAL",
   },
@@ -97,10 +97,10 @@ const features = [
     tag: "27 ESTADOS",
   },
   {
-    icon: BookOpen,
-    title: "Gerador de E-books",
-    desc: "Crie e-books profissionais em 30 segundos. Use como isca digital ou venda diretamente. Conteúdo gerado por IA de verdade.",
-    tag: "RÁPIDO",
+    icon: BarChart3,
+    title: "Dashboard de Vendas",
+    desc: "Acompanhe seus lucros, clientes atendidos e sites criados em um painel completo. Tenha controle total do seu negócio.",
+    tag: "GESTÃO",
   },
 ];
 
