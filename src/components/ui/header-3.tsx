@@ -46,17 +46,17 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'fixed left-1/2 z-50 w-[calc(100%-1rem)] -translate-x-1/2 border transition-all duration-500 ease-out',
+				'fixed left-1/2 z-50 -translate-x-1/2 border transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
 				scrolled && !open
-					? 'top-3 max-w-4xl rounded-xl border-border bg-background/95 shadow-lg supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg'
-					: 'top-0 max-w-6xl rounded-none border-transparent bg-background/85 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
+					? 'top-3 w-[calc(100%-2rem)] max-w-3xl rounded-2xl border-border bg-background/90 shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] supports-[backdrop-filter]:bg-background/40 backdrop-blur-xl'
+					: 'top-0 w-full max-w-full rounded-none border-transparent bg-background/80 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
 				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
 			)}
 		>
 			<nav
 				className={cn(
-					'flex w-full items-center justify-between px-4 transition-all duration-500 ease-out',
-					scrolled ? 'h-11 md:px-3' : 'h-14',
+					'flex w-full items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
+					scrolled ? 'h-10 px-4 md:px-4' : 'h-14 px-4',
 				)}
 			>
 				<div className="flex items-center gap-5">
