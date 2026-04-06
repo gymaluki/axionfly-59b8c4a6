@@ -301,6 +301,9 @@ const Index = () => {
         </section>
 
         {/* Testimonials */}
+        {/* Features Carousel */}
+        <FeaturesCarousel />
+
         <Testimonials />
 
         <PricingCards />
