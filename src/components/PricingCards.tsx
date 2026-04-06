@@ -1,6 +1,5 @@
-import React from "react";
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Briefcase, BarChart3, Globe, Zap, MapPin, Users, RefreshCw, Code2 } from "lucide-react";
+import { Sparkles, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
@@ -21,8 +20,7 @@ interface PricingCardProps {
   description: string;
   price: string;
   priceDescription: string;
-  features: { text: string; icon: React.ReactNode }[];
-  icon: React.ReactNode;
+  features: string[];
   isPopular?: boolean;
   buttonText: string;
   buttonHref: string;
@@ -35,7 +33,6 @@ function PricingCard({
   price,
   priceDescription,
   features,
-  icon,
   isPopular,
   buttonText,
   buttonHref,
@@ -49,43 +46,35 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ scale: 1.03, y: -6, transition: springTransition }}
-      className={`relative rounded-2xl p-7 flex flex-col w-full max-w-sm transition-all duration-500 ${
-        isPopular
-          ? "neon-border glow-blue"
-          : "border border-border/50 hover:border-border"
+      className={`relative flex w-full max-w-sm flex-col rounded-2xl p-7 transition-all duration-500 ${
+        isPopular ? "neon-border glow-blue" : "border border-border/50 hover:border-border"
       }`}
       style={{
         backgroundColor: "hsl(var(--card))",
-        backgroundImage:
-          isPopular
-            ? "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)"
-            : undefined,
+        backgroundImage: isPopular
+          ? "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)"
+          : undefined,
       }}
     >
       {isPopular && (
-        <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
+        <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
           <motion.span
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap shadow-lg shadow-primary/30"
+            className="whitespace-nowrap rounded-full bg-primary px-4 py-1 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/30"
           >
             MAIS ESCOLHIDO
           </motion.span>
         </div>
       )}
 
-      <div className="flex items-center gap-3 mb-6">
-        <div className="h-10 w-10 rounded-xl border border-border bg-secondary/50 flex items-center justify-center">
-          {icon}
-        </div>
-        <div>
-          <h3 className="text-xl font-bold text-foreground">{planName}</h3>
-          <p className="text-xs text-muted-foreground">{description}</p>
-        </div>
+      <div className="mb-6 text-center">
+        <h3 className="text-2xl font-bold text-foreground">{planName}</h3>
+        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       </div>
 
-      <div className="mb-6">
-        <div className="flex items-baseline gap-2">
+      <div className="mb-8 text-center">
+        <div className="flex items-baseline justify-center gap-2">
           <span className={`text-4xl font-black ${isPopular ? "gradient-text" : "text-foreground"}`}>
             {price}
           </span>
@@ -93,32 +82,24 @@ function PricingCard({
         </div>
       </div>
 
-      <ul className="space-y-3 text-sm text-muted-foreground flex-1">
+      <ul className="flex-1 space-y-3 text-center text-sm text-muted-foreground">
         {features.map((feature, idx) => (
           <motion.li
             key={idx}
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 + idx * 0.06, duration: 0.4, ease }}
-            className="flex items-start gap-3"
+            className="rounded-xl border border-border/40 bg-secondary/30 px-4 py-3"
           >
-            <div className="flex items-center justify-center w-5 h-5 mt-0.5 bg-primary/20 rounded-full shrink-0">
-              {feature.icon}
-            </div>
-            <span>{feature.text}</span>
+            {feature}
           </motion.li>
         ))}
       </ul>
 
       <div className="mt-6">
         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-          <Button
-            variant={isPopular ? "neon" : "outline"}
-            size="lg"
-            className="w-full"
-            asChild
-          >
+          <Button variant={isPopular ? "neon" : "outline"} size="lg" className="w-full" asChild>
             <a href={buttonHref}>{buttonText}</a>
           </Button>
         </motion.div>
@@ -128,42 +109,34 @@ function PricingCard({
 }
 
 export default function PricingCards() {
+  const sharedFeatures = [
+    "Criador de Sites com IA (20+ nichos)",
+    "Prospecção automática via Google Maps",
+    "Dashboard de acompanhamento de lucros",
+    "Parceria oficial com Lovable",
+    "Suporte prioritário",
+    "6 estilos de design exclusivos",
+    "Todas as atualizações futuras incluídas",
+  ];
+
   const plans: PricingCardProps[] = [
     {
-      planName: "Mensal",
+      planName: "Plano Mensal",
       description: "Para quem quer testar sem compromisso",
       price: "R$ 147",
       priceDescription: "/ mês",
-      icon: <Sparkles className="w-5 h-5 text-primary" />,
-      features: [
-        { text: "Criador de Sites com IA (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
-        { text: "Prospecção automática via Google Maps", icon: <MapPin className="w-3 h-3 text-primary" /> },
-        { text: "Dashboard de acompanhamento de lucros", icon: <BarChart3 className="w-3 h-3 text-primary" /> },
-        { text: "Parceria oficial com Lovable", icon: <Zap className="w-3 h-3 text-primary" /> },
-        { text: "Suporte prioritário", icon: <Users className="w-3 h-3 text-primary" /> },
-        { text: "6 estilos de design exclusivos", icon: <Code2 className="w-3 h-3 text-primary" /> },
-        { text: "Todas as atualizações futuras incluídas", icon: <RefreshCw className="w-3 h-3 text-primary" /> },
-      ],
+      features: sharedFeatures,
       buttonText: "Assinar Agora",
       buttonHref: "https://go.perfectpay.com.br/PPU38CQA06U",
       isPopular: false,
       index: 1,
     },
     {
-      planName: "Vitalício",
+      planName: "Plano Vitalício",
       description: "Pague uma vez. Use para sempre.",
       price: "R$ 247",
       priceDescription: "/ custo único",
-      icon: <Briefcase className="w-5 h-5 text-primary" />,
-      features: [
-        { text: "Criador de Sites com IA (20+ nichos)", icon: <Globe className="w-3 h-3 text-primary" /> },
-        { text: "Prospecção automática via Google Maps", icon: <MapPin className="w-3 h-3 text-primary" /> },
-        { text: "Dashboard de acompanhamento de lucros", icon: <BarChart3 className="w-3 h-3 text-primary" /> },
-        { text: "Parceria oficial com Lovable", icon: <Zap className="w-3 h-3 text-primary" /> },
-        { text: "Suporte prioritário", icon: <Users className="w-3 h-3 text-primary" /> },
-        { text: "6 estilos de design exclusivos", icon: <Code2 className="w-3 h-3 text-primary" /> },
-        { text: "Todas as atualizações futuras incluídas", icon: <RefreshCw className="w-3 h-3 text-primary" /> },
-      ],
+      features: sharedFeatures,
       buttonText: "Garantir Acesso Vitalício",
       buttonHref: "https://go.perfectpay.com.br/PPU38CQA071",
       isPopular: true,
@@ -173,8 +146,8 @@ export default function PricingCards() {
 
   return (
     <section id="pricing" className="container mx-auto px-4 py-20">
-      <div className="flex justify-center mb-8">
-        <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+      <div className="mb-8 flex justify-center">
+        <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-sm">
           Preços - Planos flexíveis
         </span>
       </div>
@@ -184,18 +157,18 @@ export default function PricingCards() {
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="text-center mb-12 space-y-4"
+        className="mb-12 space-y-4 text-center"
       >
-        <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+        <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-5xl">
           Comece de forma simples.{" "}
           <br className="hidden md:block" />
           Escale com <span className="gradient-text">automações precisas!</span>
         </h2>
-        <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-          Escolha o plano ideal para você. Comece seu negócio com a liberdade de crescer ainda mais.
+        <p className="mx-auto max-w-xl text-lg text-muted-foreground">
+          Escolha o plano ideal para você e comece seu negócio com liberdade para crescer ainda mais.
         </p>
       </motion.div>
-      <div className="flex flex-col md:flex-row items-stretch justify-center gap-8 max-w-3xl mx-auto">
+      <div className="mx-auto flex max-w-3xl flex-col items-stretch justify-center gap-8 md:flex-row">
         {plans.map((plan) => (
           <PricingCard key={plan.planName} {...plan} />
         ))}

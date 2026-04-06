@@ -46,11 +46,11 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'fixed top-0 left-0 right-0 z-50 mx-auto w-full border-b transition-all duration-500 ease-out',
+				'fixed left-1/2 z-50 w-[calc(100%-1rem)] -translate-x-1/2 border transition-all duration-500 ease-out',
 				scrolled && !open
-					? 'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg shadow-lg max-w-4xl top-4 rounded-xl'
-					: 'border-transparent max-w-full bg-background/80 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
-				open ? 'bg-background/90 max-w-full rounded-none top-0' : '',
+					? 'top-3 max-w-4xl rounded-xl border-border bg-background/95 shadow-lg supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg'
+					: 'top-0 max-w-full rounded-none border-transparent bg-background/85 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
+				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
 			)}
 		>
 			<nav
