@@ -53,6 +53,13 @@ export default function Testimonials() {
   return (
     <section className="container mx-auto px-4 py-24 relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.03)_0%,transparent_70%)] pointer-events-none" />
+      
+      <div className="flex justify-center mb-8">
+        <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+          Feedbacks - Resultados Reais
+        </span>
+      </div>
+
       <motion.div
         initial="hidden"
         whileInView="visible"

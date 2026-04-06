@@ -65,23 +65,41 @@ const staggerContainer = {
   visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
+/* ── Section Pill ── */
+function SectionPill({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      custom={0}
+      className="flex justify-center mb-8"
+    >
+      <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+        {children}
+      </span>
+    </motion.div>
+  );
+}
+
 const features = [
   {
     icon: Code2,
     title: "Fábrica de Sites IA",
-    desc: "Escolha entre 20+ nichos (barbearias, pizzarias, clínicas, academias...), personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Pronto pra vender.",
+    desc: "Escolha entre 20+ nichos, personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Pronto pra vender.",
     tag: "PRINCIPAL",
   },
   {
     icon: MapPin,
-    title: "Busca de Leads por Estado e Cidade",
-    desc: "Selecione qualquer estado e cidade do Brasil. O sistema busca negócios no Google e entrega nome, telefone e endereço — tudo pronto pra prospectar e fechar contrato.",
+    title: "Prospecção Automática",
+    desc: "Selecione estado e cidade. O sistema busca negócios sem site e entrega nome, telefone e endereço — tudo pronto pra fechar contrato.",
     tag: "27 ESTADOS",
   },
   {
     icon: BookOpen,
-    title: "Gerador de E-books com IA",
-    desc: "Crie e-books profissionais em 30 segundos. Use como isca digital para atrair clientes ou venda diretamente. Conteúdo gerado por IA de verdade.",
+    title: "Gerador de E-books",
+    desc: "Crie e-books profissionais em 30 segundos. Use como isca digital ou venda diretamente. Conteúdo gerado por IA de verdade.",
     tag: "RÁPIDO",
   },
 ];
@@ -102,7 +120,6 @@ function useCountUp(end: number, duration = 2000, start = false) {
     const animate = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setCount(Math.round(eased * end));
       if (progress < 1) {
@@ -154,17 +171,32 @@ function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
 }
 
 const howItWorks = [
-  { step: "01", icon: Search, title: "Encontre o cliente ideal", desc: "Escolha o estado, a cidade e o nicho. O sistema busca negócios sem site e entrega nome, telefone e endereço." },
-  { step: "02", icon: MousePointerClick, title: "Crie o site sob medida", desc: "Selecione o nicho, escolha entre 6 estilos de design (conversão, catálogo, local-first...), personalize fontes e cores. Site pronto em minutos." },
-  { step: "03", icon: Globe, title: "Apresente e feche o contrato", desc: "Entre em contato pelo WhatsApp, mostre o site já pronto e feche o contrato. Sem programar uma linha de código." },
+  {
+    step: "Etapa - 1",
+    icon: Search,
+    title: "Ative sua Ferramenta",
+    desc: "Assine a AxionFly, acesse a plataforma e conecte a IA. Em poucos cliques, sua base de operação está pronta para prospectar e criar sites.",
+  },
+  {
+    step: "Etapa - 2",
+    icon: MousePointerClick,
+    title: "Crie Sites e Encontre Clientes",
+    desc: "Escolha o nicho, personalize o design e gere o site com IA. Use a busca de leads para encontrar negócios sem site na sua cidade.",
+  },
+  {
+    step: "Etapa - 3",
+    icon: Globe,
+    title: "Apresente, Venda e Escale",
+    desc: "Entre em contato pelo WhatsApp, mostre o site pronto e feche o contrato. Acompanhe seus resultados e continue escalando.",
+  },
 ];
 
 const faqItems = [
   { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você só preenche o nome do negócio, escolhe o nicho, as cores e o estilo de design — a IA faz todo o trabalho técnico. Zero código, zero complicação." },
-  { q: "Quais tipos de site posso criar?", a: "São mais de 20 nichos prontos: barbearias, pizzarias, hamburguerias, clínicas, pet shops, academias, restaurantes, salões de beleza, escritórios de advocacia, imobiliárias, contabilidades, estúdios de estética, escolas de idiomas e muito mais. E você ainda escolhe entre 6 estilos de design: Landing Page de Conversão, Catálogo/E-commerce, Local-First, Institucional Moderno, Lifestyle e Cardápio Digital." },
-  { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o nicho de negócio. O sistema busca automaticamente no Google e entrega nome, telefone e endereço — tudo pronto para você entrar em contato pelo WhatsApp e oferecer um site." },
+  { q: "Quais tipos de site posso criar?", a: "São mais de 20 nichos prontos: barbearias, pizzarias, hamburguerias, clínicas, pet shops, academias, restaurantes, salões de beleza, escritórios de advocacia, imobiliárias, contabilidades, estúdios de estética, escolas de idiomas e muito mais." },
+  { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o nicho de negócio. O sistema busca automaticamente e entrega nome, telefone e endereço — tudo pronto para você prospectar." },
   { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
-  { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes (Playfair Display, Inter, Poppins, Oswald...) e 6 estilos de design diferentes. Cada site sai único e profissional." },
+  { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes e 6 estilos de design diferentes. Cada site sai único e profissional." },
   { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos), busca de leads em todos os estados do Brasil, gerador de e-books com IA e todas as atualizações futuras. Pague uma vez, use para sempre." },
   { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
   { q: "Funciona em qualquer cidade do Brasil?", a: "Sim! A busca de leads cobre todos os 27 estados e todas as cidades do Brasil. Basta selecionar o estado e a cidade para encontrar negócios sem site na sua região." },
@@ -176,19 +208,19 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-hidden relative" style={{ perspective: "1200px" }}>
       {/* Grid Background */}
-        <div
-          aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
-          }}
-        />
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
 
       <div className="relative z-10">
         <Header />
 
-        {/* Hero */}
+        {/* ═══════════ HERO ═══════════ */}
         <div className="relative w-full min-h-[90vh]">
           <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
           <BackgroundPaths />
@@ -197,7 +229,7 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Stats */}
+        {/* ═══════════ STATS ═══════════ */}
         <section className="container mx-auto px-4 py-16 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
           <motion.div
@@ -213,17 +245,24 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* How It Works */}
-        <section className="container mx-auto px-4 py-24 relative">
+        {/* ═══════════ ETAPAS (How It Works) ═══════════ */}
+        <section id="etapas" className="container mx-auto px-4 py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04)_0%,transparent_70%)] pointer-events-none" />
+          
+          <SectionPill>Veja como começar - Simples e Fácil</SectionPill>
+          
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-20 space-y-4">
             <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              Da prospecção ao contrato em <span className="gradient-text">3 passos</span>
+              Como começar a <span className="gradient-text">vender sites</span>{" "}
+              <br className="hidden md:block" />
+              com a AxionFly?
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+              Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.
+            </p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto relative">
-            <div className="hidden md:block absolute top-16 left-[16%] right-[16%] h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {howItWorks.map(({ step, icon: Icon, title, desc }, i) => (
               <motion.div
                 key={step}
@@ -232,34 +271,36 @@ const Index = () => {
                 viewport={{ once: true, amount: 0.3 }}
                 variants={fadeUp}
                 custom={i + 1}
-                whileHover={{ y: -12, transition: springTransition }}
-                className="text-center space-y-5 relative group"
+                whileHover={{ y: -8, transition: springTransition }}
+                className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 space-y-5 relative group hover:border-primary/30 transition-all duration-500"
               >
-                <motion.div
-                  whileHover={{ scale: 1.2, rotate: 12, boxShadow: "0 0 40px -8px hsl(var(--primary) / 0.5)" }}
-                  transition={springTransition}
-                  className="w-20 h-20 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto relative backdrop-blur-sm"
-                >
-                  <Icon className="w-8 h-8 text-primary" />
-                  <span className="absolute -top-2 -right-2 text-[10px] font-bold bg-primary text-primary-foreground rounded-full w-6 h-6 flex items-center justify-center shadow-lg shadow-primary/30">{step}</span>
-                </motion.div>
+                <span className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-4 py-1 text-xs font-medium text-muted-foreground">
+                  {step}
+                </span>
                 <h3 className="text-xl font-bold text-foreground">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{desc}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
               </motion.div>
             ))}
           </div>
         </section>
 
-        {/* Features + Globe */}
+        {/* ═══════════ FERRAMENTAS (Features + Globe) ═══════════ */}
         <section className="container mx-auto px-4 py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
+          
+          <SectionPill>Conheça a Plataforma</SectionPill>
+          
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-4">
             <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              Três ferramentas de lucro.{" "}
-              <span className="gradient-text">Uma plataforma completa.</span>
+              Comece de forma simples.{" "}
+              <br className="hidden md:block" />
+              Escale com <span className="gradient-text">automações precisas!</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+              20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.
+            </p>
           </motion.div>
+
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="grid gap-6">
               {features.map(({ icon: Icon, title, desc, tag }, i) => (
@@ -311,7 +352,13 @@ const Index = () => {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* ═══════════ CAROUSEL ═══════════ */}
+        <section>
+          <SectionPill>Conheça Área de Membros</SectionPill>
+          <FeaturesCarousel />
+        </section>
+
+        {/* ═══════════ CTA ═══════════ */}
         <section className="container mx-auto px-4 py-20">
           <motion.div
             initial="hidden"
@@ -321,7 +368,7 @@ const Index = () => {
             custom={0}
             className="glass rounded-3xl p-10 md:p-16 text-center space-y-6 neon-border max-w-3xl mx-auto relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-accent/5 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.08] via-transparent to-accent/[0.05] pointer-events-none" />
             <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
             <motion.div
@@ -332,7 +379,8 @@ const Index = () => {
               <Sparkles className="w-10 h-10 text-primary mx-auto drop-shadow-[0_0_15px_hsl(var(--primary)/0.5)]" />
             </motion.div>
             <h2 className="text-2xl md:text-4xl font-bold text-foreground relative z-10 tracking-tight">
-              Enquanto você lê isso, alguém está faturando com sites criados por IA.
+              Enquanto você lê isso, alguém está{" "}
+              <span className="gradient-text">faturando com sites</span> criados por IA.
             </h2>
             <p className="text-muted-foreground max-w-lg mx-auto relative z-10 text-lg">
               20+ nichos prontos, busca de clientes em qualquer cidade do Brasil, sites profissionais em minutos. Configure em 5 minutos e comece a vender hoje.
@@ -351,23 +399,28 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* Testimonials */}
-        {/* Features Carousel */}
-        <FeaturesCarousel />
+        {/* ═══════════ FEEDBACKS ═══════════ */}
+        <div id="feedbacks">
+          <Testimonials />
+        </div>
 
-        <Testimonials />
-
+        {/* ═══════════ PLANOS ═══════════ */}
         <PricingCards />
 
         <LovablePartnership />
 
-        {/* FAQ */}
-        <section className="container mx-auto px-4 py-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Perguntas <span className="gradient-text">Frequentes</span>
+        {/* ═══════════ FAQ ═══════════ */}
+        <section id="faq" className="container mx-auto px-4 py-20">
+          <SectionPill>Dúvidas Frequentes</SectionPill>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+              Tudo que você precisa saber{" "}
+              <br className="hidden md:block" />
+              sobre a <span className="gradient-text">AxionFly</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">Tudo que você precisa saber sobre criar sites com IA na AxionFly.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+              Respostas rápidas para suas principais dúvidas.
+            </p>
           </motion.div>
           <div className="max-w-2xl mx-auto space-y-4">
             {faqItems.map(({ q, a }, i) => (
