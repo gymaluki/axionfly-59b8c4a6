@@ -5,6 +5,7 @@ import { ArrowRight, MapPin, BookOpen, Code2, Check, Sparkles, Zap, Users, Trend
 import { motion, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
+import { BackgroundPaths } from "@/components/ui/background-paths";
 import { Header } from "@/components/ui/header-3";
 import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
