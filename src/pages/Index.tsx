@@ -144,7 +144,7 @@ function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
       className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
     >
       <Icon className="w-6 h-6 text-primary mx-auto" />
-      <p className="text-3xl font-black text-foreground tabular-nums">
+      <p className="text-3xl font-black text-foreground tabular-nums drop-shadow-[0_0_20px_hsl(var(--primary)/0.3)]">
         {prefix}{count.toLocaleString("pt-BR")}{suffix}
       </p>
       <p className="text-sm text-muted-foreground">{label}</p>
