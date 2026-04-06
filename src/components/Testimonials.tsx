@@ -92,12 +92,9 @@ export default function Testimonials() {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <Quote className="w-5 h-5 text-primary/30 absolute top-4 right-4" />
             <div className="flex items-center gap-3">
-              <img
-                src={t.avatar}
-                alt={t.name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-primary/30"
-                loading="lazy"
-              />
+              <div className="w-12 h-12 rounded-full border-2 border-primary/30 bg-primary/10 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-primary">{t.initials}</span>
+              </div>
               <div>
                 <p className="font-semibold text-foreground text-sm">{t.name}</p>
                 <p className="text-xs text-muted-foreground">{t.role}</p>
