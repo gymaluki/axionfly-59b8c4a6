@@ -155,20 +155,26 @@ export default function PricingCards() {
 
   return (
     <section id="pricing" className="container mx-auto px-4 py-20">
+      <div className="flex justify-center mb-8">
+        <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+          Preços - Planos flexíveis
+        </span>
+      </div>
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="text-center mb-12 space-y-3"
+        className="text-center mb-12 space-y-4"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          O investimento se paga no{" "}
-          <span className="gradient-text">primeiro site vendido</span>
+        <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+          Comece de forma simples.{" "}
+          <br className="hidden md:block" />
+          Escale com <span className="gradient-text">automações precisas!</span>
         </h2>
-        <p className="text-muted-foreground">
-          Sem surpresas. Sem taxa escondida. Venda e lucre.
+        <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+          Escolha o plano ideal para você. Comece seu negócio com a liberdade de crescer ainda mais.
         </p>
       </motion.div>
       <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-3xl mx-auto">
