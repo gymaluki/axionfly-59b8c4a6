@@ -79,7 +79,7 @@ function PricingCard({
 
       {/* Price */}
       <div className="mb-6 text-center">
-        <span className={`text-4xl font-black ${isHighlight ? "gradient-text" : "text-foreground"}`}>
+        <span className="text-5xl font-black gradient-text">
           {price}
         </span>
         <span className="ml-2 text-sm text-muted-foreground">{priceDescription}</span>
