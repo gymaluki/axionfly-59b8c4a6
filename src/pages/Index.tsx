@@ -249,15 +249,16 @@ const Index = () => {
         </section>
 
         {/* Features + Globe */}
-        <section className="container mx-auto px-4 py-20">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <section className="container mx-auto px-4 py-24 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
               Três ferramentas de lucro.{" "}
               <span className="gradient-text">Uma plataforma completa.</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.</p>
           </motion.div>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="grid gap-6">
               {features.map(({ icon: Icon, title, desc, tag }, i) => (
                 <motion.div
@@ -267,29 +268,44 @@ const Index = () => {
                   viewport={{ once: true, amount: 0.2 }}
                   variants={slideFromLeft}
                   custom={i + 1}
-                  whileHover={{ scale: 1.04, y: -6 }}
-                  className="glass rounded-2xl p-6 space-y-4 hover:neon-border transition-all duration-300 group cursor-pointer relative overflow-hidden"
+                  whileHover={{ 
+                    scale: 1.03, 
+                    y: -8,
+                    boxShadow: "0 25px 60px -15px hsl(var(--primary) / 0.15), 0 0 30px -10px hsl(var(--primary) / 0.1)",
+                    transition: springTransition
+                  }}
+                  className="glass rounded-2xl p-7 space-y-4 hover:neon-border transition-all duration-500 group cursor-pointer relative overflow-hidden"
                 >
-                  <div className="absolute top-3 right-3">
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded-full border border-primary/20">{tag}</span>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute top-4 right-4">
+                    <span className="text-[9px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2.5 py-1 rounded-full border border-primary/20">{tag}</span>
                   </div>
                   <motion.div
-                    whileHover={{ rotate: 10 }}
-                    className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors"
+                    whileHover={{ rotate: 12, scale: 1.1 }}
+                    transition={springTransition}
+                    className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/20"
                   >
-                    <Icon className="w-6 h-6 text-primary" />
+                    <Icon className="w-7 h-7 text-primary" />
                   </motion.div>
-                  <h3 className="text-xl font-bold text-foreground">{title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{desc}</p>
+                  <h3 className="text-xl font-bold text-foreground relative z-10">{title}</h3>
+                  <p className="text-muted-foreground leading-relaxed text-sm relative z-10">{desc}</p>
                 </motion.div>
               ))}
             </div>
             {/* Globe */}
-            <div className="flex items-center justify-center">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={slideFromRight}
+              custom={1}
+              className="flex items-center justify-center"
+            >
               <div className="w-full max-w-md relative">
+                <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.08)_0%,transparent_70%)] blur-3xl pointer-events-none" />
                 <GlobeCdn className="w-full" speed={0.008} />
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
