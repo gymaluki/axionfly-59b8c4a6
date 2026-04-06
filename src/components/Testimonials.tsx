@@ -64,12 +64,12 @@ export default function Testimonials() {
         custom={0}
         className="text-center mb-16 space-y-4"
       >
+        <p className="text-muted-foreground text-lg">
+          Resultados reais de quem já usa a AxionFly.
+        </p>
         <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
           Quem usa, <span className="gradient-text">não volta atrás</span>
         </h2>
-        <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-          Resultados reais de quem já usa a AxionFly.
-        </p>
       </motion.div>
 
       <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">

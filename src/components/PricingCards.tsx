@@ -1,5 +1,5 @@
 import { motion, type Easing } from "framer-motion";
-import { Sparkles, Briefcase } from "lucide-react";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
@@ -21,7 +21,7 @@ interface PricingCardProps {
   price: string;
   priceDescription: string;
   features: string[];
-  isPopular?: boolean;
+  isHighlight?: boolean;
   buttonText: string;
   buttonHref: string;
   index: number;
@@ -33,7 +33,7 @@ function PricingCard({
   price,
   priceDescription,
   features,
-  isPopular,
+  isHighlight,
   buttonText,
   buttonHref,
   index,
@@ -46,64 +46,55 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ scale: 1.03, y: -6, transition: springTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-2xl p-7 transition-all duration-500 ${
-        isPopular ? "neon-border glow-blue" : "border border-border/50 hover:border-border"
+      className={`relative flex w-full max-w-sm flex-col rounded-2xl p-8 transition-all duration-500 ${
+        isHighlight ? "neon-border glow-blue" : "border border-border/50 hover:border-border"
       }`}
       style={{
         backgroundColor: "hsl(var(--card))",
-        backgroundImage: isPopular
+        backgroundImage: isHighlight
           ? "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)"
           : undefined,
       }}
     >
-      {isPopular && (
-        <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-          <motion.span
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="whitespace-nowrap rounded-full bg-primary px-4 py-1 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/30"
-          >
-            MAIS ESCOLHIDO
-          </motion.span>
-        </div>
-      )}
-
+      {/* Title */}
       <div className="mb-6 text-center">
         <h3 className="text-2xl font-bold text-foreground">{planName}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       </div>
 
-      <div className="mb-8 text-center">
-        <div className="flex items-baseline justify-center gap-2">
-          <span className={`text-4xl font-black ${isPopular ? "gradient-text" : "text-foreground"}`}>
-            {price}
-          </span>
-          <span className="text-sm text-muted-foreground">{priceDescription}</span>
-        </div>
-      </div>
-
-      <ul className="flex-1 space-y-3 text-center text-sm text-muted-foreground">
+      {/* Features */}
+      <ul className="flex-1 space-y-4 mb-8">
         {features.map((feature, idx) => (
           <motion.li
             key={idx}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 + idx * 0.06, duration: 0.4, ease }}
-            className="rounded-xl border border-border/40 bg-secondary/30 px-4 py-3"
+            className="flex items-center gap-3 text-sm text-foreground font-medium"
           >
+            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20">
+              <Check className="h-3 w-3 text-primary" />
+            </div>
             {feature}
           </motion.li>
         ))}
       </ul>
 
-      <div className="mt-6">
-        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-          <Button variant={isPopular ? "neon" : "outline"} size="lg" className="w-full" asChild>
-            <a href={buttonHref}>{buttonText}</a>
-          </Button>
-        </motion.div>
+      {/* Price */}
+      <div className="mb-6 text-center">
+        <span className={`text-4xl font-black ${isHighlight ? "gradient-text" : "text-foreground"}`}>
+          {price}
+        </span>
+        <span className="ml-2 text-sm text-muted-foreground">{priceDescription}</span>
       </div>
+
+      {/* CTA */}
+      <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+        <Button variant={isHighlight ? "neon" : "outline"} size="lg" className="w-full text-base" asChild>
+          <a href={buttonHref}>{buttonText}</a>
+        </Button>
+      </motion.div>
     </motion.div>
   );
 }
@@ -126,9 +117,9 @@ export default function PricingCards() {
       price: "R$ 147",
       priceDescription: "/ mês",
       features: sharedFeatures,
-      buttonText: "Assinar Agora",
+      buttonText: "Escolher este plano",
       buttonHref: "https://go.perfectpay.com.br/PPU38CQA06U",
-      isPopular: false,
+      isHighlight: false,
       index: 1,
     },
     {
@@ -137,9 +128,9 @@ export default function PricingCards() {
       price: "R$ 247",
       priceDescription: "/ custo único",
       features: sharedFeatures,
-      buttonText: "Garantir Acesso Vitalício",
+      buttonText: "Escolher este plano",
       buttonHref: "https://go.perfectpay.com.br/PPU38CQA071",
-      isPopular: true,
+      isHighlight: true,
       index: 2,
     },
   ];
