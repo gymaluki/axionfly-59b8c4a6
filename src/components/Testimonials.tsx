@@ -51,19 +51,20 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="container mx-auto px-4 py-20">
+    <section className="container mx-auto px-4 py-24 relative">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.03)_0%,transparent_70%)] pointer-events-none" />
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="text-center mb-12 space-y-3"
+        className="text-center mb-16 space-y-4"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
           Quem usa, <span className="gradient-text">não volta atrás</span>
         </h2>
-        <p className="text-muted-foreground max-w-xl mx-auto">
+        <p className="text-muted-foreground max-w-xl mx-auto text-lg">
           Resultados reais de quem já vende sites com a AxionFly.
         </p>
       </motion.div>
@@ -77,9 +78,15 @@ export default function Testimonials() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={i + 1}
-            whileHover={{ scale: 1.02, y: -2 }}
-            className="glass rounded-2xl p-6 space-y-4 transition-all duration-300 hover:neon-border"
+            whileHover={{ 
+              scale: 1.03, 
+              y: -6,
+              boxShadow: "0 25px 50px -15px hsl(var(--primary) / 0.12)",
+              transition: springTransition
+            }}
+            className="glass rounded-2xl p-7 space-y-4 transition-all duration-500 hover:neon-border relative overflow-hidden group"
           >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <div className="flex items-center gap-3">
               <img
                 src={t.avatar}
