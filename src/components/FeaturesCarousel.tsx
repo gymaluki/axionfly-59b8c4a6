@@ -124,14 +124,14 @@ export default function FeaturesCarousel() {
                 boxShadow: "0 0 50px -15px hsl(var(--primary) / 0.2)",
               }}
             >
-              {/* Color overlay to match SaaS palette */}
+              {/* Blue tint overlay */}
               <div
-                className="absolute inset-0 z-10 pointer-events-none mix-blend-color opacity-30"
+                className="absolute inset-0 z-10 pointer-events-none mix-blend-color opacity-60"
                 style={{ background: "hsl(var(--primary))" }}
               />
               <div
-                className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay opacity-20"
-                style={{ background: "linear-gradient(180deg, transparent 40%, hsl(var(--background)) 100%)" }}
+                className="absolute inset-0 z-10 pointer-events-none opacity-25"
+                style={{ background: "linear-gradient(180deg, hsl(var(--primary) / 0.3) 0%, hsl(var(--background)) 100%)" }}
               />
               <img
                 src={slide.src}
