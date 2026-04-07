@@ -110,19 +110,14 @@ export default function LovablePartnership() {
           >
             {/* Logo */}
             <div className="flex justify-center py-4">
-              {partner.name === "Lovable" ? (
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                {partner.name === "Lovable" ? (
                   <img src={lovableLogo} alt="Lovable" className="h-8 w-8 object-contain" />
-                  <span className="text-2xl font-bold text-foreground">Lovable</span>
-                </div>
-              ) : (
-                <img
-                  src={partner.logo!}
-                  alt={`Logo ${partner.name}`}
-                  className={partner.logoClass}
-                  loading="lazy"
-                />
-              )}
+                ) : (
+                  <img src={partner.logo!} alt={partner.name} className="h-8 w-8 object-contain" loading="lazy" />
+                )}
+                <span className="text-2xl font-bold text-foreground">{partner.name}</span>
+              </div>
             </div>
 
             {/* Title */}
