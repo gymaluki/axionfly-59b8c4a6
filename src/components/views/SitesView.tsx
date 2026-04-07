@@ -241,6 +241,33 @@ const ctaOptions = [
   { value: "ligar", label: "📞 Ligar Agora", desc: "Inicia uma ligação telefônica" },
 ];
 
+const sloganSuggestions: Record<string, string[]> = {
+  barbearia: ["Estilo & Tradição", "Onde o corte vira arte", "Seu visual, nossa missão", "A navalha da confiança", "Mais que um corte, uma experiência"],
+  pizzaria: ["Sabor que conquista", "Direto do forno pro coração", "A fatia perfeita existe", "Tradição em cada mordida", "Pizza feita com paixão"],
+  "fine-dining": ["Sabores que contam histórias", "Uma experiência além do paladar", "Onde a arte encontra a gastronomia", "Excelência em cada detalhe"],
+  "restaurante-bairro": ["Comida de verdade, feita com amor", "O sabor de se sentir em casa", "Tempero de família", "Aqui todo mundo é de casa"],
+  clinica: ["Seu sorriso em boas mãos", "Cuidado que transforma sorrisos", "Tecnologia e confiança para o seu sorriso", "Saúde bucal com excelência"],
+  petshop: ["Amor em cada patinha", "Seu pet merece o melhor", "Cuidado que faz o rabo abanar", "O paraíso do seu pet"],
+  sobrancelhas: ["O olhar que encanta", "Beleza nos mínimos detalhes", "Realce o que você tem de melhor", "Design que transforma"],
+  mecanica: ["Confiança embaixo do capô", "Seu carro em boas mãos", "Performance e segurança garantidas", "A solução que você precisa"],
+  hamburgueria: ["Sabor sem limites", "O smash que vicia", "Feito na brasa, com alma", "Aqui o burger é levado a sério"],
+  acaiteria: ["Energia pura da Amazônia", "Sabor tropical, alma brasileira", "Açaí do jeito que você merece", "Refrescância que dá energia"],
+  lavarapido: ["Brilho que impressiona", "Seu carro como novo, sempre", "Cuidado premium pro seu veículo", "Limpeza que você vê e sente"],
+  assistencia: ["Tecnologia que volta a funcionar", "Conserto rápido, confiança total", "Seu dispositivo em boas mãos", "A solução tech que você precisa"],
+  academia: ["Supere seus limites", "Transforme corpo e mente", "O treino que muda sua vida", "Força, foco e resultado"],
+  advogado: ["Justiça com estratégia", "Seu direito, nossa luta", "Advocacia de resultado", "Confiança e competência jurídica"],
+  imobiliaria: ["O lar dos seus sonhos te espera", "Seu novo endereço começa aqui", "Realizando sonhos em cada chave", "Imóveis que combinam com você"],
+  salaobeleza: ["Beleza que transforma", "Realce a sua essência", "Seu momento de brilhar", "Beleza com personalidade"],
+  contabilidade: ["Números que fazem sentido", "Seu negócio em boas contas", "Contabilidade inteligente", "Resultados que você pode contar"],
+  estetica: ["Beleza é cuidar de si", "Sua melhor versão começa aqui", "Estética com resultado real", "Cuide-se, você merece"],
+  marmitaria: ["Comida de verdade, feita com amor", "Sabor caseiro todo dia", "Sua refeição, nossa dedicação", "Tempero de mãe, praticidade de chef"],
+  idiomas: ["O mundo fala, você também", "Fluência que abre portas", "Seu futuro é bilíngue", "Aprenda o idioma da oportunidade"],
+  fotografo: ["Momentos que duram para sempre", "A arte de contar histórias em imagens", "Cada clique, uma emoção", "Fotografia que eterniza"],
+  "marketing-digital": ["Resultados que você pode medir", "Marketing que converte de verdade", "Seu negócio no topo digital", "Estratégia + criatividade = resultado"],
+  "artes-marciais": ["Forje seu espírito de luta", "Disciplina que transforma", "Supere-se a cada round", "Força interior, poder exterior"],
+  papelaria: ["A beleza está nos detalhes", "Criatividade em cada página", "Papelaria que inspira", "Sua história merece ser escrita com estilo"],
+};
+
 const TOTAL_STEPS = 5;
 
 const stepMeta = [
@@ -372,7 +399,26 @@ const SitesView = () => {
                   onChange={(e) => setSlogan(e.target.value)}
                   className="bg-secondary/50 border-border"
                 />
-                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio</p>
+                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio. Clique numa sugestão abaixo:</p>
+                {niche && sloganSuggestions[niche] && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {sloganSuggestions[niche].map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSlogan(s)}
+                        className={cn(
+                          "text-xs px-3 py-1.5 rounded-full border transition-all duration-200",
+                          slogan === s
+                            ? "border-primary bg-primary/15 text-primary font-medium"
+                            : "border-border bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-foreground"
+                        )}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="space-y-2">
