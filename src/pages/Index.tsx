@@ -19,48 +19,44 @@ const ease: Easing = [0.16, 1, 0.3, 1];
 const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 60, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { delay: i * 0.12, duration: 0.8, ease },
+    transition: { delay: i * 0.05, duration: 0.45, ease },
   }),
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8, filter: "blur(8px)" },
+  hidden: { opacity: 0, scale: 0.9 },
   visible: (i: number) => ({
     opacity: 1,
     scale: 1,
-    filter: "blur(0px)",
-    transition: { delay: i * 0.1, duration: 0.7, ease },
+    transition: { delay: i * 0.05, duration: 0.4, ease },
   }),
 };
 
 const slideFromLeft = {
-  hidden: { opacity: 0, x: -80, filter: "blur(8px)" },
+  hidden: { opacity: 0, x: -40 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    filter: "blur(0px)",
-    transition: { delay: i * 0.15, duration: 0.8, ease },
+    transition: { delay: i * 0.06, duration: 0.45, ease },
   }),
 };
 
 const slideFromRight = {
-  hidden: { opacity: 0, x: 80, filter: "blur(8px)" },
+  hidden: { opacity: 0, x: 40 },
   visible: (i: number) => ({
     opacity: 1,
     x: 0,
-    filter: "blur(0px)",
-    transition: { delay: i * 0.15, duration: 0.8, ease },
+    transition: { delay: i * 0.06, duration: 0.45, ease },
   }),
 };
 
 const staggerContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+  visible: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } },
 };
 
 /* ── Section Pill ── */
