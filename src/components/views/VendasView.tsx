@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Plus, Trash2, DollarSign, TrendingUp, ShoppingBag, Edit2, X, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,6 +38,40 @@ const VendasView = () => {
   const [status, setStatus] = useState("pendente");
   const [saleDate, setSaleDate] = useState(new Date().toISOString().split("T")[0]);
 
+  const demoSales: Sale[] = useMemo(() => {
+    const now = new Date();
+    const entries = [
+      { client_name: "Barbearia Dom Corte", amount: 1200, status: "pago", daysAgo: 3 },
+      { client_name: "Barbearia El Patrón", amount: 950, status: "pago", daysAgo: 7 },
+      { client_name: "Barbearia Vintage Club", amount: 1300, status: "pago", daysAgo: 12 },
+      { client_name: "Barbearia Reis do Corte", amount: 800, status: "pago", daysAgo: 15 },
+      { client_name: "Navalha Negra Barbearia", amount: 1100, status: "pago", daysAgo: 18 },
+      { client_name: "Barbearia Lenhador", amount: 1150, status: "pago", daysAgo: 22 },
+      { client_name: "Studio Barber Premium", amount: 1286, status: "pago", daysAgo: 25 },
+      { client_name: "Barbearia Old School SP", amount: 900, status: "pago", daysAgo: 30 },
+      { client_name: "Corte & Estilo Barbearia", amount: 1050, status: "pago", daysAgo: 35 },
+      { client_name: "Barbearia Machado", amount: 850, status: "pago", daysAgo: 38 },
+      { client_name: "Dom Bigode Barbearia", amount: 1250, status: "pago", daysAgo: 42 },
+      { client_name: "Barbearia Tropa do Corte", amount: 800, status: "pago", daysAgo: 45 },
+      { client_name: "Barbearia La Mafia", amount: 1100, status: "pendente", daysAgo: 48 },
+      { client_name: "Barbearia Cavalheiro", amount: 950, status: "pago", daysAgo: 50 },
+      { client_name: "Black Barber Studio", amount: 1300, status: "pago", daysAgo: 53 },
+      { client_name: "Barbearia Corte Real", amount: 1050, status: "pendente", daysAgo: 56 },
+    ];
+    return entries.map((e, i) => {
+      const d = new Date(now);
+      d.setDate(d.getDate() - e.daysAgo);
+      return {
+        id: `demo-${i}`,
+        client_name: e.client_name,
+        description: "Criação de site",
+        amount: e.amount,
+        status: e.status,
+        sale_date: d.toISOString().split("T")[0],
+      };
+    });
+  }, []);
+
   const fetchSales = async () => {
     if (!user) return;
     const { data, error } = await supabase
@@ -46,8 +80,10 @@ const VendasView = () => {
       .order("sale_date", { ascending: false });
     if (error) {
       toast.error("Erro ao carregar vendas");
+      setSales(demoSales);
     } else {
-      setSales((data as Sale[]) || []);
+      const realSales = (data as Sale[]) || [];
+      setSales(realSales.length > 0 ? realSales : demoSales);
     }
     setLoading(false);
   };
