@@ -1,0 +1,1 @@
+ALTER TABLE public.pending_payments ADD CONSTRAINT pending_payments_email_key UNIQUE (email);
