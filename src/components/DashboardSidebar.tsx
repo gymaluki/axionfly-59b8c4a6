@@ -53,9 +53,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-border px-4 py-4">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-            <span className="text-primary font-black text-sm">A</span>
-          </div>
+          <img src={axionflyLogo} alt="AxionFly" className="w-8 h-8 object-contain shrink-0" />
           {!collapsed && (
             <span className="text-lg font-bold text-foreground tracking-tight">
               Axion<span className="text-primary">Fly</span>
