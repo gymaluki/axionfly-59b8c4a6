@@ -362,6 +362,20 @@ const SitesView = () => {
               </div>
 
               <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  Slogan / Tagline
+                </label>
+                <Input
+                  placeholder="Ex: Estilo & Tradição, Sabor que conquista"
+                  value={slogan}
+                  onChange={(e) => setSlogan(e.target.value)}
+                  className="bg-secondary/50 border-border"
+                />
+                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio</p>
+              </div>
+
+              <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground">Tipo de Negócio *</label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                   {nicheEntries.map(([key, t]) => (
