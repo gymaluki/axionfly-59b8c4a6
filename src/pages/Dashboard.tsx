@@ -149,7 +149,7 @@ const Dashboard = () => {
 
         <DashboardSidebar
           active={activeView}
-          onNavigate={setActiveView}
+          onNavigate={handleNavigate}
           onSignOut={async () => {
             await signOut();
             navigate("/");
