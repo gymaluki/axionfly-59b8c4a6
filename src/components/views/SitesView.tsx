@@ -208,6 +208,39 @@ const designStyles = [
   },
 ];
 
+const siteObjectives = [
+  { value: "leads", label: "📩 Gerar Leads", desc: "Captar contatos e potenciais clientes" },
+  { value: "vendas", label: "🛒 Vender Produtos/Serviços", desc: "Levar o visitante a comprar" },
+  { value: "portfolio", label: "🎨 Portfólio", desc: "Mostrar trabalhos e projetos realizados" },
+  { value: "institucional", label: "🏢 Institucional", desc: "Apresentar a empresa e gerar confiança" },
+];
+
+const toneOptions = [
+  { value: "formal", label: "👔 Formal", desc: "Sério, profissional e corporativo" },
+  { value: "amigavel", label: "😊 Amigável", desc: "Próximo, caloroso e acessível" },
+  { value: "criativo", label: "🎨 Criativo", desc: "Ousado, divertido e inovador" },
+  { value: "autoritario", label: "🏆 Autoritário", desc: "Especialista, confiante e direto" },
+];
+
+const pageOptions = [
+  { value: "inicio", label: "Início" },
+  { value: "sobre", label: "Sobre Nós" },
+  { value: "servicos", label: "Serviços" },
+  { value: "depoimentos", label: "Depoimentos" },
+  { value: "faq", label: "FAQ" },
+  { value: "blog", label: "Blog" },
+  { value: "galeria", label: "Galeria de Fotos" },
+  { value: "precos", label: "Preços / Planos" },
+];
+
+const ctaOptions = [
+  { value: "whatsapp", label: "📱 Enviar WhatsApp", desc: "Redireciona para conversa no WhatsApp" },
+  { value: "checkout", label: "💳 Ir para Checkout", desc: "Leva direto para a página de pagamento" },
+  { value: "formulario", label: "📝 Preencher Formulário", desc: "Abre um formulário de contato/orçamento" },
+  { value: "agendar", label: "📅 Agendar Horário", desc: "Leva para agendamento online" },
+  { value: "ligar", label: "📞 Ligar Agora", desc: "Inicia uma ligação telefônica" },
+];
+
 const TOTAL_STEPS = 5;
 
 const stepMeta = [
