@@ -304,6 +304,21 @@ const SitesView = () => {
 
     if (address.trim()) generated += ` Endereço do estabelecimento: ${address.trim()}.`;
     if (phone.trim()) generated += ` Telefone: ${phone.trim()}.`;
+    if (slogan.trim()) generated += ` Slogan/tagline do negócio: "${slogan.trim()}". Use essa frase de forma destacada no hero ou header.`;
+
+    const selectedTone = toneOptions.find(t => t.value === tone);
+    if (selectedTone) generated += ` Tom de voz dos textos: ${selectedTone.label.replace(/^.\s/, "")} — ${selectedTone.desc}.`;
+
+    const selectedObjective = siteObjectives.find(o => o.value === siteObjective);
+    if (selectedObjective) generated += ` Objetivo principal do site: ${selectedObjective.desc}.`;
+
+    if (selectedPages.length > 0) {
+      const pageLabels = selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean);
+      if (pageLabels.length > 0) generated += ` Incluir as seções: ${pageLabels.join(", ")}.`;
+    }
+
+    const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
+    if (selectedCta) generated += ` Botão CTA principal: "${selectedCta.label.replace(/^.\s/, "")}" — ${selectedCta.desc}.`;
 
     navigator.clipboard.writeText(generated)
       .catch(() => {
