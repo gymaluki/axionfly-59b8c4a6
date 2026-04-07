@@ -274,7 +274,7 @@ const SitesView = () => {
         toast.success("Tudo pronto! Cole na plataforma para criar seu site.");
         setTimeout(() => {
           setCopied(false);
-          const newWindow = window.open("https://lovable.dev/projects/create", "_blank", "noopener,noreferrer");
+          const newWindow = window.open("https://lovable.dev/invite/4QDCZAZ", "_blank", "noopener,noreferrer");
           if (newWindow) newWindow.opener = null;
         }, 1200);
       });
