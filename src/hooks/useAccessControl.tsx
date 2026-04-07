@@ -17,31 +17,34 @@ export function useAccessControl(user: User | null) {
 
     const checkAccess = async () => {
       try {
-        // Check if user is admin
-        const { data: adminData } = await supabase
+        // Use the database function that checks both admin and subscription
+        const { data: hasAccessResult, error: accessError } = await supabase
+          .rpc("check_user_access", { check_user_id: user.id });
+
+        if (accessError) {
+          console.error("Access RPC error:", accessError);
+        }
+
+        // Check if user is admin (separate query)
+        const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("id")
           .eq("email", user.email ?? "")
           .maybeSingle();
 
-        if (adminData) {
-          setIsAdmin(true);
-          setHasAccess(true);
-          setLoading(false);
-          return;
+        if (adminError) {
+          console.error("Admin check error:", adminError);
         }
 
-        // Check if user has active subscription
-        const { data: subData } = await supabase
-          .from("subscriptions")
-          .select("status")
-          .eq("user_id", user.id)
-          .maybeSingle();
+        const isAdminUser = !!adminData;
+        const accessGranted = hasAccessResult === true || isAdminUser;
 
-        setHasAccess(subData?.status === "active");
+        setIsAdmin(isAdminUser);
+        setHasAccess(accessGranted);
         setLoading(false);
       } catch (err) {
         console.error("Access check error:", err);
+        // On error, still try to not block — default to false
         setHasAccess(false);
         setLoading(false);
       }
