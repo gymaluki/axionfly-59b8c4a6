@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAccessControl } from "@/hooks/useAccessControl";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import ProspeccaoView from "@/components/views/ProspeccaoView";
 import SitesView from "@/components/views/SitesView";
