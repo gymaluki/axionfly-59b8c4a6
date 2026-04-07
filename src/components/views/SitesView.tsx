@@ -602,6 +602,67 @@ const SitesView = () => {
                   className="bg-secondary/50 border-border h-12"
                 />
               </div>
+
+              {/* Páginas Desejadas */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-primary" />
+                  Páginas / Seções do Site
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {pageOptions.map((p) => {
+                    const isSelected = selectedPages.includes(p.value);
+                    return (
+                      <button
+                        key={p.value}
+                        type="button"
+                        onClick={() =>
+                          setSelectedPages(
+                            isSelected
+                              ? selectedPages.filter((v) => v !== p.value)
+                              : [...selectedPages, p.value]
+                          )
+                        }
+                        className={cn(
+                          "p-2.5 rounded-xl border transition-all duration-200 text-sm text-center",
+                          isSelected
+                            ? "border-primary bg-primary/10 ring-1 ring-primary/30 text-foreground font-medium"
+                            : "border-border bg-secondary/30 hover:border-primary/40 text-muted-foreground"
+                        )}
+                      >
+                        {isSelected && <Check className="w-3 h-3 inline mr-1" />}
+                        {p.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* CTA Principal */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <MousePointerClick className="w-4 h-4 text-primary" />
+                  Botão Principal (CTA)
+                </label>
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {ctaOptions.map((c) => (
+                    <button
+                      key={c.value}
+                      type="button"
+                      onClick={() => setCtaPrincipal(ctaPrincipal === c.value ? "" : c.value)}
+                      className={cn(
+                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                        ctaPrincipal === c.value
+                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                      )}
+                    >
+                      <span className="font-medium text-foreground">{c.label}</span>
+                      <p className="text-xs text-muted-foreground mt-0.5">{c.desc}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         );
