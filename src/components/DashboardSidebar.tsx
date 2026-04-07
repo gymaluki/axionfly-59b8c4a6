@@ -1,4 +1,4 @@
-import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp } from "lucide-react";
+import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-type View = "prospeccao" | "sites" | "vendas";
+type View = "prospeccao" | "sites" | "vendas" | "admin";
 
 interface DashboardSidebarProps {
   active: View;
@@ -28,6 +28,7 @@ interface DashboardSidebarProps {
   onSignOut: () => void;
   userEmail?: string;
   userName?: string;
+  isAdmin?: boolean;
 }
 
 const navItems: { id: View; label: string; icon: React.ElementType }[] = [
@@ -36,9 +37,13 @@ const navItems: { id: View; label: string; icon: React.ElementType }[] = [
   { id: "vendas", label: "Minhas Vendas", icon: ShoppingBag },
 ];
 
-const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName }: DashboardSidebarProps) => {
+const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, isAdmin }: DashboardSidebarProps) => {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
+
+  const allNavItems = isAdmin
+    ? [...navItems, { id: "admin" as View, label: "Painel Admin", icon: Shield }]
+    : navItems;
 
   const displayName = userName || userEmail?.split("@")[0] || "Usuário";
   const initials = displayName.slice(0, 2).toUpperCase();
@@ -63,7 +68,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName }
           <SidebarGroupLabel>Ferramentas</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map(({ id, label, icon: Icon }) => (
+              {allNavItems.map(({ id, label, icon: Icon }) => (
                 <SidebarMenuItem key={id}>
                   <SidebarMenuButton
                     onClick={() => onNavigate(id)}

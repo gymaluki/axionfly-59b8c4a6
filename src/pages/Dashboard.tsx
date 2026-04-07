@@ -6,6 +6,7 @@ import DashboardSidebar from "@/components/DashboardSidebar";
 import ProspeccaoView from "@/components/views/ProspeccaoView";
 import SitesView from "@/components/views/SitesView";
 import VendasView from "@/components/views/VendasView";
+import AdminView from "@/components/views/AdminView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,7 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 
-type View = "prospeccao" | "sites" | "vendas";
+type View = "prospeccao" | "sites" | "vendas" | "admin";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
@@ -52,15 +53,16 @@ const viewTitles: Record<View, string> = {
   sites: "Criador de Sites",
   prospeccao: "Busca de Leads",
   vendas: "Minhas Vendas",
+  admin: "Painel Administrativo",
 };
 
 const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
-  const { hasAccess, loading: accessLoading } = useAccessControl(user);
+  const { hasAccess, isAdmin, loading: accessLoading } = useAccessControl(user);
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const validViews: View[] = ["prospeccao", "sites", "vendas"];
+  const validViews: View[] = ["prospeccao", "sites", "vendas", "admin"];
   const paramView = searchParams.get("view") as View | null;
   const [activeView, setActiveView] = useState<View>(
     paramView && validViews.includes(paramView) ? paramView : "sites"
@@ -157,6 +159,7 @@ const Dashboard = () => {
           }}
           userEmail={user.email}
           userName={userName}
+          isAdmin={isAdmin}
         />
 
         <div className="flex-1 flex flex-col relative z-10">
@@ -178,6 +181,7 @@ const Dashboard = () => {
                   {activeView === "prospeccao" && <ProspeccaoView />}
                   {activeView === "sites" && <SitesView />}
                   {activeView === "vendas" && <VendasView />}
+                  {activeView === "admin" && isAdmin && <AdminView />}
                 </motion.div>
               </AnimatePresence>
             </DashboardViewErrorBoundary>
