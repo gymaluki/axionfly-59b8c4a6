@@ -72,9 +72,33 @@ Deno.serve(async (req) => {
     );
 
     if (!user) {
-      console.log(`User not found for email: ${email}. Will activate when they register.`);
+      console.log(`User not found for email: ${email}. Saving as pending payment.`);
+
+      // Salvar pagamento pendente para ativar quando o usuário se cadastrar
+      const statusLowerPending = (status || "").toLowerCase();
+      const activeStatusesPending = ["approved", "completed", "paid", "subscription_started", "subscription_renewed"];
+
+      if (activeStatusesPending.includes(statusLowerPending)) {
+        const { error: pendingError } = await supabase
+          .from("pending_payments")
+          .upsert(
+            {
+              email: email.toLowerCase(),
+              status: "active",
+              payment_provider: "perfectpay",
+              transaction_id: String(transactionId || ""),
+              plan: plan || "default",
+            },
+            { onConflict: "email" }
+          );
+
+        if (pendingError) {
+          console.error("Error saving pending payment:", pendingError);
+        }
+      }
+
       return new Response(
-        JSON.stringify({ message: "User not found yet, payment recorded" }),
+        JSON.stringify({ message: "User not found yet, payment saved for activation on register" }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
