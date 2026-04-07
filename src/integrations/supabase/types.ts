@@ -32,6 +32,39 @@ export type Database = {
         }
         Relationships: []
       }
+      pending_payments: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          payment_provider: string | null
+          plan: string | null
+          status: string
+          transaction_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          payment_provider?: string | null
+          plan?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          payment_provider?: string | null
+          plan?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
