@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3 } from "lucide-react";
 import { motion, useInView, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
-import IsoLevelWarp from "@/components/ui/isometric-wave-grid-background";
-import { BackgroundPaths } from "@/components/ui/background-paths";
 import { Header } from "@/components/ui/header-3";
-import { GlobeCdn } from "@/components/ui/cobe-globe-cdn";
 import Testimonials from "@/components/Testimonials";
 import PricingCards from "@/components/PricingCards";
 import LovablePartnership from "@/components/LovablePartnership";
 import FeaturesCarousel from "@/components/FeaturesCarousel";
+
+// Lazy load heavy visual components
+const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
+const IsoLevelWarp = lazy(() => import("@/components/ui/isometric-wave-grid-background"));
+const BackgroundPaths = lazy(() => import("@/components/ui/background-paths").then(m => ({ default: m.BackgroundPaths })));
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
@@ -208,9 +210,11 @@ const Index = () => {
         <Header />
 
         {/* ═══════════ HERO ═══════════ */}
-        <div id="inicio" className="relative w-full min-h-[90vh]">
-          <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
-          <BackgroundPaths />
+        <div id="inicio" className="relative w-full min-h-[80vh] md:min-h-[90vh]">
+          <Suspense fallback={null}>
+            <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
+            <BackgroundPaths />
+          </Suspense>
           <div className="relative z-10">
             <HeroSection />
           </div>
