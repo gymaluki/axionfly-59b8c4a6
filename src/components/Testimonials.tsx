@@ -15,28 +15,24 @@ const fadeUp = {
 const testimonials = [
   {
     name: "Estter Oliveira",
-    role: "São Paulo · SP",
     initials: "EO",
     text: "Criar sites pra comércio e já ter os clientes pra poder vender é a melhor coisa já feita, sensacional!",
     stars: 5,
   },
   {
     name: "Igor Freitosa",
-    role: "Rio de Janeiro · RJ",
     initials: "IF",
     text: "Adorei demais, hoje mesmo já vendi até pra uma amiga minha que tem barbearia.",
     stars: 5,
   },
   {
     name: "Raphael Calderon",
-    role: "Belo Horizonte · MG",
     initials: "RC",
     text: "Fácil, prático e incrível. Vale o investimento!",
     stars: 5,
   },
   {
     name: "O Nostalgista",
-    role: "Curitiba · PR",
     initials: "ON",
     text: "Parabéns aos criadores da ferramenta, fiz as minhas primeiras vendas online e consegui juntar uma boa grana.",
     stars: 5,
@@ -95,8 +91,6 @@ export default function Testimonials() {
               </div>
               <div>
                 <p className="font-semibold text-foreground text-sm">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.role}</p>
-              </div>
               <div className="ml-auto flex gap-0.5">
                 {Array.from({ length: t.stars }).map((_, s) => (
                   <motion.div
