@@ -64,9 +64,9 @@ export function Header() {
 					<img
 						src={axionflyLogo}
 						alt="AxionFly"
-						className={cn(
+					className={cn(
 							'object-contain transition-all duration-700',
-							scrolled ? 'h-6 w-6' : 'h-9 w-9',
+							scrolled ? 'h-5 w-5' : 'h-8 w-8 md:h-9 md:w-9',
 						)}
 					/>
 				</a>
