@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import {
   Check,
   Sparkles,
-  Info,
   ExternalLink,
   ArrowRight,
   ArrowLeft,
@@ -12,8 +11,11 @@ import {
   Type,
   MapPin,
   Phone,
-  Settings,
   Eye,
+  Target,
+  MessageSquare,
+  FileText,
+  MousePointerClick,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -206,6 +208,39 @@ const designStyles = [
   },
 ];
 
+const siteObjectives = [
+  { value: "leads", label: "📩 Gerar Leads", desc: "Captar contatos e potenciais clientes" },
+  { value: "vendas", label: "🛒 Vender Produtos/Serviços", desc: "Levar o visitante a comprar" },
+  { value: "portfolio", label: "🎨 Portfólio", desc: "Mostrar trabalhos e projetos realizados" },
+  { value: "institucional", label: "🏢 Institucional", desc: "Apresentar a empresa e gerar confiança" },
+];
+
+const toneOptions = [
+  { value: "formal", label: "👔 Formal", desc: "Sério, profissional e corporativo" },
+  { value: "amigavel", label: "😊 Amigável", desc: "Próximo, caloroso e acessível" },
+  { value: "criativo", label: "🎨 Criativo", desc: "Ousado, divertido e inovador" },
+  { value: "autoritario", label: "🏆 Autoritário", desc: "Especialista, confiante e direto" },
+];
+
+const pageOptions = [
+  { value: "inicio", label: "Início" },
+  { value: "sobre", label: "Sobre Nós" },
+  { value: "servicos", label: "Serviços" },
+  { value: "depoimentos", label: "Depoimentos" },
+  { value: "faq", label: "FAQ" },
+  { value: "blog", label: "Blog" },
+  { value: "galeria", label: "Galeria de Fotos" },
+  { value: "precos", label: "Preços / Planos" },
+];
+
+const ctaOptions = [
+  { value: "whatsapp", label: "📱 Enviar WhatsApp", desc: "Redireciona para conversa no WhatsApp" },
+  { value: "checkout", label: "💳 Ir para Checkout", desc: "Leva direto para a página de pagamento" },
+  { value: "formulario", label: "📝 Preencher Formulário", desc: "Abre um formulário de contato/orçamento" },
+  { value: "agendar", label: "📅 Agendar Horário", desc: "Leva para agendamento online" },
+  { value: "ligar", label: "📞 Ligar Agora", desc: "Inicia uma ligação telefônica" },
+];
+
 const TOTAL_STEPS = 5;
 
 const stepMeta = [
@@ -229,6 +264,11 @@ const SitesView = () => {
   const [font, setFont] = useState("");
   const [designStyle, setDesignStyle] = useState("");
   const [copied, setCopied] = useState(false);
+  const [slogan, setSlogan] = useState("");
+  const [siteObjective, setSiteObjective] = useState("");
+  const [tone, setTone] = useState("");
+  const [selectedPages, setSelectedPages] = useState<string[]>(["inicio"]);
+  const [ctaPrincipal, setCtaPrincipal] = useState("");
 
   const canAdvance = useMemo(() => {
     if (step === 0) return projectName.trim().length > 0 && niche.length > 0;
@@ -264,6 +304,21 @@ const SitesView = () => {
 
     if (address.trim()) generated += ` Endereço do estabelecimento: ${address.trim()}.`;
     if (phone.trim()) generated += ` Telefone: ${phone.trim()}.`;
+    if (slogan.trim()) generated += ` Slogan/tagline do negócio: "${slogan.trim()}". Use essa frase de forma destacada no hero ou header.`;
+
+    const selectedTone = toneOptions.find(t => t.value === tone);
+    if (selectedTone) generated += ` Tom de voz dos textos: ${selectedTone.label.replace(/^.\s/, "")} — ${selectedTone.desc}.`;
+
+    const selectedObjective = siteObjectives.find(o => o.value === siteObjective);
+    if (selectedObjective) generated += ` Objetivo principal do site: ${selectedObjective.desc}.`;
+
+    if (selectedPages.length > 0) {
+      const pageLabels = selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean);
+      if (pageLabels.length > 0) generated += ` Incluir as seções: ${pageLabels.join(", ")}.`;
+    }
+
+    const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
+    if (selectedCta) generated += ` Botão CTA principal: "${selectedCta.label.replace(/^.\s/, "")}" — ${selectedCta.desc}.`;
 
     navigator.clipboard.writeText(generated)
       .catch(() => {
@@ -304,6 +359,20 @@ const SitesView = () => {
                   className="bg-secondary/50 border-border h-12 text-base"
                   autoFocus
                 />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  Slogan / Tagline
+                </label>
+                <Input
+                  placeholder="Ex: Estilo & Tradição, Sabor que conquista"
+                  value={slogan}
+                  onChange={(e) => setSlogan(e.target.value)}
+                  className="bg-secondary/50 border-border"
+                />
+                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio</p>
               </div>
 
               <div className="space-y-2">
@@ -357,6 +426,58 @@ const SitesView = () => {
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{s.desc}</p>
                 </button>
               ))}
+            </div>
+
+            {/* Objetivo do Site */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                <Target className="w-4 h-4 text-primary" />
+                Objetivo do Site
+              </label>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {siteObjectives.map((o) => (
+                  <button
+                    key={o.value}
+                    type="button"
+                    onClick={() => setSiteObjective(siteObjective === o.value ? "" : o.value)}
+                    className={cn(
+                      "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                      siteObjective === o.value
+                        ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                        : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                    )}
+                  >
+                    <span className="font-medium text-foreground">{o.label}</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">{o.desc}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Tom de Voz */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-primary" />
+                Tom de Voz
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {toneOptions.map((t) => (
+                  <button
+                    key={t.value}
+                    type="button"
+                    onClick={() => setTone(tone === t.value ? "" : t.value)}
+                    className={cn(
+                      "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                      tone === t.value
+                        ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                        : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                    )}
+                  >
+                    <span className="font-medium text-foreground">{t.label}</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">{t.desc}</p>
+                  </button>
+                ))}
+              </div>
             </div>
 
             <button
@@ -481,6 +602,67 @@ const SitesView = () => {
                   className="bg-secondary/50 border-border h-12"
                 />
               </div>
+
+              {/* Páginas Desejadas */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-primary" />
+                  Páginas / Seções do Site
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {pageOptions.map((p) => {
+                    const isSelected = selectedPages.includes(p.value);
+                    return (
+                      <button
+                        key={p.value}
+                        type="button"
+                        onClick={() =>
+                          setSelectedPages(
+                            isSelected
+                              ? selectedPages.filter((v) => v !== p.value)
+                              : [...selectedPages, p.value]
+                          )
+                        }
+                        className={cn(
+                          "p-2.5 rounded-xl border transition-all duration-200 text-sm text-center",
+                          isSelected
+                            ? "border-primary bg-primary/10 ring-1 ring-primary/30 text-foreground font-medium"
+                            : "border-border bg-secondary/30 hover:border-primary/40 text-muted-foreground"
+                        )}
+                      >
+                        {isSelected && <Check className="w-3 h-3 inline mr-1" />}
+                        {p.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* CTA Principal */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <MousePointerClick className="w-4 h-4 text-primary" />
+                  Botão Principal (CTA)
+                </label>
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {ctaOptions.map((c) => (
+                    <button
+                      key={c.value}
+                      type="button"
+                      onClick={() => setCtaPrincipal(ctaPrincipal === c.value ? "" : c.value)}
+                      className={cn(
+                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                        ctaPrincipal === c.value
+                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                      )}
+                    >
+                      <span className="font-medium text-foreground">{c.label}</span>
+                      <p className="text-xs text-muted-foreground mt-0.5">{c.desc}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         );
@@ -497,7 +679,16 @@ const SitesView = () => {
 
             <div className="space-y-3">
               <ReviewItem label="Nome" value={projectName} />
+              <ReviewItem label="Slogan" value={slogan || "Não informado"} />
               <ReviewItem label="Tipo" value={nicheTemplates[niche]?.label || "—"} />
+              <ReviewItem
+                label="Objetivo"
+                value={siteObjectives.find((o) => o.value === siteObjective)?.label || "Não definido"}
+              />
+              <ReviewItem
+                label="Tom de Voz"
+                value={toneOptions.find((t) => t.value === tone)?.label || "Padrão"}
+              />
               <ReviewItem
                 label="Estilo"
                 value={designStyles.find((s) => s.value === designStyle)?.label || "Padrão do nicho"}
@@ -508,6 +699,16 @@ const SitesView = () => {
               />
               <ReviewItem label="Cor Principal" value={primaryColor || "Padrão do nicho"} />
               <ReviewItem label="Cor Secundária" value={secondaryColor || "Padrão do nicho"} />
+              <ReviewItem
+                label="Páginas"
+                value={selectedPages.length > 0
+                  ? selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean).join(", ")
+                  : "Padrão do nicho"}
+              />
+              <ReviewItem
+                label="CTA Principal"
+                value={ctaOptions.find((c) => c.value === ctaPrincipal)?.label || "Padrão do nicho"}
+              />
               <ReviewItem label="Endereço" value={address || "Não informado"} />
               <ReviewItem label="Telefone" value={phone || "Não informado"} />
               <ReviewItem label="Extras" value={features || "Nenhum"} />
