@@ -55,23 +55,25 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
         toast.error(error.message);
-      } else {
-        toast.success("Login realizado com sucesso!");
-        navigate(redirectTo, { replace: true });
+        setLoading(false);
+        return;
       }
-    } else {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) {
-        toast.error(error.message);
-      } else if (data.session) {
-        toast.success("Conta criada com sucesso!");
-        navigate(redirectTo, { replace: true });
-      } else {
-        toast.success("Conta criada! Confirme seu email para entrar.");
-        setIsLogin(true);
-      }
+
+      toast.success("Login realizado com sucesso!");
+      return;
     }
-    setLoading(false);
+
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      toast.error(error.message);
+      setLoading(false);
+    } else if (data.session) {
+      toast.success("Conta criada com sucesso!");
+    } else {
+      toast.success("Conta criada! Confirme seu email para entrar.");
+      setIsLogin(true);
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {

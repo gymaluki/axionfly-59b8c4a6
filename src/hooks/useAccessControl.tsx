@@ -8,6 +8,8 @@ export function useAccessControl(user: User | null) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     if (!user) {
       setHasAccess(false);
       setIsAdmin(false);
@@ -15,9 +17,11 @@ export function useAccessControl(user: User | null) {
       return;
     }
 
+    setLoading(true);
+    setHasAccess(null);
+
     const checkAccess = async () => {
       try {
-        // Use the database function that checks both admin and subscription
         const { data: hasAccessResult, error: accessError } = await supabase
           .rpc("check_user_access", { check_user_id: user.id });
 
@@ -25,7 +29,6 @@ export function useAccessControl(user: User | null) {
           console.error("Access RPC error:", accessError);
         }
 
-        // Check if user is admin (separate query)
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("id")
@@ -36,6 +39,8 @@ export function useAccessControl(user: User | null) {
           console.error("Admin check error:", adminError);
         }
 
+        if (!isMounted) return;
+
         const isAdminUser = !!adminData;
         const accessGranted = hasAccessResult === true || isAdminUser;
 
@@ -43,14 +48,19 @@ export function useAccessControl(user: User | null) {
         setHasAccess(accessGranted);
         setLoading(false);
       } catch (err) {
+        if (!isMounted) return;
         console.error("Access check error:", err);
-        // On error, still try to not block — default to false
+        setIsAdmin(false);
         setHasAccess(false);
         setLoading(false);
       }
     };
 
     checkAccess();
+
+    return () => {
+      isMounted = false;
+    };
   }, [user]);
 
   return { hasAccess, isAdmin, loading };
