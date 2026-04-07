@@ -264,6 +264,11 @@ const SitesView = () => {
   const [font, setFont] = useState("");
   const [designStyle, setDesignStyle] = useState("");
   const [copied, setCopied] = useState(false);
+  const [slogan, setSlogan] = useState("");
+  const [siteObjective, setSiteObjective] = useState("");
+  const [tone, setTone] = useState("");
+  const [selectedPages, setSelectedPages] = useState<string[]>(["inicio"]);
+  const [ctaPrincipal, setCtaPrincipal] = useState("");
 
   const canAdvance = useMemo(() => {
     if (step === 0) return projectName.trim().length > 0 && niche.length > 0;
