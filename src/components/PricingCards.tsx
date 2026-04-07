@@ -7,12 +7,11 @@ const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { delay: i * 0.12, duration: 0.7, ease },
+    transition: { delay: i * 0.05, duration: 0.4, ease },
   }),
 };
 
@@ -67,7 +66,7 @@ function PricingCard({
             initial={{ opacity: 0, x: -10 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 + idx * 0.06, duration: 0.4, ease }}
+            transition={{ delay: idx * 0.03, duration: 0.3, ease }}
             className="flex items-center gap-3 text-sm text-foreground font-medium"
           >
             <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20">

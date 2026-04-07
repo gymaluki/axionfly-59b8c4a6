@@ -4,13 +4,11 @@ import { Star, Quote } from "lucide-react";
 const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 60, filter: "blur(10px)", scale: 0.96 },
+  hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    scale: 1,
-    transition: { delay: i * 0.1, duration: 0.9, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+    transition: { delay: i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
   }),
 };
 
@@ -106,7 +104,7 @@ export default function Testimonials() {
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.3 + s * 0.08, type: "spring", stiffness: 200 }}
+                    transition={{ delay: s * 0.04, type: "spring", stiffness: 200 }}
                   >
                     <Star className="w-3.5 h-3.5 fill-primary text-primary" />
                   </motion.div>

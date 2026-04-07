@@ -6,11 +6,11 @@ import lovableLogo from "@/assets/lovable-logo.png";
 const ease: Easing = [0.16, 1, 0.3, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.7, ease },
+    transition: { delay: i * 0.05, duration: 0.4, ease },
   }),
 };
 
