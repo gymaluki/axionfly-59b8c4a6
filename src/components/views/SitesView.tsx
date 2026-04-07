@@ -679,7 +679,16 @@ const SitesView = () => {
 
             <div className="space-y-3">
               <ReviewItem label="Nome" value={projectName} />
+              <ReviewItem label="Slogan" value={slogan || "Não informado"} />
               <ReviewItem label="Tipo" value={nicheTemplates[niche]?.label || "—"} />
+              <ReviewItem
+                label="Objetivo"
+                value={siteObjectives.find((o) => o.value === siteObjective)?.label || "Não definido"}
+              />
+              <ReviewItem
+                label="Tom de Voz"
+                value={toneOptions.find((t) => t.value === tone)?.label || "Padrão"}
+              />
               <ReviewItem
                 label="Estilo"
                 value={designStyles.find((s) => s.value === designStyle)?.label || "Padrão do nicho"}
@@ -690,6 +699,16 @@ const SitesView = () => {
               />
               <ReviewItem label="Cor Principal" value={primaryColor || "Padrão do nicho"} />
               <ReviewItem label="Cor Secundária" value={secondaryColor || "Padrão do nicho"} />
+              <ReviewItem
+                label="Páginas"
+                value={selectedPages.length > 0
+                  ? selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean).join(", ")
+                  : "Padrão do nicho"}
+              />
+              <ReviewItem
+                label="CTA Principal"
+                value={ctaOptions.find((c) => c.value === ctaPrincipal)?.label || "Padrão do nicho"}
+              />
               <ReviewItem label="Endereço" value={address || "Não informado"} />
               <ReviewItem label="Telefone" value={phone || "Não informado"} />
               <ReviewItem label="Extras" value={features || "Nenhum"} />
