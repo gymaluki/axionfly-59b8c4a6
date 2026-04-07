@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
@@ -16,25 +16,36 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const redirectTo = useMemo(() => {
+    const redirect = new URLSearchParams(location.search).get("redirect");
+
+    if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//") || redirect.startsWith("/auth")) {
+      return "/dashboard";
+    }
+
+    return redirect;
+  }, [location.search]);
 
   // Redirect if already logged in
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate("/dashboard", { replace: true });
+        navigate(redirectTo, { replace: true });
       }
     };
     checkSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
-        navigate("/dashboard", { replace: true });
+        navigate(redirectTo, { replace: true });
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,15 +57,18 @@ const Auth = () => {
         toast.error(error.message);
       } else {
         toast.success("Login realizado com sucesso!");
-        navigate("/dashboard");
+        navigate(redirectTo, { replace: true });
       }
     } else {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) {
         toast.error(error.message);
-      } else {
+      } else if (data.session) {
         toast.success("Conta criada com sucesso!");
-        navigate("/dashboard");
+        navigate(redirectTo, { replace: true });
+      } else {
+        toast.success("Conta criada! Confirme seu email para entrar.");
+        setIsLogin(true);
       }
     }
     setLoading(false);
@@ -64,7 +78,7 @@ const Auth = () => {
     setGoogleLoading(true);
     try {
       const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/auth${window.location.search}`,
       });
 
       if (result.error) {
@@ -78,7 +92,7 @@ const Auth = () => {
       }
 
       toast.success("Login realizado com sucesso!");
-      navigate("/dashboard");
+      navigate(redirectTo, { replace: true });
     } catch {
       toast.error("Erro ao fazer login com Google");
     }

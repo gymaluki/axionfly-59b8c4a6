@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useAccessControl } from "@/hooks/useAccessControl";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import DashboardSidebar from "@/components/DashboardSidebar";
 import ProspeccaoView from "@/components/views/ProspeccaoView";
 import SitesView from "@/components/views/SitesView";
@@ -58,6 +58,7 @@ const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
   const { hasAccess, loading: accessLoading } = useAccessControl(user);
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const validViews: View[] = ["prospeccao", "sites", "vendas"];
   const paramView = searchParams.get("view") as View | null;
@@ -73,9 +74,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!loading && !user) {
-      navigate("/auth");
+      navigate(`/auth?redirect=${encodeURIComponent(`${location.pathname}${location.search}`)}`, { replace: true });
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, location.pathname, location.search]);
 
   // Fetch profile display name
   useEffect(() => {
