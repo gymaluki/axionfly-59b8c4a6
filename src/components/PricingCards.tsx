@@ -87,7 +87,7 @@ function PricingCard({
 
       {/* CTA */}
       <motion.div whileHover={{ scale: 1.02, transition: hoverTransition }} whileTap={{ scale: 0.98, transition: hoverTransition }}>
-        <Button variant={isHighlight ? "neon" : "outline"} size="lg" className="w-full text-base" asChild>
+        <Button variant="neon" size="lg" className="w-full text-base" asChild>
           <a href={buttonHref}>{buttonText}</a>
         </Button>
       </motion.div>
