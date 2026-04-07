@@ -1,6 +1,20 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, Sparkles, Info, ExternalLink } from "lucide-react";
+import {
+  Check,
+  Sparkles,
+  Info,
+  ExternalLink,
+  ArrowRight,
+  ArrowLeft,
+  Store,
+  Palette,
+  Type,
+  MapPin,
+  Phone,
+  Settings,
+  Eye,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,6 +26,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 interface NicheTemplate {
   label: string;
@@ -161,37 +177,48 @@ const designStyles = [
   {
     value: "catalogo",
     label: "🛍️ Catálogo / E-commerce Clean",
-    desc: "Visualização de produtos com fotos de alta qualidade e navegação intuitiva. Ideal para lojas de roupas, eletrônicos e móveis.",
+    desc: "Visualização de produtos com fotos de alta qualidade e navegação intuitiva.",
     prompt: "Estilo catálogo/e-commerce limpo: priorizar visualização dos produtos com fotos grandes e fundos neutros, navegação intuitiva com filtros e categorias bem visíveis, grid de produtos organizado.",
   },
   {
     value: "local-first",
     label: "📍 Local-First (Geolocalização)",
-    desc: "Informações práticas em destaque: mapa, 'Como chegar', horário e telefone. Ideal para restaurantes, oficinas e salões.",
-    prompt: "Estilo local-first: colocar informações práticas em primeiro plano (mapa de localização, botão 'Como Chegar', horário de funcionamento, telefone clicável). Design extremamente rápido e mobile-first, otimizado para quem está na rua procurando o local.",
+    desc: "Informações práticas em destaque: mapa, 'Como chegar', horário e telefone.",
+    prompt: "Estilo local-first: colocar informações práticas em primeiro plano (mapa de localização, botão 'Como Chegar', horário de funcionamento, telefone clicável). Design extremamente rápido e mobile-first.",
   },
   {
     value: "institucional",
     label: "🏢 Institucional Moderno",
-    desc: "Transmite autoridade e profissionalismo com seção 'Quem Somos', fotos da equipe e cores sólidas. Ideal para escritórios e empresas.",
+    desc: "Transmite autoridade e profissionalismo com seção 'Quem Somos' e cores sólidas.",
     prompt: "Estilo institucional moderno: passar autoridade e profissionalismo com estrutura organizada, fotos da equipe, seção 'Quem Somos' detalhada, cores sólidas, fontes serifadas para transmitir confiança e tradição.",
   },
   {
     value: "lifestyle",
     label: "🌿 Visual / Estético (Lifestyle)",
-    desc: "Foca em vender experiência e estilo de vida com fotos ambientadas e design elegante. Ideal para cafeterias, spas e hotéis.",
-    prompt: "Estilo visual/lifestyle: foco em vender uma experiência e estilo de vida, menos texto e mais imagens ambientadas e vídeos em tela cheia mostrando o produto em uso. Design elegante com margens amplas e tipografia refinada.",
+    desc: "Foca em vender experiência e estilo de vida com fotos ambientadas.",
+    prompt: "Estilo visual/lifestyle: foco em vender uma experiência e estilo de vida, menos texto e mais imagens ambientadas e vídeos em tela cheia. Design elegante com margens amplas e tipografia refinada.",
   },
   {
     value: "cardapio-digital",
     label: "📋 Cardápio Digital / Reservas",
-    desc: "Facilita escolhas rápidas com grids organizados, fotos dos pratos, preços destacados e integração com pagamento/agendamento.",
+    desc: "Grids organizados, fotos dos pratos, preços destacados e integração com agendamento.",
     prompt: "Estilo cardápio digital: facilitar escolhas rápidas com grids organizados, fotos dos pratos/serviços, preços bem destacados, integração direta com sistema de pagamento ou agendamento online.",
   },
 ];
 
+const TOTAL_STEPS = 5;
+
+const stepMeta = [
+  { icon: Store, label: "Negócio" },
+  { icon: Palette, label: "Design" },
+  { icon: Type, label: "Visual" },
+  { icon: MapPin, label: "Contato" },
+  { icon: Eye, label: "Revisão" },
+];
+
 const SitesView = () => {
   const navigate = useNavigate();
+  const [step, setStep] = useState(0);
   const [projectName, setProjectName] = useState("");
   const [niche, setNiche] = useState("");
   const [address, setAddress] = useState("");
@@ -202,11 +229,15 @@ const SitesView = () => {
   const [font, setFont] = useState("");
   const [designStyle, setDesignStyle] = useState("");
   const [copied, setCopied] = useState(false);
-  const [showDesignInfo, setShowDesignInfo] = useState(false);
+
+  const canAdvance = useMemo(() => {
+    if (step === 0) return projectName.trim().length > 0 && niche.length > 0;
+    return true; // other steps are optional
+  }, [step, projectName, niche]);
+
+  const progress = ((step + 1) / TOTAL_STEPS) * 100;
 
   const handleGenerate = () => {
-    if (!projectName.trim() || !niche) return;
-
     const template = nicheTemplates[niche];
     if (!template) return;
 
@@ -217,7 +248,6 @@ const SitesView = () => {
       features.trim()
     );
 
-    // Add font override
     if (font) {
       const selectedFont = fontOptions.find((f) => f.value === font);
       if (selectedFont) {
@@ -225,7 +255,6 @@ const SitesView = () => {
       }
     }
 
-    // Add design style
     if (designStyle) {
       const selectedStyle = designStyles.find((s) => s.value === designStyle);
       if (selectedStyle) {
@@ -238,7 +267,7 @@ const SitesView = () => {
 
     navigator.clipboard.writeText(generated)
       .catch(() => {
-        toast.error("Não consegui copiar automaticamente. Você ainda pode gerar e colar manualmente.");
+        toast.error("Não consegui copiar automaticamente.");
       })
       .finally(() => {
         setCopied(true);
@@ -246,224 +275,386 @@ const SitesView = () => {
         setTimeout(() => {
           setCopied(false);
           const newWindow = window.open("https://lovable.dev/projects/create", "_blank", "noopener,noreferrer");
-          if (newWindow) {
-            newWindow.opener = null;
-          }
+          if (newWindow) newWindow.opener = null;
         }, 1200);
       });
   };
 
-  const selectedDesignInfo = designStyles.find((s) => s.value === designStyle);
+  const nicheEntries = Object.entries(nicheTemplates);
+
+  const renderStep = () => {
+    switch (step) {
+      case 0:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <h3 className="text-xl font-bold text-foreground">Sobre o seu negócio</h3>
+              <p className="text-sm text-muted-foreground">
+                Comece escolhendo o nome e o tipo do seu projeto
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Nome do Projeto *</label>
+                <Input
+                  placeholder="Ex: Royal Barber, Forno & Massa"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  className="bg-secondary/50 border-border h-12 text-base"
+                  autoFocus
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Tipo de Negócio *</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                  {nicheEntries.map(([key, t]) => (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => setNiche(key)}
+                      className={cn(
+                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                        niche === key
+                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                      )}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 1:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <h3 className="text-xl font-bold text-foreground">Estilo de Design</h3>
+              <p className="text-sm text-muted-foreground">
+                Escolha o estilo visual que combina com o seu negócio
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-3">
+              {designStyles.map((s) => (
+                <button
+                  key={s.value}
+                  type="button"
+                  onClick={() => setDesignStyle(s.value)}
+                  className={cn(
+                    "text-left p-4 rounded-xl border transition-all duration-200",
+                    designStyle === s.value
+                      ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                      : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                  )}
+                >
+                  <p className="text-sm font-semibold text-foreground">{s.label}</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{s.desc}</p>
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => navigate("/guia-design")}
+              className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+            >
+              Ver guia completo de estilos <ExternalLink className="w-3 h-3" />
+            </button>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <h3 className="text-xl font-bold text-foreground">Personalização Visual</h3>
+              <p className="text-sm text-muted-foreground">
+                Defina cores, fontes e funcionalidades extras
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
+                  <button
+                    type="button"
+                    onClick={() => navigate("/guia-fontes")}
+                    className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+                  >
+                    Ver exemplos <ExternalLink className="w-3 h-3" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {fontOptions.map((f) => (
+                    <button
+                      key={f.value}
+                      type="button"
+                      onClick={() => setFont(font === f.value ? "" : f.value)}
+                      className={cn(
+                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                        font === f.value
+                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                      )}
+                    >
+                      <span className="font-medium text-foreground">{f.label}</span>
+                      <span className="text-xs text-muted-foreground ml-2">— {f.desc}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Cor Principal</label>
+                  <Input
+                    placeholder="Ex: dourado, azul escuro"
+                    value={primaryColor}
+                    onChange={(e) => setPrimaryColor(e.target.value)}
+                    className="bg-secondary/50 border-border"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Cor Secundária</label>
+                  <Input
+                    placeholder="Ex: cinza, verde-água"
+                    value={secondaryColor}
+                    onChange={(e) => setSecondaryColor(e.target.value)}
+                    className="bg-secondary/50 border-border"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Funcionalidades Extras</label>
+                <Input
+                  placeholder="Ex: Agendamento, Cardápio, Blog, Galeria de Fotos"
+                  value={features}
+                  onChange={(e) => setFeatures(e.target.value)}
+                  className="bg-secondary/50 border-border"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <h3 className="text-xl font-bold text-foreground">Informações de Contato</h3>
+              <p className="text-sm text-muted-foreground">
+                Adicione endereço e telefone para aparecer no site
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  Endereço
+                </label>
+                <Input
+                  placeholder="Ex: Rua das Flores, 123 - Centro, São Paulo"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="bg-secondary/50 border-border h-12"
+                  autoFocus
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-primary" />
+                  Telefone / WhatsApp
+                </label>
+                <Input
+                  placeholder="Ex: (11) 99999-9999"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="bg-secondary/50 border-border h-12"
+                />
+              </div>
+            </div>
+          </div>
+        );
+
+      case 4:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <h3 className="text-xl font-bold text-foreground">Revisão Final</h3>
+              <p className="text-sm text-muted-foreground">
+                Confira as informações antes de gerar seu site
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <ReviewItem label="Nome" value={projectName} />
+              <ReviewItem label="Tipo" value={nicheTemplates[niche]?.label || "—"} />
+              <ReviewItem
+                label="Estilo"
+                value={designStyles.find((s) => s.value === designStyle)?.label || "Padrão do nicho"}
+              />
+              <ReviewItem
+                label="Fonte"
+                value={fontOptions.find((f) => f.value === font)?.label || "Padrão do nicho"}
+              />
+              <ReviewItem label="Cor Principal" value={primaryColor || "Padrão do nicho"} />
+              <ReviewItem label="Cor Secundária" value={secondaryColor || "Padrão do nicho"} />
+              <ReviewItem label="Endereço" value={address || "Não informado"} />
+              <ReviewItem label="Telefone" value={phone || "Não informado"} />
+              <ReviewItem label="Extras" value={features || "Nenhum"} />
+            </div>
+
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                variant="hero"
+                size="lg"
+                onClick={handleGenerate}
+                className="w-full"
+              >
+                {copied ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+                {copied ? "Copiado! Redirecionando..." : "Criar Meu Site com IA"}
+              </Button>
+            </motion.div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="space-y-8"
+      className="max-w-3xl mx-auto space-y-6"
     >
+      {/* Header */}
       <div>
         <h2 className="text-2xl font-bold text-foreground">Criador de Sites</h2>
         <p className="text-muted-foreground text-sm mt-1">
-          Preencha os dados do seu projeto e crie seu site profissional com IA em segundos
+          Responda passo a passo e crie seu site profissional com IA
         </p>
       </div>
 
-      <div className="space-y-5">
-        <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-primary" />
-          Gerador de Prompt
-        </h3>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Nome do Projeto *</label>
-            <Input
-              placeholder="Ex: Royal Barber, Forno & Massa"
-              value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
-              className="bg-secondary/50 border-border"
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Tipo de Negócio *</label>
-            <Select value={niche} onValueChange={setNiche}>
-              <SelectTrigger className="bg-secondary/50 border-border">
-                <SelectValue placeholder="Selecione o nicho" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(nicheTemplates).map(([key, t]) => (
-                  <SelectItem key={key} value={key}>
-                    {t.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Design Style + Font */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-medium text-foreground">Estilo de Design</label>
+      {/* Step indicators */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          {stepMeta.map((s, i) => {
+            const Icon = s.icon;
+            const isActive = i === step;
+            const isDone = i < step;
+            return (
               <button
+                key={i}
                 type="button"
-                onClick={() => setShowDesignInfo(!showDesignInfo)}
-                className="text-muted-foreground hover:text-primary transition-colors"
-                title="Ver detalhes dos estilos"
+                onClick={() => {
+                  if (i <= step || canAdvance) setStep(i);
+                }}
+                className={cn(
+                  "flex flex-col items-center gap-1 transition-all duration-200",
+                  isActive && "scale-110",
+                  i > step && !canAdvance && "opacity-40 cursor-not-allowed"
+                )}
+                disabled={i > step && !canAdvance}
               >
-                <Info className="w-4 h-4" />
+                <div
+                  className={cn(
+                    "w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-300",
+                    isActive
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : isDone
+                        ? "border-primary/60 bg-primary/20 text-primary"
+                        : "border-border bg-secondary/50 text-muted-foreground"
+                  )}
+                >
+                  {isDone ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
+                </div>
+                <span
+                  className={cn(
+                    "text-[10px] font-medium hidden sm:block",
+                    isActive ? "text-primary" : isDone ? "text-primary/70" : "text-muted-foreground"
+                  )}
+                >
+                  {s.label}
+                </span>
               </button>
-              <button
-                type="button"
-                onClick={() => navigate("/guia-design")}
-                className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
-              >
-                Ver guia completo <ExternalLink className="w-3 h-3" />
-              </button>
-            </div>
-            <Select value={designStyle} onValueChange={setDesignStyle}>
-              <SelectTrigger className="bg-secondary/50 border-border">
-                <SelectValue placeholder="Selecione o estilo (opcional)" />
-              </SelectTrigger>
-              <SelectContent>
-                {designStyles.map((s) => (
-                  <SelectItem key={s.value} value={s.value}>
-                    {s.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {selectedDesignInfo && (
-              <p className="text-xs text-muted-foreground">{selectedDesignInfo.desc}</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
-              <button
-                type="button"
-                onClick={() => navigate("/guia-fontes")}
-                className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
-              >
-                Ver exemplos <ExternalLink className="w-3 h-3" />
-              </button>
-            </div>
-            <Select value={font} onValueChange={setFont}>
-              <SelectTrigger className="bg-secondary/50 border-border">
-                <SelectValue placeholder="Selecione a fonte (opcional)" />
-              </SelectTrigger>
-              <SelectContent>
-                {fontOptions.map((f) => (
-                  <SelectItem key={f.value} value={f.value}>
-                    {f.label} — {f.desc}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            );
+          })}
         </div>
-
-        {/* Design styles info panel */}
-        <AnimatePresence>
-          {showDesignInfo && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden"
-            >
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4 rounded-xl bg-secondary/30 border border-border">
-                {designStyles.map((s) => (
-                  <button
-                    key={s.value}
-                    type="button"
-                    onClick={() => {
-                      setDesignStyle(s.value);
-                      setShowDesignInfo(false);
-                    }}
-                    className={`text-left p-3 rounded-lg border transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 ${
-                      designStyle === s.value
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-background/50"
-                    }`}
-                  >
-                    <p className="text-sm font-semibold text-foreground">{s.label}</p>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{s.desc}</p>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Endereço</label>
-            <Input
-              placeholder="Ex: Rua das Flores, 123 - Centro"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="bg-secondary/50 border-border"
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Telefone / WhatsApp</label>
-            <Input
-              placeholder="Ex: (11) 99999-9999"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              className="bg-secondary/50 border-border"
-            />
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Cor Principal</label>
-            <Input
-              placeholder="Ex: dourado, azul escuro"
-              value={primaryColor}
-              onChange={(e) => setPrimaryColor(e.target.value)}
-              className="bg-secondary/50 border-border"
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Cor Secundária</label>
-            <Input
-              placeholder="Ex: cinza, verde-água"
-              value={secondaryColor}
-              onChange={(e) => setSecondaryColor(e.target.value)}
-              className="bg-secondary/50 border-border"
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Funcionalidades Extras</label>
-            <Input
-              placeholder="Ex: Agendamento, Cardápio, Blog"
-              value={features}
-              onChange={(e) => setFeatures(e.target.value)}
-              className="bg-secondary/50 border-border"
-            />
-          </div>
-        </div>
-
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Button
-            variant="hero"
-            size="lg"
-            onClick={handleGenerate}
-            disabled={!projectName.trim() || !niche}
-            className="w-full"
-          >
-            {copied ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
-            {copied ? "Copiado! Redirecionando..." : "Criar Meu Site com IA"}
-          </Button>
-        </motion.div>
+        <Progress value={progress} className="h-1.5" />
       </div>
+
+      {/* Step content */}
+      <div className="bg-card/50 border border-border rounded-2xl p-6 min-h-[340px]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.25 }}
+          >
+            {renderStep()}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Navigation */}
+      {step < 4 && (
+        <div className="flex justify-between">
+          <Button
+            variant="ghost"
+            onClick={() => setStep(Math.max(0, step - 1))}
+            disabled={step === 0}
+            className="gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Voltar
+          </Button>
+          <Button
+            variant="neon"
+            onClick={() => setStep(Math.min(TOTAL_STEPS - 1, step + 1))}
+            disabled={!canAdvance}
+            className="gap-2"
+          >
+            Avançar
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+      )}
+
+      {step === 4 && (
+        <div className="flex justify-start">
+          <Button
+            variant="ghost"
+            onClick={() => setStep(3)}
+            className="gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Voltar
+          </Button>
+        </div>
+      )}
     </motion.div>
   );
 };
+
+const ReviewItem = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-secondary/30 border border-border">
+    <span className="text-sm text-muted-foreground">{label}</span>
+    <span className="text-sm font-medium text-foreground text-right max-w-[60%] truncate">{value}</span>
+  </div>
+);
 
 export default SitesView;
