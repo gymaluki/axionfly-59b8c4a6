@@ -428,6 +428,58 @@ const SitesView = () => {
               ))}
             </div>
 
+            {/* Objetivo do Site */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                <Target className="w-4 h-4 text-primary" />
+                Objetivo do Site
+              </label>
+              <div className="grid sm:grid-cols-2 gap-2">
+                {siteObjectives.map((o) => (
+                  <button
+                    key={o.value}
+                    type="button"
+                    onClick={() => setSiteObjective(siteObjective === o.value ? "" : o.value)}
+                    className={cn(
+                      "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                      siteObjective === o.value
+                        ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                        : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                    )}
+                  >
+                    <span className="font-medium text-foreground">{o.label}</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">{o.desc}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Tom de Voz */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-primary" />
+                Tom de Voz
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {toneOptions.map((t) => (
+                  <button
+                    key={t.value}
+                    type="button"
+                    onClick={() => setTone(tone === t.value ? "" : t.value)}
+                    className={cn(
+                      "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                      tone === t.value
+                        ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                        : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                    )}
+                  >
+                    <span className="font-medium text-foreground">{t.label}</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">{t.desc}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <button
               type="button"
               onClick={() => navigate("/guia-design")}
