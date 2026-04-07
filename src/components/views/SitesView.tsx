@@ -622,15 +622,22 @@ const SitesView = () => {
             <ArrowLeft className="w-4 h-4" />
             Voltar
           </Button>
-          <Button
-            variant="neon"
-            onClick={() => setStep(Math.min(TOTAL_STEPS - 1, step + 1))}
-            disabled={!canAdvance}
-            className="gap-2"
-          >
-            Avançar
-            <ArrowRight className="w-4 h-4" />
-          </Button>
+          <div className="flex flex-col items-end gap-1">
+            {step === 0 && !canAdvance && (projectName.trim().length === 0 || niche.length === 0) && (
+              <span className="text-xs text-destructive">
+                {projectName.trim().length === 0 ? "Preencha o nome do projeto" : "Selecione o tipo de negócio"}
+              </span>
+            )}
+            <Button
+              variant="neon"
+              onClick={() => setStep(Math.min(TOTAL_STEPS - 1, step + 1))}
+              disabled={!canAdvance}
+              className="gap-2"
+            >
+              Avançar
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       )}
 
