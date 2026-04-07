@@ -131,6 +131,9 @@ const VendasView = () => {
         return;
       }
       toast.success("Venda registrada!");
+      const audio = new Audio("/sounds/sale-added.mpeg");
+      audio.volume = 0.5;
+      audio.play().catch(() => {});
     }
 
     resetForm();
