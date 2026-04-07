@@ -221,7 +221,7 @@ const Index = () => {
         </div>
 
         {/* ═══════════ FUNCIONALIDADES (Features + Globe) ═══════════ */}
-        <section className="container mx-auto px-4 py-24 relative">
+        <section className="container mx-auto px-4 py-12 md:py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
           
           <SectionPill>Conheça a Plataforma</SectionPill>
@@ -237,7 +237,7 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="grid gap-6">
               {features.map(({ icon: Icon, title, desc, tag }, i) => (
                 <motion.div
@@ -278,11 +278,13 @@ const Index = () => {
               viewport={{ once: true }}
               variants={slideFromRight}
               custom={1}
-              className="flex items-center justify-center"
+              className="hidden lg:flex items-center justify-center"
             >
               <div className="w-full max-w-md relative">
                 <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.08)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-                <GlobeCdn className="w-full" speed={0.008} />
+                <Suspense fallback={<div className="w-full aspect-square" />}>
+                  <GlobeCdn className="w-full" speed={0.008} />
+                </Suspense>
               </div>
             </motion.div>
           </div>
