@@ -34,6 +34,19 @@ Deno.serve(async (req) => {
     const body = await req.json();
     console.log("Perfect Pay webhook received:", JSON.stringify(body));
 
+    // Encaminhar para UTMify (Weenbook)
+    try {
+      const utmifyUrl = "https://api.utmify.com.br/webhooks/perfectpay?id=69d53d31108de07369984530";
+      const utmifyRes = await fetch(utmifyUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      console.log("UTMify forward status:", utmifyRes.status);
+    } catch (utmifyErr) {
+      console.error("Erro ao encaminhar para UTMify:", utmifyErr);
+    }
+
     // Perfect Pay sends different event types
     // Common fields: customer.email, sale_status_enum
     const email = body?.customer?.email || body?.email;
