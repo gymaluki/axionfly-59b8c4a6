@@ -47,8 +47,6 @@ Deno.serve(async (req) => {
       console.error("Erro ao encaminhar para UTMify:", utmifyErr);
     }
 
-    // Perfect Pay sends different event types
-    // Common fields: customer.email, sale_status_enum
     const email = body?.customer?.email || body?.email;
     const status = body?.sale_status_enum || body?.status;
     const transactionId = body?.sale_id || body?.transaction_id || body?.id;
@@ -60,6 +58,8 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    console.log(`Event: status=${status}, email=${email}, plan=${plan}`);
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
@@ -73,20 +73,55 @@ Deno.serve(async (req) => {
 
     if (!user) {
       console.log(`User not found for email: ${email}. Will activate when they register.`);
-      // Store pending activation — we'll check on login
       return new Response(
         JSON.stringify({ message: "User not found yet, payment recorded" }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Map Perfect Pay status to our status
-    // Perfect Pay statuses: approved, completed, refunded, canceled, chargeback, etc.
-    const isActive = ["approved", "completed", "paid"].includes(
-      (status || "").toLowerCase()
-    );
+    // Map Perfect Pay events to subscription status
+    // Eventos do plano mensal:
+    // - approved / completed / paid → ativo (aprovado)
+    // - subscription_started → ativo (assinatura iniciada)
+    // - subscription_renewed → ativo (assinatura renovada)
+    // - chargeback → inativo (charge back)
+    // - subscription_canceled / canceled → inativo (assinatura cancelada)
+    // - subscription_expired / expired → inativo (assinatura expirada)
+    // - refunded → inativo (reembolsado)
 
-    const subscriptionStatus = isActive ? "active" : "inactive";
+    const statusLower = (status || "").toLowerCase();
+
+    const activeStatuses = [
+      "approved",
+      "completed",
+      "paid",
+      "subscription_started",
+      "subscription_renewed",
+    ];
+
+    const inactiveStatuses = [
+      "chargeback",
+      "chargedback",
+      "charge_back",
+      "canceled",
+      "cancelled",
+      "subscription_canceled",
+      "subscription_cancelled",
+      "subscription_expired",
+      "expired",
+      "refunded",
+    ];
+
+    let subscriptionStatus: string;
+
+    if (activeStatuses.includes(statusLower)) {
+      subscriptionStatus = "active";
+    } else if (inactiveStatuses.includes(statusLower)) {
+      subscriptionStatus = "inactive";
+    } else {
+      console.log(`Unknown status: ${statusLower}, defaulting to inactive`);
+      subscriptionStatus = "inactive";
+    }
 
     // Upsert subscription
     const { error: subError } = await supabase
@@ -104,7 +139,7 @@ Deno.serve(async (req) => {
 
     if (subError) throw subError;
 
-    console.log(`Subscription ${subscriptionStatus} for user ${email}`);
+    console.log(`Subscription ${subscriptionStatus} for user ${email} (event: ${statusLower})`);
 
     return new Response(
       JSON.stringify({ success: true, status: subscriptionStatus }),
