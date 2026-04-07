@@ -6,6 +6,7 @@ import DashboardSidebar from "@/components/DashboardSidebar";
 import ProspeccaoView from "@/components/views/ProspeccaoView";
 import SitesView from "@/components/views/SitesView";
 import VendasView from "@/components/views/VendasView";
+import MembrosView from "@/components/views/MembrosView";
 import AdminView from "@/components/views/AdminView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
@@ -14,7 +15,7 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 
-type View = "prospeccao" | "sites" | "vendas" | "admin";
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
@@ -52,6 +53,7 @@ class DashboardViewErrorBoundary extends Component<
 const viewTitles: Record<View, string> = {
   sites: "Criador de Sites",
   prospeccao: "Busca de Leads",
+  membros: "Área de Membros",
   vendas: "Minhas Vendas",
   admin: "Painel Administrativo",
 };
@@ -62,7 +64,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const validViews: View[] = ["prospeccao", "sites", "vendas", "admin"];
+  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "admin"];
   const paramView = searchParams.get("view") as View | null;
   const [activeView, setActiveView] = useState<View>(
     paramView && validViews.includes(paramView) ? paramView : "sites"
@@ -181,6 +183,7 @@ const Dashboard = () => {
                   {activeView === "prospeccao" && <ProspeccaoView />}
                   {activeView === "sites" && <SitesView />}
                   {activeView === "vendas" && <VendasView />}
+                  {activeView === "membros" && <MembrosView isAdmin={isAdmin} />}
                   {activeView === "admin" && isAdmin && <AdminView />}
                 </motion.div>
               </AnimatePresence>
