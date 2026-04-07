@@ -399,7 +399,26 @@ const SitesView = () => {
                   onChange={(e) => setSlogan(e.target.value)}
                   className="bg-secondary/50 border-border"
                 />
-                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio</p>
+                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio. Clique numa sugestão abaixo:</p>
+                {niche && sloganSuggestions[niche] && (
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {sloganSuggestions[niche].map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSlogan(s)}
+                        className={cn(
+                          "text-xs px-3 py-1.5 rounded-full border transition-all duration-200",
+                          slogan === s
+                            ? "border-primary bg-primary/15 text-primary font-medium"
+                            : "border-border bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-foreground"
+                        )}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="space-y-2">
