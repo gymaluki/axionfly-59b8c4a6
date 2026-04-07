@@ -46,17 +46,17 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'fixed left-1/2 z-50 -translate-x-1/2 border transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
+				'fixed left-1/2 z-50 -translate-x-1/2 border transition-all duration-700',
 				scrolled && !open
-					? 'top-2 w-auto max-w-fit rounded-full border-border bg-background/90 shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] supports-[backdrop-filter]:bg-background/40 backdrop-blur-xl'
-					: 'top-0 w-full max-w-full rounded-none border-transparent bg-background/80 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
+					? 'top-2 w-auto max-w-fit rounded-full border-border bg-background/95 shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] backdrop-blur-xl'
+					: 'top-0 w-full max-w-full rounded-none border-transparent bg-background/80 backdrop-blur-lg',
 				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
 			)}
 		>
 			<nav
 				className={cn(
-					'flex w-full items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
-					scrolled ? 'h-9 px-2 md:px-2 gap-1' : 'h-14 px-4 gap-5',
+					'flex w-full items-center justify-between transition-all duration-700',
+					scrolled ? 'h-8 px-2 md:px-2 gap-1' : 'h-12 md:h-14 px-4 gap-5',
 				)}
 			>
 			{/* Logo */}
