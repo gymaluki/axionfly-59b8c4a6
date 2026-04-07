@@ -1,6 +1,7 @@
 import { motion, type Easing } from "framer-motion";
 import { Check, Sparkles, Shield } from "lucide-react";
 import googleMapsLogo from "@/assets/google-maps-logo.png";
+import lovableLogo from "@/assets/lovable-logo.png";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
@@ -110,7 +111,10 @@ export default function LovablePartnership() {
             {/* Logo */}
             <div className="flex justify-center py-4">
               {partner.name === "Lovable" ? (
-                <LovableLogo />
+                <div className="flex items-center gap-2">
+                  <img src={lovableLogo} alt="Lovable" className="h-8 w-8 object-contain" />
+                  <span className="text-2xl font-bold text-foreground">Lovable</span>
+                </div>
               ) : (
                 <img
                   src={partner.logo!}
