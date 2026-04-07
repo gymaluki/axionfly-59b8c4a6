@@ -58,8 +58,18 @@ const Dashboard = () => {
   const { user, loading, signOut } = useAuth();
   const { hasAccess, loading: accessLoading } = useAccessControl(user);
   const navigate = useNavigate();
-  const [activeView, setActiveView] = useState<View>("sites");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const validViews: View[] = ["prospeccao", "sites", "vendas"];
+  const paramView = searchParams.get("view") as View | null;
+  const [activeView, setActiveView] = useState<View>(
+    paramView && validViews.includes(paramView) ? paramView : "sites"
+  );
   const [userName, setUserName] = useState<string>("");
+
+  const handleNavigate = useCallback((view: View) => {
+    setActiveView(view);
+    setSearchParams({ view });
+  }, [setSearchParams]);
 
   useEffect(() => {
     if (!loading && !user) {
