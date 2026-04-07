@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import {
   Check,
   Sparkles,
-  Info,
   ExternalLink,
   ArrowRight,
   ArrowLeft,
@@ -12,8 +11,11 @@ import {
   Type,
   MapPin,
   Phone,
-  Settings,
   Eye,
+  Target,
+  MessageSquare,
+  FileText,
+  MousePointerClick,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
