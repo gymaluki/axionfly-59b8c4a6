@@ -91,6 +91,7 @@ export default function Testimonials() {
               </div>
               <div>
                 <p className="font-semibold text-foreground text-sm">{t.name}</p>
+              </div>
               <div className="ml-auto flex gap-0.5">
                 {Array.from({ length: t.stars }).map((_, s) => (
                   <motion.div
