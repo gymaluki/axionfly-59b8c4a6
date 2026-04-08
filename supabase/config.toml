@@ -1,1 +1,7 @@
 project_id = "uzsvdtahsnkfjuuuipfh"
+
+[functions.perfectpay-webhook]
+verify_jwt = false
+
+[functions.perfectpay-lifetime-webhook]
+verify_jwt = false
