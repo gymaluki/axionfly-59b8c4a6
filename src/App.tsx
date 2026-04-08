@@ -10,7 +10,14 @@ import DesignStylesGuide from "./pages/DesignStylesGuide";
 import FontsGuide from "./pages/FontsGuide";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

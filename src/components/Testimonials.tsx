@@ -59,7 +59,7 @@ export default function Testimonials() {
         className="text-center mb-16 space-y-4"
       >
         <p className="text-muted-foreground text-lg">
-          Resultados reais de quem já usa a AxionFly.
+          Veja o que nossos usuários estão dizendo.
         </p>
         <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
           Resultados reais de quem já usa a <span className="gradient-text">AxionFly</span>
