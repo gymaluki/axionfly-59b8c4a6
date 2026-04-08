@@ -41,7 +41,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="container mx-auto px-4 py-24 relative">
+    <section className="container mx-auto px-4 py-10 md:py-24 relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.03)_0%,transparent_70%)] pointer-events-none" />
       
       <div className="flex justify-center mb-8">

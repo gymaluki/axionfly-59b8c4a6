@@ -74,7 +74,7 @@ const partners = [
 
 export default function LovablePartnership() {
   return (
-    <section className="container mx-auto px-4 py-20">
+    <section className="container mx-auto px-4 py-10 md:py-20">
       <motion.div
         initial="hidden"
         whileInView="visible"
