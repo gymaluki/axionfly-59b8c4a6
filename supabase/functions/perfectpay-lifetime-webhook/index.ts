@@ -37,12 +37,19 @@ Deno.serve(async (req) => {
     // Encaminhar para UTMify (Weenbook)
     try {
       const utmifyUrl = "https://api.utmify.com.br/webhooks/perfectpay?id=69d5befe705c5afce3bad2a8";
+      const UTMIFY_API_TOKEN = Deno.env.get("UTMIFY_API_TOKEN");
+      const utmifyHeaders: Record<string, string> = { "Content-Type": "application/json" };
+      if (UTMIFY_API_TOKEN) {
+        utmifyHeaders["x-api-token"] = UTMIFY_API_TOKEN;
+      }
       const utmifyRes = await fetch(utmifyUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: utmifyHeaders,
         body: JSON.stringify(body),
       });
       console.log("UTMify forward status:", utmifyRes.status);
+      const utmifyBody = await utmifyRes.text();
+      console.log("UTMify response:", utmifyBody);
     } catch (utmifyErr) {
       console.error("Erro ao encaminhar para UTMify:", utmifyErr);
     }
