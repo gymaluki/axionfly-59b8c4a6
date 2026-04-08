@@ -146,7 +146,7 @@ export default function PricingCards() {
         custom={0}
         className="mb-14 space-y-5 text-center"
       >
-        <h2 className="text-4xl font-black tracking-tight text-foreground md:text-6xl leading-tight">
+        <h2 className="text-3xl font-black tracking-tight text-foreground md:text-6xl leading-tight">
           Comece de forma simples.{" "}
           <br className="hidden md:block" />
           Escale com <span className="gradient-text">sites prontos e prospecção automática</span>
