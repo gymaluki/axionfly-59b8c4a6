@@ -132,7 +132,7 @@ function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
   icon: any; value: number; label: string; prefix: string; suffix: string; index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const isInView = useInView(ref, { once: true, amount: 0.2, margin: "0px 0px -50px 0px" });
   const count = useCountUp(value, 1500, isInView);
 
   return (
