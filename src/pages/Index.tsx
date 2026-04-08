@@ -128,30 +128,17 @@ function useCountUp(end: number, duration = 2000, start = false) {
   return count;
 }
 
-function AnimatedStat({ icon: Icon, value, label, prefix, suffix, index }: {
-  icon: any; value: number; label: string; prefix: string; suffix: string; index: number;
+function StaticStat({ icon: Icon, value, label, prefix, suffix }: {
+  icon: any; value: number; label: string; prefix: string; suffix: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2, margin: "0px 0px -50px 0px" });
-  const count = useCountUp(value, 1500, isInView);
-
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={scaleIn}
-      custom={index}
-      whileHover={{ scale: 1.06, y: -4, transition: springTransition }}
-      className="text-center space-y-2 p-6 rounded-xl glass cursor-default"
-    >
+    <div className="text-center space-y-2 p-6 rounded-xl glass cursor-default">
       <Icon className="w-6 h-6 text-primary mx-auto" />
       <p className="text-3xl font-black text-foreground tabular-nums drop-shadow-[0_0_20px_hsl(var(--primary)/0.3)]">
-        {prefix}{count.toLocaleString("pt-BR")}{suffix}
+        {prefix}{value.toLocaleString("pt-BR")}{suffix}
       </p>
       <p className="text-sm text-muted-foreground">{label}</p>
-    </motion.div>
+    </div>
   );
 }
 
@@ -348,7 +335,7 @@ const Index = () => {
             className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
           >
             {stats.map((stat, i) => (
-              <AnimatedStat key={stat.label} {...stat} index={i} />
+              <StaticStat key={stat.label} {...stat} />
             ))}
           </motion.div>
         </section>
