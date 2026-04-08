@@ -55,6 +55,7 @@ export function useAccessControl(user: User | null) {
 
         setIsAdmin(isAdminUser);
         setHasAccess(accessGranted);
+        setCheckedUserId(userId);
         setLoading(false);
       } catch (err) {
         if (!isMounted) return;
