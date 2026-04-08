@@ -36,7 +36,7 @@ Deno.serve(async (req) => {
 
     // Encaminhar para UTMify (Weenbook)
     try {
-      const utmifyUrl = "https://api.utmify.com.br/webhooks/perfectpay?id=69d53d31108de07369984530";
+      const utmifyUrl = "https://api.utmify.com.br/webhooks/perfectpay?id=69d5befe705c5afce3bad2a8";
       const utmifyRes = await fetch(utmifyUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
