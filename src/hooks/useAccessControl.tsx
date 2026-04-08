@@ -6,24 +6,33 @@ export function useAccessControl(user: User | null) {
   const [hasAccess, setHasAccess] = useState<boolean | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [checkedUserId, setCheckedUserId] = useState<string | null>(null);
+
+  const userId = user?.id ?? null;
+  const userEmail = user?.email ?? "";
 
   useEffect(() => {
     let isMounted = true;
 
-    if (!user) {
+    if (!userId) {
       setHasAccess(false);
       setIsAdmin(false);
       setLoading(false);
+      setCheckedUserId(null);
+      return;
+    }
+
+    // Don't re-check if we already verified this user
+    if (checkedUserId === userId && hasAccess !== null) {
       return;
     }
 
     setLoading(true);
-    setHasAccess(null);
 
     const checkAccess = async () => {
       try {
         const { data: hasAccessResult, error: accessError } = await supabase
-          .rpc("check_user_access", { check_user_id: user.id });
+          .rpc("check_user_access", { check_user_id: userId });
 
         if (accessError) {
           console.error("Access RPC error:", accessError);
@@ -32,7 +41,7 @@ export function useAccessControl(user: User | null) {
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("id")
-          .eq("email", user.email ?? "")
+          .eq("email", userEmail)
           .maybeSingle();
 
         if (adminError) {
