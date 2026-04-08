@@ -60,11 +60,18 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
       const ext = videoFile.name.split(".").pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-      const { error: uploadError } = await supabase.storage
-        .from("videos")
-        .upload(fileName, videoFile, { contentType: videoFile.type });
+      console.log("Uploading video file:", fileName, "size:", videoFile.size, "type:", videoFile.type);
 
-      if (uploadError) throw uploadError;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("videos")
+        .upload(fileName, videoFile, { contentType: videoFile.type, upsert: false });
+
+      if (uploadError) {
+        console.error("Storage upload error:", uploadError);
+        throw uploadError;
+      }
+
+      console.log("Upload success:", uploadData);
 
       const { data: urlData } = supabase.storage.from("videos").getPublicUrl(fileName);
 
@@ -74,7 +81,10 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
         video_url: urlData.publicUrl,
       });
 
-      if (insertError) throw insertError;
+      if (insertError) {
+        console.error("DB insert error:", insertError);
+        throw insertError;
+      }
 
       toast({ title: "Vídeo adicionado com sucesso!" });
       setTitle("");
@@ -83,6 +93,7 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
       setDialogOpen(false);
       fetchVideos();
     } catch (err: any) {
+      console.error("Full upload error:", err);
       toast({ title: "Erro ao enviar vídeo", description: err.message, variant: "destructive" });
     } finally {
       setUploading(false);
