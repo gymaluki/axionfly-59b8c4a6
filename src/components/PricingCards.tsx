@@ -132,7 +132,7 @@ export default function PricingCards() {
   ];
 
   return (
-    <section id="pricing" className="container mx-auto px-4 py-20">
+    <section id="pricing" className="container mx-auto px-4 py-10 md:py-20">
       <div className="mb-8 flex justify-center">
         <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-sm">
           Planos

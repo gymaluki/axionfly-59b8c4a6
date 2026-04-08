@@ -18,7 +18,7 @@ export function HeroSection() {
 			</div>
 
 			{/* main content */}
-			<div className="relative flex flex-col items-center justify-center gap-5 pt-32 pb-20">
+			<div className="relative flex flex-col items-center justify-center gap-4 pt-20 pb-10 md:gap-5 md:pt-32 md:pb-20">
 			<a
 				className={cn(
 					"group mx-auto flex w-fit items-center gap-3 rounded-full border border-border bg-card px-4 py-1.5 shadow",

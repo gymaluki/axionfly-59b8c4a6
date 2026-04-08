@@ -193,7 +193,7 @@ const Index = () => {
         <Header />
 
         {/* ═══════════ HERO ═══════════ */}
-        <div id="inicio" className="relative w-full min-h-[80vh] md:min-h-[90vh]">
+        <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
           <Suspense fallback={null}>
             <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
             <BackgroundPaths />
@@ -204,7 +204,7 @@ const Index = () => {
         </div>
 
         {/* ═══════════ FUNCIONALIDADES (Features + Globe) ═══════════ */}
-        <section className="container mx-auto px-4 py-12 md:py-24 relative">
+        <section className="container mx-auto px-4 py-10 md:py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
           
           <SectionPill>Conheça a Plataforma</SectionPill>
@@ -274,7 +274,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════ ETAPAS (How It Works) ═══════════ */}
-        <section id="etapas" className="container mx-auto px-4 py-12 md:py-24 relative">
+        <section id="etapas" className="container mx-auto px-4 py-10 md:py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04)_0%,transparent_70%)] pointer-events-none" />
           
           <SectionPill>Veja como começar - Simples e Fácil</SectionPill>
@@ -325,7 +325,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
-        <section className="container mx-auto px-4 py-10 md:py-16 relative">
+        <section className="container mx-auto px-4 py-8 md:py-16 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
           <motion.div
             initial="hidden"
@@ -347,7 +347,7 @@ const Index = () => {
         <LovablePartnership />
 
         {/* ═══════════ CTA FINAL ═══════════ */}
-        <section className="container mx-auto px-4 py-12 md:py-20 relative">
+        <section className="container mx-auto px-4 py-10 md:py-20 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06)_0%,transparent_60%)] pointer-events-none" />
           <motion.div
             initial="hidden"
@@ -391,7 +391,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════ FAQ ═══════════ */}
-        <section id="faq" className="container mx-auto px-4 py-12 md:py-20">
+        <section id="faq" className="container mx-auto px-4 py-10 md:py-20">
           <SectionPill>Dúvidas Frequentes</SectionPill>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-4">
             <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
