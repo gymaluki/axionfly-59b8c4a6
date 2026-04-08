@@ -84,7 +84,7 @@ const VendasView = () => {
       setSales(isOwner ? demoSales : []);
     } else {
       const realSales = (data as Sale[]) || [];
-      setSales(realSales.length > 0 ? realSales : (isOwner ? demoSales : []));
+      setSales(isOwner ? [...realSales, ...demoSales] : realSales);
     }
     setLoading(false);
   };
