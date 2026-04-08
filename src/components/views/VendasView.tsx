@@ -78,12 +78,13 @@ const VendasView = () => {
       .from("sales")
       .select("*")
       .order("sale_date", { ascending: false });
+    const isOwner = user.email === "andreyhenriquev4@gmail.com";
     if (error) {
       toast.error("Erro ao carregar vendas");
-      setSales(demoSales);
+      setSales(isOwner ? demoSales : []);
     } else {
       const realSales = (data as Sale[]) || [];
-      setSales(realSales.length > 0 ? realSales : demoSales);
+      setSales(realSales.length > 0 ? realSales : (isOwner ? demoSales : []));
     }
     setLoading(false);
   };
