@@ -57,6 +57,7 @@ const VendasView = () => {
       { client_name: "Barbearia Cavalheiro", amount: 1450, status: "pago", daysAgo: 50 },
       { client_name: "Black Barber Studio", amount: 1800, status: "pago", daysAgo: 53 },
       { client_name: "Barbearia Corte Real", amount: 1831, status: "pago", daysAgo: 56 },
+      { client_name: "Barbearia Império do Fade", amount: 2200, status: "pendente", daysAgo: 1 },
     ];
     return entries.map((e, i) => {
       const d = new Date(now);
