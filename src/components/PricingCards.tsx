@@ -98,6 +98,7 @@ function PricingCard({
 export default function PricingCards() {
   const sharedFeatures = [
     "Criador de Sites com IA (20+ nichos)",
+    "Estratégia para criar sites infinitos",
     "Prospecção automática via Google Maps",
     "Dashboard de acompanhamento de lucros",
     "Parceria oficial com Lovable",
