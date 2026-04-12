@@ -46,20 +46,30 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ scale: 1.03, y: -6, transition: hoverTransition }}
-      className="relative flex w-full max-w-sm flex-col rounded-2xl p-8 transition-transform duration-150 neon-border glow-blue will-change-transform"
+      className={`relative flex w-full max-w-sm flex-col rounded-2xl p-6 sm:p-8 transition-transform duration-150 neon-border glow-blue will-change-transform ${isHighlight ? "ring-2 ring-primary/60" : ""}`}
       style={{
         backgroundColor: "hsl(var(--card))",
         backgroundImage: "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)",
       }}
     >
+      {/* Badge Mais Escolhido */}
+      {isHighlight && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1 text-xs font-bold text-primary-foreground shadow-lg whitespace-nowrap">
+            <Sparkles className="h-3 w-3" />
+            Mais Escolhido
+          </span>
+        </div>
+      )}
+
       {/* Title */}
       <div className="mb-6 text-center">
-        <h3 className="text-2xl font-bold text-foreground">{planName}</h3>
+        <h3 className="text-xl sm:text-2xl font-bold text-foreground">{planName}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       </div>
 
       {/* Features */}
-      <ul className="flex-1 space-y-4 mb-8">
+      <ul className="flex-1 space-y-3 sm:space-y-4 mb-6 sm:mb-8">
         {features.map((feature, idx) => (
           <motion.li
             key={idx}
@@ -67,19 +77,19 @@ function PricingCard({
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.03, duration: 0.3, ease }}
-            className="flex items-center gap-3 text-sm text-foreground font-medium"
+            className="flex items-start gap-3 text-sm text-foreground font-medium"
           >
-            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20">
+            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 mt-0.5">
               <Check className="h-3 w-3 text-primary" />
             </div>
-            {feature}
+            <span className="leading-snug">{feature}</span>
           </motion.li>
         ))}
       </ul>
 
       {/* Price */}
       <div className="mb-6 text-center">
-        <span className="text-5xl font-black gradient-text">
+        <span className="text-4xl sm:text-5xl font-black gradient-text">
           {price}
         </span>
         <span className="ml-2 text-sm text-muted-foreground">{priceDescription}</span>
@@ -156,7 +166,7 @@ export default function PricingCards() {
           Escolha o plano ideal para você e comece seu negócio com liberdade para crescer ainda mais.
         </p>
       </motion.div>
-      <div className="mx-auto flex max-w-3xl flex-col items-stretch justify-center gap-8 md:flex-row">
+      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-8 px-2 sm:px-0 md:flex-row md:items-stretch">
         {plans.map((plan) => (
           <PricingCard key={plan.planName} {...plan} />
         ))}
