@@ -1,4 +1,4 @@
-import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle } from "lucide-react";
+import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText } from "lucide-react";
 import axionflyLogo from "@/assets/axionfly-logo.png";
 import {
   Sidebar,
@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin";
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato";
 
 interface DashboardSidebarProps {
   active: View;
@@ -37,6 +37,7 @@ const navItems: { id: View; label: string; icon: React.ElementType }[] = [
   { id: "prospeccao", label: "Busca de Leads", icon: MapPin },
   { id: "membros", label: "Área de Membros", icon: PlayCircle },
   { id: "vendas", label: "Minhas Vendas", icon: ShoppingBag },
+  { id: "contrato", label: "Contrato & Script", icon: FileText },
 ];
 
 const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, isAdmin }: DashboardSidebarProps) => {
