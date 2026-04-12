@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3 } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare } from "lucide-react";
 import { motion, useInView, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
@@ -89,6 +89,18 @@ const features = [
     title: "Prospecção Automática",
     desc: "Selecione estado e cidade. O sistema busca negócios sem site e entrega nome, telefone e endereço — tudo pronto pra fechar contrato.",
     tag: "27 ESTADOS",
+  },
+  {
+    icon: FileText,
+    title: "Gerador de Contrato",
+    desc: "Gere contratos profissionais personalizados com nome do cliente, serviço e valores — prontos para enviar e fechar negócio na hora.",
+    tag: "AUTOMÁTICO",
+  },
+  {
+    icon: MessageSquare,
+    title: "Script de Vendas Pronto",
+    desc: "Mensagens prontas para WhatsApp com o nome do cliente já preenchido. Abordagem, objeções e fechamento — tudo humanizado e testado.",
+    tag: "VENDAS",
   },
   {
     icon: BarChart3,
