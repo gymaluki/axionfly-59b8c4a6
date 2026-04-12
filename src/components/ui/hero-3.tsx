@@ -32,7 +32,7 @@ export function HeroSection() {
 						<p className="font-mono text-xs text-primary">NOVO</p>
 					</div>
 
-					<span className="text-xs text-muted-foreground">Acesso vitalício por apenas R$ 247</span>
+					<span className="text-xs text-muted-foreground">Acesso vitalício por apenas R$ 147,90</span>
 					<span className="block h-5 border-l border-border" />
 
 					<div className="pr-1">
