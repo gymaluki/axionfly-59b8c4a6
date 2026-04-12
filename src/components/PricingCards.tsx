@@ -166,7 +166,7 @@ export default function PricingCards() {
           Escolha o plano ideal para você e comece seu negócio com liberdade para crescer ainda mais.
         </p>
       </motion.div>
-      <div className="mx-auto flex max-w-3xl flex-col items-stretch justify-center gap-8 md:flex-row">
+      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-8 px-2 sm:px-0 md:flex-row md:items-stretch">
         {plans.map((plan) => (
           <PricingCard key={plan.planName} {...plan} />
         ))}
