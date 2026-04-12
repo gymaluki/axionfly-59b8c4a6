@@ -65,42 +65,51 @@ interface ScriptItem {
 
 const scriptsVendas: ScriptItem[] = [
   {
-    titulo: "Primeira abordagem (após encontrar o lead)",
+    titulo: "Primeira abordagem (quebra-gelo)",
     mensagens: [
-      "Olá, {nome}! Tudo bem? Me chamo [seu nome] e trabalho com criação de sites profissionais para empresas como a sua.",
-      "Vi que a {empresa} ainda não tem um site ou o site atual pode ser melhorado. Posso te mostrar como um site moderno pode trazer mais clientes?",
-      "Sem compromisso, só quero te mostrar algumas ideias! Posso te enviar um exemplo rápido?",
+      "Oi, {nome}! Tudo bem? 😊 Me chamo [seu nome], vi o perfil da {empresa} e achei muito bacana o trabalho de vocês!",
+      "Eu ajudo negócios como o seu a atrair mais clientes pela internet com um site profissional. Já pensou em ter uma presença online que realmente traz resultado?",
+      "Posso te mostrar como ficaria um site pra {empresa}, sem compromisso nenhum! O que acha?",
     ],
   },
   {
     titulo: "Quando o cliente pergunta o preço",
     mensagens: [
-      "Ótima pergunta, {nome}! O investimento varia conforme o que você precisa, mas nossos sites começam a partir de R$ 497.",
-      "Inclui design profissional, responsivo pra celular, otimizado pro Google e pronto pra receber clientes. Quer que eu monte uma proposta personalizada?",
+      "Boa pergunta, {nome}! O valor depende do que você precisa, mas pra te dar uma ideia: os projetos começam a partir de R$ 497.",
+      "Isso já inclui design profissional, site responsivo (fica bonito no celular também), otimização pro Google e tudo pronto pra receber clientes.",
+      "Mas o mais importante: o site se paga rápido. Com 2 ou 3 clientes novos que chegam por ele, já valeu o investimento. Quer que eu monte uma proposta sob medida pra {empresa}?",
     ],
   },
   {
     titulo: "Quando o cliente diz que vai pensar",
     mensagens: [
-      "Entendo perfeitamente, {nome}! É uma decisão importante mesmo.",
-      "Só pra te ajudar: seus concorrentes já estão online e capturando clientes que poderiam ser seus. Quanto mais tempo sem um site, mais oportunidades passam.",
-      "Que tal a gente agendar uma conversa rápida de 10 minutos? Posso te mostrar exatamente como ficaria o site da {empresa}.",
+      "Claro, {nome}! Faz total sentido pensar com calma. 😉",
+      "Só queria te deixar uma reflexão: enquanto a {empresa} não tá online, seus concorrentes já estão lá capturando os clientes que poderiam ser seus. Cada dia sem site é oportunidade passando.",
+      "Que tal a gente marcar uma conversa rápida de 10 minutinhos? Te mostro exatamente como ficaria o site e você decide com mais clareza. Pode ser?",
     ],
   },
   {
-    titulo: "Quando o cliente diz que é caro",
+    titulo: "Quando o cliente acha caro",
     mensagens: [
-      "Entendo, {nome}! Mas pensa comigo: quantos clientes novos por mês um site profissional pode trazer?",
-      "Se o site trouxer pelo menos 2 ou 3 clientes novos, o investimento já se paga no primeiro mês. É um investimento, não um gasto.",
-      "E o melhor: você paga uma vez e o site trabalha pra você 24 horas por dia, 7 dias por semana.",
+      "Entendo totalmente, {nome}. Mas deixa eu te fazer uma pergunta: quanto vale um cliente novo pra {empresa}?",
+      "Se o site trouxer pelo menos 2 clientes novos por mês — e vai trazer — o investimento se paga logo no primeiro mês. Não é um gasto, é o melhor vendedor que você pode ter: trabalha 24h, não tira férias e não pede aumento. 😄",
+      "E o melhor: você paga uma vez e o retorno vem todo mês. É o investimento com melhor custo-benefício que existe pra quem quer crescer.",
     ],
   },
   {
-    titulo: "Fechamento / Call to Action",
+    titulo: "Follow-up (se não respondeu)",
     mensagens: [
-      "Então, {nome}, posso reservar uma vaga pra começar o site da {empresa} essa semana?",
-      "Tenho apenas {X} vagas disponíveis esse mês. Garanto que vai ficar muito satisfeito(a) com o resultado!",
-      "Pra começar, preciso apenas do logotipo e algumas informações básicas. Posso te enviar um formulário rápido?",
+      "Oi, {nome}! Tudo certo? 😊 Passei aqui só pra saber se conseguiu pensar sobre o site da {empresa}.",
+      "Sei que a rotina é corrida, mas não queria que você perdesse a oportunidade. Ainda tenho vaga disponível essa semana pra começar o projeto.",
+      "Se preferir, posso te mandar um exemplo de site parecido com o que ficaria pra {empresa}. Assim você visualiza melhor! Me avisa. 🚀",
+    ],
+  },
+  {
+    titulo: "Fechamento (hora de fechar!)",
+    mensagens: [
+      "Então, {nome}, bora transformar a {empresa} em referência online? Posso reservar sua vaga pra essa semana!",
+      "Pra começar é super simples: preciso só do logotipo e algumas informações básicas. Te mando um formulário rápido e a gente já inicia!",
+      "Ah, e fica tranquilo(a): tem garantia de satisfação. Se não curtir o resultado, a gente ajusta até ficar do jeitinho que você quer. 💪",
     ],
   },
 ];
