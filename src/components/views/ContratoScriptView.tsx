@@ -276,28 +276,32 @@ const ContratoScriptView = () => {
           animate={{ opacity: 1, x: 0 }}
           className="space-y-6"
         >
-          <Card className="bg-card border-border">
-            <CardHeader>
-              <CardTitle className="text-lg">Personalizar Mensagens</CardTitle>
-              <CardDescription>
-                Preencha o nome e empresa do lead para personalizar as frases automaticamente
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-3 bg-card border border-border rounded-lg p-4">
+            <div className="flex-1 space-y-1">
+              <label className="text-xs font-medium text-muted-foreground">Nome do lead</label>
               <Input
-                placeholder="Nome do lead (ex: Maria)"
+                placeholder="Ex: Maria"
                 value={nomeScript}
                 onChange={(e) => setNomeScript(e.target.value)}
                 className="bg-secondary/50 border-border"
               />
+            </div>
+            <div className="flex-1 space-y-1">
+              <label className="text-xs font-medium text-muted-foreground">Empresa do lead</label>
               <Input
-                placeholder="Empresa do lead (ex: Salão da Maria)"
+                placeholder="Ex: Salão da Maria"
                 value={empresaScript}
                 onChange={(e) => setEmpresaScript(e.target.value)}
                 className="bg-secondary/50 border-border"
               />
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+
+          {(!nomeScript.trim() || !empresaScript.trim()) && (
+            <p className="text-xs text-amber-400/80 px-1">
+              ⚠ Preencha o nome e empresa acima para as mensagens ficarem prontas para copiar e enviar direto.
+            </p>
+          )}
 
           <div className="space-y-4">
             {scriptsVendas.map((script, sIdx) => (
