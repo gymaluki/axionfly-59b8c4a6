@@ -110,6 +110,8 @@ export default function PricingCards() {
     "Criador de Sites com IA (20+ nichos)",
     "Estratégia para criar sites infinitos",
     "Prospecção automática via Google Maps",
+    "Gerador de contrato profissional",
+    "Script de vendas pronto para WhatsApp",
     "Dashboard de acompanhamento de lucros",
     "Parceria oficial com Lovable",
     "Suporte prioritário",
