@@ -123,7 +123,7 @@ export default function PricingCards() {
     {
       planName: "Plano Mensal",
       description: "Para quem quer testar sem compromisso",
-      price: "R$ 97,90",
+      price: "R$ 59,90",
       priceDescription: "/ mês",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
@@ -134,7 +134,7 @@ export default function PricingCards() {
     {
       planName: "Plano Vitalício",
       description: "Pague uma vez. Use para sempre.",
-      price: "R$ 147,90",
+      price: "R$ 97,09",
       priceDescription: "/ custo único",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
