@@ -11,6 +11,7 @@ import {
   Type,
   MapPin,
   Phone,
+  Clock,
   Eye,
   Target,
   MessageSquare,
@@ -296,6 +297,7 @@ const SitesView = () => {
   const [tone, setTone] = useState("");
   const [selectedPages, setSelectedPages] = useState<string[]>(["inicio"]);
   const [ctaPrincipal, setCtaPrincipal] = useState("");
+  const [businessHours, setBusinessHours] = useState("");
 
   const canAdvance = useMemo(() => {
     if (step === 0) return projectName.trim().length > 0 && niche.length > 0;
@@ -331,6 +333,7 @@ const SitesView = () => {
 
     if (address.trim()) generated += ` Endereço do estabelecimento: ${address.trim()}.`;
     if (phone.trim()) generated += ` Telefone: ${phone.trim()}.`;
+    if (businessHours.trim()) generated += ` Horário de funcionamento: ${businessHours.trim()}.`;
     if (slogan.trim()) generated += ` Slogan/tagline do negócio: "${slogan.trim()}". Use essa frase de forma destacada no hero ou header.`;
 
     const selectedTone = toneOptions.find(t => t.value === tone);
@@ -648,6 +651,18 @@ const SitesView = () => {
                   className="bg-secondary/50 border-border h-12"
                 />
               </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-primary" />
+                  Horário de Funcionamento
+                </label>
+                <Input
+                  placeholder="Ex: Seg-Sex 9h às 18h, Sáb 9h às 13h"
+                  value={businessHours}
+                  onChange={(e) => setBusinessHours(e.target.value)}
+                  className="bg-secondary/50 border-border h-12"
+                />
+              </div>
 
               {/* Páginas Desejadas */}
               <div className="space-y-2">
@@ -757,6 +772,7 @@ const SitesView = () => {
               />
               <ReviewItem label="Endereço" value={address || "Não informado"} />
               <ReviewItem label="Telefone" value={phone || "Não informado"} />
+              <ReviewItem label="Horário" value={businessHours || "Não informado"} />
               <ReviewItem label="Extras" value={features || "Nenhum"} />
             </div>
 
