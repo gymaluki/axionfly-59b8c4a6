@@ -11,6 +11,7 @@ import {
   Type,
   MapPin,
   Phone,
+  Clock,
   Eye,
   Target,
   MessageSquare,
