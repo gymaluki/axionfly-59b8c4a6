@@ -134,7 +134,7 @@ export default function PricingCards() {
     {
       planName: "Plano Vitalício",
       description: "Pague uma vez. Use para sempre.",
-      price: "R$ 97,09",
+      price: "R$ 97,90",
       priceDescription: "/ custo único",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
