@@ -1,6 +1,8 @@
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Shield } from "lucide-react";
+import { Check, Sparkles, Shield, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SiPix } from "react-icons/si";
+import { FaCcMastercard, FaCcVisa, FaBarcode } from "react-icons/fa";
 import googleMapsLogo from "@/assets/google-maps-logo.png";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
@@ -89,10 +91,18 @@ function PricingCard({
 
       {/* Price */}
       <div className="mb-6 text-center">
-        <span className="text-4xl sm:text-5xl font-black gradient-text">
-          {price}
-        </span>
-        <span className="ml-2 text-sm text-muted-foreground">{priceDescription}</span>
+        <div className="flex items-baseline justify-center gap-2">
+          <span className="text-4xl sm:text-5xl font-black gradient-text">
+            {price}
+          </span>
+          <span className="text-base sm:text-lg font-bold text-primary">{priceDescription}</span>
+        </div>
+        <div className="mt-3 flex items-center justify-center gap-3 text-muted-foreground/70">
+          <SiPix className="h-5 w-5" />
+          <FaCcMastercard className="h-6 w-6" />
+          <FaCcVisa className="h-6 w-6" />
+          <FaBarcode className="h-5 w-5" />
+        </div>
       </div>
 
       {/* CTA */}
