@@ -1,6 +1,8 @@
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Shield } from "lucide-react";
+import { Check, Sparkles, Shield, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SiPix } from "react-icons/si";
+import { FaCcMastercard, FaCcVisa, FaBarcode } from "react-icons/fa";
 import googleMapsLogo from "@/assets/google-maps-logo.png";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
