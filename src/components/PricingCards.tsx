@@ -138,7 +138,7 @@ export default function PricingCards() {
       priceDescription: "/ custo único",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
-      buttonHref: "https://go.perfectpay.com.br/PPU38CQA071",
+      buttonHref: "https://go.perfectpay.com.br/PPU38CQAGSE",
       isHighlight: true,
       index: 2,
     },
