@@ -619,36 +619,80 @@ const SitesView = () => {
                 />
               </div>
 
-              {/* WhatsApp Ordering Toggle - only for food niches */}
+              {/* WhatsApp Ordering Card - only for food niches */}
               {foodNiches.includes(niche) && (
-                <button
-                  type="button"
-                  onClick={() => setWhatsappOrdering(!whatsappOrdering)}
-                  className={cn(
-                    "w-full text-left p-4 rounded-xl border transition-all duration-200 space-y-1",
-                    whatsappOrdering
-                      ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                      : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
-                      whatsappOrdering ? "bg-primary/20" : "bg-secondary/50"
-                    )}>
-                      <MessageSquare className={cn("w-5 h-5", whatsappOrdering ? "text-primary" : "text-muted-foreground")} />
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">🚀 Automação</label>
+                  <button
+                    type="button"
+                    onClick={() => setWhatsappOrdering(!whatsappOrdering)}
+                    className={cn(
+                      "w-full text-left p-5 rounded-xl border-2 transition-all duration-300 relative overflow-hidden group",
+                      whatsappOrdering
+                        ? "border-green-500 bg-green-500/10 ring-2 ring-green-500/20 shadow-lg shadow-green-500/10"
+                        : "border-border bg-card hover:border-green-500/50 hover:bg-green-500/5"
+                    )}
+                  >
+                    {/* Background glow when active */}
+                    {whatsappOrdering && (
+                      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-green-500/10 pointer-events-none" />
+                    )}
+                    
+                    <div className="relative flex items-start gap-4">
+                      {/* Icon */}
+                      <div className={cn(
+                        "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300",
+                        whatsappOrdering 
+                          ? "bg-green-500/20 shadow-md shadow-green-500/20" 
+                          : "bg-secondary/50 group-hover:bg-green-500/10"
+                      )}>
+                        <MessageSquare className={cn(
+                          "w-6 h-6 transition-colors",
+                          whatsappOrdering ? "text-green-400" : "text-muted-foreground group-hover:text-green-400"
+                        )} />
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="flex-1 space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <h4 className="text-sm font-bold text-foreground">
+                            Pedidos via WhatsApp
+                          </h4>
+                          {/* Toggle indicator */}
+                          <div className={cn(
+                            "w-11 h-6 rounded-full transition-all duration-300 flex items-center px-0.5",
+                            whatsappOrdering ? "bg-green-500" : "bg-muted"
+                          )}>
+                            <div className={cn(
+                              "w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-300",
+                              whatsappOrdering ? "translate-x-5" : "translate-x-0"
+                            )} />
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          Seus clientes escolhem os itens direto no site e o pedido vai formatado pro WhatsApp — sem app, sem comissão.
+                        </p>
+                        
+                        {/* Feature pills */}
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {["Cardápio interativo", "Carrinho inline", "Checkout 2 etapas", "Envio automático"].map((feat) => (
+                            <span 
+                              key={feat}
+                              className={cn(
+                                "text-[10px] font-medium px-2 py-0.5 rounded-full transition-colors",
+                                whatsappOrdering 
+                                  ? "bg-green-500/15 text-green-300 border border-green-500/20" 
+                                  : "bg-secondary/50 text-muted-foreground border border-border"
+                              )}
+                            >
+                              {feat}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-foreground flex items-center gap-2">
-                        📱 Pedidos via WhatsApp
-                        {whatsappOrdering && <Check className="w-4 h-4 text-primary" />}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Cardápio interativo com carrinho e envio automático do pedido para o WhatsApp do cliente
-                      </p>
-                    </div>
-                  </div>
-                </button>
+                  </button>
+                </div>
               )}
             </div>
           </div>
