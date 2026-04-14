@@ -32,8 +32,8 @@ const testimonials = [
     stars: 5,
   },
   {
-    name: "O Nostalgista",
-    initials: "ON",
+    name: "Fogaça",
+    initials: "FG",
     text: "Parabéns aos criadores da ferramenta, fiz as minhas primeiras vendas online e consegui juntar uma boa grana.",
     stars: 5,
   },
