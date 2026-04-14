@@ -127,7 +127,7 @@ export default function PricingCards() {
       priceDescription: "/ mês",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
-      buttonHref: "https://go.perfectpay.com.br/PPU38CQA06U",
+      buttonHref: "https://go.perfectpay.com.br/PPU38CQAGS6",
       isHighlight: false,
       index: 1,
     },
