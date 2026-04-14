@@ -91,11 +91,11 @@ function PricingCard({
 
       {/* Price */}
       <div className="mb-6 text-center">
-        <div className="flex items-baseline justify-center gap-2">
-          <span className="text-4xl sm:text-5xl font-black gradient-text">
+        <div className="flex items-baseline justify-center gap-2 flex-nowrap">
+          <span className="text-4xl sm:text-5xl font-black gradient-text whitespace-nowrap">
             {price}
           </span>
-          <span className="text-base sm:text-lg font-bold text-primary">{priceDescription}</span>
+          <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">{priceDescription}</span>
         </div>
         <div className="mt-3 flex items-center justify-center gap-3 text-muted-foreground/70">
           <SiPix className="h-5 w-5" />
