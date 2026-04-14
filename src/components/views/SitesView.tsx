@@ -298,6 +298,9 @@ const SitesView = () => {
   const [selectedPages, setSelectedPages] = useState<string[]>(["inicio"]);
   const [ctaPrincipal, setCtaPrincipal] = useState("");
   const [businessHours, setBusinessHours] = useState("");
+  const [whatsappOrdering, setWhatsappOrdering] = useState(false);
+
+  const foodNiches = ["pizzaria", "fine-dining", "restaurante-bairro", "hamburgueria", "acaiteria", "marmitaria"];
 
   const canAdvance = useMemo(() => {
     if (step === 0) return projectName.trim().length > 0 && niche.length > 0;
@@ -349,6 +352,10 @@ const SitesView = () => {
 
     const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
     if (selectedCta) generated += ` Botão CTA principal: "${selectedCta.label.replace(/^.\s/, "")}" — ${selectedCta.desc}.`;
+
+    if (whatsappOrdering) {
+      generated += ` IMPORTANTE: Inclua um sistema de pedidos via WhatsApp completo. Crie uma seção de cardápio interativo com botões "+" e "−" ao lado de cada item para adicionar/remover do carrinho, mostrando a quantidade selecionada entre os botões. Itens selecionados devem ter destaque visual. Adicione um botão flutuante fixo no canto inferior direito com ícone de carrinho e contador de itens (só aparece quando há itens no carrinho). Ao clicar, abra um modal de checkout em 2 etapas: Etapa 1 com campos Nome, Endereço, Forma de pagamento (Dinheiro/Cartão Crédito/Cartão Débito/PIX como toggles) e Observação. Etapa 2 com revisão completa e botão "Enviar WhatsApp". Ao confirmar, gere uma mensagem formatada com emojis (🍕 PEDIDO, 👤 Nome, 📍 Endereço, 💳 Pagamento, 📋 Itens, 📝 Observação) e envie via https://wa.me/{numero}?text={mensagem}. Após envio, limpar carrinho e fechar modal.`;
+    }
 
     navigator.clipboard.writeText(generated)
       .catch(() => {
@@ -611,6 +618,38 @@ const SitesView = () => {
                   className="bg-secondary/50 border-border"
                 />
               </div>
+
+              {/* WhatsApp Ordering Toggle - only for food niches */}
+              {foodNiches.includes(niche) && (
+                <button
+                  type="button"
+                  onClick={() => setWhatsappOrdering(!whatsappOrdering)}
+                  className={cn(
+                    "w-full text-left p-4 rounded-xl border transition-all duration-200 space-y-1",
+                    whatsappOrdering
+                      ? "border-primary bg-primary/10 ring-1 ring-primary/30"
+                      : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
+                      whatsappOrdering ? "bg-primary/20" : "bg-secondary/50"
+                    )}>
+                      <MessageSquare className={cn("w-5 h-5", whatsappOrdering ? "text-primary" : "text-muted-foreground")} />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-foreground flex items-center gap-2">
+                        📱 Pedidos via WhatsApp
+                        {whatsappOrdering && <Check className="w-4 h-4 text-primary" />}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Cardápio interativo com carrinho e envio automático do pedido para o WhatsApp do cliente
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              )}
             </div>
           </div>
         );
@@ -774,6 +813,9 @@ const SitesView = () => {
               <ReviewItem label="Telefone" value={phone || "Não informado"} />
               <ReviewItem label="Horário" value={businessHours || "Não informado"} />
               <ReviewItem label="Extras" value={features || "Nenhum"} />
+              {foodNiches.includes(niche) && (
+                <ReviewItem label="Pedidos WhatsApp" value={whatsappOrdering ? "✅ Ativado" : "Desativado"} />
+              )}
             </div>
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
