@@ -137,7 +137,7 @@ export default function PricingCards() {
       priceDescription: "/ mês",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
-      buttonHref: "https://go.perfectpay.com.br/PPU38CQAGS6",
+      buttonHref: "https://pay.cakto.com.br/6u886t8_849513",
       isHighlight: false,
       index: 1,
     },
