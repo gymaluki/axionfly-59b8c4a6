@@ -148,7 +148,7 @@ export default function PricingCards() {
       priceDescription: "/ custo único",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
-      buttonHref: "https://go.perfectpay.com.br/PPU38CQAGSE",
+      buttonHref: "https://pay.cakto.com.br/wcv2cko_849541",
       isHighlight: true,
       index: 2,
     },
