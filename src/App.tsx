@@ -8,6 +8,7 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import DesignStylesGuide from "./pages/DesignStylesGuide";
 import FontsGuide from "./pages/FontsGuide";
+import PedidosDemo from "./pages/PedidosDemo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/guia-design" element={<DesignStylesGuide />} />
           <Route path="/guia-fontes" element={<FontsGuide />} />
+          <Route path="/pedidos-demo" element={<PedidosDemo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
