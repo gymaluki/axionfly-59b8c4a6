@@ -9,7 +9,7 @@ export function useAccessControl(user: User | null) {
   const [checkedUserId, setCheckedUserId] = useState<string | null>(null);
 
   const userId = user?.id ?? null;
-  const userEmail = user?.email ?? "";
+  
 
   useEffect(() => {
     let isMounted = true;
