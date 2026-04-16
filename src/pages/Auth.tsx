@@ -18,6 +18,10 @@ const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const paymentRedirect = useMemo(() => {
+    return new URLSearchParams(location.search).get("redirect_payment");
+  }, [location.search]);
+
   const redirectTo = useMemo(() => {
     const redirect = new URLSearchParams(location.search).get("redirect");
 
