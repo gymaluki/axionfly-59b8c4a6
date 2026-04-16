@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FileText, MessageSquare, Copy, Check, Download } from "lucide-react";
+import jsPDF from "jspdf";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -138,6 +139,60 @@ const ContratoScriptView = () => {
     const texto = contratoTemplate({ nomeCliente, nomeEmpresa, valor, descricao, prazo });
     setContratoGerado(texto);
     toast.success("Contrato gerado com sucesso!");
+  };
+
+  const baixarPDF = () => {
+    if (!contratoGerado) return;
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    const maxWidth = pageWidth - margin * 2;
+    const lineHeight = 7;
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("CONTRATO DE PRESTAÇÃO DE SERVIÇOS", pageWidth / 2, 25, { align: "center" });
+    doc.text("DE DESENVOLVIMENTO WEB", pageWidth / 2, 33, { align: "center" });
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+
+    // Split text removing the title (first line)
+    const lines = contratoGerado.split("\n").slice(2);
+    let y = 48;
+
+    for (const line of lines) {
+      if (y > 275) {
+        doc.addPage();
+        y = 20;
+      }
+
+      const trimmed = line.trim();
+      if (/^\d+\./.test(trimmed)) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+        y += 4;
+      } else if (trimmed.startsWith("CONTRATANTE:") || trimmed.startsWith("CONTRATADO")) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+      } else {
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+      }
+
+      const wrapped = doc.splitTextToSize(trimmed || " ", maxWidth);
+      for (const wl of wrapped) {
+        if (y > 275) {
+          doc.addPage();
+          y = 20;
+        }
+        doc.text(wl, margin, y);
+        y += lineHeight;
+      }
+    }
+
+    doc.save(`contrato-${nomeCliente.replace(/\s+/g, "-").toLowerCase()}.pdf`);
+    toast.success("PDF baixado com sucesso!");
   };
 
   const copiarTexto = (texto: string, id: string) => {
