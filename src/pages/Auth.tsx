@@ -34,22 +34,32 @@ const Auth = () => {
 
   // Redirect if already logged in
   useEffect(() => {
+    const handleRedirect = (session: any) => {
+      if (session) {
+        if (paymentRedirect) {
+          // User logged in and has a payment to complete
+          toast.success("Conta pronta! Redirecionando para o pagamento...");
+          setTimeout(() => {
+            window.location.href = paymentRedirect;
+          }, 1500);
+        } else {
+          navigate(redirectTo, { replace: true });
+        }
+      }
+    };
+
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate(redirectTo, { replace: true });
-      }
+      handleRedirect(session);
     };
     checkSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        navigate(redirectTo, { replace: true });
-      }
+      handleRedirect(session);
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate, redirectTo]);
+  }, [navigate, redirectTo, paymentRedirect]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
