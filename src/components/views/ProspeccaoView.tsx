@@ -205,7 +205,7 @@ const ProspeccaoView = () => {
     >
       <div>
         <h2 className="text-2xl font-bold text-foreground">Prospecção de Clientes</h2>
-        <p className="text-muted-foreground text-sm mt-1">Encontre leads por nicho, cidade e estado — 100% Brasil</p>
+        <p className="text-muted-foreground text-sm mt-1">Encontre empresas sem site ou com sites ruins por nicho, cidade e estado — ideais para prospectar</p>
       </div>
 
       {/* Filtros de localização */}
