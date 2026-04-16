@@ -1,9 +1,12 @@
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Shield, CreditCard } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiPix } from "react-icons/si";
 import { FaCcMastercard, FaCcVisa, FaBarcode } from "react-icons/fa";
 import googleMapsLogo from "@/assets/google-maps-logo.png";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
@@ -40,6 +43,21 @@ function PricingCard({
   buttonHref,
   index,
 }: PricingCardProps) {
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session) {
+      toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
+      navigate(`/auth?redirect_payment=${encodeURIComponent(buttonHref)}`);
+      return;
+    }
+    
+    // User is logged in, redirect to payment
+    window.location.href = buttonHref;
+  };
+
   return (
     <motion.div
       initial="hidden"
@@ -54,7 +72,6 @@ function PricingCard({
         backgroundImage: "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)",
       }}
     >
-      {/* Badge Mais Escolhido */}
       {isHighlight && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1 text-xs font-bold text-primary-foreground shadow-lg whitespace-nowrap">
@@ -64,13 +81,11 @@ function PricingCard({
         </div>
       )}
 
-      {/* Title */}
       <div className="mb-6 text-center">
         <h3 className="text-xl sm:text-2xl font-bold text-foreground">{planName}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{description}</p>
       </div>
 
-      {/* Features */}
       <ul className="flex-1 space-y-3 sm:space-y-4 mb-6 sm:mb-8">
         {features.map((feature, idx) => (
           <motion.li
@@ -89,7 +104,6 @@ function PricingCard({
         ))}
       </ul>
 
-      {/* Price */}
       <div className="mb-6 text-center">
         <div className="flex items-baseline justify-center gap-2 flex-nowrap">
           <span className="text-4xl sm:text-5xl font-black gradient-text whitespace-nowrap">
@@ -105,10 +119,9 @@ function PricingCard({
         </div>
       </div>
 
-      {/* CTA */}
       <motion.div whileHover={{ scale: 1.02, transition: hoverTransition }} whileTap={{ scale: 0.98, transition: hoverTransition }}>
-        <Button variant="neon" size="lg" className="w-full text-base" asChild>
-          <a href={buttonHref}>{buttonText}</a>
+        <Button variant="neon" size="lg" className="w-full text-base" onClick={handleClick}>
+          {buttonText}
         </Button>
       </motion.div>
     </motion.div>
@@ -184,7 +197,6 @@ export default function PricingCards() {
         ))}
       </div>
 
-      {/* Parcerias */}
       <motion.div
         initial="hidden"
         whileInView="visible"
