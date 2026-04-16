@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, MessageCircle, MapPin, Loader2, Phone } from "lucide-react";
+import { Search, MessageCircle, MapPin, Loader2, Phone, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -92,6 +92,7 @@ const ProspeccaoView = () => {
   const [cidades, setCidades] = useState<string[]>([]);
   const [loadingCidades, setLoadingCidades] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
+  const [searchMode, setSearchMode] = useState<"sem_site" | "site_ruim" | "sem_redes" | "geral">("sem_site");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
@@ -138,7 +139,24 @@ const ProspeccaoView = () => {
   const doSearch = async (nicho: string) => {
     if (!nicho.trim()) return;
     const location = buildLocation();
-    const query = `${nicho} em ${location} sem site OR "não possui site" OR "sem website" Google Maps contato telefone`;
+    
+    let queryFilter = "";
+    switch (searchMode) {
+      case "sem_site":
+        queryFilter = `sem site OR "não possui site" OR "sem website"`;
+        break;
+      case "site_ruim":
+        queryFilter = `site desatualizado OR "site antigo" OR "site ruim" OR "precisa de site novo"`;
+        break;
+      case "sem_redes":
+        queryFilter = `sem instagram OR "sem redes sociais" OR "não tem instagram" OR "sem facebook"`;
+        break;
+      case "geral":
+        queryFilter = "";
+        break;
+    }
+    
+    const query = `${nicho} em ${location} ${queryFilter} Google Maps contato telefone`.trim();
 
     setLoading(true);
     setSearched(true);
@@ -247,6 +265,35 @@ const ProspeccaoView = () => {
           </div>
         </div>
       </form>
+
+      {/* Filtro de tipo de busca */}
+      <div>
+        <label className="text-xs font-medium text-muted-foreground mb-2 flex items-center gap-1.5">
+          <Filter className="w-3.5 h-3.5" /> Tipo de busca
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {([
+            { id: "sem_site" as const, label: "Sem site", emoji: "🚫" },
+            { id: "site_ruim" as const, label: "Site ruim / desatualizado", emoji: "⚠️" },
+            { id: "sem_redes" as const, label: "Sem redes sociais", emoji: "📵" },
+            { id: "geral" as const, label: "Geral (todos)", emoji: "🔍" },
+          ]).map(({ id, label, emoji }) => (
+            <motion.button
+              key={id}
+              onClick={() => setSearchMode(id)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                searchMode === id
+                  ? "bg-primary text-primary-foreground glow-purple"
+                  : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+              }`}
+            >
+              <span>{emoji}</span> {label}
+            </motion.button>
+          ))}
+        </div>
+      </div>
 
       {/* Nichos */}
       <div>
