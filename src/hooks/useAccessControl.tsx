@@ -69,7 +69,7 @@ export function useAccessControl(user: User | null) {
     return () => {
       isMounted = false;
     };
-  }, [userId, userEmail, checkedUserId, hasAccess]);
+  }, [userId, checkedUserId, hasAccess]);
 
   return { hasAccess, isAdmin, loading };
 }
