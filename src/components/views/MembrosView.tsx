@@ -104,13 +104,29 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
   };
 
   const handleDelete = async (video: Video) => {
-    const fileName = video.video_url.split("/").pop();
-    if (fileName) {
-      await supabase.storage.from("videos").remove([fileName]);
+    try {
+      // Extract file name from the public URL
+      const urlParts = video.video_url.split("/storage/v1/object/public/videos/");
+      const fileName = urlParts.length > 1 ? urlParts[1] : video.video_url.split("/").pop();
+      
+      if (fileName) {
+        const { error: storageError } = await supabase.storage.from("videos").remove([fileName]);
+        if (storageError) console.error("Storage delete error:", storageError);
+      }
+
+      const { error: dbError } = await supabase.from("videos").delete().eq("id", video.id);
+      if (dbError) {
+        console.error("DB delete error:", dbError);
+        toast({ title: "Erro ao remover vídeo", description: dbError.message, variant: "destructive" });
+        return;
+      }
+
+      setVideos((prev) => prev.filter((v) => v.id !== video.id));
+      toast({ title: "Vídeo removido" });
+    } catch (err: any) {
+      console.error("Delete error:", err);
+      toast({ title: "Erro ao remover vídeo", description: err.message, variant: "destructive" });
     }
-    await supabase.from("videos").delete().eq("id", video.id);
-    setVideos((prev) => prev.filter((v) => v.id !== video.id));
-    toast({ title: "Vídeo removido" });
   };
 
   if (loading) {
