@@ -123,6 +123,26 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
 
   return (
     <div className="space-y-6">
+      {/* Strategy Card */}
+      <Card className="bg-primary/5 border-primary/20">
+        <CardContent className="p-6">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <Play className="w-5 h-5 text-primary" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-bold text-foreground">💡 Estratégia para Criar Sites Infinitos</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                A estratégia para construir sites infinitos se baseia em você criando contas no Lovable. 
+                Ao acabar seus créditos, você ganha <span className="font-semibold text-foreground">15 créditos grátis</span> a 
+                cada nova conta criada, isso retorna em média <span className="font-semibold text-foreground">6-8 sites</span> para você. 
+                <span className="block mt-2 text-primary font-medium">Usem da forma certa.</span>
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Área de Membros</h2>
