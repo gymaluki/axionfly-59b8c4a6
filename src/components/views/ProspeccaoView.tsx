@@ -92,6 +92,7 @@ const ProspeccaoView = () => {
   const [cidades, setCidades] = useState<string[]>([]);
   const [loadingCidades, setLoadingCidades] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
+  const [searchMode, setSearchMode] = useState<"sem_site" | "site_ruim" | "sem_redes" | "geral">("sem_site");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
@@ -138,7 +139,24 @@ const ProspeccaoView = () => {
   const doSearch = async (nicho: string) => {
     if (!nicho.trim()) return;
     const location = buildLocation();
-    const query = `${nicho} em ${location} sem site OR "não possui site" OR "sem website" Google Maps contato telefone`;
+    
+    let queryFilter = "";
+    switch (searchMode) {
+      case "sem_site":
+        queryFilter = `sem site OR "não possui site" OR "sem website"`;
+        break;
+      case "site_ruim":
+        queryFilter = `site desatualizado OR "site antigo" OR "site ruim" OR "precisa de site novo"`;
+        break;
+      case "sem_redes":
+        queryFilter = `sem instagram OR "sem redes sociais" OR "não tem instagram" OR "sem facebook"`;
+        break;
+      case "geral":
+        queryFilter = "";
+        break;
+    }
+    
+    const query = `${nicho} em ${location} ${queryFilter} Google Maps contato telefone`.trim();
 
     setLoading(true);
     setSearched(true);
