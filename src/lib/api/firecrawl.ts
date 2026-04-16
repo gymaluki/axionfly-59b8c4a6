@@ -20,8 +20,24 @@ export const firecrawlApi = {
       body: { query, options },
     });
 
+    console.log('[firecrawl] invoke result:', { data, error });
+
     if (error) {
-      return { success: false, error: error.message };
+      // Try to extract the real error from the function response
+      let detail = error.message;
+      try {
+        const ctx: any = (error as any).context;
+        if (ctx?.body) {
+          const parsed = typeof ctx.body === 'string' ? JSON.parse(ctx.body) : ctx.body;
+          if (parsed?.error) detail = parsed.error;
+        }
+      } catch {}
+      return { success: false, error: detail };
+    }
+
+    // Firecrawl returns { success, data } directly — normalize
+    if (data && typeof data === 'object' && 'data' in data) {
+      return { success: true, data: (data as any).data };
     }
     return data;
   },
