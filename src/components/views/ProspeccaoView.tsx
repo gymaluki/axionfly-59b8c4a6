@@ -138,7 +138,7 @@ const ProspeccaoView = () => {
   const doSearch = async (nicho: string) => {
     if (!nicho.trim()) return;
     const location = buildLocation();
-    const query = `${nicho} em ${location} contato telefone endereço`;
+    const query = `${nicho} em ${location} sem site OR "não possui site" OR "sem website" Google Maps contato telefone`;
 
     setLoading(true);
     setSearched(true);
