@@ -31,22 +31,20 @@ export function useAccessControl(user: User | null) {
 
     const checkAccess = async () => {
       try {
-        const { data: hasAccessResult, error: accessError } = await supabase
-          .rpc("check_user_access", { check_user_id: userId });
+        const [accessRes, adminRes] = await Promise.all([
+          supabase.rpc("check_user_access", { check_user_id: userId }),
+          supabase.rpc("is_admin", { check_user_id: userId }),
+        ]);
 
-        if (accessError) {
-          console.error("Access RPC error:", accessError);
+        if (accessRes.error) {
+          console.error("Access RPC error:", accessRes.error);
+        }
+        if (adminRes.error) {
+          console.error("Admin check error:", adminRes.error);
         }
 
-        const { data: adminData, error: adminError } = await supabase
-          .from("admin_users")
-          .select("id")
-          .eq("email", userEmail)
-          .maybeSingle();
-
-        if (adminError) {
-          console.error("Admin check error:", adminError);
-        }
+        const hasAccessResult = accessRes.data;
+        const adminData = adminRes.data;
 
         if (!isMounted) return;
 
