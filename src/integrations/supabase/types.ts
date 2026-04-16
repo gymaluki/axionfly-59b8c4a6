@@ -200,6 +200,7 @@ export type Database = {
     }
     Functions: {
       check_user_access: { Args: { check_user_id: string }; Returns: boolean }
+      claim_pending_access: { Args: never; Returns: boolean }
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
     }
     Enums: {
