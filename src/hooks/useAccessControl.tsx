@@ -48,7 +48,7 @@ export function useAccessControl(user: User | null) {
 
         if (!isMounted) return;
 
-        const isAdminUser = !!adminData;
+        const isAdminUser = adminData === true;
         const accessGranted = hasAccessResult === true || isAdminUser;
 
         setIsAdmin(isAdminUser);
