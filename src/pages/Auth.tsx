@@ -32,10 +32,24 @@ const Auth = () => {
     return redirect;
   }, [location.search]);
 
+  const claimPendingAccess = async () => {
+    try {
+      const { error } = await supabase.rpc("claim_pending_access" as never);
+
+      if (error) {
+        console.error("Erro ao ativar acesso pendente:", error);
+      }
+    } catch (error) {
+      console.error("Erro inesperado ao ativar acesso pendente:", error);
+    }
+  };
+
   // Redirect if already logged in
   useEffect(() => {
-    const handleRedirect = (session: any) => {
+    const handleRedirect = async (session: any) => {
       if (session) {
+        await claimPendingAccess();
+
         if (paymentRedirect) {
           // User logged in and has a payment to complete
           toast.success("Conta pronta! Redirecionando para o pagamento...");
@@ -50,12 +64,12 @@ const Auth = () => {
 
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      handleRedirect(session);
+      await handleRedirect(session);
     };
     checkSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      handleRedirect(session);
+      void handleRedirect(session);
     });
 
     return () => subscription.unsubscribe();
