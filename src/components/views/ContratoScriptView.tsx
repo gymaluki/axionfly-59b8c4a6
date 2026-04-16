@@ -311,17 +311,28 @@ const ContratoScriptView = () => {
 
           {contratoGerado && (
             <Card className="bg-card border-border">
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-2">
                 <CardTitle className="text-lg">Contrato Gerado</CardTitle>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copiarTexto(contratoGerado, "contrato")}
-                  className="gap-2"
-                >
-                  {copiedIdx === "contrato" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  {copiedIdx === "contrato" ? "Copiado!" : "Copiar tudo"}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="neon"
+                    size="sm"
+                    onClick={baixarPDF}
+                    className="gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Baixar PDF
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => copiarTexto(contratoGerado, "contrato")}
+                    className="gap-2"
+                  >
+                    {copiedIdx === "contrato" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    {copiedIdx === "contrato" ? "Copiado!" : "Copiar tudo"}
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <pre className="whitespace-pre-wrap text-sm text-foreground/90 bg-secondary/30 rounded-lg p-4 font-mono leading-relaxed max-h-[500px] overflow-auto">
