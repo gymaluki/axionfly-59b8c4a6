@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FileText, MessageSquare, Copy, Check, Download } from "lucide-react";
+import jsPDF from "jspdf";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -140,6 +141,60 @@ const ContratoScriptView = () => {
     toast.success("Contrato gerado com sucesso!");
   };
 
+  const baixarPDF = () => {
+    if (!contratoGerado) return;
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 20;
+    const maxWidth = pageWidth - margin * 2;
+    const lineHeight = 7;
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("CONTRATO DE PRESTAÇÃO DE SERVIÇOS", pageWidth / 2, 25, { align: "center" });
+    doc.text("DE DESENVOLVIMENTO WEB", pageWidth / 2, 33, { align: "center" });
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+
+    // Split text removing the title (first line)
+    const lines = contratoGerado.split("\n").slice(2);
+    let y = 48;
+
+    for (const line of lines) {
+      if (y > 275) {
+        doc.addPage();
+        y = 20;
+      }
+
+      const trimmed = line.trim();
+      if (/^\d+\./.test(trimmed)) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+        y += 4;
+      } else if (trimmed.startsWith("CONTRATANTE:") || trimmed.startsWith("CONTRATADO")) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+      } else {
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+      }
+
+      const wrapped = doc.splitTextToSize(trimmed || " ", maxWidth);
+      for (const wl of wrapped) {
+        if (y > 275) {
+          doc.addPage();
+          y = 20;
+        }
+        doc.text(wl, margin, y);
+        y += lineHeight;
+      }
+    }
+
+    doc.save(`contrato-${nomeCliente.replace(/\s+/g, "-").toLowerCase()}.pdf`);
+    toast.success("PDF baixado com sucesso!");
+  };
+
   const copiarTexto = (texto: string, id: string) => {
     navigator.clipboard.writeText(texto);
     setCopiedIdx(id);
@@ -256,17 +311,28 @@ const ContratoScriptView = () => {
 
           {contratoGerado && (
             <Card className="bg-card border-border">
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-2">
                 <CardTitle className="text-lg">Contrato Gerado</CardTitle>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copiarTexto(contratoGerado, "contrato")}
-                  className="gap-2"
-                >
-                  {copiedIdx === "contrato" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  {copiedIdx === "contrato" ? "Copiado!" : "Copiar tudo"}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="neon"
+                    size="sm"
+                    onClick={baixarPDF}
+                    className="gap-2"
+                  >
+                    <Download className="w-4 h-4" />
+                    Baixar PDF
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => copiarTexto(contratoGerado, "contrato")}
+                    className="gap-2"
+                  >
+                    {copiedIdx === "contrato" ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    {copiedIdx === "contrato" ? "Copiado!" : "Copiar tudo"}
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <pre className="whitespace-pre-wrap text-sm text-foreground/90 bg-secondary/30 rounded-lg p-4 font-mono leading-relaxed max-h-[500px] overflow-auto">
