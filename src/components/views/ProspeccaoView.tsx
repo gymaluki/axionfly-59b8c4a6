@@ -151,7 +151,6 @@ const ProspeccaoView = () => {
         limit: 15,
         lang: "pt-br",
         country: "br",
-        scrapeOptions: { formats: ["markdown"] },
       });
 
       if (response.success && Array.isArray(response.data)) {
