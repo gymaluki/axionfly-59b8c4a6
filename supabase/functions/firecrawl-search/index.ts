@@ -29,7 +29,7 @@ Deno.serve(async (req) => {
 
     console.log('Searching:', query);
 
-    const response = await fetch('https://api.firecrawl.dev/v1/search', {
+    const response = await fetch('https://api.firecrawl.dev/v2/search', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -46,6 +46,11 @@ Deno.serve(async (req) => {
     });
 
     const data = await response.json();
+
+    // Normalize v2 shape ({ data: { web: [...] } }) to a flat array for the client
+    if (response.ok && data?.data && !Array.isArray(data.data) && Array.isArray(data.data.web)) {
+      data.data = data.data.web;
+    }
 
     if (!response.ok) {
       console.error('Firecrawl API error:', data);
