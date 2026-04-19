@@ -139,7 +139,8 @@ const ProspeccaoView = () => {
   const doSearch = async (nicho: string) => {
     if (!nicho.trim()) return;
     const location = buildLocation();
-    const query = `${nicho} em ${location} Google Maps contato telefone`.trim();
+    // Query mais limpa — sem termos que poluem resultados
+    const query = `${nicho} em ${location}`.trim();
 
     setLoading(true);
     setSearched(true);
@@ -153,7 +154,7 @@ const ProspeccaoView = () => {
         scrapeOptions: { formats: ["markdown"] },
       });
 
-      if (response.success && response.data) {
+      if (response.success && Array.isArray(response.data)) {
         const mapped: SearchResult[] = (response.data as any[]).map((item: any) => {
           const allText = `${item.description || ""} ${item.markdown || ""}`;
           const phone = extractPhone(allText);
@@ -167,7 +168,6 @@ const ProspeccaoView = () => {
         setResults(mapped);
         setKey((k) => k + 1);
 
-        // Salva histórico
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           await supabase.from("search_history").insert({
@@ -179,11 +179,11 @@ const ProspeccaoView = () => {
           });
         }
       } else {
-        toast.error(response.error || "Erro na busca");
+        toast.error(response.error || "Nenhum resultado encontrado");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Erro ao buscar leads. Verifique a conexão com o Firecrawl.");
+      toast.error("Erro ao buscar leads. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -191,18 +191,15 @@ const ProspeccaoView = () => {
 
   const handleFilterClick = (label: string) => {
     setActiveFilter(label);
-    // Apenas seleciona o nicho, não busca automaticamente
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const filter = activeFilter || "negócios";
-    if (!estado || estado === "todos") {
-      // Busca em todo o Brasil
-      doSearch(filter);
-    } else {
-      doSearch(filter);
+    if (!activeFilter) {
+      toast.error("Selecione um nicho antes de buscar");
+      return;
     }
+    doSearch(activeFilter);
   };
 
   const extractDomain = (url: string) => {
