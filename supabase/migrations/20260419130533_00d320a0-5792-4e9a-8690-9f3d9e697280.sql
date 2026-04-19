@@ -1,0 +1,1 @@
+UPDATE public.subscriptions SET status = 'active', plan = 'monthly', updated_at = now() WHERE user_id = '2c811afd-3f28-4d42-ac12-f6fb8e7b6c99';
