@@ -29,7 +29,7 @@ Deno.serve(async (req) => {
 
     console.log('Searching:', query);
 
-    const response = await fetch('https://api.firecrawl.dev/v1/search', {
+    const response = await fetch('https://api.firecrawl.dev/v2/search', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
