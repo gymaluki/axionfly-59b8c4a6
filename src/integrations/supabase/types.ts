@@ -32,6 +32,45 @@ export type Database = {
         }
         Relationships: []
       }
+      contacted_leads: {
+        Row: {
+          created_at: string
+          id: string
+          lead_name: string
+          notes: string | null
+          phone: string | null
+          source_url: string | null
+          status: string
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lead_name: string
+          notes?: string | null
+          phone?: string | null
+          source_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lead_name?: string
+          notes?: string | null
+          phone?: string | null
+          source_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       pending_payments: {
         Row: {
           created_at: string
@@ -124,6 +163,36 @@ export type Database = {
           sale_date?: string
           status?: string
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      search_history: {
+        Row: {
+          created_at: string
+          id: string
+          location: string | null
+          nicho: string | null
+          query: string
+          results_count: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          location?: string | null
+          nicho?: string | null
+          query: string
+          results_count?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          location?: string | null
+          nicho?: string | null
+          query?: string
+          results_count?: number
           user_id?: string
         }
         Relationships: []
