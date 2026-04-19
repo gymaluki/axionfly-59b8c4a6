@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { motion, AnimatePresence } from "framer-motion";
 import { firecrawlApi } from "@/lib/api/firecrawl";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const quickFilters = [
@@ -165,6 +166,18 @@ const ProspeccaoView = () => {
         });
         setResults(mapped);
         setKey((k) => k + 1);
+
+        // Salva histórico
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await supabase.from("search_history").insert({
+            user_id: user.id,
+            query,
+            nicho,
+            location,
+            results_count: mapped.length,
+          });
+        }
       } else {
         toast.error(response.error || "Erro na busca");
       }
