@@ -1,4 +1,4 @@
-import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText } from "lucide-react";
+import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle } from "lucide-react";
 import axionflyLogo from "@/assets/axionfly-logo.png";
 import {
   Sidebar,
@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato";
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil";
 
 interface DashboardSidebarProps {
   active: View;
@@ -38,6 +38,7 @@ const navItems: { id: View; label: string; icon: React.ElementType }[] = [
   { id: "membros", label: "Área de Membros", icon: PlayCircle },
   { id: "vendas", label: "Minhas Vendas", icon: ShoppingBag },
   { id: "contrato", label: "Contrato & Script", icon: FileText },
+  { id: "perfil", label: "Meu Perfil", icon: UserCircle },
 ];
 
 const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, isAdmin }: DashboardSidebarProps) => {
@@ -109,6 +110,10 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" align="start" className="w-56">
+                <DropdownMenuItem onClick={() => onNavigate("perfil")}>
+                  <UserCircle className="w-4 h-4 mr-2" />
+                  Meu Perfil
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={onSignOut} className="text-destructive focus:text-destructive">
                   <LogOut className="w-4 h-4 mr-2" />
                   Sair da conta

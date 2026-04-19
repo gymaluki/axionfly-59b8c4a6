@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { motion, AnimatePresence } from "framer-motion";
 import { firecrawlApi } from "@/lib/api/firecrawl";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const quickFilters = [
@@ -165,6 +166,18 @@ const ProspeccaoView = () => {
         });
         setResults(mapped);
         setKey((k) => k + 1);
+
+        // Salva histórico
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await supabase.from("search_history").insert({
+            user_id: user.id,
+            query,
+            nicho,
+            location,
+            results_count: mapped.length,
+          });
+        }
       } else {
         toast.error(response.error || "Erro na busca");
       }
@@ -342,10 +355,24 @@ const ProspeccaoView = () => {
                         <Button
                           size="sm"
                           variant="hero"
-                          onClick={() => {
+                          onClick={async () => {
                             const phoneNum = r.phone ? r.phone.replace(/\D/g, "") : "";
                             const fullNum = phoneNum.startsWith("55") ? phoneNum : `55${phoneNum}`;
                             const msg = encodeURIComponent(`Olá! Vi seu negócio online e gostaria de apresentar uma proposta. Podemos conversar?`);
+
+                            // Registra lead contatado
+                            const { data: { user } } = await supabase.auth.getUser();
+                            if (user) {
+                              await supabase.from("contacted_leads").insert({
+                                user_id: user.id,
+                                lead_name: r.title,
+                                phone: r.phone,
+                                website: extractDomain(r.url),
+                                source_url: r.url,
+                                status: "contatado",
+                              });
+                            }
+
                             openExternalLink(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`);
                           }}
                           className="gap-1.5"
