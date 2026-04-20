@@ -91,17 +91,33 @@ const Auth = () => {
       return;
     }
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) {
-      toast.error(error.message);
+    // Tenta cadastro via edge function (suporta senha mestra com 1 mês grátis)
+    const { data: fnData, error: fnError } = await supabase.functions.invoke(
+      "signup-with-master-password",
+      { body: { email, password } },
+    );
+
+    if (fnError || (fnData && fnData.error)) {
+      toast.error(fnData?.error ?? fnError?.message ?? "Erro ao criar conta.");
       setLoading(false);
-    } else if (data.session) {
-      toast.success("Conta criada com sucesso!");
-    } else {
-      toast.success("Conta criada! Confirme seu email para entrar.");
-      setIsLogin(true);
-      setLoading(false);
+      return;
     }
+
+    if (fnData?.masterAccess) {
+      // Já está confirmado — faz login direto
+      const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInErr) {
+        toast.error(signInErr.message);
+        setLoading(false);
+        return;
+      }
+      toast.success("Conta criada com 1 mês de acesso liberado!");
+      return;
+    }
+
+    toast.success("Conta criada! Confirme seu email para entrar.");
+    setIsLogin(true);
+    setLoading(false);
   };
 
   const handleGoogleLogin = async () => {
