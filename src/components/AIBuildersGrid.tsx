@@ -9,7 +9,8 @@ interface Builder {
   bg: string;
 }
 
-const favicon = (domain: string) => `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+const logoUrl = (domain: string) => `https://logo.clearbit.com/${domain}`;
+const fallbackFavicon = (domain: string) => `https://icons.duckduckgo.com/ip3/${domain}.ico`;
 
 const builders: Builder[] = [
   { name: "Lovable", url: "https://lovable.dev", description: "Apps full-stack com IA", domain: "lovable.dev", bg: "from-pink-500/20 to-purple-500/20" },
@@ -66,14 +67,24 @@ export const AIBuildersGrid = () => {
             <div className={`absolute inset-0 bg-gradient-to-br ${builder.bg} opacity-0 group-hover:opacity-100 transition-opacity`} />
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-start justify-between mb-3">
-                <div className="w-10 h-10 rounded-xl bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center overflow-hidden">
+                <div className="w-12 h-12 rounded-xl bg-white border border-border flex items-center justify-center overflow-hidden p-1.5">
                   <img
-                    src={favicon(builder.domain)}
+                    src={logoUrl(builder.domain)}
                     alt={`Logo ${builder.name}`}
-                    className="w-6 h-6 object-contain"
+                    className="w-full h-full object-contain"
                     loading="lazy"
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                      const img = e.currentTarget as HTMLImageElement;
+                      if (!img.dataset.fallback) {
+                        img.dataset.fallback = "1";
+                        img.src = fallbackFavicon(builder.domain);
+                      } else {
+                        img.style.display = "none";
+                        const parent = img.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `<span class="text-sm font-bold text-foreground">${builder.name.charAt(0)}</span>`;
+                        }
+                      }
                     }}
                   />
                 </div>
