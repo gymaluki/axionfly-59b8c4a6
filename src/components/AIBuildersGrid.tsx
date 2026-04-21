@@ -68,7 +68,7 @@ export const AIBuildersGrid = () => {
               <div className="flex items-start justify-between mb-3">
                 <div className="w-10 h-10 rounded-xl bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center overflow-hidden">
                   <img
-                    src={builder.logo}
+                    src={favicon(builder.domain)}
                     alt={`Logo ${builder.name}`}
                     className="w-6 h-6 object-contain"
                     loading="lazy"
