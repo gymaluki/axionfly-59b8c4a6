@@ -31,6 +31,7 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import AIBuildersGrid from "@/components/AIBuildersGrid";
 
 interface NicheTemplate {
   label: string;
