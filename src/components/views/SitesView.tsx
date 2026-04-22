@@ -32,6 +32,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import AIBuildersGrid from "@/components/AIBuildersGrid";
+import AIBuilderPicker from "@/components/AIBuilderPicker";
 
 interface NicheTemplate {
   label: string;
