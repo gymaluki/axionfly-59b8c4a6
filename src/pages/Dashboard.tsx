@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
+import OnboardingTour from "@/components/OnboardingTour";
 
 type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil";
 
@@ -197,6 +198,8 @@ const Dashboard = () => {
           </main>
         </div>
       </div>
+
+      <OnboardingTour userId={user.id} />
     </SidebarProvider>
   );
 };
