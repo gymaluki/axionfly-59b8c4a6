@@ -294,6 +294,8 @@ const SitesView = () => {
   const [font, setFont] = useState("");
   const [designStyle, setDesignStyle] = useState("");
   const [copied, setCopied] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [slogan, setSlogan] = useState("");
   const [siteObjective, setSiteObjective] = useState("");
   const [tone, setTone] = useState("");
@@ -359,19 +361,8 @@ const SitesView = () => {
       generated += ` IMPORTANTE: Inclua um sistema de pedidos via WhatsApp completo. Crie uma seção de cardápio interativo com botões "+" e "−" ao lado de cada item para adicionar/remover do carrinho, mostrando a quantidade selecionada entre os botões. Itens selecionados devem ter destaque visual. Adicione um botão flutuante fixo no canto inferior direito com ícone de carrinho e contador de itens (só aparece quando há itens no carrinho). Ao clicar, abra um modal de checkout em 2 etapas: Etapa 1 com campos Nome, Endereço, Forma de pagamento (Dinheiro/Cartão Crédito/Cartão Débito/PIX como toggles) e Observação. Etapa 2 com revisão completa e botão "Enviar WhatsApp". Ao confirmar, gere uma mensagem formatada com emojis (🍕 PEDIDO, 👤 Nome, 📍 Endereço, 💳 Pagamento, 📋 Itens, 📝 Observação) e envie via https://wa.me/{numero}?text={mensagem}. Após envio, limpar carrinho e fechar modal.`;
     }
 
-    navigator.clipboard.writeText(generated)
-      .catch(() => {
-        toast.error("Não consegui copiar automaticamente.");
-      })
-      .finally(() => {
-        setCopied(true);
-        toast.success("Tudo pronto! Cole na plataforma para criar seu site.");
-        setTimeout(() => {
-          setCopied(false);
-          const newWindow = window.open("https://lovable.dev/invite/4QDCZAZ", "_blank", "noopener,noreferrer");
-          if (newWindow) newWindow.opener = null;
-        }, 1200);
-      });
+    setGeneratedPrompt(generated);
+    setPickerOpen(true);
   };
 
   const nicheEntries = Object.entries(nicheTemplates);
