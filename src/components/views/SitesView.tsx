@@ -293,7 +293,6 @@ const SitesView = () => {
   const [features, setFeatures] = useState("");
   const [font, setFont] = useState("");
   const [designStyle, setDesignStyle] = useState("");
-  const [copied, setCopied] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [slogan, setSlogan] = useState("");
