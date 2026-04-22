@@ -157,7 +157,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                     />
                     <div className="relative z-10 flex flex-col h-full min-h-[110px]">
                       <div className="flex items-start justify-between mb-2">
-                        <div className="w-11 h-11 rounded-xl bg-white border border-border flex items-center justify-center overflow-hidden p-1.5">
+                        <div className="w-11 h-11 rounded-xl bg-secondary border border-border flex items-center justify-center overflow-hidden p-1.5">
                           {copying === builder.name ? (
                             <Check className="w-5 h-5 text-primary" />
                           ) : (
