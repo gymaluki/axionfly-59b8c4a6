@@ -862,8 +862,8 @@ const SitesView = () => {
                 onClick={handleGenerate}
                 className="w-full"
               >
-                {copied ? <Check className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
-                {copied ? "Copiado! Redirecionando..." : "Criar Meu Site com IA"}
+                <Sparkles className="w-4 h-4" />
+                Criar Meu Site com IA
               </Button>
             </motion.div>
           </div>
@@ -995,6 +995,12 @@ const SitesView = () => {
           </Button>
         </div>
       )}
+
+      <AIBuilderPicker
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        prompt={generatedPrompt}
+      />
     </motion.div>
   );
 };
