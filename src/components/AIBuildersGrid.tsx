@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Sparkles } from "lucide-react";
+import { ExternalLink, Sparkles, Crown } from "lucide-react";
 
 interface Builder {
   name: string;
@@ -7,13 +7,14 @@ interface Builder {
   description: string;
   domain: string;
   bg: string;
+  recommended?: boolean;
 }
 
 const logoUrl = (domain: string) => `https://logo.clearbit.com/${domain}`;
 const fallbackFavicon = (domain: string) => `https://icons.duckduckgo.com/ip3/${domain}.ico`;
 
 const builders: Builder[] = [
-  { name: "Lovable", url: "https://lovable.dev", description: "Apps full-stack com IA", domain: "lovable.dev", bg: "from-pink-500/20 to-purple-500/20" },
+  { name: "Lovable", url: "https://lovable.dev", description: "Apps full-stack com IA — nossa recomendação", domain: "lovable.dev", bg: "from-pink-500/30 to-purple-500/30", recommended: true },
   { name: "Bolt.new", url: "https://bolt.new", description: "Builder full-stack instantâneo", domain: "bolt.new", bg: "from-blue-500/20 to-cyan-500/20" },
   { name: "v0 by Vercel", url: "https://v0.dev", description: "UI components com IA", domain: "v0.dev", bg: "from-zinc-500/20 to-slate-500/20" },
   { name: "Replit Agent", url: "https://replit.com", description: "Codifica e roda no navegador", domain: "replit.com", bg: "from-orange-500/20 to-red-500/20" },
@@ -62,9 +63,19 @@ export const AIBuildersGrid = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: i * 0.03 }}
             whileHover={{ y: -4, scale: 1.02 }}
-            className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/40"
+            className={`group relative overflow-hidden rounded-2xl border bg-card p-5 transition-colors ${
+              builder.recommended
+                ? "border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary"
+                : "border-border hover:border-primary/40"
+            }`}
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${builder.bg} opacity-0 group-hover:opacity-100 transition-opacity`} />
+            {builder.recommended && (
+              <div className="absolute top-2 right-2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg">
+                <Crown className="w-3 h-3" />
+                MAIS ESCOLHIDO
+              </div>
+            )}
+            <div className={`absolute inset-0 bg-gradient-to-br ${builder.bg} ${builder.recommended ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity`} />
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-start justify-between mb-3">
                 <div className="w-12 h-12 rounded-xl bg-white border border-border flex items-center justify-center overflow-hidden p-1.5">
@@ -88,9 +99,12 @@ export const AIBuildersGrid = () => {
                     }}
                   />
                 </div>
-                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                <ExternalLink className={`w-4 h-4 transition-colors ${builder.recommended ? "text-primary" : "text-muted-foreground group-hover:text-primary"}`} />
               </div>
-              <h3 className="font-semibold text-foreground text-sm mb-1">{builder.name}</h3>
+              <h3 className="font-semibold text-foreground text-sm mb-1 flex items-center gap-1.5">
+                {builder.name}
+                {builder.recommended && <Crown className="w-3 h-3 text-primary fill-primary" />}
+              </h3>
               <p className="text-xs text-muted-foreground line-clamp-2">{builder.description}</p>
             </div>
           </motion.a>
