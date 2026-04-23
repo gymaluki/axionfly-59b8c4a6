@@ -7,6 +7,7 @@ import googleMapsLogo from "@/assets/google-maps-logo.png";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { resolveCheckoutUrl } from "@/lib/affiliates";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
@@ -28,7 +29,7 @@ interface PricingCardProps {
   features: string[];
   isHighlight?: boolean;
   buttonText: string;
-  buttonHref: string;
+  plan: "monthly" | "lifetime";
   index: number;
 }
 
@@ -40,22 +41,25 @@ function PricingCard({
   features,
   isHighlight,
   buttonText,
-  buttonHref,
+  plan,
   index,
 }: PricingCardProps) {
   const navigate = useNavigate();
 
   const handleClick = async () => {
+    // Resolve dinamicamente: usa link do afiliado ativo (se houver) ou o padrão
+    const checkoutUrl = resolveCheckoutUrl(plan);
+
     const { data: { session } } = await supabase.auth.getSession();
-    
+
     if (!session) {
       toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
-      navigate(`/auth?redirect_payment=${encodeURIComponent(buttonHref)}`);
+      navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
       return;
     }
-    
+
     // User is logged in, redirect to payment
-    window.location.href = buttonHref;
+    window.location.href = checkoutUrl;
   };
 
   return (
@@ -150,7 +154,7 @@ export default function PricingCards() {
       priceDescription: "/ mês",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
-      buttonHref: "https://pay.cakto.com.br/6u886t8_849513",
+      plan: "monthly",
       isHighlight: false,
       index: 1,
     },
@@ -161,7 +165,7 @@ export default function PricingCards() {
       priceDescription: "/ custo único",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
-      buttonHref: "https://pay.cakto.com.br/wcv2cko_849541",
+      plan: "lifetime",
       isHighlight: true,
       index: 2,
     },
