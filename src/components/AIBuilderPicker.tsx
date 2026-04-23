@@ -57,15 +57,6 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     }, 800);
   };
 
-  const handleCopyOnly = async () => {
-    try {
-      await navigator.clipboard.writeText(prompt);
-      toast.success("Prompt copiado para a área de transferência!");
-    } catch {
-      toast.error("Não consegui copiar.");
-    }
-  };
-
   return (
     <AnimatePresence>
       {open && (
