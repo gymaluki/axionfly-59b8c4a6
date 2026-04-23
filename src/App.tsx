@@ -9,6 +9,8 @@ import Dashboard from "./pages/Dashboard";
 import DesignStylesGuide from "./pages/DesignStylesGuide";
 import FontsGuide from "./pages/FontsGuide";
 import PedidosDemo from "./pages/PedidosDemo";
+import QAGrid from "./pages/QAGrid";
+import QAGridFrame from "./pages/QAGridFrame";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -33,6 +35,8 @@ const App = () => (
           <Route path="/guia-design" element={<DesignStylesGuide />} />
           <Route path="/guia-fontes" element={<FontsGuide />} />
           <Route path="/pedidos-demo" element={<PedidosDemo />} />
+          <Route path="/qa-grid" element={<QAGrid />} />
+          <Route path="/qa-grid/frame" element={<QAGridFrame />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
