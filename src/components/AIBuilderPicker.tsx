@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Crown, ExternalLink, X, Check, Copy, Sparkles } from "lucide-react";
+import { Crown, ExternalLink, X, Check, Copy, Sparkles, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -8,6 +8,7 @@ interface Builder {
   name: string;
   url: string;
   description: string;
+  freeInfo: string;
   domain: string;
   bg: string;
   recommended?: boolean;
@@ -16,27 +17,20 @@ interface Builder {
 const logoUrl = (domain: string) => `https://logo.clearbit.com/${domain}`;
 const fallbackFavicon = (domain: string) => `https://icons.duckduckgo.com/ip3/${domain}.ico`;
 
+// Apenas IAs com plano gratuito real para criar sites
 const builders: Builder[] = [
-  { name: "Lovable", url: "https://lovable.dev/invite/4QDCZAZ", description: "Parceiro oficial AxionFly", domain: "lovable.dev", bg: "from-pink-500/30 to-purple-500/30", recommended: true },
-  { name: "Bolt.new", url: "https://bolt.new", description: "Builder full-stack instantâneo", domain: "bolt.new", bg: "from-blue-500/20 to-cyan-500/20" },
-  { name: "v0 by Vercel", url: "https://v0.dev", description: "UI components com IA", domain: "v0.dev", bg: "from-zinc-500/20 to-slate-500/20" },
-  { name: "Replit Agent", url: "https://replit.com", description: "Codifica e roda no navegador", domain: "replit.com", bg: "from-orange-500/20 to-red-500/20" },
-  { name: "Cursor", url: "https://cursor.com", description: "IDE com IA integrada", domain: "cursor.com", bg: "from-neutral-500/20 to-zinc-500/20" },
-  { name: "Wix ADI", url: "https://www.wix.com/studio/ai-website-builder", description: "Sites prontos com IA", domain: "wix.com", bg: "from-yellow-500/20 to-amber-500/20" },
-  { name: "Framer AI", url: "https://www.framer.com/ai", description: "Sites visuais animados", domain: "framer.com", bg: "from-blue-600/20 to-indigo-500/20" },
-  { name: "Webflow AI", url: "https://webflow.com/ai", description: "No-code visual avançado", domain: "webflow.com", bg: "from-purple-500/20 to-violet-500/20" },
-  { name: "Durable", url: "https://durable.co", description: "Site em 30 segundos", domain: "durable.co", bg: "from-emerald-500/20 to-green-500/20" },
-  { name: "Hostinger AI", url: "https://www.hostinger.com.br/criador-de-sites", description: "Builder + hospedagem", domain: "hostinger.com", bg: "from-violet-500/20 to-fuchsia-500/20" },
-  { name: "10Web", url: "https://10web.io", description: "WordPress com IA", domain: "10web.io", bg: "from-sky-500/20 to-blue-500/20" },
-  { name: "Mixo", url: "https://mixo.io", description: "Landing pages instantâneas", domain: "mixo.io", bg: "from-rose-500/20 to-pink-500/20" },
-  { name: "Hocoos", url: "https://hocoos.com", description: "Site em 5 minutos", domain: "hocoos.com", bg: "from-teal-500/20 to-cyan-500/20" },
-  { name: "B12", url: "https://b12.io", description: "Sites profissionais com IA", domain: "b12.io", bg: "from-indigo-500/20 to-blue-500/20" },
-  { name: "Jimdo Dolphin", url: "https://www.jimdo.com", description: "Builder guiado por IA", domain: "jimdo.com", bg: "from-lime-500/20 to-green-500/20" },
-  { name: "Unicorn Platform", url: "https://unicornplatform.com", description: "Landing pages para SaaS", domain: "unicornplatform.com", bg: "from-fuchsia-500/20 to-pink-500/20" },
-  { name: "Typedream", url: "https://typedream.com", description: "Notion-like website builder", domain: "typedream.com", bg: "from-amber-500/20 to-orange-500/20" },
-  { name: "Dorik AI", url: "https://dorik.com", description: "Sites com IA sem código", domain: "dorik.com", bg: "from-cyan-500/20 to-teal-500/20" },
-  { name: "Zyro AI", url: "https://zyro.com", description: "Construtor com IA", domain: "zyro.com", bg: "from-red-500/20 to-rose-500/20" },
-  { name: "Builder.ai", url: "https://www.builder.ai", description: "Apps customizados com IA", domain: "builder.ai", bg: "from-purple-600/20 to-indigo-600/20" },
+  { name: "Lovable", url: "https://lovable.dev/invite/4QDCZAZ", description: "Parceiro oficial AxionFly", freeInfo: "5 mensagens grátis/dia", domain: "lovable.dev", bg: "from-pink-500/30 to-purple-500/30", recommended: true },
+  { name: "Bolt.new", url: "https://bolt.new", description: "Builder full-stack instantâneo", freeInfo: "1M tokens grátis/dia", domain: "bolt.new", bg: "from-blue-500/20 to-cyan-500/20" },
+  { name: "v0 by Vercel", url: "https://v0.dev", description: "UI components com IA", freeInfo: "Plano gratuito mensal", domain: "v0.dev", bg: "from-zinc-500/20 to-slate-500/20" },
+  { name: "Replit Agent", url: "https://replit.com", description: "Codifica e roda no navegador", freeInfo: "Conta grátis disponível", domain: "replit.com", bg: "from-orange-500/20 to-red-500/20" },
+  { name: "Framer AI", url: "https://www.framer.com/ai", description: "Sites visuais animados", freeInfo: "Plano free para sempre", domain: "framer.com", bg: "from-blue-600/20 to-indigo-500/20" },
+  { name: "Webflow AI", url: "https://webflow.com/ai", description: "No-code visual avançado", freeInfo: "Starter grátis", domain: "webflow.com", bg: "from-purple-500/20 to-violet-500/20" },
+  { name: "Durable", url: "https://durable.co", description: "Site em 30 segundos", freeInfo: "Trial gratuito", domain: "durable.co", bg: "from-emerald-500/20 to-green-500/20" },
+  { name: "Mixo", url: "https://mixo.io", description: "Landing pages instantâneas", freeInfo: "Plano free disponível", domain: "mixo.io", bg: "from-rose-500/20 to-pink-500/20" },
+  { name: "Hocoos", url: "https://hocoos.com", description: "Site em 5 minutos", freeInfo: "Criação 100% grátis", domain: "hocoos.com", bg: "from-teal-500/20 to-cyan-500/20" },
+  { name: "B12", url: "https://b12.io", description: "Sites profissionais com IA", freeInfo: "Rascunho grátis", domain: "b12.io", bg: "from-indigo-500/20 to-blue-500/20" },
+  { name: "Typedream", url: "https://typedream.com", description: "Notion-like website builder", freeInfo: "Free starter", domain: "typedream.com", bg: "from-amber-500/20 to-orange-500/20" },
+  { name: "Dorik AI", url: "https://dorik.com", description: "Sites com IA sem código", freeInfo: "Free forever plan", domain: "dorik.com", bg: "from-cyan-500/20 to-teal-500/20" },
 ];
 
 interface AIBuilderPickerProps {
@@ -80,7 +74,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-background/80 backdrop-blur-sm p-2 sm:p-4 overflow-y-auto"
           onClick={onClose}
         >
           <motion.div
@@ -88,26 +82,26 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full max-w-5xl bg-card border border-border rounded-2xl shadow-2xl my-8"
+            className="relative w-full max-w-5xl bg-card border border-border rounded-2xl shadow-2xl my-4 sm:my-8 max-h-[95vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="sticky top-0 z-10 flex items-start justify-between p-6 border-b border-border bg-card rounded-t-2xl">
-              <div className="space-y-2">
+            <div className="flex items-start justify-between gap-3 p-4 sm:p-6 border-b border-border bg-card rounded-t-2xl shrink-0">
+              <div className="space-y-2 min-w-0 flex-1">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-                  <Sparkles className="w-3.5 h-3.5 text-primary" />
-                  <span className="text-xs font-medium text-primary">Escolha sua IA</span>
+                  <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span className="text-xs font-medium text-primary">Apenas IAs com plano grátis</span>
                 </div>
-                <h2 className="text-2xl font-bold text-foreground">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground">
                   Onde você quer criar seu site?
                 </h2>
-                <p className="text-sm text-muted-foreground max-w-xl">
-                  Escolha a IA preferida — vamos copiar o prompt e abrir a plataforma para você colar.
+                <p className="text-xs sm:text-sm text-muted-foreground max-w-xl">
+                  Escolha a IA — vamos copiar o prompt e abrir a plataforma para você colar.
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg hover:bg-secondary transition-colors"
+                className="p-2 rounded-lg hover:bg-secondary transition-colors shrink-0"
                 aria-label="Fechar"
               >
                 <X className="w-5 h-5 text-muted-foreground" />
@@ -115,7 +109,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
             </div>
 
             {/* Body */}
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               <Button
                 variant="outline"
                 size="sm"
@@ -126,7 +120,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                 Apenas copiar o prompt
               </Button>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {builders.map((builder, i) => (
                   <motion.button
                     key={builder.name}
@@ -138,14 +132,14 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                     transition={{ duration: 0.25, delay: i * 0.02 }}
                     whileHover={{ y: -3, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`group relative overflow-hidden rounded-2xl border bg-card p-4 text-left transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                    className={`group relative overflow-hidden rounded-2xl border bg-card p-3 sm:p-4 text-left transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                       builder.recommended
-                        ? "border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary"
+                        ? "border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary mt-3"
                         : "border-border hover:border-primary/40"
                     }`}
                   >
                     {builder.recommended && (
-                      <div className="absolute top-2 right-2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg">
+                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg whitespace-nowrap">
                         <Crown className="w-3 h-3" />
                         MAIS ESCOLHIDO
                       </div>
@@ -153,11 +147,11 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${builder.bg} ${
                         builder.recommended ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                      } transition-opacity`}
+                      } transition-opacity pointer-events-none`}
                     />
-                    <div className="relative z-10 flex flex-col h-full min-h-[110px]">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="w-11 h-11 rounded-xl bg-secondary border border-border flex items-center justify-center overflow-hidden p-1.5">
+                    <div className="relative z-10 flex flex-col h-full min-h-[130px]">
+                      <div className="flex items-start justify-between mb-2 gap-2">
+                        <div className="w-11 h-11 rounded-xl bg-secondary border border-border flex items-center justify-center overflow-hidden p-1.5 shrink-0">
                           {copying === builder.name ? (
                             <Check className="w-5 h-5 text-primary" />
                           ) : (
@@ -183,16 +177,20 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                           )}
                         </div>
                         <ExternalLink
-                          className={`w-4 h-4 transition-colors ${
+                          className={`w-4 h-4 shrink-0 transition-colors ${
                             builder.recommended ? "text-primary" : "text-muted-foreground group-hover:text-primary"
                           }`}
                         />
                       </div>
-                      <h3 className="font-semibold text-foreground text-sm mb-0.5 flex items-center gap-1.5">
-                        {builder.name}
-                        {builder.recommended && <Crown className="w-3 h-3 text-primary fill-primary" />}
+                      <h3 className="font-semibold text-foreground text-sm mb-1 flex items-center gap-1.5 truncate">
+                        <span className="truncate">{builder.name}</span>
+                        {builder.recommended && <Crown className="w-3 h-3 text-primary fill-primary shrink-0" />}
                       </h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{builder.description}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{builder.description}</p>
+                      <div className="mt-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 w-fit">
+                        <Gift className="w-3 h-3 text-emerald-500 shrink-0" />
+                        <span className="text-[10px] font-medium text-emerald-500 truncate">{builder.freeInfo}</span>
+                      </div>
                     </div>
                   </motion.button>
                 ))}
