@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Crown, ExternalLink, X, Check, Copy, Sparkles, Gift } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Crown, ExternalLink, X, Check } from "lucide-react";
 import { toast } from "sonner";
 
 interface Builder {
@@ -88,10 +87,6 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
             {/* Header */}
             <div className="flex items-start justify-between gap-3 p-4 sm:p-6 border-b border-border bg-card rounded-t-2xl shrink-0">
               <div className="space-y-2 min-w-0 flex-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-                  <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />
-                  <span className="text-xs font-medium text-primary">Apenas IAs com plano grátis</span>
-                </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-foreground">
                   Onde você quer criar seu site?
                 </h2>
@@ -109,17 +104,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
             </div>
 
             {/* Body */}
-            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCopyOnly}
-                className="gap-2"
-              >
-                <Copy className="w-3.5 h-3.5" />
-                Apenas copiar o prompt
-              </Button>
-
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {builders.map((builder, i) => (
                   <motion.button
@@ -186,11 +171,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                         <span className="truncate">{builder.name}</span>
                         {builder.recommended && <Crown className="w-3 h-3 text-primary fill-primary shrink-0" />}
                       </h3>
-                      <p className="text-xs text-muted-foreground line-clamp-2 mb-2">{builder.description}</p>
-                      <div className="mt-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 w-fit">
-                        <Gift className="w-3 h-3 text-emerald-500 shrink-0" />
-                        <span className="text-[10px] font-medium text-emerald-500 truncate">{builder.freeInfo}</span>
-                      </div>
+                      <p className="text-xs text-muted-foreground line-clamp-2">{builder.description}</p>
                     </div>
                   </motion.button>
                 ))}
