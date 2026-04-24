@@ -5,7 +5,7 @@ import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Sea
 import { motion, useInView, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
-import Testimonials from "@/components/Testimonials";
+
 import PricingCards from "@/components/PricingCards";
 import LovablePartnership from "@/components/LovablePartnership";
 import FeaturesCarousel from "@/components/FeaturesCarousel";
@@ -324,11 +324,6 @@ const Index = () => {
             ))}
           </div>
         </section>
-
-        {/* ═══════════ FEEDBACKS ═══════════ */}
-        <div id="feedbacks">
-          <Testimonials />
-        </div>
 
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section>
