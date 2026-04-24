@@ -217,6 +217,34 @@ const Index = () => {
           </div>
         </div>
 
+        {/* ═══════════ GLOBE / TERRA 3D ═══════════ */}
+        <section className="relative w-full py-8 md:py-16 overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06)_0%,transparent_70%)] pointer-events-none" />
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={fadeUp}
+              custom={0}
+              className="text-center mb-6 md:mb-10 space-y-3"
+            >
+              <h2 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight">
+                Venda sites para <span className="gradient-text">comércios pelo mundo</span>
+              </h2>
+              <p className="text-muted-foreground max-w-lg mx-auto text-sm md:text-base">
+                De São Paulo a Nova York. A AxionFly conecta você a negócios que precisam de um site profissional.
+              </p>
+            </motion.div>
+            <div className="w-full max-w-2xl mx-auto aspect-square relative">
+              <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+              <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
+                <GlobeCdn className="w-full" speed={0.006} />
+              </Suspense>
+            </div>
+          </div>
+        </section>
+
         {/* ═══════════ FUNCIONALIDADES (Features + Globe) ═══════════ */}
         <section className="container mx-auto px-4 py-10 md:py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
@@ -235,7 +263,7 @@ const Index = () => {
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div className="grid gap-6">
+            <div className="grid gap-6 lg:col-span-2">
               {features.map(({ icon: Icon, title, desc, tag }, i) => (
                 <motion.div
                   key={title}
@@ -268,22 +296,6 @@ const Index = () => {
                 </motion.div>
               ))}
             </div>
-            {/* Globe */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={slideFromRight}
-              custom={1}
-              className="hidden lg:flex items-center justify-center"
-            >
-              <div className="w-full max-w-md relative">
-                <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.08)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-                <Suspense fallback={<div className="w-full aspect-square" />}>
-                  <GlobeCdn className="w-full" speed={0.008} />
-                </Suspense>
-              </div>
-            </motion.div>
           </div>
         </section>
 
