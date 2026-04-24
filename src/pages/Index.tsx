@@ -176,14 +176,14 @@ const howItWorks = [
 ];
 
 const faqItems = [
-  { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você só preenche o nome do negócio, escolhe o nicho, as cores e o estilo de design — a IA faz todo o trabalho técnico. Zero código, zero complicação." },
-  { q: "Quais tipos de site posso criar?", a: "São mais de 20 nichos prontos: barbearias, pizzarias, hamburguerias, clínicas, pet shops, academias, restaurantes, salões de beleza, escritórios de advocacia, imobiliárias, contabilidades, estúdios de estética, escolas de idiomas e muito mais." },
-  { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o nicho de negócio. O sistema busca automaticamente e entrega nome, telefone e endereço — tudo pronto para você prospectar." },
+  { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você só preenche o nome do comércio, escolhe o nicho, as cores e o estilo de design — a IA faz todo o trabalho técnico. Zero código, zero complicação." },
+  { q: "Quais tipos de comércio posso atender?", a: "São mais de 20 nichos prontos focados em comércios locais: barbearias, pizzarias, hamburguerias, restaurantes, padarias, sorveterias, açaiterias, mercados, lojas de roupas, lanchonetes, marmitarias, salões de beleza, cafeterias, docerias, açougues, hortifrutis e muito mais." },
+  { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o tipo de comércio. O sistema busca automaticamente e entrega nome, telefone e endereço — tudo pronto para você prospectar." },
   { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
   { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes e 6 estilos de design diferentes. Cada site sai único e profissional." },
-  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos), busca de leads em todos os estados do Brasil, dashboard de vendas e todas as atualizações futuras. Pague uma vez, use para sempre." },
+  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos de comércio), busca de leads em todos os estados do Brasil, dashboard de vendas e todas as atualizações futuras. Pague uma vez, use para sempre." },
   { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
-  { q: "Funciona em qualquer cidade do Brasil?", a: "Sim! A busca de leads cobre todos os 27 estados e todas as cidades do Brasil. Basta selecionar o estado e a cidade para encontrar negócios sem site na sua região." },
+  { q: "Funciona em qualquer cidade do Brasil?", a: "Sim! A busca de leads cobre todos os 27 estados e todas as cidades do Brasil. Basta selecionar o estado e a cidade para encontrar comércios sem site na sua região." },
 ];
 
 const Index = () => {
@@ -207,8 +207,10 @@ const Index = () => {
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
           <Suspense fallback={null}>
-            <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
-            <BackgroundPaths />
+            <IsoLevelWarp color="30, 58, 138" density={30} speed={0.9} />
+            <div className="hidden md:block">
+              <BackgroundPaths />
+            </div>
           </Suspense>
           <div className="relative z-10">
             <HeroSection />
