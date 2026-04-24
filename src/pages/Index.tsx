@@ -263,7 +263,7 @@ const Index = () => {
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div className="grid gap-6">
+            <div className="grid gap-6 lg:col-span-2">
               {features.map(({ icon: Icon, title, desc, tag }, i) => (
                 <motion.div
                   key={title}
@@ -296,22 +296,6 @@ const Index = () => {
                 </motion.div>
               ))}
             </div>
-            {/* Globe */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={slideFromRight}
-              custom={1}
-              className="hidden lg:flex items-center justify-center"
-            >
-              <div className="w-full max-w-md relative">
-                <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.08)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-                <Suspense fallback={<div className="w-full aspect-square" />}>
-                  <GlobeCdn className="w-full" speed={0.008} />
-                </Suspense>
-              </div>
-            </motion.div>
           </div>
         </section>
 
