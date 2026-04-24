@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import ShutterText from "@/components/ui/hero-shutter-text";
 
 export function HeroSection() {
 	const navigate = useNavigate();
