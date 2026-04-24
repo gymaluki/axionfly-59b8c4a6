@@ -9,7 +9,7 @@ interface ShutterTextProps {
 }
 
 export default function ShutterText({
-  words = ["BARBEARIAS", "PIZZARIAS", "HAMBURGUERIAS", "ACADEMIAS", "CLÍNICAS", "RESTAURANTES"],
+  words = ["BARBEARIAS", "PIZZARIAS", "HAMBURGUERIAS", "RESTAURANTES", "PADARIAS", "SORVETERIAS", "MERCADOS", "LOJAS"],
   className = "",
   interval = 2500,
 }: ShutterTextProps) {
