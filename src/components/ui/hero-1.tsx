@@ -36,10 +36,9 @@ export function HeroSection() {
 						Crie Sites Feitos por IA e Venda para
 					</h1>
 					<div className="flex justify-center">
-						<ShutterText
-							words={["BARBEARIAS", "PIZZARIAS", "HAMBURGUERIAS", "RESTAURANTES", "PADARIAS", "SORVETERIAS", "MERCADOS", "LOJAS"]}
-							interval={2200}
-						/>
+						<span className="block text-center text-4xl font-black leading-none gradient-text md:text-6xl lg:text-7xl">
+							COMÉRCIOS
+						</span>
 					</div>
 				</div>
 
