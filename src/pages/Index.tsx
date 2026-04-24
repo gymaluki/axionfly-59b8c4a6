@@ -325,11 +325,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ FEEDBACKS ═══════════ */}
-        <div id="feedbacks">
-          <Testimonials />
-        </div>
-
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section>
           <SectionPill>Conheça Área de Membros</SectionPill>
