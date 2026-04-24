@@ -207,8 +207,10 @@ const Index = () => {
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
           <Suspense fallback={null}>
-            <IsoLevelWarp color="30, 58, 138" density={45} speed={1.2} />
-            <BackgroundPaths />
+            <IsoLevelWarp color="30, 58, 138" density={30} speed={0.9} />
+            <div className="hidden md:block">
+              <BackgroundPaths />
+            </div>
           </Suspense>
           <div className="relative z-10">
             <HeroSection />
