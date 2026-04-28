@@ -89,6 +89,14 @@ function PricingCard({
         </div>
       )}
 
+      {savingsBadge && !isHighlight && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-500 px-4 py-1 text-xs font-bold text-white shadow-lg whitespace-nowrap">
+            {savingsBadge}
+          </span>
+        </div>
+      )}
+
       <div className="mb-6 text-center">
         <h3 className="text-xl sm:text-2xl font-bold text-foreground">{planName}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{description}</p>
@@ -113,12 +121,23 @@ function PricingCard({
       </ul>
 
       <div className="mb-6 text-center">
+        {comparePrice && (
+          <div className="mb-1 text-sm text-muted-foreground">
+            <span className="line-through">{comparePrice}</span>{" "}
+            <span className="text-xs">no mensal</span>
+          </div>
+        )}
         <div className="flex items-baseline justify-center gap-2 flex-nowrap">
           <span className="text-4xl sm:text-5xl font-black gradient-text whitespace-nowrap">
             {price}
           </span>
           <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">{priceDescription}</span>
         </div>
+        {plan === "quarterly" && (
+          <p className="mt-2 text-xs font-semibold text-green-500">
+            Equivale a R$ 32,63/mês • Economize R$ 105,80
+          </p>
+        )}
         <div className="mt-3 flex items-center justify-center gap-3 text-muted-foreground/70">
           <SiPix className="h-5 w-5" />
           <FaCcMastercard className="h-6 w-6" />
