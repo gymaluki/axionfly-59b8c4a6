@@ -191,6 +191,8 @@ export default function PricingCards() {
       plan: "quarterly",
       isHighlight: false,
       index: 2,
+      savingsBadge: "Economize 52%",
+      comparePrice: "R$ 203,70",
     },
     {
       planName: "Plano Vitalício",
