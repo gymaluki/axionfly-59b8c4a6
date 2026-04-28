@@ -31,6 +31,8 @@ interface PricingCardProps {
   buttonText: string;
   plan: "monthly" | "quarterly" | "lifetime";
   index: number;
+  savingsBadge?: string;
+  comparePrice?: string;
 }
 
 function PricingCard({
@@ -43,6 +45,8 @@ function PricingCard({
   buttonText,
   plan,
   index,
+  savingsBadge,
+  comparePrice,
 }: PricingCardProps) {
   const navigate = useNavigate();
 
