@@ -217,53 +217,26 @@ const Index = () => {
           </div>
         </div>
 
-        {/* ═══════════ GLOBE / TERRA 3D ═══════════ */}
-        <section className="relative w-full py-8 md:py-16 overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06)_0%,transparent_70%)] pointer-events-none" />
-          <div className="container mx-auto px-4 relative z-10">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={fadeUp}
-              custom={0}
-              className="text-center mb-6 md:mb-10 space-y-3"
-            >
-              <h2 className="text-2xl md:text-4xl font-bold text-foreground tracking-tight">
-                Venda sites para <span className="gradient-text">comércios pelo mundo</span>
-              </h2>
-              <p className="text-muted-foreground max-w-lg mx-auto text-sm md:text-base">
-                De São Paulo a Nova York. A AxionFly conecta você a negócios que precisam de um site profissional.
-              </p>
-            </motion.div>
-            <div className="w-full max-w-2xl mx-auto aspect-square relative">
-              <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-              <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
-                <GlobeCdn className="w-full" speed={0.006} />
-              </Suspense>
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════ FUNCIONALIDADES (Features + Globe) ═══════════ */}
+        {/* ═══════════ FUNCIONALIDADES (Features lateral + Globe) ═══════════ */}
         <section className="container mx-auto px-4 py-10 md:py-24 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
-          
+
           <SectionPill>Conheça a Plataforma</SectionPill>
-          
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 md:mb-16 space-y-4">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
               Comece de forma simples.{" "}
               <br className="hidden md:block" />
               Escale com <span className="gradient-text">sites prontos e prospecção automática</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+            <p className="text-muted-foreground max-w-xl mx-auto text-base md:text-lg">
               20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            <div className="grid gap-6 lg:col-span-2">
+          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-12 items-center">
+            {/* Features na lateral esquerda - menores */}
+            <div className="grid gap-4 order-2 lg:order-1">
               {features.map(({ icon: Icon, title, desc, tag }, i) => (
                 <motion.div
                   key={title}
@@ -272,29 +245,55 @@ const Index = () => {
                   viewport={{ once: true, amount: 0.2 }}
                   variants={slideFromLeft}
                   custom={i + 1}
-                  whileHover={{ 
-                    scale: 1.03, 
-                    y: -8,
-                    boxShadow: "0 25px 60px -15px hsl(var(--primary) / 0.15), 0 0 30px -10px hsl(var(--primary) / 0.1)",
+                  whileHover={{
+                    scale: 1.02,
+                    y: -4,
                     transition: springTransition
                   }}
-                  className="glass rounded-2xl p-7 space-y-4 hover:neon-border transition-all duration-500 group cursor-pointer relative overflow-hidden"
+                  className="glass rounded-xl p-4 md:p-5 space-y-2 hover:neon-border transition-all duration-500 group cursor-pointer relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                  <div className="absolute top-4 right-4">
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2.5 py-1 rounded-full border border-primary/20">{tag}</span>
+                  <div className="absolute top-3 right-3">
+                    <span className="text-[8px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded-full border border-primary/20">{tag}</span>
                   </div>
-                  <motion.div
-                    whileHover={{ rotate: 12, scale: 1.1 }}
-                    transition={springTransition}
-                    className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/20"
-                  >
-                    <Icon className="w-7 h-7 text-primary" />
-                  </motion.div>
-                  <h3 className="text-xl font-bold text-foreground relative z-10">{title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm relative z-10">{desc}</p>
+                  <div className="flex items-center gap-3">
+                    <motion.div
+                      whileHover={{ rotate: 12, scale: 1.1 }}
+                      transition={springTransition}
+                      className="w-10 h-10 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300"
+                    >
+                      <Icon className="w-5 h-5 text-primary" />
+                    </motion.div>
+                    <h3 className="text-base md:text-lg font-bold text-foreground relative z-10 pr-16">{title}</h3>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed text-xs md:text-sm relative z-10">{desc}</p>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Globo 3D na lateral direita */}
+            <div className="order-1 lg:order-2 lg:sticky lg:top-24">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={fadeUp}
+                custom={0}
+                className="text-center mb-4 md:mb-6 space-y-2"
+              >
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
+                  Venda sites para <span className="gradient-text">comércios pelo mundo</span>
+                </h3>
+                <p className="text-muted-foreground max-w-md mx-auto text-xs md:text-sm">
+                  De São Paulo a Nova York. Conecte-se a negócios que precisam de um site profissional.
+                </p>
+              </motion.div>
+              <div className="w-full max-w-lg mx-auto aspect-square relative">
+                <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+                <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
+                  <GlobeCdn className="w-full" speed={0.006} />
+                </Suspense>
+              </div>
             </div>
           </div>
         </section>
