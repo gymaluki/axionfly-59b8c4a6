@@ -1,10 +1,13 @@
 // Sistema de afiliados — captura ?aff=slug na URL, persiste em localStorage
 // e resolve os links da Cakto com o código de afiliado correto de cada parceiro.
 
+export type PlanKey = "monthly" | "quarterly" | "lifetime";
+
 export interface Affiliate {
   slug: string;          // usado em ?aff=
   name: string;          // nome do afiliado
   monthlyUrl: string;    // link Cakto plano mensal (com ?affiliate=...)
+  quarterlyUrl: string;  // link Cakto plano trimestral (com ?affiliate=...)
   lifetimeUrl: string;   // link Cakto plano vitalício (com ?affiliate=...)
 }
 
@@ -14,12 +17,14 @@ export const AFFILIATES: Record<string, Affiliate> = {
     slug: "jonathan",
     name: "Jonathan Ferreira",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
+    quarterlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP", // TODO: substituir pelo link trimestral oficial
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
   },
 };
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
 const DEFAULT_MONTHLY = "https://pay.cakto.com.br/6u886t8_849513";
+const DEFAULT_QUARTERLY = "https://pay.cakto.com.br/6u886t8_849513"; // TODO: substituir pelo link trimestral oficial
 const DEFAULT_LIFETIME = "https://pay.cakto.com.br/wcv2cko_849541";
 
 const STORAGE_KEY = "axionfly_affiliate";
