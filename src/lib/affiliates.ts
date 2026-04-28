@@ -78,8 +78,14 @@ export function getActiveAffiliate(): Affiliate | null {
  * Se houver afiliado ativo, devolve o link Cakto dele (com ?affiliate=...).
  * Caso contrário, devolve o link padrão.
  */
-export function resolveCheckoutUrl(plan: "monthly" | "lifetime"): string {
+export function resolveCheckoutUrl(plan: PlanKey): string {
   const aff = getActiveAffiliate();
-  if (aff) return plan === "monthly" ? aff.monthlyUrl : aff.lifetimeUrl;
-  return plan === "monthly" ? DEFAULT_MONTHLY : DEFAULT_LIFETIME;
+  if (aff) {
+    if (plan === "monthly") return aff.monthlyUrl;
+    if (plan === "quarterly") return aff.quarterlyUrl;
+    return aff.lifetimeUrl;
+  }
+  if (plan === "monthly") return DEFAULT_MONTHLY;
+  if (plan === "quarterly") return DEFAULT_QUARTERLY;
+  return DEFAULT_LIFETIME;
 }
