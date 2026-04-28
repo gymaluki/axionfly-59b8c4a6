@@ -91,7 +91,7 @@ function PricingCard({
 
       {savingsBadge && !isHighlight && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-500 px-4 py-1 text-xs font-bold text-white shadow-lg whitespace-nowrap">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/30 whitespace-nowrap">
             {savingsBadge}
           </span>
         </div>
