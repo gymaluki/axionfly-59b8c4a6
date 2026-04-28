@@ -29,7 +29,7 @@ interface PricingCardProps {
   features: string[];
   isHighlight?: boolean;
   buttonText: string;
-  plan: "monthly" | "lifetime";
+  plan: "monthly" | "quarterly" | "lifetime";
   index: number;
 }
 
