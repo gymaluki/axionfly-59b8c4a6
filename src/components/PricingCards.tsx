@@ -134,7 +134,7 @@ function PricingCard({
           <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">{priceDescription}</span>
         </div>
         {plan === "quarterly" && (
-          <p className="mt-2 text-xs font-semibold text-green-500">
+          <p className="mt-2 text-xs font-semibold text-primary">
             Equivale a R$ 32,63/mês • Economize R$ 105,80
           </p>
         )}
