@@ -17,14 +17,14 @@ export const AFFILIATES: Record<string, Affiliate> = {
     slug: "jonathan",
     name: "Jonathan Ferreira",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
-    quarterlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP", // TODO: substituir pelo link trimestral oficial
+    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=ZsdtBDJP",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
   },
 };
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
 const DEFAULT_MONTHLY = "https://pay.cakto.com.br/6u886t8_849513";
-const DEFAULT_QUARTERLY = "https://pay.cakto.com.br/6u886t8_849513"; // TODO: substituir pelo link trimestral oficial
+const DEFAULT_QUARTERLY = "https://pay.cakto.com.br/uqn993t";
 const DEFAULT_LIFETIME = "https://pay.cakto.com.br/wcv2cko_849541";
 
 const STORAGE_KEY = "axionfly_affiliate";
