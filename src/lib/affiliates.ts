@@ -1,10 +1,13 @@
 // Sistema de afiliados — captura ?aff=slug na URL, persiste em localStorage
 // e resolve os links da Cakto com o código de afiliado correto de cada parceiro.
 
+export type PlanKey = "monthly" | "quarterly" | "lifetime";
+
 export interface Affiliate {
   slug: string;          // usado em ?aff=
   name: string;          // nome do afiliado
   monthlyUrl: string;    // link Cakto plano mensal (com ?affiliate=...)
+  quarterlyUrl: string;  // link Cakto plano trimestral (com ?affiliate=...)
   lifetimeUrl: string;   // link Cakto plano vitalício (com ?affiliate=...)
 }
 
@@ -14,12 +17,14 @@ export const AFFILIATES: Record<string, Affiliate> = {
     slug: "jonathan",
     name: "Jonathan Ferreira",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
+    quarterlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP", // TODO: substituir pelo link trimestral oficial
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
   },
 };
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
 const DEFAULT_MONTHLY = "https://pay.cakto.com.br/6u886t8_849513";
+const DEFAULT_QUARTERLY = "https://pay.cakto.com.br/6u886t8_849513"; // TODO: substituir pelo link trimestral oficial
 const DEFAULT_LIFETIME = "https://pay.cakto.com.br/wcv2cko_849541";
 
 const STORAGE_KEY = "axionfly_affiliate";
@@ -73,8 +78,14 @@ export function getActiveAffiliate(): Affiliate | null {
  * Se houver afiliado ativo, devolve o link Cakto dele (com ?affiliate=...).
  * Caso contrário, devolve o link padrão.
  */
-export function resolveCheckoutUrl(plan: "monthly" | "lifetime"): string {
+export function resolveCheckoutUrl(plan: PlanKey): string {
   const aff = getActiveAffiliate();
-  if (aff) return plan === "monthly" ? aff.monthlyUrl : aff.lifetimeUrl;
-  return plan === "monthly" ? DEFAULT_MONTHLY : DEFAULT_LIFETIME;
+  if (aff) {
+    if (plan === "monthly") return aff.monthlyUrl;
+    if (plan === "quarterly") return aff.quarterlyUrl;
+    return aff.lifetimeUrl;
+  }
+  if (plan === "monthly") return DEFAULT_MONTHLY;
+  if (plan === "quarterly") return DEFAULT_QUARTERLY;
+  return DEFAULT_LIFETIME;
 }

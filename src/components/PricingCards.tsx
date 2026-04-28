@@ -29,7 +29,7 @@ interface PricingCardProps {
   features: string[];
   isHighlight?: boolean;
   buttonText: string;
-  plan: "monthly" | "lifetime";
+  plan: "monthly" | "quarterly" | "lifetime";
   index: number;
 }
 
@@ -150,7 +150,7 @@ export default function PricingCards() {
     {
       planName: "Plano Mensal",
       description: "Para quem quer testar sem compromisso",
-      price: "R$ 59,90",
+      price: "R$ 67,90",
       priceDescription: "/ mês",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
@@ -159,15 +159,26 @@ export default function PricingCards() {
       index: 1,
     },
     {
+      planName: "Plano Trimestral",
+      description: "3 meses com desconto",
+      price: "R$ 97,90",
+      priceDescription: "/ trimestre",
+      features: sharedFeatures,
+      buttonText: "Escolher este plano",
+      plan: "quarterly",
+      isHighlight: false,
+      index: 2,
+    },
+    {
       planName: "Plano Vitalício",
       description: "Pague uma vez. Use para sempre.",
-      price: "R$ 97,90",
+      price: "R$ 127,90",
       priceDescription: "/ custo único",
       features: sharedFeatures,
       buttonText: "Escolher este plano",
       plan: "lifetime",
       isHighlight: true,
-      index: 2,
+      index: 3,
     },
   ];
 
@@ -195,7 +206,7 @@ export default function PricingCards() {
           Escolha o plano ideal para você e comece seu negócio com liberdade para crescer ainda mais.
         </p>
       </motion.div>
-      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-8 px-2 sm:px-0 md:flex-row md:items-stretch">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-8 px-2 sm:px-0 lg:flex-row lg:items-stretch">
         {plans.map((plan) => (
           <PricingCard key={plan.planName} {...plan} />
         ))}
