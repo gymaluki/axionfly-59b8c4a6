@@ -279,16 +279,16 @@ const Index = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 variants={fadeUp}
                 custom={0}
-                className="text-center mb-4 md:mb-6 space-y-2"
+                className="text-center mb-3 md:mb-6 space-y-1.5 md:space-y-2 px-2"
               >
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
+                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-foreground tracking-tight leading-snug">
                   Venda sites para <span className="gradient-text">comércios pelo mundo</span>
                 </h3>
                 <p className="text-muted-foreground max-w-md mx-auto text-xs md:text-sm">
                   De São Paulo a Nova York. Conecte-se a negócios que precisam de um site profissional.
                 </p>
               </motion.div>
-              <div className="w-full max-w-lg mx-auto aspect-square relative">
+              <div className="w-[80%] sm:w-[70%] lg:w-full max-w-lg mx-auto aspect-square relative">
                 <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
                 <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
                   <GlobeCdn className="w-full" speed={0.006} />
