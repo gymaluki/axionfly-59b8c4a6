@@ -18,18 +18,7 @@ const fallbackFavicon = (domain: string) => `https://icons.duckduckgo.com/ip3/${
 
 // Apenas IAs com plano gratuito real para criar sites
 const builders: Builder[] = [
-  { name: "Lovable", url: "https://lovable.dev/invite/4QDCZAZ", description: "Parceiro oficial AxionFly", freeInfo: "5 mensagens grátis/dia", domain: "lovable.dev", bg: "from-pink-500/30 to-purple-500/30", recommended: true },
-  { name: "Bolt.new", url: "https://bolt.new", description: "Builder full-stack instantâneo", freeInfo: "1M tokens grátis/dia", domain: "bolt.new", bg: "from-blue-500/20 to-cyan-500/20" },
-  { name: "v0 by Vercel", url: "https://v0.dev", description: "UI components com IA", freeInfo: "Plano gratuito mensal", domain: "v0.dev", bg: "from-zinc-500/20 to-slate-500/20" },
-  { name: "Replit Agent", url: "https://replit.com", description: "Codifica e roda no navegador", freeInfo: "Conta grátis disponível", domain: "replit.com", bg: "from-orange-500/20 to-red-500/20" },
-  { name: "Framer AI", url: "https://www.framer.com/ai", description: "Sites visuais animados", freeInfo: "Plano free para sempre", domain: "framer.com", bg: "from-blue-600/20 to-indigo-500/20" },
-  { name: "Webflow AI", url: "https://webflow.com/ai", description: "No-code visual avançado", freeInfo: "Starter grátis", domain: "webflow.com", bg: "from-purple-500/20 to-violet-500/20" },
-  { name: "Durable", url: "https://durable.co", description: "Site em 30 segundos", freeInfo: "Trial gratuito", domain: "durable.co", bg: "from-emerald-500/20 to-green-500/20" },
-  { name: "Mixo", url: "https://mixo.io", description: "Landing pages instantâneas", freeInfo: "Plano free disponível", domain: "mixo.io", bg: "from-rose-500/20 to-pink-500/20" },
-  { name: "Hocoos", url: "https://hocoos.com", description: "Site em 5 minutos", freeInfo: "Criação 100% grátis", domain: "hocoos.com", bg: "from-teal-500/20 to-cyan-500/20" },
-  { name: "B12", url: "https://b12.io", description: "Sites profissionais com IA", freeInfo: "Rascunho grátis", domain: "b12.io", bg: "from-indigo-500/20 to-blue-500/20" },
-  { name: "Typedream", url: "https://typedream.com", description: "Notion-like website builder", freeInfo: "Free starter", domain: "typedream.com", bg: "from-amber-500/20 to-orange-500/20" },
-  { name: "Dorik AI", url: "https://dorik.com", description: "Sites com IA sem código", freeInfo: "Free forever plan", domain: "dorik.com", bg: "from-cyan-500/20 to-teal-500/20" },
+  { name: "Lovable", url: "https://lovable.dev/invite/4QDCZAZ", description: "Parceiro oficial AxionFly", freeInfo: "Parceria Hyperbuild Pro", domain: "lovable.dev", bg: "from-pink-500/30 to-purple-500/30", recommended: true },
 ];
 
 interface AIBuilderPickerProps {

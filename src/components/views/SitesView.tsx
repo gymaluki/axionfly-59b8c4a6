@@ -303,6 +303,11 @@ const SitesView = () => {
   const [businessHours, setBusinessHours] = useState("");
   const [whatsappOrdering, setWhatsappOrdering] = useState(false);
 
+  const [hasInstalledExtension, setHasInstalledExtension] = useState(() => {
+    return localStorage.getItem("has_installed_hyperbuild") === "true";
+  });
+  const [showExtensionModal, setShowExtensionModal] = useState(false);
+
   const foodNiches = ["pizzaria", "fine-dining", "restaurante-bairro", "hamburgueria", "acaiteria", "marmitaria"];
 
   const canAdvance = useMemo(() => {
@@ -360,7 +365,17 @@ const SitesView = () => {
       generated += ` IMPORTANTE: Inclua um sistema de pedidos via WhatsApp completo. Crie uma seção de cardápio interativo com botões "+" e "−" ao lado de cada item para adicionar/remover do carrinho, mostrando a quantidade selecionada entre os botões. Itens selecionados devem ter destaque visual. Adicione um botão flutuante fixo no canto inferior direito com ícone de carrinho e contador de itens (só aparece quando há itens no carrinho). Ao clicar, abra um modal de checkout em 2 etapas: Etapa 1 com campos Nome, Endereço, Forma de pagamento (Dinheiro/Cartão Crédito/Cartão Débito/PIX como toggles) e Observação. Etapa 2 com revisão completa e botão "Enviar WhatsApp". Ao confirmar, gere uma mensagem formatada com emojis (🍕 PEDIDO, 👤 Nome, 📍 Endereço, 💳 Pagamento, 📋 Itens, 📝 Observação) e envie via https://wa.me/{numero}?text={mensagem}. Após envio, limpar carrinho e fechar modal.`;
     }
 
-    setGeneratedPrompt(generated);
+    if (!hasInstalledExtension) {
+      setShowExtensionModal(true);
+    } else {
+      setPickerOpen(true);
+    }
+  };
+
+  const handleConfirmExtension = () => {
+    localStorage.setItem("has_installed_hyperbuild", "true");
+    setHasInstalledExtension(true);
+    setShowExtensionModal(false);
     setPickerOpen(true);
   };
 
@@ -1000,6 +1015,56 @@ const SitesView = () => {
         onClose={() => setPickerOpen(false)}
         prompt={generatedPrompt}
       />
+
+      {/* Extension Install Check Modal */}
+      <AnimatePresence>
+        {showExtensionModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl p-6 space-y-6"
+            >
+              <div className="text-center space-y-2">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <Sparkles className="w-8 h-8 text-primary" />
+                </div>
+                <h2 className="text-2xl font-bold text-foreground">
+                  Lovable Infinito
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Para criar sites ilimitados e sem travas, você já instalou a nossa extensão e gerou seu token?
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <Button 
+                  className="w-full h-12 font-bold gap-2" 
+                  variant="neon"
+                  onClick={handleConfirmExtension}
+                >
+                  <Check className="w-5 h-5" />
+                  Sim, já instalei e configurei
+                </Button>
+                <Button 
+                  className="w-full h-12 font-bold gap-2" 
+                  variant="outline"
+                  onClick={() => navigate("/extensao")}
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  Não, quero instalar agora
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
