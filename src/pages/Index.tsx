@@ -374,10 +374,9 @@ const Index = () => {
         {/* ═══════════ PARCERIAS ═══════════ */}
         <LovablePartnership />
 
-        {/* ═══════════ CTA FINAL ═══════════ */}
-        <section className="relative z-10 pb-20">
-          <CTASection />
-        </section>
+        {/* ═══════════ POR QUE ESCOLHER A AXIONFLY ═══════════ */}
+        <WhyChooseSection />
+
 
         {/* ═══════════ FOOTER ═══════════ */}
         <section className="container mx-auto px-4 py-10 md:py-20 relative">
