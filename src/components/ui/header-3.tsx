@@ -48,7 +48,7 @@ export function Header() {
 			className={cn(
 				'fixed left-1/2 z-50 -translate-x-1/2 border transition-all duration-700',
 				scrolled && !open
-					? 'top-2 w-auto max-w-fit rounded-full border-border bg-background/95 shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.15)] backdrop-blur-xl'
+					? 'top-2 w-auto max-w-fit rounded-full border-primary/40 bg-background/95 shadow-[0_0_20px_-5px_hsl(var(--primary)/0.6)] backdrop-blur-xl'
 					: 'top-0 w-full max-w-full rounded-none border-transparent bg-background/80 backdrop-blur-lg',
 				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
 			)}
