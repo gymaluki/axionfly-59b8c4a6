@@ -2,6 +2,7 @@ import { motion, type Easing } from "framer-motion";
 import { Check, Sparkles, Infinity as InfinityIcon, Zap, Rocket, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import lovableLogo from "@/assets/lovable-logo.png";
+import hyperbuildLogo from "@/assets/hyperbuild-logo.jpg";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
@@ -73,9 +74,16 @@ const ExtensaoLovableView = () => {
         }}
       >
         <div className="grid md:grid-cols-[auto_1fr] gap-6 items-center">
-          <div className="flex items-center gap-3 shrink-0">
-            <img src={lovableLogo} alt="Lovable" className="h-14 w-14 object-contain" />
-            <span className="text-3xl font-black text-foreground">Lovable</span>
+          <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
+            <div className="flex items-center gap-3">
+              <img src={lovableLogo} alt="Lovable" className="h-12 w-12 object-contain" />
+              <span className="text-2xl font-black text-foreground">Lovable</span>
+            </div>
+            <span className="text-muted-foreground text-xl font-bold">×</span>
+            <div className="flex items-center gap-3">
+              <img src={hyperbuildLogo} alt="Hyperbuild Pro" className="h-12 w-12 object-contain rounded-lg" />
+              <span className="text-2xl font-black text-foreground">Hyperbuild</span>
+            </div>
           </div>
           <div className="space-y-3">
             <h2 className="text-xl md:text-2xl font-bold text-foreground">
