@@ -158,11 +158,10 @@ const ExtensaoLovableView = () => {
             className="gap-2"
           >
             <a
-              href="https://hyperbuildpro.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
+              onClick={(e) => e.preventDefault()}
             >
-              Acessar Hyperbuild Pro
+              Resgatar Meu Acesso Hyperbuild
               <ExternalLink className="w-4 h-4" />
             </a>
           </Button>
