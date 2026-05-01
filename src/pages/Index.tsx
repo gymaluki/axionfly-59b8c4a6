@@ -257,6 +257,7 @@ const Index = () => {
                     transition: springTransition
                   }}
                   className="glass rounded-xl p-4 md:p-5 space-y-2 hover:neon-border transition-all duration-500 group cursor-pointer relative overflow-hidden"
+                  onClick={() => title.includes("Extensão") ? navigate("/extensao") : null}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   <div className="absolute top-3 right-3">
