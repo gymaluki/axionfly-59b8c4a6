@@ -15,25 +15,6 @@ const fallbackFavicon = (domain: string) => `https://icons.duckduckgo.com/ip3/${
 
 const builders: Builder[] = [
   { name: "Lovable", url: "https://lovable.dev", description: "Apps full-stack com IA — nossa recomendação", domain: "lovable.dev", bg: "from-pink-500/30 to-purple-500/30", recommended: true },
-  { name: "Bolt.new", url: "https://bolt.new", description: "Builder full-stack instantâneo", domain: "bolt.new", bg: "from-blue-500/20 to-cyan-500/20" },
-  { name: "v0 by Vercel", url: "https://v0.dev", description: "UI components com IA", domain: "v0.dev", bg: "from-zinc-500/20 to-slate-500/20" },
-  { name: "Replit Agent", url: "https://replit.com", description: "Codifica e roda no navegador", domain: "replit.com", bg: "from-orange-500/20 to-red-500/20" },
-  { name: "Cursor", url: "https://cursor.com", description: "IDE com IA integrada", domain: "cursor.com", bg: "from-neutral-500/20 to-zinc-500/20" },
-  { name: "Wix ADI", url: "https://www.wix.com/studio/ai-website-builder", description: "Sites prontos com IA", domain: "wix.com", bg: "from-yellow-500/20 to-amber-500/20" },
-  { name: "Framer AI", url: "https://www.framer.com/ai", description: "Sites visuais animados", domain: "framer.com", bg: "from-blue-600/20 to-indigo-500/20" },
-  { name: "Webflow AI", url: "https://webflow.com/ai", description: "No-code visual avançado", domain: "webflow.com", bg: "from-purple-500/20 to-violet-500/20" },
-  { name: "Durable", url: "https://durable.co", description: "Site em 30 segundos", domain: "durable.co", bg: "from-emerald-500/20 to-green-500/20" },
-  { name: "Hostinger AI", url: "https://www.hostinger.com.br/criador-de-sites", description: "Builder + hospedagem", domain: "hostinger.com", bg: "from-violet-500/20 to-fuchsia-500/20" },
-  { name: "10Web", url: "https://10web.io", description: "WordPress com IA", domain: "10web.io", bg: "from-sky-500/20 to-blue-500/20" },
-  { name: "Mixo", url: "https://mixo.io", description: "Landing pages instantâneas", domain: "mixo.io", bg: "from-rose-500/20 to-pink-500/20" },
-  { name: "Hocoos", url: "https://hocoos.com", description: "Site em 5 minutos", domain: "hocoos.com", bg: "from-teal-500/20 to-cyan-500/20" },
-  { name: "B12", url: "https://b12.io", description: "Sites profissionais com IA", domain: "b12.io", bg: "from-indigo-500/20 to-blue-500/20" },
-  { name: "Jimdo Dolphin", url: "https://www.jimdo.com", description: "Builder guiado por IA", domain: "jimdo.com", bg: "from-lime-500/20 to-green-500/20" },
-  { name: "Unicorn Platform", url: "https://unicornplatform.com", description: "Landing pages para SaaS", domain: "unicornplatform.com", bg: "from-fuchsia-500/20 to-pink-500/20" },
-  { name: "Typedream", url: "https://typedream.com", description: "Notion-like website builder", domain: "typedream.com", bg: "from-amber-500/20 to-orange-500/20" },
-  { name: "Dorik AI", url: "https://dorik.com", description: "Sites com IA sem código", domain: "dorik.com", bg: "from-cyan-500/20 to-teal-500/20" },
-  { name: "Zyro AI", url: "https://zyro.com", description: "Construtor com IA", domain: "zyro.com", bg: "from-red-500/20 to-rose-500/20" },
-  { name: "Builder.ai", url: "https://www.builder.ai", description: "Apps customizados com IA", domain: "builder.ai", bg: "from-purple-600/20 to-indigo-600/20" },
 ];
 
 export const AIBuildersGrid = () => {
