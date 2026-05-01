@@ -167,10 +167,9 @@ const ExtensaoLovableView = () => {
             className="gap-2"
           >
             <a
-              href="#"
-              onClick={(e) => e.preventDefault()}
+              href="/extensao"
             >
-              Resgatar Meu Acesso Hyperbuild
+              Baixar Extensão e Gerar Token
               <ExternalLink className="w-4 h-4" />
             </a>
           </Button>
