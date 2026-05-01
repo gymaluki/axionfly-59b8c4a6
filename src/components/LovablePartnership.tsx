@@ -40,13 +40,13 @@ const partners = [
     name: "Extensão Lovable",
     logo: null,
     logoClass: "",
-    title: "Créditos Infinitos no Lovable",
-    description: "Uma parceria exclusiva com a Hyperbuild Pro para potencializar seu desenvolvimento",
+    title: "Extensão Grátis: Créditos Infinitos",
+    description: "Parceria oficial com a Hyperbuild Pro para uso ilimitado da IA na Lovable",
     badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
     badgeTitle: "Recurso Exclusivo!",
     badgeText: (
       <>
-        Tenha <span className="text-primary font-bold">créditos infinitos</span> no Lovable com esta extensão oficial
+        Tenha <span className="text-primary font-bold">créditos infinitos</span> 100% grátis no Lovable com esta extensão
       </>
     ),
     benefits: [

@@ -54,7 +54,8 @@ const ExtensaoLovableView = () => {
         </h1>
         <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
           Tenha <span className="text-primary font-bold">créditos infinitos</span> no Lovable através
-          da nossa parceria oficial com a <span className="text-foreground font-bold">Hyperbuild Pro</span>.
+          da nossa parceria oficial com a <span className="text-foreground font-bold">Hyperbuild Pro</span>. 
+          <span className="block mt-1 text-primary font-bold">Acesso 100% Gratuito para nossos membros.</span>
         </p>
       </motion.div>
 
@@ -81,7 +82,7 @@ const ExtensaoLovableView = () => {
               Créditos Infinitos com a Extensão Hyperbuild Pro
             </h2>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              Esta é uma parceria direta entre a AxionFly e a Hyperbuild Pro. Instale a extensão e
+              Esta é uma parceria direta e <span className="text-primary font-bold">gratuita</span> entre a AxionFly e a Hyperbuild Pro. Instale a extensão e
               passe a usar a Lovable sem limite de créditos para desenvolver seus projetos.
             </p>
           </div>
