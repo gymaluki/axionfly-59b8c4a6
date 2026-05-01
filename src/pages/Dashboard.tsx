@@ -10,6 +10,7 @@ import MembrosView from "@/components/views/MembrosView";
 import AdminView from "@/components/views/AdminView";
 import ContratoScriptView from "@/components/views/ContratoScriptView";
 import PerfilView from "@/components/views/PerfilView";
+import ExtensaoLovableView from "@/components/views/ExtensaoLovableView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import OnboardingTour from "@/components/OnboardingTour";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil";
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
@@ -60,6 +61,7 @@ const viewTitles: Record<View, string> = {
   vendas: "Minhas Vendas",
   contrato: "Contrato & Script",
   perfil: "Meu Perfil",
+  "extensao-lovable": "Extensão Lovable",
   admin: "Painel Administrativo",
 };
 
@@ -69,7 +71,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "admin"];
+  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "extensao-lovable", "admin"];
   const paramView = searchParams.get("view") as View | null;
   const [activeView, setActiveView] = useState<View>(
     paramView && validViews.includes(paramView) ? paramView : "sites"
@@ -191,6 +193,7 @@ const Dashboard = () => {
                   {activeView === "membros" && <MembrosView isAdmin={isAdmin} />}
                   {activeView === "contrato" && <ContratoScriptView />}
                   {activeView === "perfil" && <PerfilView />}
+                  {activeView === "extensao-lovable" && <ExtensaoLovableView />}
                   {activeView === "admin" && isAdmin && <AdminView />}
                 </motion.div>
               </AnimatePresence>
