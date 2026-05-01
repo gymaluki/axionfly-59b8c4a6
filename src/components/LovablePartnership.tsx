@@ -63,10 +63,10 @@ const partners = [
     title: "Parceria com Lovable",
     description: "Integração completa com a plataforma Lovable para desenvolvimento acelerado",
     badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
-    badgeTitle: "Bônus Exclusivo!",
+    badgeTitle: "Deploy Ilimitado!",
     badgeText: (
       <>
-        <span className="text-primary font-bold">15 créditos grátis</span> na Lovable ao usar a AXIONFLY
+        Aproveite o <span className="text-primary font-bold">deploy automático</span> profissional em todos os seus projetos
       </>
     ),
     benefits: [
