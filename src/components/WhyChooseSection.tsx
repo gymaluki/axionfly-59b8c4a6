@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Sparkles, MapPin, Palette, BarChart3 } from "lucide-react";
 
 const features = [
@@ -24,7 +24,7 @@ const features = [
   },
 ];
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
@@ -32,6 +32,7 @@ const fadeUp = {
     transition: { delay: i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   }),
 };
+
 
 export default function WhyChooseSection() {
   return (
