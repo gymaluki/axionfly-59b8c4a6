@@ -37,6 +37,25 @@ function LovableLogo({ className }: { className?: string }) {
 
 const partners = [
   {
+    name: "Extensão Lovable",
+    logo: null,
+    logoClass: "",
+    title: "Créditos Infinitos no Lovable",
+    description: "Uma parceria exclusiva com a Hyperbuild Pro para potencializar seu desenvolvimento",
+    badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
+    badgeTitle: "Recurso Exclusivo!",
+    badgeText: (
+      <>
+        Tenha <span className="text-primary font-bold">créditos infinitos</span> no Lovable com esta extensão oficial
+      </>
+    ),
+    benefits: [
+      "Parceria direta com Hyperbuild Pro",
+      "Uso ilimitado de IA na Lovable",
+      "Aceleração máxima nos seus projetos",
+    ],
+  },
+  {
     name: "Lovable",
     logo: null,
     logoClass: "",
@@ -91,7 +110,7 @@ export default function LovablePartnership() {
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {partners.map((partner, idx) => (
           <motion.div
             key={partner.name}
@@ -111,7 +130,7 @@ export default function LovablePartnership() {
             {/* Logo */}
             <div className="flex justify-center py-4">
               <div className="flex items-center gap-2">
-                {partner.name === "Lovable" ? (
+                {partner.name === "Lovable" || partner.name === "Extensão Lovable" ? (
                   <img src={lovableLogo} alt="Lovable" className="h-8 w-8 object-contain" />
                 ) : (
                   <img src={partner.logo!} alt={partner.name} className="h-8 w-8 object-contain" loading="lazy" />
