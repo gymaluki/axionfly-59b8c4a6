@@ -2,6 +2,7 @@ import { motion, type Easing } from "framer-motion";
 import { Check, Sparkles, Shield } from "lucide-react";
 import googleMapsLogo from "@/assets/google-maps-logo.png";
 import lovableLogo from "@/assets/lovable-logo.png";
+import hyperbuildLogo from "@/assets/hyperbuild-logo.jpg";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
@@ -130,8 +131,10 @@ export default function LovablePartnership() {
             {/* Logo */}
             <div className="flex justify-center py-4">
               <div className="flex items-center gap-2">
-                {partner.name === "Lovable" || partner.name === "Extensão Lovable" ? (
+                {partner.name === "Lovable" ? (
                   <img src={lovableLogo} alt="Lovable" className="h-8 w-8 object-contain" />
+                ) : partner.name === "Hyperbuild Pro" ? (
+                  <img src={hyperbuildLogo} alt="Hyperbuild Pro" className="h-10 w-10 object-contain rounded-md" />
                 ) : (
                   <img src={partner.logo!} alt={partner.name} className="h-8 w-8 object-contain" loading="lazy" />
                 )}
