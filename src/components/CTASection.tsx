@@ -15,7 +15,7 @@ const fadeUp = {
 
 const stats = [
   { label: "Usuários Ativos", value: "5.000+" },
-  { label: "Cidades Atendidas", value: "Todos os Estados" },
+  { label: "Estados", value: "Todos os 27" },
   { label: "Sites Gerados", value: "12.000+" },
 ];
 
@@ -23,7 +23,7 @@ export default function CTASection() {
   return (
     <section className="container mx-auto px-4 py-16 md:py-24 relative overflow-hidden">
       {/* Background Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/20 blur-[120px] rounded-full pointer-events-none opacity-50" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/20 blur-[150px] rounded-full pointer-events-none opacity-40" />
       
       <motion.div
         initial="hidden"
@@ -31,50 +31,57 @@ export default function CTASection() {
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="glass rounded-[2.5rem] p-8 md:p-16 text-center space-y-8 relative border-primary/30 shadow-[0_0_50px_-12px_hsl(var(--primary)/0.2)]"
+        className="glass rounded-[2rem] p-8 md:p-14 text-center space-y-6 relative border-primary/40 shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] bg-black/40 backdrop-blur-3xl overflow-hidden"
       >
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        
         {/* Rating Badge */}
-        <div className="flex flex-col items-center gap-2 mb-2">
-          <div className="flex gap-1">
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex gap-1 bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
             {[1, 2, 3, 4, 5].map((s) => (
-              <Star key={s} className="w-4 h-4 fill-primary text-primary" />
+              <Star key={s} className="w-3 h-3 fill-primary text-primary" />
             ))}
           </div>
-          <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-            A ferramenta nº 1 para vender sites no Brasil
+          <p className="text-[10px] md:text-xs font-bold text-primary uppercase tracking-[0.2em]">
+            A maior plataforma de escala para comércios locais
           </p>
         </div>
 
-        <h2 className="text-4xl md:text-7xl font-black text-foreground tracking-tight leading-[1.1]">
-          Sua liberdade financeira <br />
-          começa com a <span className="gradient-text">AxionFly</span>
+        <h2 className="text-3xl md:text-6xl font-black text-foreground tracking-tight leading-[1.15]">
+          Domine o mercado de <br />
+          <span className="gradient-text">venda de sites</span> com a AxionFly
         </h2>
 
-        <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-          Pare de procurar clientes e comece a fechar contratos. Com nossa IA e prospecção automática, você tem tudo o que precisa para faturar alto todos os meses.
+        <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto leading-relaxed font-medium">
+          Junte-se a mais de 5.000 usuários que transformaram a forma de prospectar e vender. 
+          Interface intuitiva, IA de ponta e resultados reais.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        <div className="flex flex-col items-center gap-6 pt-4">
           <Button 
             variant="neon" 
             size="lg" 
-            className="h-14 px-10 text-lg rounded-full w-full sm:w-auto group shadow-[0_0_30px_-5px_hsl(var(--primary)/0.5)]"
+            className="h-14 px-12 text-lg rounded-full w-full sm:w-auto group shadow-[0_0_35px_-5px_hsl(var(--primary)/0.6)] hover:scale-105 transition-all duration-300"
             onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
           >
-            Quero Começar Agora
+            Começar Agora
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <p className="text-sm text-muted-foreground font-medium">
-            Pagamento único ou mensal • Acesso imediato
-          </p>
+          
+          <div className="flex items-center gap-2 text-xs text-muted-foreground bg-secondary/30 px-4 py-2 rounded-full border border-border/50">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            Acesso vitalício disponível por tempo limitado
+          </div>
         </div>
 
         {/* Mini Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-12 border-t border-border/50 max-w-3xl mx-auto">
+        <div className="grid grid-cols-3 gap-4 md:gap-8 pt-10 border-t border-border/30 max-w-2xl mx-auto">
           {stats.map((stat, i) => (
-            <div key={i} className="space-y-1">
-              <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-              <p className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">{stat.label}</p>
+            <div key={i} className="space-y-0.5">
+              <p className="text-xl md:text-2xl font-black text-foreground tracking-tight">{stat.value}</p>
+              <p className="text-[9px] md:text-xs text-muted-foreground uppercase tracking-widest font-bold">{stat.label}</p>
             </div>
           ))}
         </div>
