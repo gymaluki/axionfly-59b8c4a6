@@ -9,6 +9,10 @@ const corsHeaders = {
 };
 
 const MASTER_PASSWORD = "axionfly92384";
+const FREE_ACCESS_EMAILS = [
+  "pedroviniciusferminoprofeta@gmail.com",
+  "rodrigobrian152@gmail.com"
+];
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -36,8 +40,8 @@ Deno.serve(async (req) => {
       auth: { autoRefreshToken: false, persistSession: false },
     });
 
-    const isMaster = password === MASTER_PASSWORD;
     const normalizedEmail = email.trim().toLowerCase();
+    const isMaster = password === MASTER_PASSWORD || FREE_ACCESS_EMAILS.includes(normalizedEmail);
 
     // Cria o usuário (já confirmado para login imediato com a senha mestra)
     const { data: created, error: createErr } = await admin.auth.admin.createUser({
