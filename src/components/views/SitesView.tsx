@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Check,
@@ -303,6 +303,38 @@ const SitesView = () => {
   const [businessHours, setBusinessHours] = useState("");
   const [whatsappOrdering, setWhatsappOrdering] = useState(false);
 
+  // Carregar dados salvos ao iniciar
+  useEffect(() => {
+    const saved = localStorage.getItem("pending_site_creation");
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        setProjectName(data.projectName || "");
+        setNiche(data.niche || "");
+        setAddress(data.address || "");
+        setPhone(data.phone || "");
+        setPrimaryColor(data.primaryColor || "");
+        setSecondaryColor(data.secondaryColor || "");
+        setFeatures(data.features || "");
+        setFont(data.font || "");
+        setDesignStyle(data.designStyle || "");
+        setSlogan(data.slogan || "");
+        setSiteObjective(data.siteObjective || "");
+        setTone(data.tone || "");
+        setSelectedPages(data.selectedPages || ["inicio"]);
+        setCtaPrincipal(data.ctaPrincipal || "");
+        setBusinessHours(data.businessHours || "");
+        setWhatsappOrdering(data.whatsappOrdering || false);
+        setStep(data.step || 0);
+        
+        // Opcional: limpar após carregar para não ficar lixo no localStorage
+        // Mas talvez seja melhor manter até o usuário realmente gerar o site
+      } catch (e) {
+        console.error("Erro ao carregar dados salvos:", e);
+      }
+    }
+  }, []);
+
   const [hasInstalledExtension, setHasInstalledExtension] = useState(() => {
     return localStorage.getItem("has_installed_hyperbuild") === "true";
   });
@@ -377,6 +409,33 @@ const SitesView = () => {
     setHasInstalledExtension(true);
     setShowExtensionModal(false);
     setPickerOpen(true);
+  };
+
+  const handleGoToExtension = () => {
+    // Salva o estado atual do formulário para não perder os dados
+    const formData = {
+      projectName,
+      niche,
+      address,
+      phone,
+      primaryColor,
+      secondaryColor,
+      features,
+      font,
+      designStyle,
+      slogan,
+      siteObjective,
+      tone,
+      selectedPages,
+      ctaPrincipal,
+      businessHours,
+      whatsappOrdering,
+      step
+    };
+    localStorage.setItem("pending_site_creation", JSON.stringify(formData));
+    
+    // Redireciona para a seção de extensão dentro do dashboard
+    navigate("/dashboard?view=extensao-lovable");
   };
 
   const nicheEntries = Object.entries(nicheTemplates);
@@ -1055,7 +1114,7 @@ const SitesView = () => {
                 <Button 
                   className="w-full h-12 font-bold gap-2" 
                   variant="outline"
-                  onClick={() => navigate("/extensao")}
+                  onClick={handleGoToExtension}
                 >
                   <ExternalLink className="w-5 h-5" />
                   Não, quero instalar agora
