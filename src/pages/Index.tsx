@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity } from "lucide-react";
 import { motion, useInView, type Easing } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
@@ -78,6 +78,12 @@ function SectionPill({ children }: { children: React.ReactNode }) {
 }
 
 const features = [
+  {
+    icon: Infinity,
+    title: "Extensão Lovable Infinito",
+    desc: "Crie sites sem limites de créditos. Parceria exclusiva com Hyperbuild Pro para garantir sua escala total.",
+    tag: "INFINITO",
+  },
   {
     icon: Code2,
     title: "Criador de Sites com IA",
