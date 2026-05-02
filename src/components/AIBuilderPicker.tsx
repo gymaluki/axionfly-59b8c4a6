@@ -30,31 +30,29 @@ interface AIBuilderPickerProps {
 export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps) => {
   const [copying, setCopying] = useState<string | null>(null);
 
-  const copyToClipboard = async (text: string): Promise<boolean> => {
-    // 1) API moderna (precisa de contexto seguro + permissão)
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-        return true;
-      }
-    } catch {
-      // segue pro fallback
-    }
-    // 2) Fallback: textarea + execCommand (funciona em iframes/preview)
+  // Copia SÍNCRONA via textarea + execCommand — funciona em iframe/preview
+  const copySync = (text: string): boolean => {
     try {
       const ta = document.createElement("textarea");
       ta.value = text;
       ta.setAttribute("readonly", "");
+      ta.contentEditable = "true";
       ta.style.position = "fixed";
       ta.style.top = "0";
       ta.style.left = "0";
+      ta.style.width = "1px";
+      ta.style.height = "1px";
       ta.style.opacity = "0";
-      ta.style.pointerEvents = "none";
+      ta.style.zIndex = "-1";
       document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
+      const range = document.createRange();
+      range.selectNodeContents(ta);
+      const sel = window.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
       ta.setSelectionRange(0, text.length);
       const ok = document.execCommand("copy");
+      sel?.removeAllRanges();
       document.body.removeChild(ta);
       return ok;
     } catch {
@@ -62,20 +60,31 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     }
   };
 
-  const handlePick = async (builder: Builder) => {
+  const handlePick = (builder: Builder) => {
     setCopying(builder.name);
-    const ok = await copyToClipboard(prompt);
-    if (ok) {
-      toast.success(`Prompt copiado! Abrindo ${builder.name}...`);
-    } else {
-      toast.error("Não consegui copiar automaticamente. Copie o prompt manualmente na próxima tela.");
+
+    // 1) Copia SÍNCRONO primeiro (dentro do gesto do usuário)
+    const okSync = copySync(prompt);
+
+    // 2) Abre a janela IMEDIATAMENTE (evita popup blocker)
+    const newWindow = window.open(builder.url, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+
+    // 3) Tenta também a Clipboard API moderna como reforço (não-bloqueante)
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(prompt).catch(() => {});
     }
+
+    if (okSync) {
+      toast.success(`Prompt copiado! Cole (Ctrl+V) no ${builder.name}.`);
+    } else {
+      toast.error("Não foi possível copiar. Copie manualmente o prompt da tela anterior.");
+    }
+
     setTimeout(() => {
-      const newWindow = window.open(builder.url, "_blank", "noopener,noreferrer");
-      if (newWindow) newWindow.opener = null;
       setCopying(null);
       onClose();
-    }, 800);
+    }, 600);
   };
 
   return (
