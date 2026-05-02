@@ -30,13 +30,45 @@ interface AIBuilderPickerProps {
 export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps) => {
   const [copying, setCopying] = useState<string | null>(null);
 
+  const copyToClipboard = async (text: string): Promise<boolean> => {
+    // 1) API moderna (precisa de contexto seguro + permissão)
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch {
+      // segue pro fallback
+    }
+    // 2) Fallback: textarea + execCommand (funciona em iframes/preview)
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "0";
+      ta.style.left = "0";
+      ta.style.opacity = "0";
+      ta.style.pointerEvents = "none";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch {
+      return false;
+    }
+  };
+
   const handlePick = async (builder: Builder) => {
     setCopying(builder.name);
-    try {
-      await navigator.clipboard.writeText(prompt);
+    const ok = await copyToClipboard(prompt);
+    if (ok) {
       toast.success(`Prompt copiado! Abrindo ${builder.name}...`);
-    } catch {
-      toast.error("Não consegui copiar o prompt automaticamente — cole manualmente.");
+    } else {
+      toast.error("Não consegui copiar automaticamente. Copie o prompt manualmente na próxima tela.");
     }
     setTimeout(() => {
       const newWindow = window.open(builder.url, "_blank", "noopener,noreferrer");
