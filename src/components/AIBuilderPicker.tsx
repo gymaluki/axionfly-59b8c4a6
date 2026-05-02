@@ -29,6 +29,7 @@ interface AIBuilderPickerProps {
 
 export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps) => {
   const [copying, setCopying] = useState<string | null>(null);
+  const normalizedPrompt = prompt.trim();
 
   // Copia SÍNCRONA via textarea + execCommand — funciona em iframe/preview
   const copySync = (text: string): boolean => {
@@ -61,10 +62,22 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
   };
 
   const handlePick = (builder: Builder) => {
+    if (!normalizedPrompt) {
+      toast.error("O prompt ainda não foi gerado. Gere o site novamente para continuar.");
+      return;
+    }
+
     setCopying(builder.name);
 
+    try {
+      sessionStorage.setItem("axionfly_lovable_prompt", normalizedPrompt);
+      localStorage.setItem("axionfly_lovable_prompt", normalizedPrompt);
+    } catch {
+      // sem bloqueio se o storage falhar
+    }
+
     // 1) Copia SÍNCRONO primeiro (dentro do gesto do usuário)
-    const okSync = copySync(prompt);
+    const okSync = copySync(normalizedPrompt);
 
     // 2) Abre a janela IMEDIATAMENTE (evita popup blocker)
     const newWindow = window.open(builder.url, "_blank", "noopener,noreferrer");
@@ -72,7 +85,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
 
     // 3) Tenta também a Clipboard API moderna como reforço (não-bloqueante)
     if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(prompt).catch(() => {});
+      navigator.clipboard.writeText(normalizedPrompt).catch(() => {});
     }
 
     if (okSync) {
@@ -132,7 +145,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                     key={builder.name}
                     type="button"
                     onClick={() => handlePick(builder)}
-                    disabled={copying !== null}
+                    disabled={copying !== null || !normalizedPrompt}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.25, delay: i * 0.02 }}
