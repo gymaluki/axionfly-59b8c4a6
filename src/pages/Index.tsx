@@ -9,7 +9,6 @@ import { Header } from "@/components/ui/header-3";
 import PricingCards from "@/components/PricingCards";
 import LovablePartnership from "@/components/LovablePartnership";
 import FeaturesCarousel from "@/components/FeaturesCarousel";
-import WhyChooseSection from "@/components/WhyChooseSection";
 
 // Lazy load heavy visual components
 const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
@@ -374,11 +373,7 @@ const Index = () => {
         {/* ═══════════ PARCERIAS ═══════════ */}
         <LovablePartnership />
 
-        {/* ═══════════ POR QUE ESCOLHER A AXIONFLY ═══════════ */}
-        <WhyChooseSection />
-
-
-        {/* ═══════════ FOOTER ═══════════ */}
+        {/* ═══════════ CTA FINAL ═══════════ */}
         <section className="container mx-auto px-4 py-10 md:py-20 relative">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06)_0%,transparent_60%)] pointer-events-none" />
           <motion.div
