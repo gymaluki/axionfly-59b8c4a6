@@ -16,6 +16,8 @@ const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut
 function useCountUp(endStr: string, duration = 2000, start = false) {
   const [count, setCount] = React.useState(0);
   const rafRef = React.useRef<number>();
+  
+  // Extract number and treat as cents (e.g., "97,90" -> 9790)
   const end = parseInt(endStr.replace(/\D/g, ''));
 
   React.useEffect(() => {
@@ -66,7 +68,13 @@ function PriceCounter({ price }: { price: string }) {
   const isInView = useInView(ref, { once: true });
   const count = useCountUp(price, 2000, isInView);
   
-  return <span ref={ref}>{count.toLocaleString("pt-BR")}</span>;
+  // Format as currency with decimal comma
+  const formattedValue = (count / 100).toLocaleString("pt-BR", { 
+    minimumFractionDigits: 2, 
+    maximumFractionDigits: 2 
+  });
+  
+  return <span ref={ref}>{formattedValue}</span>;
 }
 
 function PricingCard({
