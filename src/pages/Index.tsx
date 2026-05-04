@@ -333,43 +333,83 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ ETAPAS (How It Works) ═══════════ */}
-        <section id="etapas" className="container mx-auto px-4 py-10 md:py-24 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.04)_0%,transparent_70%)] pointer-events-none" />
+        {/* ═══════════ ETAPAS ═══════════ */}
+        <section id="etapas" className="container mx-auto px-4 py-20 md:py-32 relative">
+          <SectionPill>Processo AxionFly</SectionPill>
           
-          <SectionPill>Veja como começar - Simples e Fácil</SectionPill>
-          
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-10 md:mb-20 space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              Como começar a <span className="gradient-text">vender sites</span>{" "}
-              <br className="hidden md:block" />
-              com a AxionFly?
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
+            <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tight mb-6">
+              Venda seu primeiro site <br />
+              em <span className="gradient-text">3 passos simples</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Sem experiência técnica. Sem programação. Do zero ao site vendido em minutos.
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+              Não reinventamos a roda, apenas automatizamos o que funciona. Siga o método e veja os resultados.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {howItWorks.map(({ step, icon: Icon, title, desc }, i) => (
-              <motion.div
-                key={step}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={fadeUp}
-                custom={i + 1}
-                whileHover={{ y: -8, transition: springTransition }}
-                className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-8 space-y-5 relative group hover:border-primary/30 transition-all duration-500"
+          <div className="relative max-w-6xl mx-auto">
+            {/* Horizontal Line - Desktop */}
+            <div className="hidden md:block absolute top-[100px] left-[10%] right-[10%] h-0.5 bg-primary/10 -z-10">
+              <motion.div 
+                className="h-full bg-primary shadow-[0_0_15px_rgba(37,99,235,0.5)]"
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+              />
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-12">
+              {[
+                { step: "01", icon: Zap, title: "Ative sua Ferramenta", desc: "Assine a AxionFly e conecte sua IA em segundos. Sua base de operações está pronta.", color: "blue" },
+                { step: "02", icon: Code2, title: "Crie e Encontre", desc: "Escolha o nicho, gere o site com IA e busque leads qualificados na sua região automaticamente.", color: "blue" },
+                { step: "03", icon: TrendingUp, title: "Venda e Escale", desc: "Aborde pelo WhatsApp com script validado e feche contratos de R$ 500 a R$ 3.000.", color: "blue" }
+              ].map(({ step, icon: Icon, title, desc }, i) => (
+                <motion.div
+                  key={step}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={fadeUp}
+                  custom={i + 1}
+                  whileHover={{ y: -10 }}
+                  className="flex flex-col items-center text-center space-y-8 group"
+                >
+                  <div className="relative">
+                    <div className="w-16 h-16 rounded-full bg-background border-4 border-primary/20 flex items-center justify-center text-xl font-black text-primary relative z-10 group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500">
+                      {step}
+                    </div>
+                    {/* Pulsing ring */}
+                    <div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+
+                  <div className="space-y-4 px-4 py-8 rounded-3xl bg-card/40 border border-primary/10 backdrop-blur-sm group-hover:border-primary/40 group-hover:bg-card/60 transition-all duration-500">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500">
+                      <Icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-black text-foreground">{title}</h3>
+                    <p className="text-muted-foreground font-medium leading-relaxed">{desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* CTA bottom of Steps */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-20 text-center"
+            >
+              <Button 
+                variant="outline" 
+                size="xl" 
+                className="rounded-full font-black uppercase tracking-[0.2em] px-12 border-2 hover:bg-primary/10 group"
+                onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
-                <span className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-4 py-1 text-xs font-medium text-muted-foreground">
-                  {step}
-                </span>
-                <h3 className="text-xl font-bold text-foreground">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-              </motion.div>
-            ))}
+                Pronto pra começar? <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              </Button>
+            </motion.div>
           </div>
         </section>
 
