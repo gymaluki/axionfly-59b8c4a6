@@ -229,55 +229,62 @@ export default function PricingCards() {
   ];
 
   return (
-    <section id="pricing" className="container mx-auto px-4 py-10 md:py-20">
-      <div className="mb-8 flex justify-center">
-        <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-sm">
-          Planos
-        </span>
-      </div>
+    <section id="pricing" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+      <SectionPill>Investimento Inteligente</SectionPill>
+      
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="mb-14 space-y-5 text-center"
+        className="mb-20 space-y-6 text-center"
       >
-        <h2 className="text-3xl font-black tracking-tight text-foreground md:text-6xl leading-tight">
-          Comece de forma simples.{" "}
-          <br className="hidden md:block" />
-          Escale com <span className="gradient-text">sites prontos e prospecção automática</span>
+        <h2 className="text-4xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1]">
+          O plano ideal para <br />
+          seu <span className="gradient-text">próximo nível</span>
         </h2>
-        <p className="mx-auto max-w-xl text-lg text-muted-foreground">
-          Escolha o plano ideal para você e comece seu negócio com liberdade para crescer ainda mais.
+        <p className="mx-auto max-w-2xl text-lg md:text-xl text-muted-foreground font-medium">
+          Sem taxas escondidas. Sem letras miúdas. Acesso imediato a todas as ferramentas após a confirmação.
         </p>
       </motion.div>
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-8 px-2 sm:px-0 lg:flex-row lg:items-stretch">
+
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-6 mb-20">
         {plans.map((plan) => (
           <PricingCard key={plan.planName} {...plan} />
         ))}
       </div>
 
+      {/* Guarantee Bar */}
       <motion.div
-        initial="hidden"
-        whileInView="visible"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        variants={fadeUp}
-        custom={3}
-        className="mt-14 flex flex-col items-center gap-4"
+        className="max-w-4xl mx-auto p-6 rounded-2xl border border-primary/20 bg-primary/5 flex flex-wrap items-center justify-center gap-8 md:gap-12"
       >
-        <p className="text-sm text-muted-foreground font-medium">Parcerias oficiais</p>
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-foreground">Lovable</span>
-          </div>
-          <div className="flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 backdrop-blur-sm">
-            <img src={googleMapsLogo} alt="Google Maps" className="h-5 w-5 object-contain" />
-            <span className="text-sm font-semibold text-foreground">Google Maps</span>
-          </div>
+        <div className="flex items-center gap-3">
+          <ShieldCheck className="w-6 h-6 text-primary" />
+          <span className="text-sm font-black uppercase tracking-widest text-foreground">7 Dias de Garantia</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <Zap className="w-6 h-6 text-primary" />
+          <span className="text-sm font-black uppercase tracking-widest text-foreground">Acesso Imediato</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <Check className="w-6 h-6 text-primary" />
+          <span className="text-sm font-black uppercase tracking-widest text-foreground">Suporte 24/7</span>
         </div>
       </motion.div>
     </section>
+  );
+}
+
+function SectionPill({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex justify-center mb-8">
+      <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-sm">
+        {children}
+      </span>
+    </div>
   );
 }
