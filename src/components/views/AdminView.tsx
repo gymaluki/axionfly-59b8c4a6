@@ -523,6 +523,69 @@ const AdminView = () => {
             </CardContent>
           </Card>
         </TabsContent>
+
+        <TabsContent value="logs" className="mt-4">
+          <Card className="bg-card border-border">
+            <CardHeader className="flex flex-row items-center justify-between gap-4 flex-wrap">
+              <CardTitle className="text-base flex items-center gap-2">
+                <History className="w-4 h-4 text-primary" />
+                Histórico de Auditoria
+              </CardTitle>
+              <Button variant="outline" size="sm" onClick={fetchLogs} className="h-8">
+                <RefreshCw className="w-3.5 h-3.5 mr-2" />
+                Atualizar Logs
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {logs.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-8">Nenhum log registrado ainda.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-left">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="pb-3 text-muted-foreground font-medium">Data/Hora</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Usuário</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Ação</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Chave</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Detalhes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {logs.map(log => (
+                        <tr key={log.id} className="border-b border-border/50 last:border-0 hover:bg-white/5 transition-colors">
+                          <td className="py-3 text-muted-foreground text-[11px] whitespace-nowrap">
+                            {formatDate(log.created_at)}
+                          </td>
+                          <td className="py-3 text-foreground text-xs">{log.user_email}</td>
+                          <td className="py-3">
+                            <Badge 
+                              variant="outline" 
+                              className={cn(
+                                "text-[10px] uppercase font-bold",
+                                log.action === 'claim' && "border-green-500/50 text-green-500 bg-green-500/5",
+                                log.action === 'view' && "border-blue-500/50 text-blue-500 bg-blue-500/5",
+                                log.action === 'error' && "border-destructive/50 text-destructive bg-destructive/5"
+                              )}
+                            >
+                              {log.action}
+                            </Badge>
+                          </td>
+                          <td className="py-3 font-mono text-[10px] text-muted-foreground">
+                            {log.license_key || "—"}
+                          </td>
+                          <td className="py-3 text-xs text-muted-foreground max-w-xs truncate">
+                            {log.details}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
     </div>
   );
