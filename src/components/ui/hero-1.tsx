@@ -8,9 +8,6 @@ import { DashboardMockup } from "./dashboard-mockup";
 export function HeroSection() {
 	const navigate = useNavigate();
 
-	const headline = "Feche Contratos de <span class='text-primary'>R$500 a R$3.000</span> Criando Sites com IA em <span class='text-primary'>10 Minutos</span>";
-	const words = headline.split(" ");
-
 	return (
 		<section id="inicio" className="relative pt-20 pb-16 md:pt-32 md:pb-32 overflow-hidden">
 			<div className="container mx-auto px-4 relative z-10">
@@ -36,23 +33,15 @@ export function HeroSection() {
 
 				{/* Headline */}
 				<div className="text-center mb-8">
-					<h1 className="text-3xl md:text-[58px] font-black tracking-tight text-foreground leading-[1.1] mb-2">
-						{words.map((word, i) => (
-							<motion.span
-								key={i}
-								initial={{ opacity: 0, y: 40 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{
-									duration: 0.8,
-									delay: i * 0.08,
-									ease: [0.16, 1, 0.3, 1]
-								}}
-								className="inline-block mr-[0.2em]"
-								dangerouslySetInnerHTML={{ __html: word }}
-							/>
-						))}
-					</h1>
-					{/* Subheadline removed as per new copy request */}
+					<motion.h1 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-3xl md:text-[58px] font-black tracking-tight text-foreground leading-[1.1] mb-2"
+          >
+            Feche Contratos de <span className="text-primary">R$500 a R$3.000</span> <br />
+            Criando Sites com IA em <span className="text-primary">10 Minutos</span>
+          </motion.h1>
 				</div>
 
 				{/* Description */}
