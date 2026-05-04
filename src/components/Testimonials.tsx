@@ -55,11 +55,11 @@ export default function Testimonials() {
         viewport={{ once: true }}
         className="text-center mb-20 space-y-6"
       >
-        <h2 className="text-4xl md:text-7xl font-black text-foreground leading-[1.1]">
+        <h2 className="text-3xl md:text-[44px] font-black text-foreground leading-[1.1]">
           Histórias de quem <br />
           já <span className="gradient-text">mudou de jogo</span>
         </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+        <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
           Mais de 5.000 empreendedores utilizando a AxionFly para criar sua própria fonte de renda.
         </p>
       </motion.div>
