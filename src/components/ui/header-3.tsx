@@ -159,7 +159,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 			id="mobile-menu"
 			className={cn(
 				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
-				'fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y border-border md:hidden',
+				'fixed top-0 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y border-border md:hidden',
 			)}
 		>
 			<div
