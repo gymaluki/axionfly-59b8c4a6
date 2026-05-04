@@ -229,14 +229,28 @@ const Index = () => {
       />
 
       <div className="relative z-10">
-        {/* Anniversary Banner */}
-        <div className="w-full bg-primary py-2 text-center relative z-[60]">
-          <div className="container mx-auto px-4 flex items-center justify-center gap-4">
-            <span className="animate-pulse text-white">🎁</span>
-            <p className="text-white text-xs md:text-sm font-black uppercase tracking-[0.2em]">
-              Promoção de 1 Ano AxionFly: 50% de Desconto em TODOS os Planos! Só hoje!
+        {/* Elegant Anniversary Banner */}
+        <div className="w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center relative z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
+          <div className="container mx-auto px-4 flex items-center justify-center gap-6">
+            <motion.span 
+              animate={{ rotate: [0, 10, -10, 0] }} 
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="text-white text-lg"
+            >
+              🎉
+            </motion.span>
+            <p className="text-white text-xs md:text-[13px] font-black uppercase tracking-[0.25em] flex items-center gap-3">
+              <span className="opacity-70 hidden sm:inline">—</span>
+              Aniversário 1 Ano AxionFly: 50% de Desconto em toda a plataforma
+              <span className="opacity-70 hidden sm:inline">—</span>
             </p>
-            <span className="animate-pulse text-white">🎁</span>
+            <motion.span 
+              animate={{ rotate: [0, -10, 10, 0] }} 
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="text-white text-lg"
+            >
+              🎉
+            </motion.span>
           </div>
         </div>
         <Header />
