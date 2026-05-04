@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw } from "lucide-react";
+import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface Subscription {
@@ -52,6 +53,15 @@ interface HyperbuildLicense {
   user_email?: string;
 }
 
+interface LicenseLog {
+  id: string;
+  user_email: string;
+  license_key: string;
+  action: string;
+  details: string;
+  created_at: string;
+}
+
 const PLAN_DAYS: Record<string, number> = {
   monthly: 30,
   trial: 7,
@@ -71,6 +81,8 @@ const AdminView = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [licenseSearch, setLicenseSearch] = useState("");
+  const [logs, setLogs] = useState<LicenseLog[]>([]);
+  const [testingConnection, setTestingConnection] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   const fetchData = async () => {
@@ -109,8 +121,64 @@ const AdminView = () => {
     }
   };
 
+  const fetchLogs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('hyperbuild_license_logs')
+        .select(`
+          id,
+          license_key,
+          action,
+          details,
+          created_at,
+          user_id
+        `)
+        .order('created_at', { ascending: false })
+        .limit(50);
+      
+      if (error) throw error;
+      
+      // Map user_id to emails using the already fetched users list
+      const enrichedLogs = (data || []).map(log => {
+        const user = users.find(u => u.user_id === log.user_id);
+        return {
+          ...log,
+          user_email: user?.email || 'Sistema'
+        } as LicenseLog;
+      });
+      
+      setLogs(enrichedLogs);
+    } catch (err: any) {
+      console.error("Error fetching logs:", err);
+    }
+  };
+
+  const testConnection = async () => {
+    setTestingConnection(true);
+    try {
+      // Simulate/test connection by calling the function
+      const { data, error } = await supabase.rpc('claim_hyperbuild_license');
+      
+      if (error) {
+        if (error.message.includes("Não há licenças")) {
+          toast({ title: "Conexão OK", description: "O sistema está conectado, mas o estoque está vazio." });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({ title: "Conexão bem-sucedida!", description: "Sistema Hyperbuild respondendo corretamente." });
+      }
+    } catch (err: any) {
+      toast({ title: "Erro na conexão", description: err.message, variant: "destructive" });
+    } finally {
+      setTestingConnection(false);
+      fetchLogs(); // Refresh logs to see the test
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    fetchLogs();
   }, []);
 
   const handleAction = async (
@@ -228,6 +296,7 @@ const AdminView = () => {
           <TabsTrigger value="users">Usuários ({users.length})</TabsTrigger>
           <TabsTrigger value="pending">Pré-pagamentos ({pendingPayments.length})</TabsTrigger>
           <TabsTrigger value="licenses">Licenças Hyperbuild ({licenses.length})</TabsTrigger>
+          <TabsTrigger value="logs">Logs de Auditoria</TabsTrigger>
         </TabsList>
 
         <TabsContent value="users" className="mt-4">
@@ -379,15 +448,28 @@ const AdminView = () => {
         <TabsContent value="licenses" className="mt-4">
           <Card className="bg-card border-border">
             <CardHeader className="flex flex-row items-center justify-between gap-4 flex-wrap">
-              <CardTitle className="text-base">Monitorar Licenças Hyperbuild</CardTitle>
+              <div className="space-y-1">
+                <CardTitle className="text-base">Monitorar Licenças Hyperbuild</CardTitle>
+                <p className="text-xs text-muted-foreground">Total de {licenses.length} licenças no banco de dados.</p>
+              </div>
               <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={testConnection} 
+                  disabled={testingConnection}
+                  className="gap-2 border-primary/20 hover:bg-primary/5"
+                >
+                  <ShieldCheck className={cn("w-4 h-4 text-primary", testingConnection && "animate-spin")} />
+                  {testingConnection ? "Testando..." : "Testar Conexão"}
+                </Button>
                 <div className="relative">
                   <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     placeholder="Buscar por chave, lote ou email..."
                     value={licenseSearch}
                     onChange={e => setLicenseSearch(e.target.value)}
-                    className="pl-9 w-64"
+                    className="pl-9 w-64 h-9"
                   />
                 </div>
               </div>
@@ -432,6 +514,69 @@ const AdminView = () => {
                           <td className="py-3 text-foreground text-xs">{l.user_email || "—"}</td>
                           <td className="py-3 text-muted-foreground text-xs">{formatDate(l.used_at)}</td>
                           <td className="py-3 text-muted-foreground text-xs">{formatDate(l.expires_at)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="logs" className="mt-4">
+          <Card className="bg-card border-border">
+            <CardHeader className="flex flex-row items-center justify-between gap-4 flex-wrap">
+              <CardTitle className="text-base flex items-center gap-2">
+                <History className="w-4 h-4 text-primary" />
+                Histórico de Auditoria
+              </CardTitle>
+              <Button variant="outline" size="sm" onClick={fetchLogs} className="h-8">
+                <RefreshCw className="w-3.5 h-3.5 mr-2" />
+                Atualizar Logs
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {logs.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-8">Nenhum log registrado ainda.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-left">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="pb-3 text-muted-foreground font-medium">Data/Hora</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Usuário</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Ação</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Chave</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Detalhes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {logs.map(log => (
+                        <tr key={log.id} className="border-b border-border/50 last:border-0 hover:bg-white/5 transition-colors">
+                          <td className="py-3 text-muted-foreground text-[11px] whitespace-nowrap">
+                            {formatDate(log.created_at)}
+                          </td>
+                          <td className="py-3 text-foreground text-xs">{log.user_email}</td>
+                          <td className="py-3">
+                            <Badge 
+                              variant="outline" 
+                              className={cn(
+                                "text-[10px] uppercase font-bold",
+                                log.action === 'claim' && "border-green-500/50 text-green-500 bg-green-500/5",
+                                log.action === 'view' && "border-blue-500/50 text-blue-500 bg-blue-500/5",
+                                log.action === 'error' && "border-destructive/50 text-destructive bg-destructive/5"
+                              )}
+                            >
+                              {log.action}
+                            </Badge>
+                          </td>
+                          <td className="py-3 font-mono text-[10px] text-muted-foreground">
+                            {log.license_key || "—"}
+                          </td>
+                          <td className="py-3 text-xs text-muted-foreground max-w-xs truncate">
+                            {log.details}
+                          </td>
                         </tr>
                       ))}
                     </tbody>

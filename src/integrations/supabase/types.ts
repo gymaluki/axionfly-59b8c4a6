@@ -71,6 +71,33 @@ export type Database = {
         }
         Relationships: []
       }
+      hyperbuild_license_logs: {
+        Row: {
+          action: string
+          created_at: string
+          details: string | null
+          id: string
+          license_key: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: string | null
+          id?: string
+          license_key?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: string | null
+          id?: string
+          license_key?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       hyperbuild_licenses: {
         Row: {
           created_at: string
@@ -314,6 +341,7 @@ export type Database = {
       claim_hyperbuild_license: {
         Args: never
         Returns: {
+          expires_at: string
           license_key: string
         }[]
       }
