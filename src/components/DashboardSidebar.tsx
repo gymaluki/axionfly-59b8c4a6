@@ -67,10 +67,10 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-base font-bold text-white tracking-tight leading-none">
+              <span className="text-xl font-black text-white tracking-tighter leading-none">
                 AxionFly
               </span>
-              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest mt-1">DASHBOARD</span>
+              <span className="text-[11px] text-muted-foreground font-bold uppercase tracking-[0.1em] mt-1">DASHBOARD</span>
             </div>
           )}
         </div>
@@ -78,7 +78,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
 
       <SidebarContent className="bg-[#05050a]">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#6b7280] mb-2 px-4">
+          <SidebarGroupLabel className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#6b7280] mb-2 px-4">
             FERRAMENTAS
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -111,7 +111,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
             <div className="p-4 rounded-2xl bg-white/5 border border-[#3B82F6]/30 space-y-3">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Parceria Ativa</span>
+                <span className="text-[11px] font-bold text-primary uppercase tracking-[0.1em]">Parceria Ativa</span>
               </div>
               <p className="text-xs text-[#94a3b8] leading-relaxed">
                 Tokens ilimitados com <span className="text-white font-bold">Hyperbuild Pro</span>
@@ -141,7 +141,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                         {!collapsed && (
                           <div className="flex-1 text-left min-w-0 ml-3">
                             <p className="text-sm font-bold text-foreground truncate leading-none mb-1">{displayName}</p>
-                            <p className="text-[10px] text-[#475569] font-medium uppercase tracking-wider">Membro Premium</p>
+                            <p className="text-[11px] text-[#475569] font-bold uppercase tracking-[0.1em]">Membro Premium</p>
                           </div>
                         )}
                         {!collapsed && <ChevronUp className="w-4 h-4 text-[#475569] shrink-0" />}
