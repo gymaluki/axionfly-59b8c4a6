@@ -171,13 +171,14 @@ const Dashboard = () => {
           isAdmin={isAdmin}
         />
 
-        <div className="flex-1 flex flex-col relative z-10">
-          <header className="h-14 flex items-center gap-4 border-b border-border px-4 bg-background/80 backdrop-blur-sm sticky top-0 z-20">
-            <SidebarTrigger />
-            <h1 className="text-lg font-semibold text-foreground">{viewTitles[activeView]}</h1>
+        <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
+          <header className="h-16 flex items-center gap-4 border-b border-white/5 px-6 bg-[#0a0a0f]/80 backdrop-blur-md sticky top-0 z-20">
+            <SidebarTrigger className="text-muted-foreground hover:text-white transition-colors" />
+            <div className="h-6 w-px bg-white/10" />
+            <h1 className="text-lg font-black text-foreground tracking-tight uppercase tracking-[0.1em]">{viewTitles[activeView]}</h1>
           </header>
 
-          <main className="flex-1 p-6 md:p-8 overflow-auto">
+          <main className="flex-1 p-4 md:p-8 overflow-auto">
             <DashboardViewErrorBoundary>
               <AnimatePresence mode="wait">
                 <motion.div
