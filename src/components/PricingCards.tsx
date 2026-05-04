@@ -1,5 +1,6 @@
-import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles } from "lucide-react";
+import React, { useState } from "react";
+import { motion, type Easing, AnimatePresence } from "framer-motion";
+import { Check, Sparkles, ChevronDown, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiPix } from "react-icons/si";
 import { FaCcMastercard, FaCcVisa, FaBarcode } from "react-icons/fa";
