@@ -148,16 +148,31 @@ function useCountUp(end: number, duration = 2000, start = false) {
   return count;
 }
 
-function StaticStat({ icon: Icon, value, label, prefix, suffix }: {
-  icon: any; value: number; label: string; prefix: string; suffix: string;
+function StaticStat({ icon: Icon, value, label, prefix, suffix, index }: {
+  icon: any; value: number; label: string; prefix: string; suffix: string; index: number;
 }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const count = useCountUp(value, 2000, isInView);
+
   return (
-    <div className="text-center space-y-2 p-6 rounded-xl glass cursor-default">
-      <Icon className="w-6 h-6 text-primary mx-auto" />
-      <p className="text-3xl font-black text-foreground tabular-nums drop-shadow-[0_0_20px_hsl(var(--primary)/0.3)]">
-        {prefix}{value.toLocaleString("pt-BR")}{suffix}
-      </p>
-      <p className="text-sm text-muted-foreground">{label}</p>
+    <div ref={ref} className="flex flex-col items-center justify-center p-8 space-y-4 relative group">
+      <motion.div
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
+        className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-2"
+      >
+        <Icon className="w-8 h-8 text-primary" />
+      </motion.div>
+      <div className="space-y-1">
+        <p className="text-4xl md:text-5xl font-black text-foreground tabular-nums tracking-tighter">
+          {prefix}{count.toLocaleString("pt-BR")}{suffix}
+        </p>
+        <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{label}</p>
+      </div>
+      
+      {/* Glow */}
+      <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
     </div>
   );
 }
