@@ -59,7 +59,7 @@ export function HeroSection() {
 						transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
 						className="flex justify-center mt-2"
 					>
-						<span className="text-5xl md:text-8xl font-black leading-none gradient-text-animate tracking-tighter">
+						<span className="text-4xl md:text-[68px] font-black leading-none gradient-text-animate tracking-tighter">
 							COMÉRCIOS
 						</span>
 					</motion.div>
