@@ -4,10 +4,11 @@ import dashboardImg from "@/assets/carousel-dashboard.jpg";
 import vendaImg from "@/assets/carousel-venda.jpg";
 
 const slides = [
-  { id: "dashboard", src: dashboardImg, alt: "Como acessar a ferramenta AxionFly" },
-  { id: "venda", src: vendaImg, alt: "Venda sem gastar com a AxionFly" },
-  { id: "dashboard2", src: dashboardImg, alt: "Dashboard AxionFly" },
-  { id: "venda2", src: vendaImg, alt: "Vendas AxionFly" },
+  { id: "aula1", src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop", title: "Primeiros Passos", desc: "Configurando sua conta e ativando a IA" },
+  { id: "aula2", src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2340&auto=format&fit=crop", title: "Busca de Clientes", desc: "Como usar o Google Maps para prospectar" },
+  { id: "aula3", src: "https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=2342&auto=format&fit=crop", title: "Fechamento de Vendas", desc: "O script de WhatsApp que vende sites" },
+  { id: "aula4", src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=2340&auto=format&fit=crop", title: "Escalando Agência", desc: "Contratando pessoas e automatizando processos" },
+  { id: "aula5", src: "https://images.unsplash.com/photo-1531403001884-48a6202a632a?q=80&w=2340&auto=format&fit=crop", title: "Design de Elite", desc: "Como deixar seus sites com visual premium" },
 ];
 
 const CARD_W = 220;
