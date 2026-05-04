@@ -80,6 +80,8 @@ const AdminView = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [licenseSearch, setLicenseSearch] = useState("");
+  const [logs, setLogs] = useState<LicenseLog[]>([]);
+  const [testingConnection, setTestingConnection] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   const fetchData = async () => {
