@@ -367,6 +367,54 @@ const SitesView = () => {
       differentiators: "Blend de carnes frescas, molho secreto, batatas rústicas artesanais",
       pricePositioning: "medio",
       cta: "whatsapp"
+    },
+    petshop: {
+      primaryColor: "Coral Vibrante (#E8734A)",
+      secondaryColor: "Âmbar Dourado",
+      font: "fredoka-nunito",
+      designStyle: "lifestyle",
+      selectedPages: ["inicio", "sobre", "servicos", "galeria"],
+      tone: "amigavel",
+      targetAudience: "Tutores de pets que buscam carinho e cuidado premium para seus animais",
+      differentiators: "Táxi-pet incluso, banho e tosa com cromoterapia, câmeras ao vivo",
+      pricePositioning: "medio",
+      cta: "whatsapp"
+    },
+    estetica: {
+      primaryColor: "Rosa Quartzo (#F472B6)",
+      secondaryColor: "Dourado Suave",
+      font: "cormorant-lato",
+      designStyle: "lifestyle",
+      selectedPages: ["inicio", "sobre", "servicos", "depoimentos"],
+      tone: "amigavel",
+      targetAudience: "Mulheres que buscam autoestima, relaxamento e tratamentos de alta performance",
+      differentiators: "Métodos exclusivos, ambiente climatizado, avaliação gratuita",
+      pricePositioning: "premium",
+      cta: "agendar"
+    },
+    fotografo: {
+      primaryColor: "Branco Minimalista",
+      secondaryColor: "Cinza Profundo",
+      font: "playfair-raleway",
+      designStyle: "lifestyle",
+      selectedPages: ["inicio", "sobre", "galeria", "contato"],
+      tone: "criativo",
+      targetAudience: "Noivos, gestantes e marcas que buscam eternizar momentos com arte",
+      differentiators: "Equipamento 4K, entrega em 48h, olhar artístico e autêntico",
+      pricePositioning: "premium",
+      cta: "formulario"
+    },
+    "marketing-digital": {
+      primaryColor: "Azul Elétrico (#2563EB)",
+      secondaryColor: "Roxo Vibrante",
+      font: "inter-space",
+      designStyle: "conversao",
+      selectedPages: ["inicio", "servicos", "depoimentos", "precos"],
+      tone: "autoritario",
+      targetAudience: "Empresas que precisam escalar vendas e dominar o mercado digital",
+      differentiators: "Foco total em ROI, especialistas certificados, suporte 24h",
+      pricePositioning: "medio",
+      cta: "whatsapp"
     }
   };
 
