@@ -8,7 +8,7 @@ import { DashboardMockup } from "./dashboard-mockup";
 export function HeroSection() {
 	const navigate = useNavigate();
 
-	const headline = "Feche Contratos de R$500 a R$3.000 Criando Sites com IA em 10 Minutos";
+	const headline = "Feche Contratos de <span class='text-primary'>R$500 a R$3.000</span> Criando Sites com IA em <span class='text-primary'>10 Minutos</span>";
 	const words = headline.split(" ");
 
 	return (
@@ -48,9 +48,8 @@ export function HeroSection() {
 									ease: [0.16, 1, 0.3, 1]
 								}}
 								className="inline-block mr-[0.2em]"
-							>
-								{word}
-							</motion.span>
+								dangerouslySetInnerHTML={{ __html: word }}
+							/>
 						))}
 					</h1>
 					{/* Subheadline removed as per new copy request */}
