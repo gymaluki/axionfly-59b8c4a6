@@ -965,8 +965,8 @@ const SitesView = () => {
     >
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-foreground">Criador de Sites</h2>
-        <p className="text-muted-foreground text-sm mt-1">
+        <h2 className="text-2xl font-bold text-white">Criador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Sites</span></h2>
+        <p className="text-[#6b7280] text-sm mt-1 font-medium">
           Responda passo a passo e crie seu site profissional com IA
         </p>
       </div>
@@ -994,12 +994,12 @@ const SitesView = () => {
                 <motion.div
                   initial={false}
                   animate={{
-                    backgroundColor: isDone ? "#10b981" : isActive ? "#2563EB" : "transparent",
-                    borderColor: isDone ? "#10b981" : isActive ? "#2563EB" : "rgba(255,255,255,0.15)",
+                    backgroundColor: isDone ? "#10b981" : isActive ? "#3B82F6" : "transparent",
+                    borderColor: isDone ? "#10b981" : isActive ? "#3B82F6" : "rgba(255,255,255,0.15)",
                   }}
                   className={cn(
                     "w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 relative z-10",
-                    isActive && "shadow-[0_0_20px_rgba(37,99,235,0.4)]",
+                    isActive && "shadow-[0_0_20px_rgba(59,130,246,0.4)]",
                     isDone && "shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                   )}
                 >
@@ -1011,7 +1011,7 @@ const SitesView = () => {
                 </motion.div>
                 <span className={cn(
                   "text-[10px] font-black uppercase tracking-widest mt-3 transition-colors",
-                  isActive ? "text-primary" : "text-[#475569]"
+                  isActive ? "text-[#3B82F6]" : "text-[#6b7280]"
                 )}>
                   {s.label}
                 </span>
@@ -1025,14 +1025,14 @@ const SitesView = () => {
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: `${(step) * 25}%` }}
-            className="h-full bg-gradient-to-r from-green-500 to-primary shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+            className="h-full bg-gradient-to-r from-green-500 to-[#3B82F6] shadow-[0_0_10px_rgba(59,130,246,0.5)]"
             transition={{ duration: 0.5 }}
           />
         </div>
       </div>
 
       {/* Step content */}
-      <div className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-8 min-h-[400px] shadow-2xl relative overflow-hidden">
+      <div className="bg-[#0f0f1f] border border-[#1e2a4a]/50 rounded-3xl p-6 md:p-8 min-h-[400px] shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
         <AnimatePresence mode="wait">
           <motion.div
@@ -1066,10 +1066,9 @@ const SitesView = () => {
               </span>
             )}
             <Button
-              variant="neon"
               onClick={() => setStep(Math.min(TOTAL_STEPS - 1, step + 1))}
               disabled={!canAdvance}
-              className="gap-2"
+              className="gap-2 bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white rounded-full font-bold px-8 transition-all"
             >
               Avançar
               <ArrowRight className="w-4 h-4" />
