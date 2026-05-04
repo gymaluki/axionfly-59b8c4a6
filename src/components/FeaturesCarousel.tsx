@@ -92,13 +92,15 @@ export default function FeaturesCarousel() {
               }}
             >
               {/* Image */}
-              <img
-                src={slide.src}
-                alt={slide.title}
-                className="w-full h-full object-cover pointer-events-none group-hover:scale-110 transition-transform duration-700"
-                loading="lazy"
-                draggable={false}
-              />
+              <div className="w-full h-full bg-[#05050a] flex items-center justify-center">
+                <img
+                  src={slide.src}
+                  alt={slide.title}
+                  className="max-w-full max-h-full object-contain pointer-events-none group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  draggable={false}
+                />
+              </div>
               
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
