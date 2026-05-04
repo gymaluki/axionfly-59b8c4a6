@@ -13,32 +13,7 @@ import { resolveCheckoutUrl } from "@/lib/affiliates";
 const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
 
-function useCountUp(endStr: string, duration = 2000, start = false) {
-  const [count, setCount] = React.useState(0);
-  const rafRef = React.useRef<number>();
-  
-  // Extract number and treat as cents (e.g., "97,90" -> 9790)
-  const end = parseInt(endStr.replace(/\D/g, ''));
-
-  React.useEffect(() => {
-    if (!start) { setCount(0); return; }
-    let startTime: number | null = null;
-    const animate = (now: number) => {
-      if (!startTime) startTime = now;
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * end));
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(animate);
-      }
-    };
-    rafRef.current = requestAnimationFrame(animate);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [end, duration, start]);
-
-  return count;
-}
+// useCountUp removed as requested to make prices static
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -64,17 +39,8 @@ interface PricingCardProps {
 }
 
 function PriceCounter({ price }: { price: string }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  const count = useCountUp(price, 2000, isInView);
-  
-  // Format as currency with decimal comma
-  const formattedValue = (count / 100).toLocaleString("pt-BR", { 
-    minimumFractionDigits: 2, 
-    maximumFractionDigits: 2 
-  });
-  
-  return <span ref={ref}>{formattedValue}</span>;
+  const displayPrice = price.replace("R$ ", "");
+  return <span>{displayPrice}</span>;
 }
 
 function PricingCard({
