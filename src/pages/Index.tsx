@@ -120,7 +120,7 @@ const features = [
 
 const stats = [
   { icon: Users, value: 5000, label: "Usuários cadastrados", prefix: "", suffix: "+" },
-  { icon: TrendingUp, value: 2, label: "Faturados pelos usuários", prefix: "+", suffix: " Mi" },
+  { icon: TrendingUp, value: 2000000, label: "Faturados pelos usuários", prefix: "R$ ", suffix: "+" },
   { icon: Zap, value: 10, label: "Tempo médio de criação", prefix: "", suffix: " min" },
 ];
 
