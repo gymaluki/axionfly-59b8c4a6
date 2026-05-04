@@ -918,14 +918,14 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                   className="bg-secondary/50 border-border h-12"
                 />
               </div>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground flex items-center gap-2">
                     <Instagram className="w-4 h-4 text-primary" />
-                    Instagram (Link)
+                    Instagram
                   </label>
                   <Input
-                    placeholder="Ex: instagram.com/seunegocio"
+                    placeholder="Link ou @user"
                     value={instagram}
                     onChange={(e) => setInstagram(e.target.value)}
                     className="bg-secondary/50 border-border"
@@ -933,16 +933,41 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-primary" />
-                    TikTok / Facebook (Link)
+                    <Youtube className="w-4 h-4 text-primary" />
+                    TikTok
                   </label>
                   <Input
-                    placeholder="Ex: tiktok.com/@seunegocio"
+                    placeholder="@usuario"
                     value={tiktok}
                     onChange={(e) => setTiktok(e.target.value)}
                     className="bg-secondary/50 border-border"
                   />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <FacebookIcon className="w-4 h-4 text-primary" />
+                    Facebook
+                  </label>
+                  <Input
+                    placeholder="Link da página"
+                    value={facebook}
+                    onChange={(e) => setFacebook(e.target.value)}
+                    className="bg-secondary/50 border-border"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Star className="w-4 h-4 text-primary" />
+                  Prova Social / Conquistas
+                </label>
+                <Input
+                  placeholder="Ex: 500+ clientes atendidos, Nota 4.9 no Google, 15 anos de tradição"
+                  value={socialProof}
+                  onChange={(e) => setSocialProof(e.target.value)}
+                  className="bg-secondary/50 border-border"
+                />
               </div>
 
               <div className="space-y-2">
