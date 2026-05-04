@@ -148,7 +148,7 @@ const Dashboard = () => {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-background relative">
+      <div className="flex min-h-screen w-full bg-[#0a0a0f] relative text-white">
         {/* Grid Background */}
         <div
           aria-hidden="true"
