@@ -98,8 +98,8 @@ const features = [
   },
   {
     icon: MapPin,
-    title: "Prospecção Automática",
-    desc: "Selecione estado e cidade. O sistema busca negócios sem site e entrega nome, telefone e endereço — tudo pronto pra você fechar seu primeiro contrato hoje.",
+    title: "Prospecção Automática Brasil",
+    desc: "Selecione qualquer estado e cidade brasileira. O sistema busca negócios sem site e entrega nome, telefone e endereço pronto pra fechar negócio.",
     tag: "27 ESTADOS",
     visual: "globe"
   },

@@ -8,7 +8,7 @@ import { DashboardMockup } from "./dashboard-mockup";
 export function HeroSection() {
 	const navigate = useNavigate();
 
-	const headline = "Crie Sites Feitos por IA e Venda para";
+	const headline = "Feche Contratos de R$500 a R$3.000 Criando Sites com IA em 10 Minutos";
 	const words = headline.split(" ");
 
 	return (
@@ -53,16 +53,7 @@ export function HeroSection() {
 							</motion.span>
 						))}
 					</h1>
-					<motion.div
-						initial={{ opacity: 0, scale: 0.8 }}
-						animate={{ opacity: 1, scale: 1 }}
-						transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-						className="flex justify-center mt-2"
-					>
-						<span className="text-4xl md:text-[68px] font-black leading-none gradient-text-animate tracking-tighter">
-							COMÉRCIOS
-						</span>
-					</motion.div>
+					{/* Subheadline removed as per new copy request */}
 				</div>
 
 				{/* Description */}
@@ -117,7 +108,7 @@ export function HeroSection() {
 					<p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#64748b]">
 						Parceiros oficiais
 					</p>
-					<div className="flex items-center gap-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+					<div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
 						<div className="flex items-center gap-2">
 							<Sparkles className="w-6 h-6 text-primary" />
 							<span className="text-xl font-black tracking-tighter text-foreground">Lovable</span>
@@ -125,6 +116,12 @@ export function HeroSection() {
 						<div className="flex items-center gap-2">
 							<img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" className="w-6 h-6" />
 							<span className="text-xl font-bold tracking-tight text-foreground/80">Google Maps</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<div className="w-6 h-6 rounded-md bg-primary/20 flex items-center justify-center">
+								<Zap className="w-4 h-4 text-primary" />
+							</div>
+							<span className="text-xl font-black tracking-tighter text-foreground italic">HYPERBUILD PRO</span>
 						</div>
 					</div>
 				</motion.div>

@@ -220,7 +220,7 @@ export default function PricingCards() {
   const sharedFeatures = [
     "Criador de Sites com IA (20+ nichos)",
     "Extensão Lovable (Sites Infinitos)",
-    "Prospecção automática via Google Maps",
+    "Prospecção automática Brasil via Google Maps",
     "Parceria Hyperbuild Pro (Grátis)",
     "Gerador de contrato automático",
     "Script de vendas pronto para WhatsApp",

@@ -41,7 +41,7 @@ const partners = [
     name: "Extensão Lovable",
     logo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg",
     title: "Créditos Infinitos",
-    description: "Parceria exclusiva Hyperbuild Pro para uso ilimitado da IA.",
+    description: "Uso ilimitado da IA para criação de sites sem limites de tokens.",
     badgeTitle: "Recurso Exclusivo",
     glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
@@ -66,14 +66,27 @@ const partners = [
   {
     name: "Google Maps",
     logo: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg",
-    title: "Prospecção Global",
-    description: "Dados oficiais do Google para encontrar negócios sem site.",
+    title: "Prospecção Brasil",
+    description: "Dados oficiais do Google para encontrar negócios sem site no Brasil.",
     badgeTitle: "Dados Reais",
     glowColor: "rgba(34, 197, 94, 0.3)",
     benefits: [
       "Busca em 27 estados",
       "Dados atualizados",
       "Filtros inteligentes"
+    ],
+  },
+  {
+    name: "HyperBuild Pro",
+    logo: "https://uzsvdtahsnkfjuuuipfh.supabase.co/storage/v1/object/public/files/uploads/ShsuAt31DMUOEDUhs93J86XVyP73/1739373972688-6677p-logo.png", // Reusing a placeholder or finding a suitable one
+    title: "Extensão de Escala",
+    description: "Parceria oficial para garantir que sua produção nunca pare.",
+    badgeTitle: "Escala Total",
+    glowColor: "rgba(37, 99, 235, 0.4)",
+    benefits: [
+      "Processamento veloz",
+      "Infraestrutura dedicada",
+      "Sincronização Cloud"
     ],
   },
 ];
@@ -106,7 +119,7 @@ export default function LovablePartnership() {
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto relative z-10">
         {partners.map((partner, idx) => (
           <motion.div
             key={partner.name}
