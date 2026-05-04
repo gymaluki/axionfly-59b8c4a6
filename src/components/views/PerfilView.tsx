@@ -386,7 +386,55 @@ const PerfilView = () => {
             )}
           </div>
         </TabsContent>
-      </Tabs>
+          </Tabs>
+        </div>
+
+        {/* Account Summary Sidebar */}
+        <div className="space-y-6">
+          <Card className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+            <div className="relative z-10 space-y-6">
+              <h3 className="text-xl font-black text-foreground tracking-tight flex items-center gap-2">
+                <Rocket className="w-5 h-5 text-primary" /> Resumo da Conta
+              </h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <Calendar className="w-4 h-4 text-[#475569]" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Cadastro</span>
+                  </div>
+                  <span className="text-sm font-bold text-foreground">Maio 2026</span>
+                </div>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <CreditCard className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Status</span>
+                  </div>
+                  <span className="text-sm font-bold text-green-500">Ativo</span>
+                </div>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <History className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Buscas</span>
+                  </div>
+                  <span className="text-sm font-bold text-foreground">{history.length}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Leads</span>
+                  </div>
+                  <span className="text-sm font-bold text-foreground">{leads.length}</span>
+                </div>
+              </div>
+              <div className="pt-4 border-t border-white/5">
+                <p className="text-[10px] text-[#475569] font-black uppercase tracking-widest text-center">AxionFly Premium v1.4</p>
+              </div>
+            </div>
+            <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 blur-[60px] rounded-full pointer-events-none" />
+          </Card>
+        </div>
+      </div>
     </motion.div>
   );
 };
