@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, MessageCircle, MapPin, Loader2, Phone } from "lucide-react";
+import { Search, MessageCircle, MapPin, Loader2, Phone, Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { firecrawlApi } from "@/lib/api/firecrawl";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 const quickFilters = [
   { label: "Barbearias", emoji: "💈" },
@@ -218,64 +219,73 @@ const ProspeccaoView = () => {
       </div>
 
       {/* Filtros de localização */}
-      <form onSubmit={handleSearch} className="space-y-3">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Estado</label>
-            <Select value={estado} onValueChange={setEstado}>
-              <SelectTrigger className="bg-secondary/50 border-border h-10">
-                <SelectValue placeholder="Todos os estados" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="todos">Todos os estados</SelectItem>
-                {estados.map(e => (
-                  <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+      <div className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-8 shadow-2xl">
+        <form onSubmit={handleSearch} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Estado</label>
+              <Select value={estado} onValueChange={setEstado}>
+                <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all">
+                  <SelectValue placeholder="Todos os estados" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#0d0d14] border-white/10 text-white">
+                  <SelectItem value="todos">Todos os estados</SelectItem>
+                  {estados.map(e => (
+                    <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Cidade</label>
+              <Select value={cidade} onValueChange={setCidade} disabled={!estado || estado === "todos" || loadingCidades}>
+                <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all">
+                  <SelectValue placeholder={loadingCidades ? "Carregando..." : !estado || estado === "todos" ? "Selecione o estado" : "Selecione a cidade"} />
+                </SelectTrigger>
+                <SelectContent className="bg-[#0d0d14] border-white/10 text-white max-h-60">
+                  <SelectItem value="todas">Todas as cidades</SelectItem>
+                  {cidades.map(c => (
+                    <SelectItem key={c} value={c}>{c}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-end">
+              <Button type="submit" variant="neon" disabled={loading} className="w-full h-12 text-base font-black uppercase tracking-widest shimmer-button shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+                {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Search className="w-5 h-5 mr-2" />}
+                Buscar Leads
+              </Button>
+            </div>
           </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Cidade</label>
-            <Select value={cidade} onValueChange={setCidade} disabled={!estado || estado === "todos" || loadingCidades}>
-              <SelectTrigger className="bg-secondary/50 border-border h-10">
-                <SelectValue placeholder={loadingCidades ? "Carregando cidades..." : !estado || estado === "todos" ? "Selecione um estado primeiro" : "Selecione a cidade"} />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                <SelectItem value="todas">Todas as cidades</SelectItem>
-                {cidades.map(c => (
-                  <SelectItem key={c} value={c}>{c}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex items-end">
-            <Button type="submit" variant="neon" disabled={loading} className="w-full h-10">
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-              Buscar Leads
-            </Button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
 
       {/* Nichos */}
-      <div>
-        <label className="text-xs font-medium text-muted-foreground mb-2 block">Selecione o nicho</label>
+      <div className="space-y-4">
+        <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider block">Selecione o nicho</label>
         <div className="flex flex-wrap gap-2">
-          {quickFilters.map(({ label, emoji }) => (
-            <motion.button
-              key={label}
-              onClick={() => handleFilterClick(label)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
-                activeFilter === label
-                  ? "bg-primary text-primary-foreground glow-purple"
-                  : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
-              }`}
-            >
-              <span>{emoji}</span> {label}
-            </motion.button>
-          ))}
+          {quickFilters.map(({ label, emoji }) => {
+            const isSelected = activeFilter === label;
+            return (
+              <motion.button
+                key={label}
+                onClick={() => handleFilterClick(label)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                animate={isSelected ? { scale: [1, 1.1, 1] } : {}}
+                transition={{ duration: 0.2 }}
+                className={cn(
+                  "px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2",
+                  isSelected
+                    ? "bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(37,99,235,0.2)]"
+                    : "bg-[#0d0d14] border-white/5 text-[#94a3b8] hover:border-white/20 hover:text-white"
+                )}
+              >
+                {isSelected && <Check className="w-3.5 h-3.5" />}
+                <span>{emoji}</span> {label}
+              </motion.button>
+            );
+          })}
         </div>
       </div>
 
@@ -311,32 +321,34 @@ const ProspeccaoView = () => {
                     initial="hidden"
                     animate="visible"
                     variants={staggerItem}
-                    className="border-b border-border/50 hover:bg-secondary/30 transition-colors"
+                    className="border-b border-white/5 hover:bg-primary/5 transition-all duration-200 group"
                   >
-                    <td className="px-4 py-3">
-                      <div className="flex items-start gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-primary shrink-0 mt-1" />
+                    <td className="px-6 py-5">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-lg bg-primary/10 text-primary shrink-0">
+                          <MapPin className="w-4 h-4" />
+                        </div>
                         <div>
-                          <span className="font-medium text-foreground block">{r.title}</span>
-                          <span className="text-xs text-muted-foreground">{extractDomain(r.url)}</span>
+                          <span className="font-bold text-foreground block text-base">{r.title}</span>
+                          <span className="text-xs text-[#64748b] mt-0.5 block">{extractDomain(r.url)}</span>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground hidden lg:table-cell max-w-xs truncate">
+                    <td className="px-6 py-5 text-sm text-[#94a3b8] hidden lg:table-cell max-w-xs truncate font-medium">
                       {r.description || "—"}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-6 py-5">
                       {r.phone ? (
-                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                        <span className="inline-flex items-center gap-2 text-sm font-bold text-foreground bg-green-500/5 px-3 py-1.5 rounded-lg border border-green-500/20">
                           <Phone className="w-3.5 h-3.5 text-green-500" />
                           {r.phone}
                         </span>
                       ) : (
-                        <span className="text-xs text-muted-foreground">—</span>
+                        <span className="text-xs text-[#475569] font-medium">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="flex gap-2 justify-end">
+                    <td className="px-6 py-5 text-right">
+                      <div className="flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           size="sm"
                           variant="outline"
@@ -344,13 +356,13 @@ const ProspeccaoView = () => {
                             const query = encodeURIComponent(r.title);
                             openExternalLink(`https://www.google.com/maps/search/${query}`);
                           }}
-                          className="gap-1.5"
+                          className="gap-2 font-bold border-white/10 hover:bg-white/5"
                         >
                           <MapPin className="w-3.5 h-3.5" /> Maps
                         </Button>
                         <Button
                           size="sm"
-                          variant="hero"
+                          variant="neon"
                           onClick={async () => {
                             const phoneNum = r.phone ? r.phone.replace(/\D/g, "") : "";
                             const fullNum = phoneNum.startsWith("55") ? phoneNum : `55${phoneNum}`;
@@ -371,9 +383,9 @@ const ProspeccaoView = () => {
 
                             openExternalLink(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`);
                           }}
-                          className="gap-1.5"
+                          className="gap-2 font-black uppercase text-[10px] tracking-widest shadow-[0_0_15px_rgba(37,99,235,0.3)]"
                         >
-                          <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
+                          <MessageCircle className="w-3.5 h-3.5 fill-current" /> WhatsApp
                         </Button>
                       </div>
                     </td>
@@ -383,14 +395,40 @@ const ProspeccaoView = () => {
             </AnimatePresence>
           </table>
         ) : searched ? (
-          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
-            <Search className="w-10 h-10 opacity-30" />
-            <p className="text-sm">Nenhum resultado encontrado. Tente outro nicho ou região.</p>
+          <div className="flex flex-col items-center justify-center py-20 text-[#64748b] gap-4">
+            <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center">
+              <Search className="w-10 h-10 opacity-20" />
+            </div>
+            <div className="text-center space-y-1">
+              <p className="text-base font-bold text-foreground">Nenhum lead encontrado</p>
+              <p className="text-sm">Tente mudar o nicho ou buscar em outra cidade/estado.</p>
+            </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
-            <Search className="w-10 h-10 opacity-30" />
-            <p className="text-sm">Selecione um nicho e uma região para buscar leads</p>
+          <div className="flex flex-col items-center justify-center py-24 text-[#64748b] gap-6 bg-gradient-to-b from-transparent to-primary/5">
+            <motion.div
+              animate={{ 
+                y: [0, -10, 0],
+                rotate: [0, 5, 0, -5, 0]
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative"
+            >
+              <div className="w-24 h-24 rounded-3xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.1)]">
+                <MapPin className="w-10 h-10 text-primary" />
+              </div>
+              <motion.div 
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -inset-4 border-2 border-primary/30 rounded-full pointer-events-none" 
+              />
+            </motion.div>
+            <div className="text-center space-y-2">
+              <p className="text-lg font-black text-foreground tracking-tight">Selecione um nicho e região para encontrar clientes</p>
+              <p className="text-[#64748b] font-medium max-w-sm mx-auto leading-relaxed">
+                💡 Dica: barbearias e restaurantes têm alta demanda e baixa presença digital.
+              </p>
+            </div>
           </div>
         )}
       </div>

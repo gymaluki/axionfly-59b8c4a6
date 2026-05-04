@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Loader2, User, Lock, History, Users2, Trash2, ExternalLink } from "lucide-react";
+import { Loader2, User, Lock, History, Users2, Trash2, ExternalLink, Check, Calendar, CreditCard, Rocket, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface SearchHistoryItem {
   id: string;
@@ -162,16 +164,51 @@ const PerfilView = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="space-y-6"
+      className="space-y-10"
     >
-      <div>
-        <h2 className="text-2xl font-bold text-foreground">Meu Perfil</h2>
-        <p className="text-muted-foreground text-sm mt-1">
-          Gerencie seus dados, senha e veja seu histórico
-        </p>
+      {/* Profile Header */}
+      <div className="flex flex-col md:flex-row items-center gap-8 bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 p-8 md:p-10 rounded-[3rem] shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="relative group">
+          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-primary to-blue-700 flex items-center justify-center text-3xl md:text-5xl font-black text-white shadow-[0_0_40px_rgba(37,99,235,0.3)] ring-4 ring-[#0d0d14]">
+            {displayName ? displayName.slice(0, 2).toUpperCase() : user?.email?.slice(0, 2).toUpperCase()}
+          </div>
+          <div className="absolute bottom-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-green-500 border-4 border-[#0d0d14] rounded-full animate-pulse shadow-lg" />
+        </div>
+        <div className="text-center md:text-left space-y-3">
+          <div className="space-y-1">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground tracking-tight">{displayName || "Usuário"}</h2>
+            <p className="text-[#94a3b8] font-medium text-base">{user?.email}</p>
+          </div>
+          <div className="flex flex-wrap justify-center md:justify-start gap-3">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-widest">
+              <Check className="w-3.5 h-3.5" /> Membro Ativo
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#475569] text-xs font-black uppercase tracking-widest">
+              Plano Vitalício
+            </span>
+          </div>
+        </div>
+        <div className="absolute -right-20 -bottom-20 w-60 h-60 bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
       </div>
 
-      <Tabs defaultValue="dados" className="w-full">
+      <div className="grid lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          <Tabs defaultValue="dados" className="w-full">
+            <TabsList className="bg-[#0d0d14] border border-white/5 p-1 rounded-2xl h-14 w-full justify-start gap-2 mb-6">
+              <TabsTrigger value="dados" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
+                <User className="w-4 h-4" /> Dados
+              </TabsTrigger>
+              <TabsTrigger value="senha" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
+                <Lock className="w-4 h-4" /> Senha
+              </TabsTrigger>
+              <TabsTrigger value="historico" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
+                <History className="w-4 h-4" /> Buscas
+              </TabsTrigger>
+              <TabsTrigger value="leads" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
+                <Users2 className="w-4 h-4" /> Leads
+              </TabsTrigger>
+            </TabsList>
         <TabsList>
           <TabsTrigger value="dados" className="gap-2">
             <User className="w-4 h-4" /> Dados
@@ -350,7 +387,55 @@ const PerfilView = () => {
             )}
           </div>
         </TabsContent>
-      </Tabs>
+          </Tabs>
+        </div>
+
+        {/* Account Summary Sidebar */}
+        <div className="space-y-6">
+          <Card className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+            <div className="relative z-10 space-y-6">
+              <h3 className="text-xl font-black text-foreground tracking-tight flex items-center gap-2">
+                <Rocket className="w-5 h-5 text-primary" /> Resumo da Conta
+              </h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <Calendar className="w-4 h-4 text-[#475569]" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Cadastro</span>
+                  </div>
+                  <span className="text-sm font-bold text-foreground">Maio 2026</span>
+                </div>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <CreditCard className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Status</span>
+                  </div>
+                  <span className="text-sm font-bold text-green-500">Ativo</span>
+                </div>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <History className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Buscas</span>
+                  </div>
+                  <span className="text-sm font-bold text-foreground">{history.length}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/5">
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-4 h-4 text-primary" />
+                    <span className="text-xs font-bold text-[#94a3b8] uppercase tracking-wider">Leads</span>
+                  </div>
+                  <span className="text-sm font-bold text-foreground">{leads.length}</span>
+                </div>
+              </div>
+              <div className="pt-4 border-t border-white/5">
+                <p className="text-[10px] text-[#475569] font-black uppercase tracking-widest text-center">AxionFly Premium v1.4</p>
+              </div>
+            </div>
+            <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 blur-[60px] rounded-full pointer-events-none" />
+          </Card>
+        </div>
+      </div>
     </motion.div>
   );
 };

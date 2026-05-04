@@ -446,50 +446,55 @@ const SitesView = () => {
     switch (step) {
       case 0:
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div className="space-y-1">
-              <h3 className="text-xl font-bold text-foreground">Sobre o seu negócio</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Sobre o seu negócio</h3>
+              <p className="text-sm text-[#94a3b8]">
                 Comece escolhendo o nome e o tipo do seu projeto
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Nome do Projeto *</label>
-                <Input
-                  placeholder="Ex: Royal Barber, Forno & Massa"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                  className="bg-secondary/50 border-border h-12 text-base"
-                  autoFocus
-                />
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Nome do Projeto *</label>
+                  <Input
+                    placeholder="Ex: Royal Barber, Forno & Massa"
+                    value={projectName}
+                    onChange={(e) => setProjectName(e.target.value)}
+                    className="bg-[#0d0d14] border-white/10 h-12 text-base focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+                    autoFocus
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4 text-primary" />
+                    Slogan / Tagline
+                  </label>
+                  <Input
+                    placeholder="Ex: Estilo & Tradição"
+                    value={slogan}
+                    onChange={(e) => setSlogan(e.target.value)}
+                    className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  Slogan / Tagline
-                </label>
-                <Input
-                  placeholder="Ex: Estilo & Tradição, Sabor que conquista"
-                  value={slogan}
-                  onChange={(e) => setSlogan(e.target.value)}
-                  className="bg-secondary/50 border-border"
-                />
-                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio. Clique numa sugestão abaixo:</p>
+              <div className="space-y-3">
+                <p className="text-xs text-[#475569] font-medium">💡 Sugestões de slogan baseadas no seu nicho:</p>
                 {niche && sloganSuggestions[niche] && (
-                  <div className="flex flex-wrap gap-2 pt-1">
+                  <div className="flex flex-wrap gap-2">
                     {sloganSuggestions[niche].map((s) => (
                       <button
                         key={s}
                         type="button"
                         onClick={() => setSlogan(s)}
                         className={cn(
-                          "text-xs px-3 py-1.5 rounded-full border transition-all duration-200",
+                          "text-xs px-4 py-2 rounded-xl border transition-all duration-200",
                           slogan === s
-                            ? "border-primary bg-primary/15 text-primary font-medium"
-                            : "border-border bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-foreground"
+                            ? "border-primary bg-primary/10 text-primary font-bold shadow-[0_0_15px_rgba(37,99,235,0.2)]"
+                            : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white"
                         )}
                       >
                         {s}
@@ -499,23 +504,25 @@ const SitesView = () => {
                 )}
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Tipo de Negócio *</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+              <div className="space-y-4">
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Tipo de Negócio *</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {nicheEntries.map(([key, t]) => (
-                    <button
+                    <motion.button
                       key={key}
                       type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => setNiche(key)}
                       className={cn(
-                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                        "text-left p-4 rounded-2xl border transition-all duration-300 text-sm font-medium",
                         niche === key
-                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                          ? "border-primary bg-primary/10 text-primary shadow-[0_0_20px_rgba(37,99,235,0.2)]"
+                          : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white"
                       )}
                     >
                       {t.label}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </div>
@@ -965,8 +972,8 @@ const SitesView = () => {
       </div>
 
       {/* Step indicators */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
+      <div className="relative max-w-2xl mx-auto px-4 py-8">
+        <div className="flex justify-between relative z-10">
           {stepMeta.map((s, i) => {
             const Icon = s.icon;
             const isActive = i === step;
@@ -979,48 +986,61 @@ const SitesView = () => {
                   if (i <= step || canAdvance) setStep(i);
                 }}
                 className={cn(
-                  "flex flex-col items-center gap-1 transition-all duration-200",
-                  isActive && "scale-110",
+                  "flex flex-col items-center group transition-all duration-300",
                   i > step && !canAdvance && "opacity-40 cursor-not-allowed"
                 )}
                 disabled={i > step && !canAdvance}
               >
-                <div
+                <motion.div
+                  initial={false}
+                  animate={{
+                    backgroundColor: isDone ? "#10b981" : isActive ? "#2563EB" : "transparent",
+                    borderColor: isDone ? "#10b981" : isActive ? "#2563EB" : "rgba(255,255,255,0.15)",
+                  }}
                   className={cn(
-                    "w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-300",
-                    isActive
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : isDone
-                        ? "border-primary/60 bg-primary/20 text-primary"
-                        : "border-border bg-secondary/50 text-muted-foreground"
+                    "w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 relative z-10",
+                    isActive && "shadow-[0_0_20px_rgba(37,99,235,0.4)]",
+                    isDone && "shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                   )}
                 >
-                  {isDone ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
-                </div>
-                <span
-                  className={cn(
-                    "text-[10px] font-medium hidden sm:block",
-                    isActive ? "text-primary" : isDone ? "text-primary/70" : "text-muted-foreground"
+                  {isDone ? (
+                    <Check className="w-5 h-5 text-white" />
+                  ) : (
+                    <Icon className={cn("w-5 h-5 transition-colors", isActive ? "text-white" : "text-[#475569]")} />
                   )}
-                >
+                </motion.div>
+                <span className={cn(
+                  "text-[10px] font-black uppercase tracking-widest mt-3 transition-colors",
+                  isActive ? "text-primary" : "text-[#475569]"
+                )}>
                   {s.label}
                 </span>
               </button>
             );
           })}
         </div>
-        <Progress value={progress} className="h-1.5" />
+
+        {/* Progress Line */}
+        <div className="absolute top-[50px] left-[15%] right-[15%] h-[2px] bg-white/10 -z-0">
+          <motion.div
+            initial={{ width: "0%" }}
+            animate={{ width: `${(step) * 25}%` }}
+            className="h-full bg-gradient-to-r from-green-500 to-primary shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+            transition={{ duration: 0.5 }}
+          />
+        </div>
       </div>
 
       {/* Step content */}
-      <div className="bg-card/50 border border-border rounded-2xl p-6 min-h-[340px]">
+      <div className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-8 min-h-[400px] shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            transition={{ duration: 0.25 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             {renderStep()}
           </motion.div>
