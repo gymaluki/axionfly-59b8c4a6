@@ -447,15 +447,28 @@ const AdminView = () => {
         <TabsContent value="licenses" className="mt-4">
           <Card className="bg-card border-border">
             <CardHeader className="flex flex-row items-center justify-between gap-4 flex-wrap">
-              <CardTitle className="text-base">Monitorar Licenças Hyperbuild</CardTitle>
+              <div className="space-y-1">
+                <CardTitle className="text-base">Monitorar Licenças Hyperbuild</CardTitle>
+                <p className="text-xs text-muted-foreground">Total de {licenses.length} licenças no banco de dados.</p>
+              </div>
               <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={testConnection} 
+                  disabled={testingConnection}
+                  className="gap-2 border-primary/20 hover:bg-primary/5"
+                >
+                  <ShieldCheck className={cn("w-4 h-4 text-primary", testingConnection && "animate-spin")} />
+                  {testingConnection ? "Testando..." : "Testar Conexão"}
+                </Button>
                 <div className="relative">
                   <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     placeholder="Buscar por chave, lote ou email..."
                     value={licenseSearch}
                     onChange={e => setLicenseSearch(e.target.value)}
-                    className="pl-9 w-64"
+                    className="pl-9 w-64 h-9"
                   />
                 </div>
               </div>
