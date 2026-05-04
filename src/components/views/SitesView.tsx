@@ -314,43 +314,92 @@ const SitesView = () => {
   const [differentiators, setDifferentiators] = useState("");
   const [pricePositioning, setPricePositioning] = useState("");
 
+  // Niche mapping for intelligent presets
+  const nichePresets: Record<string, any> = {
+    pizzaria: {
+      primaryColor: "Vermelho Pepperoni (#E31837)",
+      secondaryColor: "Laranja Queimado",
+      font: "playfair-raleway",
+      designStyle: "conversao",
+      selectedPages: ["inicio", "servicos", "depoimentos", "precos"],
+      tone: "amigavel",
+      targetAudience: "Famílias e jovens casais que buscam sabor artesanal e rapidez",
+      differentiators: "Massa de longa fermentação, entrega em 30 min, ingredientes importados",
+      pricePositioning: "medio",
+      cta: "whatsapp"
+    },
+    barbearia: {
+      primaryColor: "Dourado Premium (#D4AF37)",
+      secondaryColor: "Preto Fosco",
+      font: "playfair-raleway",
+      designStyle: "institucional",
+      selectedPages: ["inicio", "sobre", "servicos", "depoimentos"],
+      tone: "autoritario",
+      targetAudience: "Homens modernos que valorizam estilo, tradição e cuidado pessoal",
+      differentiators: "Barba com toalha quente, cerveja artesanal cortesia, especialistas em fade",
+      pricePositioning: "premium",
+      cta: "agendar"
+    },
+    clinica: {
+      primaryColor: "Azul Sereno (#0EA5E9)",
+      secondaryColor: "Verde Água",
+      font: "inter-space",
+      designStyle: "institucional",
+      selectedPages: ["inicio", "sobre", "servicos", "faq"],
+      tone: "formal",
+      targetAudience: "Pessoas que buscam saúde e confiança em tratamentos modernos",
+      differentiators: "Tecnologia de ponta, atendimento humanizado, parcelamento facilitado",
+      pricePositioning: "medio",
+      cta: "agendar"
+    },
+    hamburgueria: {
+      primaryColor: "Laranja Incandescente (#F97316)",
+      secondaryColor: "Carvão",
+      font: "oswald-roboto",
+      designStyle: "conversao",
+      selectedPages: ["inicio", "servicos", "depoimentos", "contato"],
+      tone: "criativo",
+      targetAudience: "Público jovem e amantes de junk food gourmet",
+      differentiators: "Blend de carnes frescas, molho secreto, batatas rústicas artesanais",
+      pricePositioning: "medio",
+      cta: "whatsapp"
+    }
+  };
+
   // Carregar dados salvos ao iniciar
   useEffect(() => {
     const saved = localStorage.getItem("pending_site_creation");
     if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        setProjectName(data.projectName || "");
-        setNiche(data.niche || "");
-        setAddress(data.address || "");
-        setPhone(data.phone || "");
-        setPrimaryColor(data.primaryColor || "");
-        setSecondaryColor(data.secondaryColor || "");
-        setFeatures(data.features || "");
-        setFont(data.font || "");
-        setDesignStyle(data.designStyle || "");
-        setSlogan(data.slogan || "");
-        setSiteObjective(data.siteObjective || "");
-        setTone(data.tone || "");
-        setSelectedPages(data.selectedPages || ["inicio"]);
-        setCtaPrincipal(data.ctaPrincipal || "");
-        setBusinessHours(data.businessHours || "");
-        setWhatsappOrdering(data.whatsappOrdering || false);
-        setInstagram(data.instagram || "");
-        setTiktok(data.tiktok || "");
-        setFacebook(data.facebook || "");
-        setTargetAudience(data.targetAudience || "");
-        setDifferentiators(data.differentiators || "");
-        setPricePositioning(data.pricePositioning || "");
-        setStep(data.step || 0);
-        
-        // Opcional: limpar após carregar para não ficar lixo no localStorage
-        // Mas talvez seja melhor manter até o usuário realmente gerar o site
-      } catch (e) {
-        console.error("Erro ao carregar dados salvos:", e);
+...
       }
     }
   }, []);
+
+  // Apply niche presets automatically
+  useEffect(() => {
+    if (niche && nichePresets[niche]) {
+      const preset = nichePresets[niche];
+      setPrimaryColor(preset.primaryColor);
+      setSecondaryColor(preset.secondaryColor);
+      setFont(preset.font);
+      setDesignStyle(preset.designStyle);
+      setSelectedPages(preset.selectedPages);
+      setTone(preset.tone);
+      setTargetAudience(preset.targetAudience);
+      setDifferentiators(preset.differentiators);
+      setPricePositioning(preset.pricePositioning);
+      setCtaPrincipal(preset.cta);
+      
+      if (foodNiches.includes(niche)) {
+        setWhatsappOrdering(true);
+      }
+      
+      toast.info(`Configurações de "${nicheTemplates[niche].label}" aplicadas automaticamente!`, {
+        description: "Você pode editar qualquer campo se desejar.",
+        duration: 4000
+      });
+    }
+  }, [niche]);
 
   const [hasInstalledExtension, setHasInstalledExtension] = useState(() => {
     return localStorage.getItem("has_installed_hyperbuild") === "true";
