@@ -313,6 +313,7 @@ const SitesView = () => {
   const [targetAudience, setTargetAudience] = useState("");
   const [differentiators, setDifferentiators] = useState("");
   const [pricePositioning, setPricePositioning] = useState("");
+  const [socialProof, setSocialProof] = useState("");
 
   // Niche mapping for intelligent presets
   const nichePresets: Record<string, any> = {
