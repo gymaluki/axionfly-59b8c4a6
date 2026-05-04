@@ -1,5 +1,6 @@
 import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle, Sparkles, ExternalLink } from "lucide-react";
 import axionflyLogo from "@/assets/axionfly-logo.png";
+import { cn } from "@/lib/utils";
 import {
   Sidebar,
   SidebarContent,
