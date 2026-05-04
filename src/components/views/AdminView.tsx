@@ -120,8 +120,64 @@ const AdminView = () => {
     }
   };
 
+  const fetchLogs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('hyperbuild_license_logs')
+        .select(`
+          id,
+          license_key,
+          action,
+          details,
+          created_at,
+          user_id
+        `)
+        .order('created_at', { ascending: false })
+        .limit(50);
+      
+      if (error) throw error;
+      
+      // Map user_id to emails using the already fetched users list
+      const enrichedLogs = (data || []).map(log => {
+        const user = users.find(u => u.user_id === log.user_id);
+        return {
+          ...log,
+          user_email: user?.email || 'Sistema'
+        } as LicenseLog;
+      });
+      
+      setLogs(enrichedLogs);
+    } catch (err: any) {
+      console.error("Error fetching logs:", err);
+    }
+  };
+
+  const testConnection = async () => {
+    setTestingConnection(true);
+    try {
+      // Simulate/test connection by calling the function
+      const { data, error } = await supabase.rpc('claim_hyperbuild_license');
+      
+      if (error) {
+        if (error.message.includes("Não há licenças")) {
+          toast({ title: "Conexão OK", description: "O sistema está conectado, mas o estoque está vazio." });
+        } else {
+          throw error;
+        }
+      } else {
+        toast({ title: "Conexão bem-sucedida!", description: "Sistema Hyperbuild respondendo corretamente." });
+      }
+    } catch (err: any) {
+      toast({ title: "Erro na conexão", description: err.message, variant: "destructive" });
+    } finally {
+      setTestingConnection(false);
+      fetchLogs(); // Refresh logs to see the test
+    }
+  };
+
   useEffect(() => {
     fetchData();
+    fetchLogs();
   }, []);
 
   const handleAction = async (
