@@ -277,10 +277,10 @@ const Index = () => {
                     <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                       <Icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-black text-foreground">{title}</h3>
+                    <h3 className="text-2xl md:text-3xl font-black text-foreground">{title}</h3>
                   </div>
                   
-                  <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-medium">
+                  <p className="text-[#64748b] text-[16px] leading-[1.7] font-normal">
                     {desc}
                   </p>
                   
