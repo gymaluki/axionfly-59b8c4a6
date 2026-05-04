@@ -235,49 +235,91 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
       </div>
 
       {videos.length === 0 ? (
-        <Card className="bg-card border-border">
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <Play className="w-12 h-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold text-foreground">Nenhum vídeo disponível</h3>
-            <p className="text-sm text-muted-foreground mt-1">
-              {isAdmin ? "Adicione o primeiro vídeo clicando no botão acima." : "Em breve novos conteúdos serão adicionados."}
+        <div className="flex flex-col items-center justify-center py-24 gap-6 bg-gradient-to-b from-transparent to-primary/5 rounded-[3rem] border border-white/5">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.05, 1],
+              rotate: [0, 5, 0, -5, 0]
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+          >
+            <div className="w-24 h-24 rounded-3xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.1)]">
+              <Play className="w-10 h-10 text-primary fill-current" />
+            </div>
+            <motion.div 
+              animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute -inset-4 border-2 border-primary/30 rounded-full pointer-events-none" 
+            />
+          </motion.div>
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl font-black text-foreground tracking-tight">Conteúdos exclusivos chegando em breve</h3>
+            <p className="text-[#64748b] font-medium max-w-sm mx-auto leading-relaxed">
+              Aulas práticas sobre criação de sites, prospecção e fechamento de contratos de alto valor.
             </p>
-          </CardContent>
-        </Card>
+          </div>
+          {isAdmin && (
+            <Button variant="neon" className="shimmer-button mt-4" onClick={() => setDialogOpen(true)}>
+              <Plus className="w-4 h-4 mr-2" /> Adicionar Primeiro Vídeo
+            </Button>
+          )}
+        </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {videos.map((video) => (
-            <Card
+            <motion.div
               key={video.id}
-              className="bg-card border-border overflow-hidden group cursor-pointer hover:border-primary/30 transition-colors"
+              whileHover={{ y: -8 }}
+              className="group"
               onClick={() => setSelectedVideo(video)}
             >
-              <div className="aspect-video bg-secondary/50 flex items-center justify-center relative">
-                <Play className="w-10 h-10 text-muted-foreground group-hover:text-primary transition-colors" />
-                {isAdmin && (
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-7 w-7"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDelete(video);
-                    }}
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </Button>
-                )}
-              </div>
-              <CardContent className="p-4 space-y-1">
-                <h3 className="font-semibold text-foreground text-sm line-clamp-1">{video.title}</h3>
-                {video.description && (
-                  <p className="text-xs text-muted-foreground line-clamp-2">{video.description}</p>
-                )}
-                <p className="text-[10px] text-muted-foreground">
-                  {new Date(video.created_at).toLocaleDateString("pt-BR")}
-                </p>
-              </CardContent>
-            </Card>
+              <Card className="bg-[#0d0d14]/40 border border-white/5 overflow-hidden transition-all duration-300 group-hover:border-primary/40 cursor-pointer">
+                <div className="aspect-video bg-secondary/20 relative overflow-hidden">
+                  {video.thumbnail_url ? (
+                    <img src={video.thumbnail_url} alt={video.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/5 to-primary/10">
+                      <Play className="w-12 h-12 text-primary/20 group-hover:text-primary/40 transition-colors" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white shadow-xl scale-75 group-hover:scale-100 transition-transform duration-300">
+                      <Play className="w-6 h-6 fill-current" />
+                    </div>
+                  </div>
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-primary text-white text-[10px] font-black px-2 py-1 rounded-md uppercase tracking-wider shadow-lg">
+                      Aula Premium
+                    </span>
+                  </div>
+                  {isAdmin && (
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 z-20"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(video);
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
+                <CardContent className="p-5 space-y-2">
+                  <h3 className="font-bold text-foreground text-base line-clamp-1 group-hover:text-primary transition-colors">{video.title}</h3>
+                  {video.description && (
+                    <p className="text-xs text-[#94a3b8] line-clamp-2 leading-relaxed">{video.description}</p>
+                  )}
+                  <div className="pt-2 flex items-center justify-between border-t border-white/5">
+                    <span className="text-[10px] text-[#475569] font-bold uppercase tracking-widest flex items-center gap-1.5">
+                      <Loader2 className="w-3 h-3" /> {new Date(video.created_at).toLocaleDateString("pt-BR")}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       )}
