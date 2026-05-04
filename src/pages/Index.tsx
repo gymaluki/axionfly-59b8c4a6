@@ -81,38 +81,37 @@ const features = [
   {
     icon: Infinity,
     title: "Extensão Lovable Infinito",
-    desc: "Crie sites sem limites de créditos. Parceria exclusiva com Hyperbuild Pro para garantir sua escala total.",
+    desc: "Crie sites sem limites de créditos. Parceria exclusiva com Hyperbuild Pro para garantir sua escala total. Comece agora sem preocupações com tokens.",
     tag: "INFINITO",
+    visual: "extension"
   },
   {
     icon: Code2,
     title: "Criador de Sites com IA",
-    desc: "Escolha entre 20+ nichos, personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Pronto pra vender.",
+    desc: "Escolha entre 20+ nichos, personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Design profissional pronto para vender.",
     tag: "PRINCIPAL",
+    visual: "builder"
   },
   {
     icon: MapPin,
     title: "Prospecção Automática",
-    desc: "Selecione estado e cidade. O sistema busca negócios sem site e entrega nome, telefone e endereço — tudo pronto pra fechar contrato.",
+    desc: "Selecione estado e cidade. O sistema busca negócios sem site e entrega nome, telefone e endereço — tudo pronto pra você fechar seu primeiro contrato hoje.",
     tag: "27 ESTADOS",
+    visual: "globe"
   },
   {
     icon: FileText,
     title: "Gerador de Contrato",
-    desc: "Gere contratos profissionais personalizados com nome do cliente, serviço e valores — prontos para enviar e fechar negócio na hora.",
+    desc: "Gere contratos profissionais personalizados com nome do cliente, serviço e valores — prontos para enviar e fechar negócio na hora, com segurança jurídica.",
     tag: "AUTOMÁTICO",
-  },
-  {
-    icon: MessageSquare,
-    title: "Script de Vendas Pronto",
-    desc: "Mensagens prontas para WhatsApp com o nome do cliente já preenchido. Abordagem, objeções e fechamento — tudo humanizado e testado.",
-    tag: "VENDAS",
+    visual: "contract"
   },
   {
     icon: BarChart3,
     title: "Dashboard de Vendas",
-    desc: "Acompanhe seus lucros, clientes atendidos e sites criados em um painel completo. Tenha controle total do seu negócio.",
+    desc: "Acompanhe seus lucros, clientes atendidos e sites criados em um painel completo. Tenha controle total do seu faturamento e crescimento.",
     tag: "GESTÃO",
+    visual: "dashboard"
   },
 ];
 
