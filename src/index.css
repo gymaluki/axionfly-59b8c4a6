@@ -102,6 +102,14 @@
     @apply bg-[hsl(240,10%,3%)] border border-border rounded-xl font-mono text-sm;
   }
 
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   .shimmer-button {
     position: relative;
     overflow: hidden;
