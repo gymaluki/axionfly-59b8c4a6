@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, type Easing, AnimatePresence } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, type Easing, AnimatePresence, useInView } from "framer-motion";
 import { Check, Sparkles, ChevronDown, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiPix } from "react-icons/si";
