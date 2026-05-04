@@ -303,6 +303,13 @@ const SitesView = () => {
   const [businessHours, setBusinessHours] = useState("");
   const [whatsappOrdering, setWhatsappOrdering] = useState(false);
 
+  const [instagram, setInstagram] = useState("");
+  const [tiktok, setTiktok] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [targetAudience, setTargetAudience] = useState("");
+  const [differentiators, setDifferentiators] = useState("");
+  const [pricePositioning, setPricePositioning] = useState("");
+
   // Carregar dados salvos ao iniciar
   useEffect(() => {
     const saved = localStorage.getItem("pending_site_creation");
@@ -325,6 +332,12 @@ const SitesView = () => {
         setCtaPrincipal(data.ctaPrincipal || "");
         setBusinessHours(data.businessHours || "");
         setWhatsappOrdering(data.whatsappOrdering || false);
+        setInstagram(data.instagram || "");
+        setTiktok(data.tiktok || "");
+        setFacebook(data.facebook || "");
+        setTargetAudience(data.targetAudience || "");
+        setDifferentiators(data.differentiators || "");
+        setPricePositioning(data.pricePositioning || "");
         setStep(data.step || 0);
         
         // Opcional: limpar após carregar para não ficar lixo no localStorage
@@ -393,6 +406,26 @@ const SitesView = () => {
     const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
     if (selectedCta) generated += ` Botão CTA principal: "${selectedCta.label.replace(/^.\s/, "")}" — ${selectedCta.desc}.`;
 
+    // Redes Sociais
+    if (instagram.trim() || tiktok.trim() || facebook.trim()) {
+      generated += ` Redes Sociais: No rodapé do site, adicione ícones com links diretos para as redes sociais fornecidas: ${instagram.trim() ? `Instagram: ${instagram.trim()}, ` : ""}${tiktok.trim() ? `TikTok: ${tiktok.trim()}, ` : ""}${facebook.trim() ? `Facebook: ${facebook.trim()}` : ""}. Garanta que os links abram em nova aba.`;
+    }
+
+    // Inteligência de Negócio
+    if (targetAudience.trim() || differentiators.trim() || pricePositioning.trim()) {
+      generated += `\n\n### ESTRATÉGIA DE NEGÓCIO (CONVERSÃO):`;
+      if (targetAudience.trim()) generated += `\n- Público-Alvo: ${targetAudience.trim()}. Adapte o design e a linguagem para este público.`;
+      if (differentiators.trim()) generated += `\n- Diferenciais Competitivos: ${differentiators.trim()}. Destaque esses pontos em seções de benefícios ou cards.`;
+      if (pricePositioning.trim()) generated += `\n- Posicionamento de Preço: ${pricePositioning.trim()}. Reflita isso no estilo visual (mais premium ou mais popular/acessível).`;
+    }
+
+    // Performance & Mobile (Obrigatórios)
+    generated += `\n\n### PERFORMANCE & MOBILE (REQUISITOS):
+- Mobile-First: O site deve ser perfeito em dispositivos móveis. Use tap targets de no mínimo 48px.
+- Botão Flutuante: Inclua um botão de CTA (WhatsApp) flutuante fixo no rodapé para dispositivos móveis.
+- Velocidade: Priorize o carregamento progressivo de imagens (lazy-load) e use fontes com font-display: swap.
+- Acessibilidade: Garanta contraste WCAG AA entre textos e fundos.`;
+
     if (whatsappOrdering) {
       generated += ` IMPORTANTE: Inclua um sistema de pedidos via WhatsApp completo. Crie uma seção de cardápio interativo com botões "+" e "−" ao lado de cada item para adicionar/remover do carrinho, mostrando a quantidade selecionada entre os botões. Itens selecionados devem ter destaque visual. Adicione um botão flutuante fixo no canto inferior direito com ícone de carrinho e contador de itens (só aparece quando há itens no carrinho). Ao clicar, abra um modal de checkout em 2 etapas: Etapa 1 com campos Nome, Endereço, Forma de pagamento (Dinheiro/Cartão Crédito/Cartão Débito/PIX como toggles) e Observação. Etapa 2 com revisão completa e botão "Enviar WhatsApp". Ao confirmar, gere uma mensagem formatada com emojis (🍕 PEDIDO, 👤 Nome, 📍 Endereço, 💳 Pagamento, 📋 Itens, 📝 Observação) e envie via https://wa.me/{numero}?text={mensagem}. Após envio, limpar carrinho e fechar modal.`;
     }
@@ -432,6 +465,12 @@ const SitesView = () => {
       ctaPrincipal,
       businessHours,
       whatsappOrdering,
+      instagram,
+      tiktok,
+      facebook,
+      targetAudience,
+      differentiators,
+      pricePositioning,
       step
     };
     localStorage.setItem("pending_site_creation", JSON.stringify(formData));
@@ -809,6 +848,78 @@ const SitesView = () => {
                   className="bg-secondary/50 border-border h-12"
                 />
               </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <Instagram className="w-4 h-4 text-primary" />
+                    Instagram (Link)
+                  </label>
+                  <Input
+                    placeholder="Ex: instagram.com/seunegocio"
+                    value={instagram}
+                    onChange={(e) => setInstagram(e.target.value)}
+                    className="bg-secondary/50 border-border"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-primary" />
+                    TikTok / Facebook (Link)
+                  </label>
+                  <Input
+                    placeholder="Ex: tiktok.com/@seunegocio"
+                    value={tiktok}
+                    onChange={(e) => setTiktok(e.target.value)}
+                    className="bg-secondary/50 border-border"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Users className="w-4 h-4 text-primary" />
+                  Público-Alvo
+                </label>
+                <Input
+                  placeholder="Ex: Jovens de 18-25 anos que gostam de esportes"
+                  value={targetAudience}
+                  onChange={(e) => setTargetAudience(e.target.value)}
+                  className="bg-secondary/50 border-border"
+                />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <Star className="w-4 h-4 text-primary" />
+                    Diferencial Competitivo
+                  </label>
+                  <Input
+                    placeholder="Ex: Entrega mais rápida da região"
+                    value={differentiators}
+                    onChange={(e) => setDifferentiators(e.target.value)}
+                    className="bg-secondary/50 border-border"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-primary" />
+                    Posicionamento de Preço
+                  </label>
+                  <Select value={pricePositioning} onValueChange={setPricePositioning}>
+                    <SelectTrigger className="bg-secondary/50 border-border">
+                      <SelectValue placeholder="Selecione..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="popular">Popular / Acessível</SelectItem>
+                      <SelectItem value="medio">Médio / Custo-Benefício</SelectItem>
+                      <SelectItem value="premium">Premium / Alta Gastronomia</SelectItem>
+                      <SelectItem value="luxo">Luxo / Exclusivo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
               <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground flex items-center gap-2">
                   <Clock className="w-4 h-4 text-primary" />
