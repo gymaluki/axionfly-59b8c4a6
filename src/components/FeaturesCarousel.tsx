@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 const slides = [
-  { id: "aula1", src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop", title: "Primeiros Passos", desc: "Configurando sua conta e ativando a IA" },
-  { id: "aula2", src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2340&auto=format&fit=crop", title: "Busca de Clientes", desc: "Como usar o Google Maps para prospectar" },
+  { id: "aula1", src: "https://uzsvdtahsnkfjuuuipfh.supabase.co/storage/v1/object/public/files/uploads/ShsuAt31DMUOEDUhs93J86XVyP73/1777674241404-5zck6-image.png", title: "Primeiros Passos", desc: "Configurando sua conta e ativando a IA" },
+  { id: "aula2", src: "https://uzsvdtahsnkfjuuuipfh.supabase.co/storage/v1/object/public/files/uploads/ShsuAt31DMUOEDUhs93J86XVyP73/1777674241404-5zck6-image.png", title: "Busca de Clientes", desc: "Como usar o Google Maps para prospectar" },
   { id: "aula3", src: "https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=2342&auto=format&fit=crop", title: "Fechamento de Vendas", desc: "O script de WhatsApp que vende sites" },
   { id: "aula4", src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=2340&auto=format&fit=crop", title: "Escalando Agência", desc: "Contratando pessoas e automatizando processos" },
   { id: "aula5", src: "https://images.unsplash.com/photo-1531403001884-48a6202a632a?q=80&w=2340&auto=format&fit=crop", title: "Design de Elite", desc: "Como deixar seus sites com visual premium" },
