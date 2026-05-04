@@ -28,8 +28,8 @@ export function HeroSection() {
 						>
 							<Zap className="size-3.5 text-primary fill-primary" />
 						</motion.div>
-						<span className="text-xs font-black uppercase tracking-widest text-primary-foreground">
-							⚡ +5.000 empreendedores já vendem com AxionFly
+						<span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">
+							+5.000 empreendedores já vendem com AxionFly
 						</span>
 					</div>
 				</motion.div>
