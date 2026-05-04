@@ -482,10 +482,10 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-7xl font-black text-foreground mb-6">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground mb-6">
               Dúvidas <span className="gradient-text">Frequentes</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Tudo o que você precisa saber para começar sua jornada com segurança.
             </p>
           </motion.div>
