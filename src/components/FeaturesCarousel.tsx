@@ -61,10 +61,10 @@ export default function FeaturesCarousel() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center space-y-6"
         >
-          <h2 className="text-4xl md:text-7xl font-black text-foreground tracking-tight leading-[1.1]">
+          <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight leading-[1.1]">
             Aulas <span className="gradient-text">Premium e Exclusivas</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+          <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
             Conteúdo estratégico para você dominar a criação de sites e fechar contratos de alto valor.
           </p>
         </motion.div>
