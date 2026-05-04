@@ -229,6 +229,16 @@ const Index = () => {
       />
 
       <div className="relative z-10">
+        {/* Anniversary Banner */}
+        <div className="w-full bg-primary py-2 text-center relative z-[60]">
+          <div className="container mx-auto px-4 flex items-center justify-center gap-4">
+            <span className="animate-pulse text-white">🎁</span>
+            <p className="text-white text-xs md:text-sm font-black uppercase tracking-[0.2em]">
+              Promoção de 1 Ano AxionFly: 50% de Desconto em TODOS os Planos! Só hoje!
+            </p>
+            <span className="animate-pulse text-white">🎁</span>
+          </div>
+        </div>
         <Header />
 
         {/* ═══════════ HERO ═══════════ */}
