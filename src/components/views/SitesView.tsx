@@ -1047,6 +1047,12 @@ const SitesView = () => {
               <ReviewItem label="Telefone" value={phone || "Não informado"} />
               <ReviewItem label="Horário" value={businessHours || "Não informado"} />
               <ReviewItem label="Extras" value={features || "Nenhum"} />
+              <ReviewItem label="Público-Alvo" value={targetAudience || "Não informado"} />
+              <ReviewItem label="Diferenciais" value={differentiators || "Não informado"} />
+              <ReviewItem label="Posicionamento" value={pricePositioning ? pricePositioning.charAt(0).toUpperCase() + pricePositioning.slice(1) : "Padrão"} />
+              {(instagram || tiktok || facebook) && (
+                <ReviewItem label="Social" value={[instagram, tiktok, facebook].filter(Boolean).length + " redes conectadas"} />
+              )}
               {foodNiches.includes(niche) && (
                 <ReviewItem label="Pedidos WhatsApp" value={whatsappOrdering ? "✅ Ativado" : "Desativado"} />
               )}
