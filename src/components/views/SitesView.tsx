@@ -370,7 +370,33 @@ const SitesView = () => {
   useEffect(() => {
     const saved = localStorage.getItem("pending_site_creation");
     if (saved) {
-...
+      try {
+        const data = JSON.parse(saved);
+        setProjectName(data.projectName || "");
+        setNiche(data.niche || "");
+        setAddress(data.address || "");
+        setPhone(data.phone || "");
+        setPrimaryColor(data.primaryColor || "");
+        setSecondaryColor(data.secondaryColor || "");
+        setFeatures(data.features || "");
+        setFont(data.font || "");
+        setDesignStyle(data.designStyle || "");
+        setSlogan(data.slogan || "");
+        setSiteObjective(data.siteObjective || "");
+        setTone(data.tone || "");
+        setSelectedPages(data.selectedPages || ["inicio"]);
+        setCtaPrincipal(data.ctaPrincipal || "");
+        setBusinessHours(data.businessHours || "");
+        setWhatsappOrdering(data.whatsappOrdering || false);
+        setInstagram(data.instagram || "");
+        setTiktok(data.tiktok || "");
+        setFacebook(data.facebook || "");
+        setTargetAudience(data.targetAudience || "");
+        setDifferentiators(data.differentiators || "");
+        setPricePositioning(data.pricePositioning || "");
+        setStep(data.step || 0);
+      } catch (e) {
+        console.error("Erro ao carregar dados salvos:", e);
       }
     }
   }, []);
