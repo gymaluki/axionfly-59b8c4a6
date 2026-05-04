@@ -273,11 +273,11 @@ export default function PricingCards() {
         custom={0}
         className="mb-20 space-y-6 text-center"
       >
-        <h2 className="text-4xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1]">
+        <h2 className="text-3xl md:text-[44px] font-black tracking-tight text-foreground leading-[1.1]">
           O plano ideal para <br />
           seu <span className="gradient-text">próximo nível</span>
         </h2>
-        <p className="mx-auto max-w-2xl text-lg md:text-xl text-muted-foreground font-medium">
+        <p className="mx-auto max-w-2xl text-[18px] md:text-[20px] text-[#94a3b8] font-normal leading-[1.7]">
           Sem taxas escondidas. Sem letras miúdas. Acesso imediato a todas as ferramentas após a confirmação.
         </p>
       </motion.div>
@@ -317,7 +317,7 @@ export default function PricingCards() {
 function SectionPill({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex justify-center mb-8">
-      <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-sm">
+      <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-[11px] font-black uppercase tracking-[0.1em] text-[#94a3b8] shadow-sm backdrop-blur-sm">
         {children}
       </span>
     </div>

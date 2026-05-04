@@ -74,7 +74,7 @@ function SectionPill({ children }: { children: React.ReactNode }) {
       custom={0}
       className="flex justify-center mb-8"
     >
-      <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+      <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.1em] text-[#94a3b8] shadow-sm">
         {children}
       </span>
     </motion.div>
@@ -246,11 +246,11 @@ const Index = () => {
           <SectionPill>Funcionalidades Premium</SectionPill>
 
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
-            <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tight mb-6">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Tudo o que você precisa <br />
               para <span className="gradient-text">escalar seu negócio</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
             </p>
           </motion.div>
@@ -270,17 +270,17 @@ const Index = () => {
                   className="flex-1 space-y-6"
                 >
                   <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.1)]">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{tag}</span>
+                    <span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">{tag}</span>
                   </div>
                   
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                       <Icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-black text-foreground">{title}</h3>
+                    <h3 className="text-2xl md:text-3xl font-black text-foreground">{title}</h3>
                   </div>
                   
-                  <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-medium">
+                  <p className="text-[#64748b] text-[16px] leading-[1.7] font-normal">
                     {desc}
                   </p>
                   
@@ -308,7 +308,7 @@ const Index = () => {
                     <div className="absolute -inset-10 bg-primary/10 blur-[100px] rounded-full opacity-50 pointer-events-none" />
                     
                     {visual === "globe" ? (
-                      <div className="w-full max-w-md mx-auto aspect-square relative">
+                      <div className="w-full max-w-[280px] md:max-w-md mx-auto aspect-square relative">
                         <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
                           <GlobeCdn className="w-full" speed={0.006} />
                           {/* Tooltips */}
@@ -354,11 +354,11 @@ const Index = () => {
           <SectionPill>Processo AxionFly</SectionPill>
           
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
-            <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tight mb-6">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Venda seu primeiro site <br />
               em <span className="gradient-text">3 passos simples</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Não reinventamos a roda, apenas automatizamos o que funciona. Siga o método e veja os resultados.
             </p>
           </motion.div>
@@ -482,10 +482,10 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-7xl font-black text-foreground mb-6">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground mb-6">
               Dúvidas <span className="gradient-text">Frequentes</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Tudo o que você precisa saber para começar sua jornada com segurança.
             </p>
           </motion.div>
@@ -508,7 +508,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="relative z-10 max-w-6xl mx-auto rounded-[3rem] border border-primary/20 bg-card/60 backdrop-blur-xl p-12 md:p-24 text-center space-y-12"
           >
-            <h2 className="text-5xl md:text-8xl font-black text-foreground leading-[1.05] tracking-tighter">
+            <h2 className="text-4xl md:text-[58px] font-black text-foreground leading-[1.05] tracking-tighter">
               Comece agora e venda seu <br />
               <span className="gradient-text-animate">primeiro site hoje</span>
             </h2>
@@ -566,7 +566,7 @@ const Index = () => {
                   </div>
                   <span className="text-3xl font-black text-foreground tracking-tighter">AxionFly</span>
                 </div>
-                <p className="text-muted-foreground max-w-sm text-xl font-medium leading-relaxed">
+                <p className="text-[#64748b] max-w-sm text-[16px] font-normal leading-[1.7]">
                   A plataforma líder em criação de sites com IA e prospecção automática para comércios locais.
                 </p>
                 <div className="flex items-center gap-4">
@@ -614,7 +614,7 @@ const Index = () => {
             </div>
             
             <div className="pt-12 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-8">
-              <p className="text-muted-foreground text-sm font-bold uppercase tracking-widest text-center">
+              <p className="text-[#64748b] text-[11px] font-black uppercase tracking-[0.1em] text-center">
                 © 2026 AxionFly · Todos os direitos reservados
               </p>
               <div className="flex items-center gap-10 text-xs font-black uppercase tracking-widest text-muted-foreground/60">

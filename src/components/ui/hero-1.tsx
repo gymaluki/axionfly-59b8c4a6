@@ -28,15 +28,15 @@ export function HeroSection() {
 						>
 							<Zap className="size-3.5 text-primary fill-primary" />
 						</motion.div>
-						<span className="text-xs font-black uppercase tracking-widest text-primary-foreground">
-							⚡ +5.000 empreendedores já vendem com AxionFly
+						<span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">
+							+5.000 empreendedores já vendem com AxionFly
 						</span>
 					</div>
 				</motion.div>
 
 				{/* Headline */}
 				<div className="text-center mb-8">
-					<h1 className="text-4xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1] mb-2">
+					<h1 className="text-3xl md:text-[58px] font-black tracking-tight text-foreground leading-[1.1] mb-2">
 						{words.map((word, i) => (
 							<motion.span
 								key={i}
@@ -59,7 +59,7 @@ export function HeroSection() {
 						transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
 						className="flex justify-center mt-2"
 					>
-						<span className="text-5xl md:text-8xl font-black leading-none gradient-text-animate tracking-tighter">
+						<span className="text-4xl md:text-[68px] font-black leading-none gradient-text-animate tracking-tighter">
 							COMÉRCIOS
 						</span>
 					</motion.div>
@@ -70,7 +70,7 @@ export function HeroSection() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8, delay: 1.2 }}
-					className="mx-auto max-w-2xl text-center text-lg md:text-xl text-muted-foreground font-medium leading-relaxed mb-10"
+					className="mx-auto max-w-2xl text-center text-[18px] md:text-[20px] text-[#94a3b8] font-normal leading-[1.7] mb-10"
 				>
 					Escolha o plano ideal para você. Comece seu negócio{" "}
 					<span className="text-foreground font-bold border-b-2 border-primary/40">com a liberdade</span> de crescer ainda mais.
@@ -108,16 +108,16 @@ export function HeroSection() {
 
 				{/* Partners */}
 				<motion.div
-					initial={{ opacity: 0 }}
-					whileInView={{ opacity: 1 }}
+					initial={{ opacity: 0, y: 10 }}
+					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					transition={{ duration: 1, delay: 2 }}
+					transition={{ duration: 1, delay: 1 }}
 					className="mt-20 flex flex-col items-center gap-6"
 				>
-					<p className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
+					<p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#64748b]">
 						Parceiros oficiais
 					</p>
-					<div className="flex items-center gap-12 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+					<div className="flex items-center gap-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
 						<div className="flex items-center gap-2">
 							<Sparkles className="w-6 h-6 text-primary" />
 							<span className="text-xl font-black tracking-tighter text-foreground">Lovable</span>

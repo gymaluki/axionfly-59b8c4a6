@@ -44,7 +44,7 @@ export default function Testimonials() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(37,99,235,0.03)_0%,transparent_70%)] pointer-events-none" />
       
       <div className="flex justify-center mb-8">
-        <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-sm">
+        <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-[11px] font-black uppercase tracking-[0.1em] text-[#94a3b8] shadow-sm backdrop-blur-sm">
           Feedbacks Reais
         </span>
       </div>
@@ -55,11 +55,11 @@ export default function Testimonials() {
         viewport={{ once: true }}
         className="text-center mb-20 space-y-6"
       >
-        <h2 className="text-4xl md:text-7xl font-black text-foreground leading-[1.1]">
+        <h2 className="text-3xl md:text-[44px] font-black text-foreground leading-[1.1]">
           Histórias de quem <br />
           já <span className="gradient-text">mudou de jogo</span>
         </h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+        <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
           Mais de 5.000 empreendedores utilizando a AxionFly para criar sua própria fonte de renda.
         </p>
       </motion.div>
