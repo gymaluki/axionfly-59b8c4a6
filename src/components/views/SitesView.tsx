@@ -965,8 +965,8 @@ const SitesView = () => {
       </div>
 
       {/* Step indicators */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
+      <div className="relative max-w-2xl mx-auto px-4 py-8">
+        <div className="flex justify-between relative z-10">
           {stepMeta.map((s, i) => {
             const Icon = s.icon;
             const isActive = i === step;
@@ -979,37 +979,49 @@ const SitesView = () => {
                   if (i <= step || canAdvance) setStep(i);
                 }}
                 className={cn(
-                  "flex flex-col items-center gap-1 transition-all duration-200",
-                  isActive && "scale-110",
+                  "flex flex-col items-center group transition-all duration-300",
                   i > step && !canAdvance && "opacity-40 cursor-not-allowed"
                 )}
                 disabled={i > step && !canAdvance}
               >
-                <div
+                <motion.div
+                  initial={false}
+                  animate={{
+                    backgroundColor: isDone ? "#10b981" : isActive ? "#2563EB" : "transparent",
+                    borderColor: isDone ? "#10b981" : isActive ? "#2563EB" : "rgba(255,255,255,0.15)",
+                  }}
                   className={cn(
-                    "w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-300",
-                    isActive
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : isDone
-                        ? "border-primary/60 bg-primary/20 text-primary"
-                        : "border-border bg-secondary/50 text-muted-foreground"
+                    "w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 relative z-10",
+                    isActive && "shadow-[0_0_20px_rgba(37,99,235,0.4)]",
+                    isDone && "shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                   )}
                 >
-                  {isDone ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
-                </div>
-                <span
-                  className={cn(
-                    "text-[10px] font-medium hidden sm:block",
-                    isActive ? "text-primary" : isDone ? "text-primary/70" : "text-muted-foreground"
+                  {isDone ? (
+                    <Check className="w-5 h-5 text-white" />
+                  ) : (
+                    <Icon className={cn("w-5 h-5 transition-colors", isActive ? "text-white" : "text-[#475569]")} />
                   )}
-                >
+                </motion.div>
+                <span className={cn(
+                  "text-[10px] font-black uppercase tracking-widest mt-3 transition-colors",
+                  isActive ? "text-primary" : "text-[#475569]"
+                )}>
                   {s.label}
                 </span>
               </button>
             );
           })}
         </div>
-        <Progress value={progress} className="h-1.5" />
+
+        {/* Progress Line */}
+        <div className="absolute top-[50px] left-[15%] right-[15%] h-[2px] bg-white/10 -z-0">
+          <motion.div
+            initial={{ width: "0%" }}
+            animate={{ width: `${(step) * 25}%` }}
+            className="h-full bg-gradient-to-r from-green-500 to-primary shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+            transition={{ duration: 0.5 }}
+          />
+        </div>
       </div>
 
       {/* Step content */}
