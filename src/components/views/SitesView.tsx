@@ -21,6 +21,9 @@ import {
   Users,
   Star,
   TrendingUp,
+  Youtube,
+  Facebook as FacebookIcon,
+  Globe,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
