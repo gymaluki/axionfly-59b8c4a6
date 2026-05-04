@@ -321,32 +321,34 @@ const ProspeccaoView = () => {
                     initial="hidden"
                     animate="visible"
                     variants={staggerItem}
-                    className="border-b border-border/50 hover:bg-secondary/30 transition-colors"
+                    className="border-b border-white/5 hover:bg-primary/5 transition-all duration-200 group"
                   >
-                    <td className="px-4 py-3">
-                      <div className="flex items-start gap-2">
-                        <MapPin className="w-3.5 h-3.5 text-primary shrink-0 mt-1" />
+                    <td className="px-6 py-5">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded-lg bg-primary/10 text-primary shrink-0">
+                          <MapPin className="w-4 h-4" />
+                        </div>
                         <div>
-                          <span className="font-medium text-foreground block">{r.title}</span>
-                          <span className="text-xs text-muted-foreground">{extractDomain(r.url)}</span>
+                          <span className="font-bold text-foreground block text-base">{r.title}</span>
+                          <span className="text-xs text-[#64748b] mt-0.5 block">{extractDomain(r.url)}</span>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground hidden lg:table-cell max-w-xs truncate">
+                    <td className="px-6 py-5 text-sm text-[#94a3b8] hidden lg:table-cell max-w-xs truncate font-medium">
                       {r.description || "—"}
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-6 py-5">
                       {r.phone ? (
-                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                        <span className="inline-flex items-center gap-2 text-sm font-bold text-foreground bg-green-500/5 px-3 py-1.5 rounded-lg border border-green-500/20">
                           <Phone className="w-3.5 h-3.5 text-green-500" />
                           {r.phone}
                         </span>
                       ) : (
-                        <span className="text-xs text-muted-foreground">—</span>
+                        <span className="text-xs text-[#475569] font-medium">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="flex gap-2 justify-end">
+                    <td className="px-6 py-5 text-right">
+                      <div className="flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
                         <Button
                           size="sm"
                           variant="outline"
@@ -354,13 +356,13 @@ const ProspeccaoView = () => {
                             const query = encodeURIComponent(r.title);
                             openExternalLink(`https://www.google.com/maps/search/${query}`);
                           }}
-                          className="gap-1.5"
+                          className="gap-2 font-bold border-white/10 hover:bg-white/5"
                         >
                           <MapPin className="w-3.5 h-3.5" /> Maps
                         </Button>
                         <Button
                           size="sm"
-                          variant="hero"
+                          variant="neon"
                           onClick={async () => {
                             const phoneNum = r.phone ? r.phone.replace(/\D/g, "") : "";
                             const fullNum = phoneNum.startsWith("55") ? phoneNum : `55${phoneNum}`;
@@ -381,9 +383,9 @@ const ProspeccaoView = () => {
 
                             openExternalLink(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`);
                           }}
-                          className="gap-1.5"
+                          className="gap-2 font-black uppercase text-[10px] tracking-widest shadow-[0_0_15px_rgba(37,99,235,0.3)]"
                         >
-                          <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
+                          <MessageCircle className="w-3.5 h-3.5 fill-current" /> WhatsApp
                         </Button>
                       </div>
                     </td>
@@ -393,14 +395,40 @@ const ProspeccaoView = () => {
             </AnimatePresence>
           </table>
         ) : searched ? (
-          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
-            <Search className="w-10 h-10 opacity-30" />
-            <p className="text-sm">Nenhum resultado encontrado. Tente outro nicho ou região.</p>
+          <div className="flex flex-col items-center justify-center py-20 text-[#64748b] gap-4">
+            <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center">
+              <Search className="w-10 h-10 opacity-20" />
+            </div>
+            <div className="text-center space-y-1">
+              <p className="text-base font-bold text-foreground">Nenhum lead encontrado</p>
+              <p className="text-sm">Tente mudar o nicho ou buscar em outra cidade/estado.</p>
+            </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground gap-3">
-            <Search className="w-10 h-10 opacity-30" />
-            <p className="text-sm">Selecione um nicho e uma região para buscar leads</p>
+          <div className="flex flex-col items-center justify-center py-24 text-[#64748b] gap-6 bg-gradient-to-b from-transparent to-primary/5">
+            <motion.div
+              animate={{ 
+                y: [0, -10, 0],
+                rotate: [0, 5, 0, -5, 0]
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative"
+            >
+              <div className="w-24 h-24 rounded-3xl bg-primary/10 border border-primary/20 flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.1)]">
+                <MapPin className="w-10 h-10 text-primary" />
+              </div>
+              <motion.div 
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -inset-4 border-2 border-primary/30 rounded-full pointer-events-none" 
+              />
+            </motion.div>
+            <div className="text-center space-y-2">
+              <p className="text-lg font-black text-foreground tracking-tight">Selecione um nicho e região para encontrar clientes</p>
+              <p className="text-[#64748b] font-medium max-w-sm mx-auto leading-relaxed">
+                💡 Dica: barbearias e restaurantes têm alta demanda e baixa presença digital.
+              </p>
+            </div>
           </div>
         )}
       </div>
