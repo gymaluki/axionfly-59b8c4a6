@@ -86,11 +86,19 @@ const ExtensionPage = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-2 p-4 bg-secondary/50 rounded-lg border border-border font-mono text-lg justify-between overflow-hidden">
-                  <span className="truncate">{extensionToken}</span>
-                  <Button variant="ghost" size="icon" onClick={handleCopyToken} className="shrink-0">
-                    {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
-                  </Button>
+                <div className="flex items-center gap-2 p-4 bg-secondary/50 rounded-lg border border-border font-mono text-lg justify-between overflow-hidden min-h-[64px]">
+                  {loading ? (
+                    <div className="w-24 h-4 bg-primary/20 animate-pulse rounded" />
+                  ) : extensionToken ? (
+                    <>
+                      <span className="truncate">{extensionToken}</span>
+                      <Button variant="ghost" size="icon" onClick={handleCopyToken} className="shrink-0">
+                        {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+                      </Button>
+                    </>
+                  ) : (
+                    <span className="text-sm text-destructive font-sans">Sem licenças disponíveis</span>
+                  )}
                 </div>
                 <div className="bg-primary/5 border border-primary/10 rounded-lg p-4 flex gap-3">
                   <Key className="w-5 h-5 text-primary shrink-0 mt-0.5" />
