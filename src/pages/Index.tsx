@@ -566,7 +566,7 @@ const Index = () => {
                   </div>
                   <span className="text-3xl font-black text-foreground tracking-tighter">AxionFly</span>
                 </div>
-                <p className="text-muted-foreground max-w-sm text-xl font-medium leading-relaxed">
+                <p className="text-[#64748b] max-w-sm text-[16px] font-normal leading-[1.7]">
                   A plataforma líder em criação de sites com IA e prospecção automática para comércios locais.
                 </p>
                 <div className="flex items-center gap-4">
