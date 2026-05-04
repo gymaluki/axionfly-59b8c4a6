@@ -71,6 +71,42 @@ export type Database = {
         }
         Relationships: []
       }
+      hyperbuild_licenses: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          key: string
+          lote: string | null
+          status: string
+          updated_at: string
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          key: string
+          lote?: string | null
+          status?: string
+          updated_at?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          key?: string
+          lote?: string | null
+          status?: string
+          updated_at?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
       pending_payments: {
         Row: {
           created_at: string
@@ -275,6 +311,12 @@ export type Database = {
     }
     Functions: {
       check_user_access: { Args: { check_user_id: string }; Returns: boolean }
+      claim_hyperbuild_license: {
+        Args: never
+        Returns: {
+          license_key: string
+        }[]
+      }
       claim_pending_access: { Args: never; Returns: boolean }
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
     }

@@ -2,14 +2,35 @@ import { Header } from "@/components/ui/header-3";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download, Key, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const ExtensionPage = () => {
   const [copied, setCopied] = useState(false);
-  const extensionToken = "HB-LOVABLE-INFINITO-" + Math.random().toString(36).substring(2, 10).toUpperCase();
+  const [extensionToken, setExtensionToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getLicense = async () => {
+      try {
+        const { data, error } = await supabase.rpc('claim_hyperbuild_license');
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setExtensionToken(data[0].license_key);
+        }
+      } catch (err: any) {
+        console.error("Error claiming license:", err);
+        toast.error(err.message || "Erro ao obter sua licença.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getLicense();
+  }, []);
 
   const handleCopyToken = () => {
+    if (!extensionToken) return;
     navigator.clipboard.writeText(extensionToken);
     setCopied(true);
     toast.success("Token copiado para a área de transferência!");
@@ -65,11 +86,19 @@ const ExtensionPage = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-2 p-4 bg-secondary/50 rounded-lg border border-border font-mono text-lg justify-between overflow-hidden">
-                  <span className="truncate">{extensionToken}</span>
-                  <Button variant="ghost" size="icon" onClick={handleCopyToken} className="shrink-0">
-                    {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
-                  </Button>
+                <div className="flex items-center gap-2 p-4 bg-secondary/50 rounded-lg border border-border font-mono text-lg justify-between overflow-hidden min-h-[64px]">
+                  {loading ? (
+                    <div className="w-24 h-4 bg-primary/20 animate-pulse rounded" />
+                  ) : extensionToken ? (
+                    <>
+                      <span className="truncate">{extensionToken}</span>
+                      <Button variant="ghost" size="icon" onClick={handleCopyToken} className="shrink-0">
+                        {copied ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+                      </Button>
+                    </>
+                  ) : (
+                    <span className="text-sm text-destructive font-sans">Sem licenças disponíveis</span>
+                  )}
                 </div>
                 <div className="bg-primary/5 border border-primary/10 rounded-lg p-4 flex gap-3">
                   <Key className="w-5 h-5 text-primary shrink-0 mt-0.5" />

@@ -40,6 +40,18 @@ interface PendingPayment {
   updated_at: string;
 }
 
+interface HyperbuildLicense {
+  id: string;
+  key: string;
+  lote: string | null;
+  status: string;
+  created_at: string;
+  expires_at: string | null;
+  used_by: string | null;
+  used_at: string | null;
+  user_email?: string;
+}
+
 const PLAN_DAYS: Record<string, number> = {
   monthly: 30,
   trial: 7,
@@ -55,8 +67,10 @@ const PLAN_LABELS: Record<string, string> = {
 const AdminView = () => {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [pendingPayments, setPendingPayments] = useState<PendingPayment[]>([]);
+  const [licenses, setLicenses] = useState<HyperbuildLicense[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [licenseSearch, setLicenseSearch] = useState("");
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   const fetchData = async () => {
@@ -68,6 +82,25 @@ const AdminView = () => {
       if (error) throw error;
       setUsers(data.users || []);
       setPendingPayments(data.pendings || []);
+
+      // Fetch licenses
+      const { data: licenseData, error: licenseError } = await supabase
+        .from('hyperbuild_licenses')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (licenseError) throw licenseError;
+      
+      // Match licenses with user emails
+      const enrichedLicenses = (licenseData || []).map(license => {
+        const user = data.users?.find((u: any) => u.user_id === license.used_by);
+        return {
+          ...license,
+          user_email: user?.email
+        };
+      });
+      
+      setLicenses(enrichedLicenses);
     } catch (err: any) {
       console.error(err);
       toast({ title: "Erro ao carregar", description: err.message, variant: "destructive" });
@@ -194,6 +227,7 @@ const AdminView = () => {
         <TabsList className="bg-muted">
           <TabsTrigger value="users">Usuários ({users.length})</TabsTrigger>
           <TabsTrigger value="pending">Pré-pagamentos ({pendingPayments.length})</TabsTrigger>
+          <TabsTrigger value="licenses">Licenças Hyperbuild ({licenses.length})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="users" className="mt-4">
@@ -332,6 +366,72 @@ const AdminView = () => {
                           <td className="py-3 text-muted-foreground">{pp.plan || "—"}</td>
                           <td className="py-3 text-muted-foreground text-xs font-mono">{pp.transaction_id || "—"}</td>
                           <td className="py-3 text-muted-foreground text-xs">{formatDate(pp.created_at)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="licenses" className="mt-4">
+          <Card className="bg-card border-border">
+            <CardHeader className="flex flex-row items-center justify-between gap-4 flex-wrap">
+              <CardTitle className="text-base">Monitorar Licenças Hyperbuild</CardTitle>
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder="Buscar por chave, lote ou email..."
+                    value={licenseSearch}
+                    onChange={e => setLicenseSearch(e.target.value)}
+                    className="pl-9 w-64"
+                  />
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {licenses.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-8">Nenhuma licença encontrada.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border text-left">
+                        <th className="pb-3 text-muted-foreground font-medium">Chave</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Lote</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Status</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Usuário</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Usado em</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Expira em</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {licenses
+                        .filter(l => {
+                          const q = licenseSearch.toLowerCase();
+                          return !q || 
+                            l.key.toLowerCase().includes(q) || 
+                            l.lote?.toLowerCase().includes(q) || 
+                            l.user_email?.toLowerCase().includes(q);
+                        })
+                        .map(l => (
+                        <tr key={l.id} className="border-b border-border/50 last:border-0">
+                          <td className="py-3 text-foreground font-mono text-xs">{l.key}</td>
+                          <td className="py-3 text-muted-foreground text-xs">{l.lote || "—"}</td>
+                          <td className="py-3">
+                            <Badge
+                              variant={l.status === "active" ? "default" : "secondary"}
+                              className={l.status === "active" ? "bg-green-500/10 text-green-500 hover:bg-green-500/20" : "text-xs"}
+                            >
+                              {l.status === "active" ? "Disponível" : "Em uso"}
+                            </Badge>
+                          </td>
+                          <td className="py-3 text-foreground text-xs">{l.user_email || "—"}</td>
+                          <td className="py-3 text-muted-foreground text-xs">{formatDate(l.used_at)}</td>
+                          <td className="py-3 text-muted-foreground text-xs">{formatDate(l.expires_at)}</td>
                         </tr>
                       ))}
                     </tbody>
