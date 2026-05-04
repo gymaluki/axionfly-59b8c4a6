@@ -218,44 +218,46 @@ const ProspeccaoView = () => {
       </div>
 
       {/* Filtros de localização */}
-      <form onSubmit={handleSearch} className="space-y-3">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Estado</label>
-            <Select value={estado} onValueChange={setEstado}>
-              <SelectTrigger className="bg-secondary/50 border-border h-10">
-                <SelectValue placeholder="Todos os estados" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="todos">Todos os estados</SelectItem>
-                {estados.map(e => (
-                  <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+      <div className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-8 shadow-2xl">
+        <form onSubmit={handleSearch} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Estado</label>
+              <Select value={estado} onValueChange={setEstado}>
+                <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all">
+                  <SelectValue placeholder="Todos os estados" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#0d0d14] border-white/10 text-white">
+                  <SelectItem value="todos">Todos os estados</SelectItem>
+                  {estados.map(e => (
+                    <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Cidade</label>
+              <Select value={cidade} onValueChange={setCidade} disabled={!estado || estado === "todos" || loadingCidades}>
+                <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all">
+                  <SelectValue placeholder={loadingCidades ? "Carregando..." : !estado || estado === "todos" ? "Selecione o estado" : "Selecione a cidade"} />
+                </SelectTrigger>
+                <SelectContent className="bg-[#0d0d14] border-white/10 text-white max-h-60">
+                  <SelectItem value="todas">Todas as cidades</SelectItem>
+                  {cidades.map(c => (
+                    <SelectItem key={c} value={c}>{c}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-end">
+              <Button type="submit" variant="neon" disabled={loading} className="w-full h-12 text-base font-black uppercase tracking-widest shimmer-button shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+                {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Search className="w-5 h-5 mr-2" />}
+                Buscar Leads
+              </Button>
+            </div>
           </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-muted-foreground">Cidade</label>
-            <Select value={cidade} onValueChange={setCidade} disabled={!estado || estado === "todos" || loadingCidades}>
-              <SelectTrigger className="bg-secondary/50 border-border h-10">
-                <SelectValue placeholder={loadingCidades ? "Carregando cidades..." : !estado || estado === "todos" ? "Selecione um estado primeiro" : "Selecione a cidade"} />
-              </SelectTrigger>
-              <SelectContent className="max-h-60">
-                <SelectItem value="todas">Todas as cidades</SelectItem>
-                {cidades.map(c => (
-                  <SelectItem key={c} value={c}>{c}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex items-end">
-            <Button type="submit" variant="neon" disabled={loading} className="w-full h-10">
-              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-              Buscar Leads
-            </Button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
 
       {/* Nichos */}
       <div>
