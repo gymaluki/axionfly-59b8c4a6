@@ -445,7 +445,12 @@ const Index = () => {
             className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
           >
             {stats.map((stat, i) => (
-              <StaticStat key={stat.label} {...stat} />
+              <React.Fragment key={stat.label}>
+                <StaticStat {...stat} index={i} />
+                {i < stats.length - 1 && (
+                  <div className="hidden sm:block w-px h-24 bg-gradient-to-b from-transparent via-primary/20 to-transparent self-center" />
+                )}
+              </React.Fragment>
             ))}
           </motion.div>
         </section>
