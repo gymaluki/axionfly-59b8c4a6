@@ -331,6 +331,51 @@ const AdminView = () => {
           </Card>
         </TabsContent>
 
+        <TabsContent value="pending" className="mt-4">
+          <Card className="bg-card border-border">
+            <CardHeader>
+              <CardTitle className="text-base">Pagamentos Pendentes (Pré-Registro)</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {pendingPayments.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-8">Nenhum pagamento pendente.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border text-left">
+                        <th className="pb-3 text-muted-foreground font-medium">Email</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Status</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Plano</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Transação</th>
+                        <th className="pb-3 text-muted-foreground font-medium">Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pendingPayments.map(pp => (
+                        <tr key={pp.id} className="border-b border-border/50 last:border-0">
+                          <td className="py-3 text-foreground">{pp.email}</td>
+                          <td className="py-3">
+                            <Badge
+                              variant={pp.status === "active" ? "outline" : "default"}
+                              className={pp.status === "active" ? "border-yellow-500 text-yellow-500 text-xs" : "text-xs"}
+                            >
+                              {pp.status === "active" ? "Aguardando Cadastro" : "Ativado"}
+                            </Badge>
+                          </td>
+                          <td className="py-3 text-muted-foreground">{pp.plan || "—"}</td>
+                          <td className="py-3 text-muted-foreground text-xs font-mono">{pp.transaction_id || "—"}</td>
+                          <td className="py-3 text-muted-foreground text-xs">{formatDate(pp.created_at)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="licenses" className="mt-4">
           <Card className="bg-card border-border">
             <CardHeader className="flex flex-row items-center justify-between gap-4 flex-wrap">
@@ -387,50 +432,6 @@ const AdminView = () => {
                           <td className="py-3 text-foreground text-xs">{l.user_email || "—"}</td>
                           <td className="py-3 text-muted-foreground text-xs">{formatDate(l.used_at)}</td>
                           <td className="py-3 text-muted-foreground text-xs">{formatDate(l.expires_at)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-        <TabsContent value="pending" className="mt-4">
-          <Card className="bg-card border-border">
-            <CardHeader>
-              <CardTitle className="text-base">Pagamentos Pendentes (Pré-Registro)</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {pendingPayments.length === 0 ? (
-                <p className="text-sm text-muted-foreground text-center py-8">Nenhum pagamento pendente.</p>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-border text-left">
-                        <th className="pb-3 text-muted-foreground font-medium">Email</th>
-                        <th className="pb-3 text-muted-foreground font-medium">Status</th>
-                        <th className="pb-3 text-muted-foreground font-medium">Plano</th>
-                        <th className="pb-3 text-muted-foreground font-medium">Transação</th>
-                        <th className="pb-3 text-muted-foreground font-medium">Data</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pendingPayments.map(pp => (
-                        <tr key={pp.id} className="border-b border-border/50 last:border-0">
-                          <td className="py-3 text-foreground">{pp.email}</td>
-                          <td className="py-3">
-                            <Badge
-                              variant={pp.status === "active" ? "outline" : "default"}
-                              className={pp.status === "active" ? "border-yellow-500 text-yellow-500 text-xs" : "text-xs"}
-                            >
-                              {pp.status === "active" ? "Aguardando Cadastro" : "Ativado"}
-                            </Badge>
-                          </td>
-                          <td className="py-3 text-muted-foreground">{pp.plan || "—"}</td>
-                          <td className="py-3 text-muted-foreground text-xs font-mono">{pp.transaction_id || "—"}</td>
-                          <td className="py-3 text-muted-foreground text-xs">{formatDate(pp.created_at)}</td>
                         </tr>
                       ))}
                     </tbody>
