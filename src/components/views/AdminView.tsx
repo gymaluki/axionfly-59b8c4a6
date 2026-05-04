@@ -295,6 +295,7 @@ const AdminView = () => {
           <TabsTrigger value="users">Usuários ({users.length})</TabsTrigger>
           <TabsTrigger value="pending">Pré-pagamentos ({pendingPayments.length})</TabsTrigger>
           <TabsTrigger value="licenses">Licenças Hyperbuild ({licenses.length})</TabsTrigger>
+          <TabsTrigger value="logs">Logs de Auditoria</TabsTrigger>
         </TabsList>
 
         <TabsContent value="users" className="mt-4">
