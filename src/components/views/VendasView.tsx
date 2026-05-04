@@ -333,7 +333,7 @@ const VendasView = () => {
       </AnimatePresence>
 
       {/* Table */}
-      <div className="glass rounded-xl overflow-hidden">
+      <div className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-[2rem] overflow-hidden shadow-2xl">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
