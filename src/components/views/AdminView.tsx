@@ -52,6 +52,15 @@ interface HyperbuildLicense {
   user_email?: string;
 }
 
+interface LicenseLog {
+  id: string;
+  user_email: string;
+  license_key: string;
+  action: string;
+  details: string;
+  created_at: string;
+}
+
 const PLAN_DAYS: Record<string, number> = {
   monthly: 30,
   trial: 7,
