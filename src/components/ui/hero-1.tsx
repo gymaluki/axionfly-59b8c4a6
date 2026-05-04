@@ -1,62 +1,138 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ArrowRightIcon, Zap } from "lucide-react";
+import { ArrowRightIcon, Zap, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { DashboardMockup } from "./dashboard-mockup";
 
 export function HeroSection() {
 	const navigate = useNavigate();
 
+	const headline = "Crie Sites Feitos por IA e Venda para";
+	const words = headline.split(" ");
+
 	return (
-		<section id="inicio" className="mx-auto w-full max-w-5xl">
-			{/* Top Shades */}
-			<div
-				aria-hidden="true"
-				className="absolute inset-0 isolate hidden overflow-hidden lg:block"
-			>
-				<div className="absolute inset-0 -top-14 isolate -z-10 bg-[radial-gradient(35%_80%_at_49%_0%,hsl(var(--foreground)/.08),transparent)]" />
-			</div>
-
-			{/* main content */}
-			<div className="relative flex flex-col items-center justify-center gap-4 pt-20 pb-10 md:gap-5 md:pt-32 md:pb-20">
-			<a
-				className={cn(
-					"group mx-auto flex w-fit items-center gap-3 rounded-full border border-border bg-card px-4 py-1.5 shadow",
-					"fade-in slide-in-from-bottom-5 animate-in fill-mode-backwards transition-all duration-300 ease-out"
-				)}
-				href="#etapas"
-			>
-				<span className="text-xs text-muted-foreground font-medium">Veja como começar - Simples e Fácil</span>
-				<span className="block h-4 border-l border-border" />
-				<ArrowRightIcon className="size-3 text-muted-foreground duration-150 ease-out group-hover:translate-x-1 group-hover:text-primary" />
-			</a>
-
-				<div className="fade-in slide-in-from-bottom-5 animate-in fill-mode-backwards text-center duration-300 ease-out space-y-3">
-					<h1 className="text-balance text-3xl font-black tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl leading-[1.08]">
-						Crie Sites Feitos por IA e Venda para
-					</h1>
-					<div className="flex justify-center">
-						<span className="block text-center text-4xl font-black leading-none gradient-text md:text-6xl lg:text-7xl">
-							COMÉRCIOS
+		<section id="inicio" className="relative pt-20 pb-16 md:pt-32 md:pb-32 overflow-hidden">
+			<div className="container mx-auto px-4 relative z-10">
+				{/* Badge */}
+				<motion.div
+					initial={{ opacity: 0, y: -20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.6 }}
+					className="flex justify-center mb-8"
+				>
+					<div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.2)]">
+						<motion.div
+							animate={{ scale: [1, 1.2, 1] }}
+							transition={{ duration: 2, repeat: Infinity }}
+						>
+							<Zap className="size-3.5 text-primary fill-primary" />
+						</motion.div>
+						<span className="text-xs font-black uppercase tracking-widest text-primary-foreground">
+							⚡ +5.000 empreendedores já vendem com AxionFly
 						</span>
 					</div>
+				</motion.div>
+
+				{/* Headline */}
+				<div className="text-center mb-8">
+					<h1 className="text-4xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1] mb-2">
+						{words.map((word, i) => (
+							<motion.span
+								key={i}
+								initial={{ opacity: 0, y: 40 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{
+									duration: 0.8,
+									delay: i * 0.08,
+									ease: [0.16, 1, 0.3, 1]
+								}}
+								className="inline-block mr-[0.2em]"
+							>
+								{word}
+							</motion.span>
+						))}
+					</h1>
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+						className="flex justify-center mt-2"
+					>
+						<span className="text-5xl md:text-8xl font-black leading-none gradient-text-animate tracking-tighter">
+							COMÉRCIOS
+						</span>
+					</motion.div>
 				</div>
 
-				<p className="fade-in slide-in-from-bottom-5 mx-auto max-w-xl animate-in fill-mode-backwards text-center text-base text-muted-foreground tracking-wide delay-100 duration-300 ease-out sm:text-lg md:text-xl leading-relaxed">
+				{/* Description */}
+				<motion.p
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.8, delay: 1.2 }}
+					className="mx-auto max-w-2xl text-center text-lg md:text-xl text-muted-foreground font-medium leading-relaxed mb-10"
+				>
 					Escolha o plano ideal para você. Comece seu negócio{" "}
-					<span className="text-foreground font-semibold">com a liberdade</span> de crescer ainda mais.
-				</p>
+					<span className="text-foreground font-bold border-b-2 border-primary/40">com a liberdade</span> de crescer ainda mais.
+				</motion.p>
 
-				<div className="fade-in slide-in-from-bottom-5 flex animate-in flex-row flex-wrap items-center justify-center gap-3 fill-mode-backwards pt-2 delay-150 duration-300 ease-out">
-					<Button variant="neon" size="lg" className="rounded-full" onClick={() => navigate("/auth")}>
-						<Zap className="size-4 mr-2" />
+				{/* CTAs */}
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.8, delay: 1.4 }}
+					className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
+				>
+					<Button 
+						variant="neon" 
+						size="xl" 
+						className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-widest w-full sm:w-auto" 
+						onClick={() => navigate("/auth")}
+					>
+						<Zap className="size-5 mr-2 fill-current" />
 						Assinar agora
 					</Button>
-					<Button className="rounded-full" size="lg" variant="outline" onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>
+					<Button 
+						variant="outline" 
+						size="xl" 
+						className="rounded-full px-10 h-14 text-base font-black uppercase tracking-widest border-2 hover:bg-primary/10 w-full sm:w-auto" 
+						onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+					>
 						Ver Planos
-						<ArrowRightIcon className="size-4 ms-2" />
+						<ArrowRightIcon className="size-5 ml-2" />
 					</Button>
-				</div>
+				</motion.div>
+
+				{/* Mockup */}
+				<DashboardMockup />
+
+				{/* Partners */}
+				<motion.div
+					initial={{ opacity: 0 }}
+					whileInView={{ opacity: 1 }}
+					viewport={{ once: true }}
+					transition={{ duration: 1, delay: 2 }}
+					className="mt-20 flex flex-col items-center gap-6"
+				>
+					<p className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
+						Parceiros oficiais
+					</p>
+					<div className="flex items-center gap-12 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+						<div className="flex items-center gap-2">
+							<Sparkles className="w-6 h-6 text-primary" />
+							<span className="text-xl font-black tracking-tighter text-foreground">Lovable</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" className="w-6 h-6" />
+							<span className="text-xl font-bold tracking-tight text-foreground/80">Google Maps</span>
+						</div>
+					</div>
+				</motion.div>
 			</div>
+			
+			{/* Decorative elements */}
+			<div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full -z-10 pointer-events-none" />
+			<div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full -z-10 pointer-events-none" />
 		</section>
 	);
 }
