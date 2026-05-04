@@ -74,7 +74,7 @@ function SectionPill({ children }: { children: React.ReactNode }) {
       custom={0}
       className="flex justify-center mb-8"
     >
-      <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+      <span className="inline-flex items-center rounded-full border border-border bg-card/80 backdrop-blur-sm px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.1em] text-[#94a3b8] shadow-sm">
         {children}
       </span>
     </motion.div>
