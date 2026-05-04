@@ -227,6 +227,7 @@ const AdminView = () => {
         <TabsList className="bg-muted">
           <TabsTrigger value="users">Usuários ({users.length})</TabsTrigger>
           <TabsTrigger value="pending">Pré-pagamentos ({pendingPayments.length})</TabsTrigger>
+          <TabsTrigger value="licenses">Licenças Hyperbuild ({licenses.length})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="users" className="mt-4">
