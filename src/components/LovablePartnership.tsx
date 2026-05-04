@@ -39,55 +39,41 @@ function LovableLogo({ className }: { className?: string }) {
 const partners = [
   {
     name: "Extensão Lovable",
-    logo: null,
-    logoClass: "",
-    title: "Extensão Grátis: Créditos Infinitos",
-    description: "Parceria oficial com a Hyperbuild Pro para uso ilimitado da IA na Lovable",
-    badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
-    badgeTitle: "Recurso Exclusivo!",
-    badgeText: (
-      <>
-        Tenha <span className="text-primary font-bold">créditos infinitos</span> 100% grátis no Lovable com esta extensão
-      </>
-    ),
+    logo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg",
+    title: "Créditos Infinitos",
+    description: "Parceria exclusiva Hyperbuild Pro para uso ilimitado da IA.",
+    badgeTitle: "Recurso Exclusivo",
+    glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
-      "Parceria direta com Hyperbuild Pro",
-      "Uso ilimitado de IA na Lovable",
-      "Aceleração máxima nos seus projetos",
+      "Zero limites de geração",
+      "Sincronização em tempo real",
+      "Exclusivo AxionFly"
     ],
   },
   {
     name: "Lovable",
-    logo: null,
-    logoClass: "",
-    title: "Parceria com Lovable",
-    description: "Integração completa com a plataforma Lovable para desenvolvimento acelerado",
-    badgeIcon: <Sparkles className="w-4 h-4 text-primary" />,
-    badgeTitle: "Deploy Ilimitado!",
-    badgeText: (
-      <>
-        Aproveite o <span className="text-primary font-bold">deploy automático</span> profissional em todos os seus projetos
-      </>
-    ),
+    logo: "https://uzsvdtahsnkfjuuuipfh.supabase.co/storage/v1/object/public/files/uploads/ShsuAt31DMUOEDUhs93J86XVyP73/1739373972688-6677p-logo.png",
+    title: "Plataforma de Elite",
+    description: "Integração total para desenvolvimento e deploy acelerado.",
+    badgeTitle: "Deploy Ilimitado",
+    glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
-      "Deploy automático de projetos",
-      "Hospedagem profissional incluída",
-      "Atualizações em tempo real",
+      "Hospedagem inclusa",
+      "SSL automático grátis",
+      "Deploy em 1 clique"
     ],
   },
   {
     name: "Google Maps",
-    logo: googleMapsLogo,
-    logoClass: "h-14",
-    title: "Parceria Oficial com Google Maps",
-    description: "Potencializado pela infraestrutura e dados do Google Maps para prospecção de negócios",
-    badgeIcon: <Shield className="w-4 h-4 text-primary" />,
-    badgeTitle: "Tecnologia Google",
-    badgeText: "IA avançada e infraestrutura de classe mundial",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg",
+    title: "Prospecção Global",
+    description: "Dados oficiais do Google para encontrar negócios sem site.",
+    badgeTitle: "Dados Reais",
+    glowColor: "rgba(34, 197, 94, 0.3)",
     benefits: [
-      "Google AI e Machine Learning",
-      "Infraestrutura cloud confiável",
-      "Escalabilidade garantida",
+      "Busca em 27 estados",
+      "Dados atualizados",
+      "Filtros inteligentes"
     ],
   },
 ];
