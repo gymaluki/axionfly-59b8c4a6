@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
-import dashboardImg from "@/assets/carousel-dashboard.jpg";
-import vendaImg from "@/assets/carousel-venda.jpg";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const slides = [
   { id: "aula1", src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop", title: "Primeiros Passos", desc: "Configurando sua conta e ativando a IA" },
@@ -11,12 +11,12 @@ const slides = [
   { id: "aula5", src: "https://images.unsplash.com/photo-1531403001884-48a6202a632a?q=80&w=2340&auto=format&fit=crop", title: "Design de Elite", desc: "Como deixar seus sites com visual premium" },
 ];
 
-const CARD_W = 220;
-const CARD_W_MD = 280;
+const CARD_W_MD = 350;
 const GAP = 32;
-const SPEED = 0.5; // px per frame
+const SPEED = 0.8; // px per frame
 
 export default function FeaturesCarousel() {
+  const navigate = useNavigate();
   const x = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -52,31 +52,31 @@ export default function FeaturesCarousel() {
   };
 
   return (
-    <section className="py-10 md:py-20 overflow-hidden">
-      <div className="container mx-auto px-4 mb-12">
+    <section className="py-20 overflow-hidden relative">
+      <div className="container mx-auto px-4 mb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center space-y-3"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center space-y-6"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
+          <h2 className="text-4xl md:text-7xl font-black text-foreground tracking-tight leading-[1.1]">
             Aulas <span className="gradient-text">Premium e Exclusivas</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Conteúdo exclusivo para você dominar a criação e venda de sites com IA.
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+            Conteúdo estratégico para você dominar a criação de sites e fechar contratos de alto valor.
           </p>
         </motion.div>
       </div>
 
       <div className="relative" ref={containerRef}>
         {/* Fade edges */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 z-10 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 z-10 bg-gradient-to-l from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 md:w-64 z-10 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 md:w-64 z-10 bg-gradient-to-l from-background to-transparent" />
 
         <motion.div
-          className="flex cursor-grab active:cursor-grabbing"
+          className="flex cursor-grab active:cursor-grabbing px-4"
           style={{ x, gap: `${GAP}px` }}
           drag="x"
           dragConstraints={{ left: -totalWidth, right: 0 }}
@@ -87,30 +87,56 @@ export default function FeaturesCarousel() {
           {allSlides.map((slide, i) => (
             <div
               key={`${slide.id}-${i}`}
-              className="shrink-0 w-[220px] md:w-[280px] rounded-2xl overflow-hidden border border-border/40 hover:border-primary/30 transition-all duration-300 relative select-none"
+              className="shrink-0 w-[280px] md:w-[350px] aspect-[4/5] rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group"
               style={{
-                boxShadow: "0 0 50px -15px hsl(var(--primary) / 0.2)",
+                boxShadow: "0 0 40px -15px hsl(var(--primary) / 0.2)",
               }}
             >
-              {/* Blue tint overlay */}
-              <div
-                className="absolute inset-0 z-10 pointer-events-none mix-blend-multiply opacity-70"
-                style={{ background: "hsl(225 73% 30%)" }}
-              />
-              <div
-                className="absolute inset-0 z-10 pointer-events-none opacity-20"
-                style={{ background: "linear-gradient(180deg, hsl(217 91% 30% / 0.4) 0%, hsl(var(--background)) 100%)" }}
-              />
+              {/* Image */}
               <img
                 src={slide.src}
-                alt={slide.alt}
-                className="w-full h-auto object-cover pointer-events-none"
+                alt={slide.title}
+                className="w-full h-full object-cover pointer-events-none group-hover:scale-110 transition-transform duration-700"
                 loading="lazy"
                 draggable={false}
               />
+              
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Content */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 space-y-2 z-20">
+                <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 backdrop-blur-md px-3 py-1 border border-primary/20 mb-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                  <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Aula Premium</span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-black text-foreground leading-tight tracking-tight">
+                  {slide.title}
+                </h3>
+                <p className="text-sm text-muted-foreground font-medium line-clamp-2">
+                  {slide.desc}
+                </p>
+              </div>
+              
+              {/* Hover Glow */}
+              <div className="absolute -inset-1 border-2 border-primary/0 group-hover:border-primary/40 rounded-[2rem] transition-all duration-500" />
             </div>
           ))}
         </motion.div>
+      </div>
+
+      <div className="mt-20 text-center space-y-8 px-4">
+        <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground/60">
+          Acesso incluso em todos os planos · Novos conteúdos toda semana
+        </p>
+        <Button 
+          variant="outline" 
+          size="xl" 
+          className="rounded-full font-black uppercase tracking-[0.2em] px-12 h-16 border-2 hover:bg-primary/10"
+          onClick={() => navigate('/auth')}
+        >
+          Ver todos os conteúdos →
+        </Button>
       </div>
     </section>
   );
