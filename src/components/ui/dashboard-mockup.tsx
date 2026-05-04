@@ -6,11 +6,16 @@ export const DashboardMockup = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-      className="relative mx-auto max-w-5xl mt-12 px-4"
+      className="relative mx-auto max-w-5xl mt-12 px-4 pb-20"
     >
-      <div className="relative group">
+      <motion.div 
+        animate={{ y: [0, -8, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="relative group"
+      >
         {/* Glow behind */}
         <div className="absolute -inset-4 bg-primary/20 blur-3xl opacity-50 group-hover:opacity-75 transition-opacity duration-500 rounded-[2rem] pointer-events-none" />
         
