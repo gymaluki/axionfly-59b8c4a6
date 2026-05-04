@@ -103,19 +103,7 @@ export default function FeaturesCarousel() {
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
               
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-8 space-y-2 z-20">
-                <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 backdrop-blur-md px-3 py-1 border border-primary/20 mb-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                  <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Aula Premium</span>
-                </div>
-                <h3 className="text-xl md:text-2xl font-black text-foreground leading-tight tracking-tight">
-                  {slide.title}
-                </h3>
-                <p className="text-sm text-muted-foreground font-medium line-clamp-2">
-                  {slide.desc}
-                </p>
-              </div>
+              {/* Content removed per user request */}
               
               {/* Hover Glow */}
               <div className="absolute -inset-1 border-2 border-primary/0 group-hover:border-primary/40 rounded-[2rem] transition-all duration-500" />
