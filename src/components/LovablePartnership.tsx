@@ -39,7 +39,7 @@ function LovableLogo({ className }: { className?: string }) {
 const partners = [
   {
     name: "Extensão Lovable",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg",
+    logo: lovableLogo,
     title: "Créditos Infinitos",
     description: "Uso ilimitado da IA para criação de sites sem limites de tokens.",
     badgeTitle: "Recurso Exclusivo",
@@ -51,25 +51,12 @@ const partners = [
     ],
   },
   {
-    name: "Lovable",
-    logo: "https://uzsvdtahsnkfjuuuipfh.supabase.co/storage/v1/object/public/files/uploads/ShsuAt31DMUOEDUhs93J86XVyP73/1739373972688-6677p-logo.png",
-    title: "Plataforma de Elite",
-    description: "Integração total para desenvolvimento e deploy acelerado.",
-    badgeTitle: "Deploy Ilimitado",
-    glowColor: "rgba(37, 99, 235, 0.4)",
-    benefits: [
-      "Hospedagem inclusa",
-      "SSL automático grátis",
-      "Deploy em 1 clique"
-    ],
-  },
-  {
     name: "Google Maps",
     logo: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg",
     title: "Prospecção Brasil",
     description: "Dados oficiais do Google para encontrar negócios sem site no Brasil.",
     badgeTitle: "Dados Reais",
-    glowColor: "rgba(34, 197, 94, 0.3)",
+    glowColor: "rgba(37, 99, 235, 0.4)", // Changed from green to blue
     benefits: [
       "Busca em 27 estados",
       "Dados atualizados",
@@ -78,8 +65,8 @@ const partners = [
   },
   {
     name: "HyperBuild Pro",
-    logo: "https://uzsvdtahsnkfjuuuipfh.supabase.co/storage/v1/object/public/files/uploads/ShsuAt31DMUOEDUhs93J86XVyP73/1739373972688-6677p-logo.png", // Reusing a placeholder or finding a suitable one
-    title: "Extensão de Escala",
+    logo: hyperbuildLogo,
+    title: "Hyperbuild Lovable Créditos Infinitos",
     description: "Parceria oficial para garantir que sua produção nunca pare.",
     badgeTitle: "Escala Total",
     glowColor: "rgba(37, 99, 235, 0.4)",

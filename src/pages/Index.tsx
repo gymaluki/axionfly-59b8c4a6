@@ -229,6 +229,16 @@ const Index = () => {
       />
 
       <div className="relative z-10">
+        {/* Anniversary Banner */}
+        <div className="w-full bg-primary py-2 text-center relative z-[60]">
+          <div className="container mx-auto px-4 flex items-center justify-center gap-4">
+            <span className="animate-pulse text-white">🎁</span>
+            <p className="text-white text-xs md:text-sm font-black uppercase tracking-[0.2em]">
+              Promoção de 1 Ano AxionFly: 50% de Desconto em TODOS os Planos! Só hoje!
+            </p>
+            <span className="animate-pulse text-white">🎁</span>
+          </div>
+        </div>
         <Header />
 
         {/* ═══════════ HERO ═══════════ */}
@@ -560,23 +570,18 @@ const Index = () => {
 
         {/* ═══════════ FOOTER ═══════════ */}
         <footer className="border-t border-primary/20 bg-[#05050a] relative z-10 pt-24 pb-12">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-16">
-              <div className="space-y-6 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-                    <Zap className="w-8 h-8 text-primary fill-primary" />
+          <div className="container mx-auto px-4 text-center">
+            <div className="flex flex-col items-center justify-center gap-8 mb-16">
+              <div className="space-y-6">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center">
+                    <Zap className="w-10 h-10 text-primary fill-primary" />
                   </div>
-                  <span className="text-3xl font-black text-foreground tracking-tighter">AxionFly</span>
+                  <div className="space-y-2">
+                    <span className="text-3xl font-black text-foreground tracking-tighter block">AxionFly</span>
+                    <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Prospecção Automática</span>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                {[Instagram, Youtube, Phone].map((Icon, i) => (
-                  <a key={i} href="#" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group">
-                    <Icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
-                  </a>
-                ))}
               </div>
             </div>
             
@@ -611,7 +616,7 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-8 text-left group"
       >
-        <span className="text-xl font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
+        <span className="text-lg font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
         <div className={`p-2 rounded-full border border-primary/20 bg-primary/5 transition-transform duration-500 ${isOpen ? "rotate-180 bg-primary text-primary-foreground" : "text-primary"}`}>
           <ChevronDown className="w-6 h-6" />
         </div>
