@@ -455,7 +455,9 @@ const SitesView = () => {
 
   // Apply niche presets automatically
   useEffect(() => {
-    if (niche && nichePresets[niche]) {
+    // Only apply presets if we are in the first step and the niche was just selected/changed
+    // and the project name has at least one character (prevents firing on mount if niche is already set)
+    if (step === 0 && niche && nichePresets[niche]) {
       const preset = nichePresets[niche];
       setPrimaryColor(preset.primaryColor);
       setSecondaryColor(preset.secondaryColor);
