@@ -109,12 +109,9 @@ export function Header() {
 				</NavigationMenu>
 
 				{/* Right side buttons */}
-				<div className={cn(
-					'hidden items-center gap-2 md:flex transition-all duration-700',
-					scrolled ? 'gap-1' : 'gap-2',
-				)}>
-					<Button variant="ghost" size={scrolled ? 'sm' : 'default'} onClick={() => navigate('/auth')}>Entrar</Button>
-					<Button variant="neon" size={scrolled ? 'sm' : 'default'} onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>Ver Planos</Button>
+				<div className="hidden items-center gap-4 md:flex">
+					<Button variant="ghost" className="font-bold uppercase tracking-widest text-xs" onClick={() => navigate('/auth')}>Entrar</Button>
+					<Button variant="neon" className="shimmer-button font-bold uppercase tracking-widest text-xs px-6" onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>Ver Planos</Button>
 				</div>
 				<Button
 					size="icon"
