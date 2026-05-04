@@ -573,7 +573,7 @@ const Index = () => {
               
               <div className="flex items-center gap-4">
                 {[Instagram, Youtube, Phone].map((Icon, i) => (
-                  <a key={i} href="#" className="w-14 h-14 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group">
+                  <a key={i} href="#" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group">
                     <Icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
                   </a>
                 ))}
