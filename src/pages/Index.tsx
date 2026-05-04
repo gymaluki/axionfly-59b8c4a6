@@ -222,85 +222,111 @@ const Index = () => {
           </div>
         </div>
 
-        {/* ═══════════ FUNCIONALIDADES (Features lateral + Globe) ═══════════ */}
-        <section className="container mx-auto px-4 py-10 md:py-24 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.05)_0%,transparent_60%)] pointer-events-none" />
+        {/* ═══════════ FUNCIONALIDADES ═══════════ */}
+        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+          <SectionPill>Funcionalidades Premium</SectionPill>
 
-          <SectionPill>Conheça a Plataforma</SectionPill>
-
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 md:mb-16 space-y-4">
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
-              Comece de forma simples.{" "}
-              <br className="hidden md:block" />
-              Escale com <span className="gradient-text">sites prontos e prospecção automática</span>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
+            <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tight mb-6">
+              Tudo o que você precisa <br />
+              para <span className="gradient-text">escalar seu negócio</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-base md:text-lg">
-              20+ nichos, 6 estilos de design, busca em todos os estados do Brasil. Tudo pra você vender mais.
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+              Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-12 items-center">
-            {/* Features na lateral esquerda - menores */}
-            <div className="grid gap-4 order-2 lg:order-1">
-              {features.map(({ icon: Icon, title, desc, tag }, i) => (
-                <motion.div
-                  key={title}
+          <div className="space-y-32 md:space-y-48">
+            {features.map(({ icon: Icon, title, desc, tag, visual }, i) => (
+              <div key={title} className={cn(
+                "flex flex-col gap-12 items-center",
+                i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+              )}>
+                {/* Text Content */}
+                <motion.div 
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  variants={slideFromLeft}
-                  custom={i + 1}
-                  whileHover={{
-                    scale: 1.02,
-                    y: -4,
-                    transition: springTransition
-                  }}
-                  className="glass rounded-xl p-4 md:p-5 space-y-2 hover:neon-border transition-all duration-500 group cursor-pointer relative overflow-hidden"
-                  onClick={() => title.includes("Extensão") ? navigate("/extensao") : null}
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={i % 2 === 0 ? slideFromLeft : slideFromRight}
+                  className="flex-1 space-y-6"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                  <div className="absolute top-3 right-3">
-                    <span className="text-[8px] font-bold uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded-full border border-primary/20">{tag}</span>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.1)]">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{tag}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <motion.div
-                      whileHover={{ rotate: 12, scale: 1.1 }}
-                      transition={springTransition}
-                      className="w-10 h-10 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300"
-                    >
-                      <Icon className="w-5 h-5 text-primary" />
-                    </motion.div>
-                    <h3 className="text-base md:text-lg font-bold text-foreground relative z-10 pr-16">{title}</h3>
+                  
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <Icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-black text-foreground">{title}</h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed text-xs md:text-sm relative z-10">{desc}</p>
+                  
+                  <p className="text-muted-foreground text-lg md:text-xl leading-relaxed font-medium">
+                    {desc}
+                  </p>
+                  
+                  <ul className="space-y-4">
+                    {['Recurso exclusivo', 'Aumento de produtividade', 'Pronto para uso'].map((item) => (
+                      <li key={item} className="flex items-center gap-3 text-foreground/80 font-bold">
+                        <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                          <Zap className="w-3 h-3 text-primary" />
+                        </div>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </motion.div>
-              ))}
-            </div>
 
-            {/* Globo 3D na lateral direita */}
-            <div className="order-1 lg:order-2 lg:sticky lg:top-24">
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={fadeUp}
-                custom={0}
-                className="text-center mb-3 md:mb-6 space-y-1.5 md:space-y-2 px-2"
-              >
-                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-foreground tracking-tight leading-snug">
-                  Venda sites para <span className="gradient-text">comércios pelo mundo</span>
-                </h3>
-                <p className="text-muted-foreground max-w-md mx-auto text-xs md:text-sm">
-                  De São Paulo a Nova York. Conecte-se a negócios que precisam de um site profissional.
-                </p>
-              </motion.div>
-              <div className="w-[80%] sm:w-[70%] lg:w-full max-w-lg mx-auto aspect-square relative">
-                <div className="absolute inset-0 bg-[radial-gradient(circle,hsl(var(--primary)/0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-                <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
-                  <GlobeCdn className="w-full" speed={0.006} />
-                </Suspense>
+                {/* Visual Content */}
+                <motion.div 
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={i % 2 === 0 ? slideFromRight : slideFromLeft}
+                  className="flex-1 w-full"
+                >
+                  <div className="relative">
+                    <div className="absolute -inset-10 bg-primary/10 blur-[100px] rounded-full opacity-50 pointer-events-none" />
+                    
+                    {visual === "globe" ? (
+                      <div className="w-full max-w-md mx-auto aspect-square relative">
+                        <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
+                          <GlobeCdn className="w-full" speed={0.006} />
+                          {/* Tooltips */}
+                          <motion.div 
+                            animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                            className="absolute top-1/4 left-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                          >
+                            <p className="text-[10px] font-bold text-foreground">Restaurante • São Paulo • Sem site</p>
+                          </motion.div>
+                          <motion.div 
+                            animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
+                            transition={{ duration: 4, repeat: Infinity }}
+                            className="absolute bottom-1/3 right-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                          >
+                            <p className="text-[10px] font-bold text-foreground">Barbearia • Rio de Janeiro • Sem site</p>
+                          </motion.div>
+                        </Suspense>
+                      </div>
+                    ) : visual === "dashboard" ? (
+                      <div className="scale-90 lg:scale-100">
+                        <DashboardMockup />
+                      </div>
+                    ) : (
+                      <div className="aspect-video rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                        <Icon className="w-32 h-32 text-primary/20 group-hover:scale-110 group-hover:text-primary/30 transition-all duration-500" />
+                        <div className="absolute bottom-8 left-8 right-8 p-6 rounded-xl glass border-primary/10">
+                          <h4 className="font-black text-foreground mb-1">{title}</h4>
+                          <p className="text-xs text-muted-foreground">{desc.substring(0, 60)}...</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
               </div>
-            </div>
+            ))}
           </div>
         </section>
 
