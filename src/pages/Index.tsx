@@ -308,7 +308,7 @@ const Index = () => {
                     <div className="absolute -inset-10 bg-primary/10 blur-[100px] rounded-full opacity-50 pointer-events-none" />
                     
                     {visual === "globe" ? (
-                      <div className="w-full max-w-md mx-auto aspect-square relative">
+                      <div className="w-full max-w-[280px] md:max-w-md mx-auto aspect-square relative">
                         <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
                           <GlobeCdn className="w-full" speed={0.006} />
                           {/* Tooltips */}
