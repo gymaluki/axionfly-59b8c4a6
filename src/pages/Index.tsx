@@ -614,7 +614,7 @@ const Index = () => {
             </div>
             
             <div className="pt-12 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-8">
-              <p className="text-muted-foreground text-sm font-bold uppercase tracking-widest text-center">
+              <p className="text-[#64748b] text-[11px] font-black uppercase tracking-[0.1em] text-center">
                 © 2026 AxionFly · Todos os direitos reservados
               </p>
               <div className="flex items-center gap-10 text-xs font-black uppercase tracking-widest text-muted-foreground/60">
