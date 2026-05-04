@@ -446,50 +446,55 @@ const SitesView = () => {
     switch (step) {
       case 0:
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div className="space-y-1">
-              <h3 className="text-xl font-bold text-foreground">Sobre o seu negócio</h3>
-              <p className="text-sm text-muted-foreground">
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Sobre o seu negócio</h3>
+              <p className="text-sm text-[#94a3b8]">
                 Comece escolhendo o nome e o tipo do seu projeto
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Nome do Projeto *</label>
-                <Input
-                  placeholder="Ex: Royal Barber, Forno & Massa"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                  className="bg-secondary/50 border-border h-12 text-base"
-                  autoFocus
-                />
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Nome do Projeto *</label>
+                  <Input
+                    placeholder="Ex: Royal Barber, Forno & Massa"
+                    value={projectName}
+                    onChange={(e) => setProjectName(e.target.value)}
+                    className="bg-[#0d0d14] border-white/10 h-12 text-base focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+                    autoFocus
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4 text-primary" />
+                    Slogan / Tagline
+                  </label>
+                  <Input
+                    placeholder="Ex: Estilo & Tradição"
+                    value={slogan}
+                    onChange={(e) => setSlogan(e.target.value)}
+                    className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  Slogan / Tagline
-                </label>
-                <Input
-                  placeholder="Ex: Estilo & Tradição, Sabor que conquista"
-                  value={slogan}
-                  onChange={(e) => setSlogan(e.target.value)}
-                  className="bg-secondary/50 border-border"
-                />
-                <p className="text-xs text-muted-foreground">Frase curta que resume o seu negócio. Clique numa sugestão abaixo:</p>
+              <div className="space-y-3">
+                <p className="text-xs text-[#475569] font-medium">💡 Sugestões de slogan baseadas no seu nicho:</p>
                 {niche && sloganSuggestions[niche] && (
-                  <div className="flex flex-wrap gap-2 pt-1">
+                  <div className="flex flex-wrap gap-2">
                     {sloganSuggestions[niche].map((s) => (
                       <button
                         key={s}
                         type="button"
                         onClick={() => setSlogan(s)}
                         className={cn(
-                          "text-xs px-3 py-1.5 rounded-full border transition-all duration-200",
+                          "text-xs px-4 py-2 rounded-xl border transition-all duration-200",
                           slogan === s
-                            ? "border-primary bg-primary/15 text-primary font-medium"
-                            : "border-border bg-secondary/30 text-muted-foreground hover:border-primary/40 hover:bg-primary/5 hover:text-foreground"
+                            ? "border-primary bg-primary/10 text-primary font-bold shadow-[0_0_15px_rgba(37,99,235,0.2)]"
+                            : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white"
                         )}
                       >
                         {s}
@@ -499,23 +504,25 @@ const SitesView = () => {
                 )}
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Tipo de Negócio *</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+              <div className="space-y-4">
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Tipo de Negócio *</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {nicheEntries.map(([key, t]) => (
-                    <button
+                    <motion.button
                       key={key}
                       type="button"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => setNiche(key)}
                       className={cn(
-                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                        "text-left p-4 rounded-2xl border transition-all duration-300 text-sm font-medium",
                         niche === key
-                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                          ? "border-primary bg-primary/10 text-primary shadow-[0_0_20px_rgba(37,99,235,0.2)]"
+                          : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white"
                       )}
                     >
                       {t.label}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </div>
