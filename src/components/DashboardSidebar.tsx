@@ -56,8 +56,8 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
   const initials = displayName.slice(0, 2).toUpperCase();
 
   return (
-    <Sidebar collapsible="icon" className="bg-[#0d0d1a] border-r border-white/5">
-      <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#0d0d1a]">
+    <Sidebar collapsible="icon" className="bg-[#05050a] border-r border-white/5">
+      <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#05050a]">
         <div className="flex items-center gap-3">
           <div className="p-1.5 flex items-center justify-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +76,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="bg-[#0d0d1a]">
+      <SidebarContent className="bg-[#05050a]">
         <SidebarGroup>
           <SidebarGroupLabel className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#6b7280] mb-2 px-4">
             FERRAMENTAS
@@ -97,7 +97,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                     )}
                   >
                     <Icon className={cn("w-4 h-4 shrink-0", active === id ? "text-primary" : "text-inherit")} />
-                    <span className="font-medium text-sm">{label}</span>
+                    <span className="font-bold text-[11px] uppercase tracking-[0.1em]">{label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -121,7 +121,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-white/5 bg-[#0d0d1a] p-4">
+      <SidebarFooter className="border-t border-white/5 bg-[#05050a] p-4">
         <SidebarMenu>
           <SidebarMenuItem>
             <TooltipProvider>

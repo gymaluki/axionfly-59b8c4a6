@@ -148,7 +148,7 @@ const Dashboard = () => {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-[#080810] relative text-white">
+      <div className="flex min-h-screen w-full bg-[#05050a] relative text-white">
         {/* Grid Background */}
         <div
           aria-hidden="true"
@@ -172,7 +172,7 @@ const Dashboard = () => {
         />
 
         <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
-          <header className="h-16 flex items-center gap-4 border-b border-white/5 px-6 bg-[#080810]/80 backdrop-blur-md sticky top-0 z-20">
+          <header className="h-16 flex items-center gap-4 border-b border-white/5 px-6 bg-[#05050a]/80 backdrop-blur-md sticky top-0 z-20">
             <SidebarTrigger className="text-muted-foreground hover:text-white transition-colors" />
             <div className="h-6 w-px bg-white/10" />
             <h1 className="text-lg font-black text-foreground tracking-tight uppercase tracking-[0.1em]">{viewTitles[activeView]}</h1>
