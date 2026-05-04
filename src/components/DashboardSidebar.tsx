@@ -1,4 +1,4 @@
-import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle, Sparkles, ExternalLink } from "lucide-react";
+import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle, Sparkles, ExternalLink, Zap } from "lucide-react";
 import axionflyLogo from "@/assets/axionfly-logo.png";
 import { cn } from "@/lib/utils";
 import {
@@ -60,7 +60,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
       <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#0d0d14]">
         <div className="flex items-center gap-3">
           <div className="p-1.5 rounded-xl bg-primary/10">
-            <img src={axionflyLogo} alt="AxionFly" className="w-6 h-6 object-contain shrink-0" />
+            <Zap className="w-6 h-6 text-primary fill-primary shrink-0" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">

@@ -558,58 +558,22 @@ const Index = () => {
         {/* ═══════════ FOOTER ═══════════ */}
         <footer className="border-t border-primary/20 bg-background relative z-10 pt-24 pb-12">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
-              <div className="md:col-span-2 space-y-8">
-                <div className="flex items-center gap-3">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-16">
+              <div className="space-y-6 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-3">
                   <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
                     <Zap className="w-8 h-8 text-primary fill-primary" />
                   </div>
                   <span className="text-3xl font-black text-foreground tracking-tighter">AxionFly</span>
                 </div>
-                <p className="text-[#64748b] max-w-sm text-[16px] font-normal leading-[1.7]">
-                  A plataforma líder em criação de sites com IA e prospecção automática para comércios locais.
-                </p>
-                <div className="flex items-center gap-4">
-                  {[Instagram, Youtube, Phone].map((Icon, i) => (
-                    <a key={i} href="#" className="w-14 h-14 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group">
-                      <Icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
-                    </a>
-                  ))}
-                </div>
               </div>
               
-              <div className="space-y-8">
-                <h4 className="text-sm font-black text-foreground uppercase tracking-[0.3em]">Links Rápidos</h4>
-                <ul className="space-y-4">
-                  {['Início', 'Etapas', 'Funcionalidades', 'Planos', 'FAQ'].map((link) => (
-                    <li key={link}>
-                      <a 
-                        href={`#${link.toLowerCase() === 'funcionalidades' ? 'funcionalidades' : link.toLowerCase() === 'início' ? 'inicio' : link.toLowerCase()}`} 
-                        className="text-muted-foreground hover:text-primary transition-colors font-bold text-lg"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const id = link.toLowerCase() === 'funcionalidades' ? 'funcionalidades' : link.toLowerCase() === 'início' ? 'inicio' : link.toLowerCase();
-                          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div className="space-y-8">
-                <h4 className="text-sm font-black text-foreground uppercase tracking-[0.3em]">Plataforma</h4>
-                <ul className="space-y-4">
-                  {['Entrar', 'Criar Conta', 'Suporte', 'Termos'].map((link) => (
-                    <li key={link}>
-                      <a href="/auth" className="text-muted-foreground hover:text-primary transition-colors font-bold text-lg">
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              <div className="flex items-center gap-4">
+                {[Instagram, Youtube, Phone].map((Icon, i) => (
+                  <a key={i} href="#" className="w-14 h-14 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group">
+                    <Icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </a>
+                ))}
               </div>
             </div>
             
