@@ -144,8 +144,8 @@ function PricingCard({
           </div>
         )}
         <div className="flex items-baseline justify-center gap-1">
-          <span className="text-5xl font-black text-foreground tracking-tighter">
-            {price}
+          <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+            R$ <PriceCounter price={price} />
           </span>
           <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
         </div>
