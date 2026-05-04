@@ -187,35 +187,89 @@ const VendasView = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-secondary/30 border-border">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-2 group hover:border-green-500/20 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <DollarSign className="w-4 h-4 text-green-500" /> Receita (Pago)
+            <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-[#475569] flex items-center gap-2">
+              <div className="p-1.5 rounded-lg bg-green-500/10 text-green-500">
+                <DollarSign className="w-4 h-4" />
+              </div>
+              Receita (Pago)
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-foreground">{formatCurrency(totalRevenue)}</p>
+          <CardContent className="pt-2">
+            <div className="flex items-baseline justify-between">
+              <p className="text-3xl font-black text-foreground tracking-tight">{formatCurrency(totalRevenue)}</p>
+              <span className="text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">+12.5%</span>
+            </div>
+            {/* Mini bar chart placeholder */}
+            <div className="mt-6 flex items-end gap-1 h-12 h-16">
+              {[40, 70, 45, 90, 65, 85, 100].map((h, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  transition={{ delay: i * 0.1, duration: 1 }}
+                  className="flex-1 bg-green-500/20 rounded-t-sm group-hover:bg-green-500/40 transition-colors"
+                />
+              ))}
+            </div>
           </CardContent>
         </Card>
-        <Card className="bg-secondary/30 border-border">
+
+        <Card className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-2 group hover:border-yellow-500/20 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-yellow-500" /> Pendente
+            <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-[#475569] flex items-center gap-2">
+              <div className="p-1.5 rounded-lg bg-yellow-500/10 text-yellow-500">
+                <TrendingUp className="w-4 h-4" />
+              </div>
+              Pendente
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-foreground">{formatCurrency(totalPending)}</p>
+          <CardContent className="pt-2">
+            <div className="flex items-baseline justify-between">
+              <p className="text-3xl font-black text-foreground tracking-tight">{formatCurrency(totalPending)}</p>
+              <span className="text-[10px] font-bold text-[#94a3b8] bg-white/5 px-2 py-1 rounded-full">venda futura</span>
+            </div>
+            <div className="mt-6 flex items-end gap-1 h-16">
+              {[60, 40, 80, 50, 70, 30, 90].map((h, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  transition={{ delay: 0.5 + i * 0.1, duration: 1 }}
+                  className="flex-1 bg-yellow-500/20 rounded-t-sm group-hover:bg-yellow-500/40 transition-colors"
+                />
+              ))}
+            </div>
           </CardContent>
         </Card>
-        <Card className="bg-secondary/30 border-border">
+
+        <Card className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-2 group hover:border-primary/20 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4 text-primary" /> Total de Vendas
+            <CardTitle className="text-[11px] font-black uppercase tracking-[0.2em] text-[#475569] flex items-center gap-2">
+              <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
+                <ShoppingBag className="w-4 h-4" />
+              </div>
+              Total de Vendas
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-foreground">{totalSales}</p>
+          <CardContent className="pt-2">
+            <div className="flex items-baseline justify-between">
+              <p className="text-3xl font-black text-foreground tracking-tight">{totalSales}</p>
+              <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">+4 este mês</span>
+            </div>
+            <div className="mt-6 flex items-end gap-1 h-16">
+              {[30, 60, 40, 100, 70, 50, 80].map((h, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ height: 0 }}
+                  animate={{ height: `${h}%` }}
+                  transition={{ delay: 1 + i * 0.1, duration: 1 }}
+                  className="flex-1 bg-primary/20 rounded-t-sm group-hover:bg-primary/40 transition-colors"
+                />
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
