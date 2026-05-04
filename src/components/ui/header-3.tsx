@@ -60,11 +60,13 @@ export function Header() {
 			>
 			{/* Logo */}
 				<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center shrink-0">
-					<img
-						src={axionflyLogo}
-						alt="AxionFly"
-						className="h-10 w-10 md:h-12 md:w-12 object-contain"
-					/>
+					<div className="p-1.5 flex items-center justify-center">
+						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 2L2 22H6L12 8L18 22H22L12 2Z" fill="#3B82F6"/>
+							<path d="M7 16H17L18 18H6L7 16Z" fill="#3B82F6"/>
+						</svg>
+						<span className="text-xl md:text-2xl font-black text-white tracking-tighter ml-2">AxionFly</span>
+					</div>
 				</a>
 
 				{/* Nav links — always visible on desktop */}

@@ -166,7 +166,10 @@ function StaticStat({ icon: Icon, value, label, prefix, suffix, index }: {
         <Icon className="w-8 h-8 text-primary" />
       </motion.div>
       <div className="space-y-1">
-        <p className="text-4xl md:text-5xl font-black text-foreground tabular-nums tracking-tighter">
+        <p className={cn(
+          "text-4xl md:text-5xl font-black text-foreground tabular-nums tracking-tighter",
+          label.includes("Tempo") && "text-primary"
+        )}>
           {prefix}{count.toLocaleString("pt-BR")}{suffix}
         </p>
         <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{label}</p>
@@ -203,7 +206,7 @@ const faqItems = [
   { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você só preenche o nome do comércio, escolhe o nicho, as cores e o estilo de design — a IA faz todo o trabalho técnico. Zero código, zero complicação." },
   { q: "Quais tipos de comércio posso atender?", a: "São mais de 20 nichos prontos focados em comércios locais: barbearias, pizzarias, hamburguerias, restaurantes, padarias, sorveterias, açaiterias, mercados, lojas de roupas, lanchonetes, marmitarias, salões de beleza, cafeterias, docerias, açougues, hortifrutis e muito mais." },
   { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o tipo de comércio. O sistema busca automaticamente e entrega nome, telefone e endereço — tudo pronto para você prospectar." },
-  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
+  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre <span class='text-primary'>R$ 500 e R$ 3.000</span> por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
   { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes e 6 estilos de design diferentes. Cada site sai único e profissional." },
   { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos de comércio), busca de leads em todos os estados do Brasil, dashboard de vendas e todas as atualizações futuras. Pague uma vez, use para sempre." },
   { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
@@ -214,7 +217,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden relative">
+    <div className="min-h-screen bg-[#05050a] overflow-hidden relative">
       {/* Grid Background */}
       <div
         aria-hidden="true"
@@ -379,7 +382,7 @@ const Index = () => {
               {[
                 { step: "01", icon: Zap, title: "Ative sua Ferramenta", desc: "Assine a AxionFly e conecte sua IA em segundos. Sua base de operações está pronta.", color: "blue" },
                 { step: "02", icon: Code2, title: "Crie e Encontre", desc: "Escolha o nicho, gere o site com IA e busque leads qualificados na sua região automaticamente.", color: "blue" },
-                { step: "03", icon: TrendingUp, title: "Venda e Escale", desc: "Aborde pelo WhatsApp com script validado e feche contratos de R$ 500 a R$ 3.000.", color: "blue" }
+                { step: "03", icon: TrendingUp, title: "Venda e Escale", desc: "Aborde pelo WhatsApp com script validado e feche contratos de <span class='text-primary'>R$ 500 a R$ 3.000</span>.", color: "blue" }
               ].map(({ step, icon: Icon, title, desc }, i) => (
                 <motion.div
                   key={step}
@@ -411,7 +414,7 @@ const Index = () => {
                       <Icon className="w-8 h-8 text-primary" />
                     </div>
                     <h3 className="text-2xl font-black text-foreground">{title}</h3>
-                    <p className="text-muted-foreground font-medium leading-relaxed">{desc}</p>
+                    <p className="text-muted-foreground font-medium leading-relaxed" dangerouslySetInnerHTML={{ __html: desc }} />
                   </div>
                 </motion.div>
               ))}
@@ -556,7 +559,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════ FOOTER ═══════════ */}
-        <footer className="border-t border-primary/20 bg-background relative z-10 pt-24 pb-12">
+        <footer className="border-t border-primary/20 bg-[#05050a] relative z-10 pt-24 pb-12">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-16">
               <div className="space-y-6 text-center md:text-left">
@@ -623,7 +626,7 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="p-8 pt-0 border-t border-primary/10">
-              <p className="text-muted-foreground font-medium leading-relaxed text-lg">{answer}</p>
+              <p className="text-muted-foreground font-medium leading-relaxed text-lg" dangerouslySetInnerHTML={{ __html: answer }} />
             </div>
           </motion.div>
         )}
