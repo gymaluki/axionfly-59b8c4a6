@@ -12,6 +12,7 @@ import { ParticleBackground } from "@/components/ui/particle-background";
 import PricingCards from "@/components/PricingCards";
 import LovablePartnership from "@/components/LovablePartnership";
 import FeaturesCarousel from "@/components/FeaturesCarousel";
+import Testimonials from "@/components/Testimonials";
 
 // Lazy load heavy visual components
 const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
