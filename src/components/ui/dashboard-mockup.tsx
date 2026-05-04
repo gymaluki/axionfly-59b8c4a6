@@ -121,7 +121,7 @@ export const DashboardMockup = () => {
             </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
