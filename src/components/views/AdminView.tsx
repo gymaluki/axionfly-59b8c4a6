@@ -40,6 +40,18 @@ interface PendingPayment {
   updated_at: string;
 }
 
+interface HyperbuildLicense {
+  id: string;
+  key: string;
+  lote: string | null;
+  status: string;
+  created_at: string;
+  expires_at: string | null;
+  used_by: string | null;
+  used_at: string | null;
+  user_email?: string;
+}
+
 const PLAN_DAYS: Record<string, number> = {
   monthly: 30,
   trial: 7,
