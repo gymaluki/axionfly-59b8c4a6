@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense, useMemo } from "react";
+import React, { useEffect, useRef, useState, lazy, Suspense, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Star, Instagram, Phone, Youtube } from "lucide-react";
