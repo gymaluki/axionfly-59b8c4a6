@@ -1025,14 +1025,15 @@ const SitesView = () => {
       </div>
 
       {/* Step content */}
-      <div className="bg-card/50 border border-border rounded-2xl p-6 min-h-[340px]">
+      <div className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-8 min-h-[400px] shadow-2xl relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            transition={{ duration: 0.25 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             {renderStep()}
           </motion.div>
