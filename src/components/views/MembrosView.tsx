@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Play, Upload, Trash2, Plus, X, Loader2, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 interface Video {
   id: string;
