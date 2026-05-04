@@ -414,7 +414,7 @@ const Index = () => {
                       <Icon className="w-8 h-8 text-primary" />
                     </div>
                     <h3 className="text-2xl font-black text-foreground">{title}</h3>
-                    <p className="text-muted-foreground font-medium leading-relaxed">{desc}</p>
+                    <p className="text-muted-foreground font-medium leading-relaxed" dangerouslySetInnerHTML={{ __html: desc }} />
                   </div>
                 </motion.div>
               ))}
@@ -626,7 +626,7 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="p-8 pt-0 border-t border-primary/10">
-              <p className="text-muted-foreground font-medium leading-relaxed text-lg">{answer}</p>
+              <p className="text-muted-foreground font-medium leading-relaxed text-lg" dangerouslySetInnerHTML={{ __html: answer }} />
             </div>
           </motion.div>
         )}
