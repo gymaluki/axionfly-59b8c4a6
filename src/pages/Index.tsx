@@ -394,8 +394,15 @@ const Index = () => {
                   <div className="relative">
                     <div className="w-16 h-16 rounded-full bg-background border-4 border-primary/20 flex items-center justify-center text-xl font-black text-primary relative z-10 group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500">
                       {step}
+                      {/* Progressive fill background */}
+                      <motion.div 
+                        initial={{ height: 0 }}
+                        whileInView={{ height: "100%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: i * 0.3 }}
+                        className="absolute inset-0 bg-primary/10 rounded-full -z-10"
+                      />
                     </div>
-                    {/* Pulsing ring */}
                     <div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
 
