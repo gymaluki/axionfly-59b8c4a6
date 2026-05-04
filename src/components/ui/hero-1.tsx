@@ -70,7 +70,7 @@ export function HeroSection() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8, delay: 1.2 }}
-					className="mx-auto max-w-2xl text-center text-lg md:text-xl text-muted-foreground font-medium leading-relaxed mb-10"
+					className="mx-auto max-w-2xl text-center text-[18px] md:text-[20px] text-[#94a3b8] font-normal leading-[1.7] mb-10"
 				>
 					Escolha o plano ideal para você. Comece seu negócio{" "}
 					<span className="text-foreground font-bold border-b-2 border-primary/40">com a liberdade</span> de crescer ainda mais.
