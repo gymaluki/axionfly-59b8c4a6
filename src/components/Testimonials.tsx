@@ -44,7 +44,7 @@ export default function Testimonials() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(37,99,235,0.03)_0%,transparent_70%)] pointer-events-none" />
       
       <div className="flex justify-center mb-8">
-        <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-sm">
+        <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-[11px] font-black uppercase tracking-[0.1em] text-[#94a3b8] shadow-sm backdrop-blur-sm">
           Feedbacks Reais
         </span>
       </div>
