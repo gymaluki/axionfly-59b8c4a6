@@ -429,26 +429,26 @@ const Index = () => {
         </section>
 
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
-        <section>
+        <section className="py-20 md:py-32">
           <SectionPill>Conheça Área de Membros</SectionPill>
           <FeaturesCarousel />
         </section>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
-        <section className="container mx-auto px-4 py-8 md:py-16 relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+        <section className="container mx-auto px-4 py-20 md:py-32 relative">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05)_0%,transparent_70%)] pointer-events-none" />
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto"
+            className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-0"
           >
             {stats.map((stat, i) => (
               <React.Fragment key={stat.label}>
                 <StaticStat {...stat} index={i} />
                 {i < stats.length - 1 && (
-                  <div className="hidden sm:block w-px h-24 bg-gradient-to-b from-transparent via-primary/20 to-transparent self-center" />
+                  <div className="hidden md:block w-px h-24 bg-gradient-to-b from-transparent via-primary/20 to-transparent self-center mx-12" />
                 )}
               </React.Fragment>
             ))}
@@ -461,92 +461,203 @@ const Index = () => {
         {/* ═══════════ PARCERIAS ═══════════ */}
         <LovablePartnership />
 
-        {/* ═══════════ CTA FINAL ═══════════ */}
-        <section className="container mx-auto px-4 py-10 md:py-20 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.06)_0%,transparent_60%)] pointer-events-none" />
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUp}
-            custom={0}
-            className="text-center space-y-6 max-w-2xl mx-auto"
-          >
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              Comece agora e venda seu{" "}
-              <span className="gradient-text">primeiro site hoje</span>
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Escolha o plano ideal e comece a faturar com sites profissionais criados por IA.
-            </p>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              custom={1}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
-            >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                <Button variant="neon" size="lg" className="rounded-full px-10 text-base" asChild>
-                  <a href="https://go.perfectpay.com.br/PPU38CQA071">
-                    <Zap className="w-4 h-4 mr-2" />
-                    Assinar agora
-                  </a>
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
-                <Button variant="outline" size="lg" className="rounded-full px-10 text-base" onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>
-                  Ver Planos
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </section>
+        {/* ═══════════ FEEDBACKS ═══════════ */}
+        <Testimonials />
 
         {/* ═══════════ FAQ ═══════════ */}
-        <section id="faq" className="container mx-auto px-4 py-10 md:py-20">
-          <SectionPill>Dúvidas Frequentes</SectionPill>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-12 space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">
-              Tudo que você precisa saber{" "}
-              <br className="hidden md:block" />
-              sobre a <span className="gradient-text">AxionFly</span>
+        <section id="faq" className="container mx-auto px-4 py-20 md:py-32 relative">
+          <SectionPill>Perguntas Frequentes</SectionPill>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-7xl font-black text-foreground mb-6">
+              Dúvidas <span className="gradient-text">Frequentes</span>
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Respostas rápidas para suas principais dúvidas.
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+              Tudo o que você precisa saber para começar sua jornada com segurança.
             </p>
           </motion.div>
-          <div className="max-w-2xl mx-auto space-y-4">
-            {faqItems.map(({ q, a }, i) => (
-              <motion.details
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={fadeUp}
-                custom={i + 1}
-                className="glass rounded-xl group"
-              >
-                <summary className="flex items-center justify-between cursor-pointer p-5 text-foreground font-semibold list-none [&::-webkit-details-marker]:hidden">
-                  {q}
-                  <ArrowRight className="w-4 h-4 text-muted-foreground transition-transform duration-300 group-open:rotate-90 shrink-0 ml-4" />
-                </summary>
-                <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border/30 pt-4">
-                  {a}
-                </div>
-              </motion.details>
+
+          <div className="max-w-4xl mx-auto space-y-4">
+            {faqItems.map((item, i) => (
+              <FAQItem key={i} question={item.q} answer={item.a} />
             ))}
           </div>
         </section>
 
-        <footer className="border-t border-border/50 py-8 text-center text-sm text-muted-foreground">
-          © 2026 AxionFly. Todos os direitos reservados.
+        {/* ═══════════ CTA FINAL ═══════════ */}
+        <section className="container mx-auto px-4 py-20 md:py-40 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.2)_0%,transparent_70%)] pointer-events-none" />
+          <ParticleBackground />
+          
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative z-10 max-w-6xl mx-auto rounded-[3rem] border border-primary/20 bg-card/60 backdrop-blur-xl p-12 md:p-24 text-center space-y-12"
+          >
+            <h2 className="text-5xl md:text-8xl font-black text-foreground leading-[1.05] tracking-tighter">
+              Comece agora e venda seu <br />
+              <span className="gradient-text-animate">primeiro site hoje</span>
+            </h2>
+            
+            <div className="flex flex-col items-center space-y-8">
+              <motion.div 
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="inline-flex items-center gap-3 px-8 py-2.5 rounded-full bg-primary/10 border border-primary/20"
+              >
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+                <span className="text-sm font-black text-primary uppercase tracking-[0.2em]">🔥 Últimas vagas com preço atual</span>
+              </motion.div>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full max-w-2xl mx-auto pt-4">
+                <Button 
+                  variant="neon" 
+                  size="xl" 
+                  className="rounded-full shimmer-button px-12 h-18 text-xl font-black uppercase tracking-[0.2em] w-full sm:w-auto shadow-[0_0_40px_rgba(37,99,235,0.4)]"
+                  onClick={() => navigate("/auth")}
+                >
+                  <Zap className="mr-3 w-6 h-6 fill-current" />
+                  Assinar agora
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="xl" 
+                  className="rounded-full px-12 h-18 text-xl font-black uppercase tracking-[0.2em] border-2 w-full sm:w-auto hover:bg-primary/10"
+                  onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
+                >
+                  Ver Planos <ArrowRight className="ml-3 w-6 h-6" />
+                </Button>
+              </div>
+              
+              <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 pt-8 border-t border-primary/10 w-full">
+                {['Sem experiência necessária', 'Setup em 5 minutos', 'Suporte em português'].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-primary stroke-[3px]" />
+                    <span className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ═══════════ FOOTER ═══════════ */}
+        <footer className="border-t border-primary/20 bg-background relative z-10 pt-24 pb-12">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+              <div className="md:col-span-2 space-y-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                    <Zap className="w-8 h-8 text-primary fill-primary" />
+                  </div>
+                  <span className="text-3xl font-black text-foreground tracking-tighter">AxionFly</span>
+                </div>
+                <p className="text-muted-foreground max-w-sm text-xl font-medium leading-relaxed">
+                  A plataforma líder em criação de sites com IA e prospecção automática para comércios locais.
+                </p>
+                <div className="flex items-center gap-4">
+                  {[Instagram, Youtube, Phone].map((Icon, i) => (
+                    <a key={i} href="#" className="w-14 h-14 rounded-full border border-primary/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 group">
+                      <Icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="space-y-8">
+                <h4 className="text-sm font-black text-foreground uppercase tracking-[0.3em]">Links Rápidos</h4>
+                <ul className="space-y-4">
+                  {['Início', 'Etapas', 'Funcionalidades', 'Planos', 'FAQ'].map((link) => (
+                    <li key={link}>
+                      <a 
+                        href={`#${link.toLowerCase() === 'funcionalidades' ? 'funcionalidades' : link.toLowerCase() === 'início' ? 'inicio' : link.toLowerCase()}`} 
+                        className="text-muted-foreground hover:text-primary transition-colors font-bold text-lg"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const id = link.toLowerCase() === 'funcionalidades' ? 'funcionalidades' : link.toLowerCase() === 'início' ? 'inicio' : link.toLowerCase();
+                          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="space-y-8">
+                <h4 className="text-sm font-black text-foreground uppercase tracking-[0.3em]">Plataforma</h4>
+                <ul className="space-y-4">
+                  {['Entrar', 'Criar Conta', 'Suporte', 'Termos'].map((link) => (
+                    <li key={link}>
+                      <a href="/auth" className="text-muted-foreground hover:text-primary transition-colors font-bold text-lg">
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            
+            <div className="pt-12 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-8">
+              <p className="text-muted-foreground text-sm font-bold uppercase tracking-widest text-center">
+                © 2026 AxionFly · Todos os direitos reservados
+              </p>
+              <div className="flex items-center gap-10 text-xs font-black uppercase tracking-widest text-muted-foreground/60">
+                <a href="#" className="hover:text-primary transition-colors">Privacidade</a>
+                <a href="#" className="hover:text-primary transition-colors">Termos de Uso</a>
+              </div>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
   );
 };
+
+/* ── FAQ Item Component ── */
+function FAQItem({ question, answer }: { question: string, answer: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <motion.div 
+      initial={false}
+      className={`rounded-3xl border transition-all duration-500 overflow-hidden ${
+        isOpen ? "border-primary/40 bg-primary/5" : "border-border/50 bg-card/40"
+      }`}
+    >
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-8 text-left group"
+      >
+        <span className="text-xl font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
+        <div className={`p-2 rounded-full border border-primary/20 bg-primary/5 transition-transform duration-500 ${isOpen ? "rotate-180 bg-primary text-primary-foreground" : "text-primary"}`}>
+          <ChevronDown className="w-6 h-6" />
+        </div>
+      </button>
+      
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="p-8 pt-0 border-t border-primary/10">
+              <p className="text-muted-foreground font-medium leading-relaxed text-lg">{answer}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
 export default Index;
