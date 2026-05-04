@@ -228,9 +228,9 @@ const Index = () => {
         }}
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col">
         {/* Elegant Anniversary Banner */}
-        <div className="w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center relative z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
+        <div className="w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center relative z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)] shrink-0">
           <div className="container mx-auto px-4 flex items-center justify-center gap-6">
             <motion.span 
               animate={{ rotate: [0, 10, -10, 0] }} 
