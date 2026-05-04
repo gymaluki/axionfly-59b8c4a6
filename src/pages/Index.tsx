@@ -82,7 +82,7 @@ function SectionPill({ children }: { children: React.ReactNode }) {
 
 const features = [
   {
-    icon: Infinity,
+    icon: LucideInfinity,
     title: "Extensão Lovable Infinito",
     desc: "Crie sites sem limites de créditos. Parceria exclusiva com Hyperbuild Pro para garantir sua escala total. Comece agora sem preocupações com tokens.",
     tag: "INFINITO",
