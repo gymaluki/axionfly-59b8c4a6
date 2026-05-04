@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, MessageCircle, MapPin, Loader2, Phone, Check, ChevronDown } from "lucide-react";
+import { Search, MessageCircle, MapPin, Loader2, Phone, Check, ChevronDown, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
