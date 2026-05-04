@@ -21,6 +21,9 @@ import {
   Users,
   Star,
   TrendingUp,
+  Youtube,
+  Facebook as FacebookIcon,
+  Globe,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -313,6 +316,107 @@ const SitesView = () => {
   const [targetAudience, setTargetAudience] = useState("");
   const [differentiators, setDifferentiators] = useState("");
   const [pricePositioning, setPricePositioning] = useState("");
+  const [socialProof, setSocialProof] = useState("");
+
+  // Niche mapping for intelligent presets
+  const nichePresets: Record<string, any> = {
+    pizzaria: {
+      primaryColor: "Vermelho Pepperoni (#E31837)",
+      secondaryColor: "Laranja Queimado",
+      font: "playfair-raleway",
+      designStyle: "conversao",
+      selectedPages: ["inicio", "servicos", "depoimentos", "precos"],
+      tone: "amigavel",
+      targetAudience: "Famílias e jovens casais que buscam sabor artesanal e rapidez",
+      differentiators: "Massa de longa fermentação, entrega em 30 min, ingredientes importados",
+      pricePositioning: "medio",
+      cta: "whatsapp"
+    },
+    barbearia: {
+      primaryColor: "Dourado Premium (#D4AF37)",
+      secondaryColor: "Preto Fosco",
+      font: "playfair-raleway",
+      designStyle: "institucional",
+      selectedPages: ["inicio", "sobre", "servicos", "depoimentos"],
+      tone: "autoritario",
+      targetAudience: "Homens modernos que valorizam estilo, tradição e cuidado pessoal",
+      differentiators: "Barba com toalha quente, cerveja artesanal cortesia, especialistas em fade",
+      pricePositioning: "premium",
+      cta: "agendar"
+    },
+    clinica: {
+      primaryColor: "Azul Sereno (#0EA5E9)",
+      secondaryColor: "Verde Água",
+      font: "inter-space",
+      designStyle: "institucional",
+      selectedPages: ["inicio", "sobre", "servicos", "faq"],
+      tone: "formal",
+      targetAudience: "Pessoas que buscam saúde e confiança em tratamentos modernos",
+      differentiators: "Tecnologia de ponta, atendimento humanizado, parcelamento facilitado",
+      pricePositioning: "medio",
+      cta: "agendar"
+    },
+    hamburgueria: {
+      primaryColor: "Laranja Incandescente (#F97316)",
+      secondaryColor: "Carvão",
+      font: "oswald-roboto",
+      designStyle: "conversao",
+      selectedPages: ["inicio", "servicos", "depoimentos", "contato"],
+      tone: "criativo",
+      targetAudience: "Público jovem e amantes de junk food gourmet",
+      differentiators: "Blend de carnes frescas, molho secreto, batatas rústicas artesanais",
+      pricePositioning: "medio",
+      cta: "whatsapp"
+    },
+    petshop: {
+      primaryColor: "Coral Vibrante (#E8734A)",
+      secondaryColor: "Âmbar Dourado",
+      font: "fredoka-nunito",
+      designStyle: "lifestyle",
+      selectedPages: ["inicio", "sobre", "servicos", "galeria"],
+      tone: "amigavel",
+      targetAudience: "Tutores de pets que buscam carinho e cuidado premium para seus animais",
+      differentiators: "Táxi-pet incluso, banho e tosa com cromoterapia, câmeras ao vivo",
+      pricePositioning: "medio",
+      cta: "whatsapp"
+    },
+    estetica: {
+      primaryColor: "Rosa Quartzo (#F472B6)",
+      secondaryColor: "Dourado Suave",
+      font: "cormorant-lato",
+      designStyle: "lifestyle",
+      selectedPages: ["inicio", "sobre", "servicos", "depoimentos"],
+      tone: "amigavel",
+      targetAudience: "Mulheres que buscam autoestima, relaxamento e tratamentos de alta performance",
+      differentiators: "Métodos exclusivos, ambiente climatizado, avaliação gratuita",
+      pricePositioning: "premium",
+      cta: "agendar"
+    },
+    fotografo: {
+      primaryColor: "Branco Minimalista",
+      secondaryColor: "Cinza Profundo",
+      font: "playfair-raleway",
+      designStyle: "lifestyle",
+      selectedPages: ["inicio", "sobre", "galeria", "contato"],
+      tone: "criativo",
+      targetAudience: "Noivos, gestantes e marcas que buscam eternizar momentos com arte",
+      differentiators: "Equipamento 4K, entrega em 48h, olhar artístico e autêntico",
+      pricePositioning: "premium",
+      cta: "formulario"
+    },
+    "marketing-digital": {
+      primaryColor: "Azul Elétrico (#2563EB)",
+      secondaryColor: "Roxo Vibrante",
+      font: "inter-space",
+      designStyle: "conversao",
+      selectedPages: ["inicio", "servicos", "depoimentos", "precos"],
+      tone: "autoritario",
+      targetAudience: "Empresas que precisam escalar vendas e dominar o mercado digital",
+      differentiators: "Foco total em ROI, especialistas certificados, suporte 24h",
+      pricePositioning: "medio",
+      cta: "whatsapp"
+    }
+  };
 
   // Carregar dados salvos ao iniciar
   useEffect(() => {
@@ -343,14 +447,39 @@ const SitesView = () => {
         setDifferentiators(data.differentiators || "");
         setPricePositioning(data.pricePositioning || "");
         setStep(data.step || 0);
-        
-        // Opcional: limpar após carregar para não ficar lixo no localStorage
-        // Mas talvez seja melhor manter até o usuário realmente gerar o site
       } catch (e) {
         console.error("Erro ao carregar dados salvos:", e);
       }
     }
   }, []);
+
+  // Apply niche presets automatically
+  useEffect(() => {
+    // Only apply presets if we are in the first step and the niche was just selected/changed
+    // and the project name has at least one character (prevents firing on mount if niche is already set)
+    if (step === 0 && niche && nichePresets[niche]) {
+      const preset = nichePresets[niche];
+      setPrimaryColor(preset.primaryColor);
+      setSecondaryColor(preset.secondaryColor);
+      setFont(preset.font);
+      setDesignStyle(preset.designStyle);
+      setSelectedPages(preset.selectedPages);
+      setTone(preset.tone);
+      setTargetAudience(preset.targetAudience);
+      setDifferentiators(preset.differentiators);
+      setPricePositioning(preset.pricePositioning);
+      setCtaPrincipal(preset.cta);
+      
+      if (foodNiches.includes(niche)) {
+        setWhatsappOrdering(true);
+      }
+      
+      toast.info(`Configurações de "${nicheTemplates[niche].label}" aplicadas automaticamente!`, {
+        description: "Você pode editar qualquer campo se desejar.",
+        duration: 4000
+      });
+    }
+  }, [niche]);
 
   const [hasInstalledExtension, setHasInstalledExtension] = useState(() => {
     return localStorage.getItem("has_installed_hyperbuild") === "true";
@@ -370,69 +499,55 @@ const SitesView = () => {
     const template = nicheTemplates[niche];
     if (!template) return;
 
-    let generated = template.buildPrompt(
-      projectName.trim(),
-      primaryColor.trim(),
-      secondaryColor.trim(),
-      features.trim()
-    );
-
-    if (font) {
-      const selectedFont = fontOptions.find((f) => f.value === font);
-      if (selectedFont) {
-        generated += ` Use as fontes ${selectedFont.label} (a primeira para títulos/headings e a segunda para corpo de texto).`;
-      }
-    }
-
-    if (designStyle) {
-      const selectedStyle = designStyles.find((s) => s.value === designStyle);
-      if (selectedStyle) {
-        generated += ` ${selectedStyle.prompt}`;
-      }
-    }
-
-    if (address.trim()) generated += ` Endereço do estabelecimento: ${address.trim()}.`;
-    if (phone.trim()) generated += ` Telefone: ${phone.trim()}.`;
-    if (businessHours.trim()) generated += ` Horário de funcionamento: ${businessHours.trim()}.`;
-    if (slogan.trim()) generated += ` Slogan/tagline do negócio: "${slogan.trim()}". Use essa frase de forma destacada no hero ou header.`;
-
+    const selectedFont = fontOptions.find((f) => f.value === font);
+    const selectedStyle = designStyles.find((s) => s.value === designStyle);
     const selectedTone = toneOptions.find(t => t.value === tone);
-    if (selectedTone) generated += ` Tom de voz dos textos: ${selectedTone.label.replace(/^.\s/, "")} — ${selectedTone.desc}.`;
-
     const selectedObjective = siteObjectives.find(o => o.value === siteObjective);
-    if (selectedObjective) generated += ` Objetivo principal do site: ${selectedObjective.desc}.`;
-
-    if (selectedPages.length > 0) {
-      const pageLabels = selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean);
-      if (pageLabels.length > 0) generated += ` Incluir as seções: ${pageLabels.join(", ")}.`;
-    }
-
     const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
-    if (selectedCta) generated += ` Botão CTA principal: "${selectedCta.label.replace(/^.\s/, "")}" — ${selectedCta.desc}.`;
+    const pageLabels = selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean);
 
-    // Redes Sociais
-    if (instagram.trim() || tiktok.trim() || facebook.trim()) {
-      generated += ` Redes Sociais: No rodapé do site, adicione ícones com links diretos para as redes sociais fornecidas: ${instagram.trim() ? `Instagram: ${instagram.trim()}, ` : ""}${tiktok.trim() ? `TikTok: ${tiktok.trim()}, ` : ""}${facebook.trim() ? `Facebook: ${facebook.trim()}` : ""}. Garanta que os links abram em nova aba.`;
-    }
+    // ESTRUTURA DE PROMPT DE ENGENHARIA DE PRECISÃO
+    let generated = `Você é um especialista em UI/UX, copywriting de alta conversão e desenvolvimento web performático. 
+Crie uma Landing Page completa e profissional com as seguintes especificações técnicas e de negócio:
 
-    // Inteligência de Negócio
-    if (targetAudience.trim() || differentiators.trim() || pricePositioning.trim()) {
-      generated += `\n\n### ESTRATÉGIA DE NEGÓCIO (CONVERSÃO):`;
-      if (targetAudience.trim()) generated += `\n- Público-Alvo: ${targetAudience.trim()}. Adapte o design e a linguagem para este público.`;
-      if (differentiators.trim()) generated += `\n- Diferenciais Competitivos: ${differentiators.trim()}. Destaque esses pontos em seções de benefícios ou cards.`;
-      if (pricePositioning.trim()) generated += `\n- Posicionamento de Preço: ${pricePositioning.trim()}. Reflita isso no estilo visual (mais premium ou mais popular/acessível).`;
-    }
+### 1. CONTEXTO DO NEGÓCIO
+- **Nome:** ${projectName.trim()}
+- **Nicho:** ${template.label}
+- **Slogan:** ${slogan.trim() || "N/A"}
+- **Público-Alvo:** ${targetAudience.trim() || "Geral"}
+- **Diferencial:** ${differentiators.trim() || "N/A"}
+- **Tom de Voz:** ${selectedTone ? `${selectedTone.label} (${selectedTone.desc})` : "Profissional"}
+- **Objetivo:** ${selectedObjective?.desc || "Conversão"}
 
-    // Performance & Mobile (Obrigatórios)
-    generated += `\n\n### PERFORMANCE & MOBILE (REQUISITOS):
-- Mobile-First: O site deve ser perfeito em dispositivos móveis. Use tap targets de no mínimo 48px.
-- Botão Flutuante: Inclua um botão de CTA (WhatsApp) flutuante fixo no rodapé para dispositivos móveis.
-- Velocidade: Priorize o carregamento progressivo de imagens (lazy-load) e use fontes com font-display: swap.
-- Acessibilidade: Garanta contraste WCAG AA entre textos e fundos.`;
+### 2. ESTRATÉGIA DE CONVERSÃO & COPYWRITING
+- **Headline (Hero):** Crie 3 variações de headlines de impacto baseadas no tom de voz.
+- **Prova Social:** ${socialProof.trim() ? `Use estes dados/depoimentos: ${socialProof.trim()}` : "Inclua seções de depoimentos com placeholders realistas e estatísticas de sucesso (ex: 1000+ clientes)."}
+- **CTAs:** O botão principal deve ser "${selectedCta?.label.replace(/^.\s/, "") || "Entre em contato"}".
 
-    if (whatsappOrdering) {
-      generated += ` IMPORTANTE: Inclua um sistema de pedidos via WhatsApp completo. Crie uma seção de cardápio interativo com botões "+" e "−" ao lado de cada item para adicionar/remover do carrinho, mostrando a quantidade selecionada entre os botões. Itens selecionados devem ter destaque visual. Adicione um botão flutuante fixo no canto inferior direito com ícone de carrinho e contador de itens (só aparece quando há itens no carrinho). Ao clicar, abra um modal de checkout em 2 etapas: Etapa 1 com campos Nome, Endereço, Forma de pagamento (Dinheiro/Cartão Crédito/Cartão Débito/PIX como toggles) e Observação. Etapa 2 com revisão completa e botão "Enviar WhatsApp". Ao confirmar, gere uma mensagem formatada com emojis (🍕 PEDIDO, 👤 Nome, 📍 Endereço, 💳 Pagamento, 📋 Itens, 📝 Observação) e envie via https://wa.me/{numero}?text={mensagem}. Após envio, limpar carrinho e fechar modal.`;
-    }
+### 3. ESPECIFICAÇÕES VISUAIS (DESIGN SYSTEM)
+- **Cores:** Primária: ${primaryColor.trim() || "Padrão do nicho"}, Secundária: ${secondaryColor.trim() || "Padrão do nicho"}.
+- **Tipografia:** ${selectedFont ? `Títulos: ${selectedFont.label.split(" + ")[0]}, Corpo: ${selectedFont.label.split(" + ")[1]}` : "Fontes modernas e legíveis"}.
+- **Estilo:** ${selectedStyle?.prompt || "Design moderno e limpo"}.
+- **Acessibilidade:** Garanta contraste WCAG AA em todos os elementos.
+
+### 4. ESTRUTURA DE PÁGINAS & SEÇÕES
+- **Seções Obrigatórias:** ${pageLabels.join(", ") || "Início, Sobre, Serviços, Contato"}.
+${whatsappOrdering ? "- **SISTEMA DE PEDIDOS WHATSAPP:** Implementar cardápio interativo com carrinho flutuante e checkout que envia o pedido formatado para o WhatsApp." : ""}
+
+### 5. REQUISITOS TÉCNICOS & PERFORMANCE
+- **Mobile-First:** Layout responsivo otimizado para celulares (tap targets > 48px).
+- **Performance:** Imagens com lazy-load, fontes otimizadas, animações suaves com Framer Motion.
+- **Redes Sociais:** Incluir links no rodapé (${instagram ? `Instagram: ${instagram}, ` : ""}${tiktok ? `TikTok: ${tiktok}, ` : ""}${facebook ? `Facebook: ${facebook}` : ""}).
+
+### 6. VARREDURA FINAL (QUALITY ASSURANCE)
+Antes de finalizar, verifique:
+1. O contraste das cores atende ao padrão WCAG AA?
+2. O site é totalmente funcional no mobile?
+3. O formulário/CTA tem validação visual de sucesso?
+
+---
+BASE DO TEMPLATE:
+${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.trim(), features.trim())}`;
 
     setGeneratedPrompt(generated);
 
@@ -475,6 +590,7 @@ const SitesView = () => {
       targetAudience,
       differentiators,
       pricePositioning,
+      socialProof,
       step
     };
     localStorage.setItem("pending_site_creation", JSON.stringify(formData));
@@ -852,14 +968,14 @@ const SitesView = () => {
                   className="bg-secondary/50 border-border h-12"
                 />
               </div>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground flex items-center gap-2">
                     <Instagram className="w-4 h-4 text-primary" />
-                    Instagram (Link)
+                    Instagram
                   </label>
                   <Input
-                    placeholder="Ex: instagram.com/seunegocio"
+                    placeholder="Link ou @user"
                     value={instagram}
                     onChange={(e) => setInstagram(e.target.value)}
                     className="bg-secondary/50 border-border"
@@ -867,16 +983,41 @@ const SitesView = () => {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-primary" />
-                    TikTok / Facebook (Link)
+                    <Youtube className="w-4 h-4 text-primary" />
+                    TikTok
                   </label>
                   <Input
-                    placeholder="Ex: tiktok.com/@seunegocio"
+                    placeholder="@usuario"
                     value={tiktok}
                     onChange={(e) => setTiktok(e.target.value)}
                     className="bg-secondary/50 border-border"
                   />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <FacebookIcon className="w-4 h-4 text-primary" />
+                    Facebook
+                  </label>
+                  <Input
+                    placeholder="Link da página"
+                    value={facebook}
+                    onChange={(e) => setFacebook(e.target.value)}
+                    className="bg-secondary/50 border-border"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <Star className="w-4 h-4 text-primary" />
+                  Prova Social / Conquistas
+                </label>
+                <Input
+                  placeholder="Ex: 500+ clientes atendidos, Nota 4.9 no Google, 15 anos de tradição"
+                  value={socialProof}
+                  onChange={(e) => setSocialProof(e.target.value)}
+                  className="bg-secondary/50 border-border"
+                />
               </div>
 
               <div className="space-y-2">
