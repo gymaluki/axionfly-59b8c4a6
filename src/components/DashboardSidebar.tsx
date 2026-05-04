@@ -55,73 +55,111 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
   const initials = displayName.slice(0, 2).toUpperCase();
 
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-border px-4 py-4">
-        <div className="flex items-center gap-2">
-          <img src={axionflyLogo} alt="AxionFly" className="w-8 h-8 object-contain shrink-0" />
+    <Sidebar collapsible="icon" className="bg-[#0d0d14] border-r border-white/5">
+      <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#0d0d14]">
+        <div className="flex items-center gap-3">
+          <div className="p-1.5 rounded-xl bg-primary/10">
+            <img src={axionflyLogo} alt="AxionFly" className="w-6 h-6 object-contain shrink-0" />
+          </div>
           {!collapsed && (
-            <span className="text-lg font-bold text-foreground tracking-tight">
-              Axion<span className="text-primary">Fly</span>
-            </span>
+            <div className="flex flex-col">
+              <span className="text-base font-bold text-foreground tracking-tight leading-none">
+                Axion<span className="text-primary">Fly</span>
+              </span>
+              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest mt-0.5">Dashboard</span>
+            </div>
           )}
         </div>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="bg-[#0d0d14]">
         <SidebarGroup>
-          <SidebarGroupLabel>Ferramentas</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[11px] font-black uppercase tracking-[0.2em] text-[#475569] mb-2 px-4">
+            Ferramentas
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="px-2 space-y-1">
               {allNavItems.map(({ id, label, icon: Icon }) => (
                 <SidebarMenuItem key={id}>
                   <SidebarMenuButton
                     onClick={() => onNavigate(id)}
                     isActive={active === id}
                     tooltip={label}
+                    className={cn(
+                      "transition-all duration-200 h-10 px-3 rounded-lg",
+                      active === id 
+                        ? "bg-primary/10 text-primary border-l-[3px] border-primary rounded-l-none" 
+                        : "text-[#94a3b8] hover:bg-white/5 hover:text-white"
+                    )}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span>{label}</span>
+                    <Icon className={cn("w-4 h-4 shrink-0", active === id ? "text-primary" : "text-inherit")} />
+                    <span className="font-medium text-sm">{label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {/* Minimal Hyperbuild Link */}
+        {!collapsed && (
+          <div className="mt-auto px-4 py-4">
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-3">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Parceria Ativa</span>
+              </div>
+              <p className="text-xs text-[#94a3b8] leading-relaxed">
+                Tokens ilimitados com <span className="text-foreground font-semibold">Hyperbuild Pro</span>
+              </p>
+            </div>
+          </div>
+        )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-border">
+      <SidebarFooter className="border-t border-white/5 bg-[#0d0d14] p-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg" className="w-full">
-                  <Avatar className="w-7 h-7 shrink-0">
-                    <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">
-                      {initials}
-                    </AvatarFallback>
-                  </Avatar>
-                  {!collapsed && (
-                    <div className="flex-1 text-left min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">{displayName}</p>
-                      {userEmail && (
-                        <p className="text-xs text-muted-foreground truncate">{userEmail}</p>
-                      )}
-                    </div>
-                  )}
-                  {!collapsed && <ChevronUp className="w-4 h-4 text-muted-foreground shrink-0" />}
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent side="top" align="start" className="w-56">
-                <DropdownMenuItem onClick={() => onNavigate("perfil")}>
-                  <UserCircle className="w-4 h-4 mr-2" />
-                  Meu Perfil
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={onSignOut} className="text-destructive focus:text-destructive">
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sair da conta
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <SidebarMenuButton size="lg" className="w-full h-12 rounded-xl hover:bg-white/5 transition-colors">
+                        <div className="relative">
+                          <Avatar className="w-8 h-8 shrink-0 ring-2 ring-white/5">
+                            <AvatarFallback className="bg-gradient-to-br from-primary to-blue-700 text-white text-xs font-bold">
+                              {initials}
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#0d0d14] rounded-full animate-pulse" />
+                        </div>
+                        {!collapsed && (
+                          <div className="flex-1 text-left min-w-0 ml-3">
+                            <p className="text-sm font-bold text-foreground truncate leading-none mb-1">{displayName}</p>
+                            <p className="text-[10px] text-[#475569] font-medium uppercase tracking-wider">Membro Premium</p>
+                          </div>
+                        )}
+                        {!collapsed && <ChevronUp className="w-4 h-4 text-[#475569] shrink-0" />}
+                      </SidebarMenuButton>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent side="top" align="start" className="w-56 bg-[#0d0d14] border-white/10 text-white">
+                      <DropdownMenuItem onClick={() => onNavigate("perfil")} className="hover:bg-white/5 focus:bg-white/5 py-2.5">
+                        <UserCircle className="w-4 h-4 mr-3 text-primary" />
+                        Meu Perfil
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={onSignOut} className="text-red-400 hover:bg-red-400/10 focus:bg-red-400/10 py-2.5">
+                        <LogOut className="w-4 h-4 mr-3" />
+                        Sair da conta
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-primary text-white border-none text-xs font-bold px-3 py-1.5">
+                  {userEmail}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
