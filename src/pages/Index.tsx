@@ -270,7 +270,7 @@ const Index = () => {
                   className="flex-1 space-y-6"
                 >
                   <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.1)]">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{tag}</span>
+                    <span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">{tag}</span>
                   </div>
                   
                   <div className="flex items-center gap-4">
