@@ -354,11 +354,11 @@ const Index = () => {
           <SectionPill>Processo AxionFly</SectionPill>
           
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
-            <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tight mb-6">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Venda seu primeiro site <br />
               em <span className="gradient-text">3 passos simples</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg md:text-xl font-medium">
+            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Não reinventamos a roda, apenas automatizamos o que funciona. Siga o método e veja os resultados.
             </p>
           </motion.div>
