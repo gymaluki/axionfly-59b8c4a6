@@ -108,16 +108,16 @@ export function HeroSection() {
 
 				{/* Partners */}
 				<motion.div
-					initial={{ opacity: 0 }}
-					whileInView={{ opacity: 1 }}
+					initial={{ opacity: 0, y: 10 }}
+					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					transition={{ duration: 1, delay: 2 }}
+					transition={{ duration: 1, delay: 1 }}
 					className="mt-20 flex flex-col items-center gap-6"
 				>
-					<p className="text-xs font-bold uppercase tracking-[0.3em] text-muted-foreground/60">
+					<p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#64748b]">
 						Parceiros oficiais
 					</p>
-					<div className="flex items-center gap-12 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+					<div className="flex items-center gap-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
 						<div className="flex items-center gap-2">
 							<Sparkles className="w-6 h-6 text-primary" />
 							<span className="text-xl font-black tracking-tighter text-foreground">Lovable</span>
