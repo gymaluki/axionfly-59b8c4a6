@@ -260,24 +260,31 @@ const ProspeccaoView = () => {
       </div>
 
       {/* Nichos */}
-      <div>
-        <label className="text-xs font-medium text-muted-foreground mb-2 block">Selecione o nicho</label>
+      <div className="space-y-4">
+        <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider block">Selecione o nicho</label>
         <div className="flex flex-wrap gap-2">
-          {quickFilters.map(({ label, emoji }) => (
-            <motion.button
-              key={label}
-              onClick={() => handleFilterClick(label)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
-                activeFilter === label
-                  ? "bg-primary text-primary-foreground glow-purple"
-                  : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
-              }`}
-            >
-              <span>{emoji}</span> {label}
-            </motion.button>
-          ))}
+          {quickFilters.map(({ label, emoji }) => {
+            const isSelected = activeFilter === label;
+            return (
+              <motion.button
+                key={label}
+                onClick={() => handleFilterClick(label)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                animate={isSelected ? { scale: [1, 1.1, 1] } : {}}
+                transition={{ duration: 0.2 }}
+                className={cn(
+                  "px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2",
+                  isSelected
+                    ? "bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(37,99,235,0.2)]"
+                    : "bg-[#0d0d14] border-white/5 text-[#94a3b8] hover:border-white/20 hover:text-white"
+                )}
+              >
+                {isSelected && <Check className="w-3.5 h-3.5" />}
+                <span>{emoji}</span> {label}
+              </motion.button>
+            );
+          })}
         </div>
       </div>
 
