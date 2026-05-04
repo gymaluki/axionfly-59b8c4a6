@@ -166,7 +166,10 @@ function StaticStat({ icon: Icon, value, label, prefix, suffix, index }: {
         <Icon className="w-8 h-8 text-primary" />
       </motion.div>
       <div className="space-y-1">
-        <p className="text-4xl md:text-5xl font-black text-foreground tabular-nums tracking-tighter">
+        <p className={cn(
+          "text-4xl md:text-5xl font-black text-foreground tabular-nums tracking-tighter",
+          label.includes("Tempo") && "text-primary"
+        )}>
           {prefix}{count.toLocaleString("pt-BR")}{suffix}
         </p>
         <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground">{label}</p>
@@ -203,7 +206,7 @@ const faqItems = [
   { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você só preenche o nome do comércio, escolhe o nicho, as cores e o estilo de design — a IA faz todo o trabalho técnico. Zero código, zero complicação." },
   { q: "Quais tipos de comércio posso atender?", a: "São mais de 20 nichos prontos focados em comércios locais: barbearias, pizzarias, hamburguerias, restaurantes, padarias, sorveterias, açaiterias, mercados, lojas de roupas, lanchonetes, marmitarias, salões de beleza, cafeterias, docerias, açougues, hortifrutis e muito mais." },
   { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o tipo de comércio. O sistema busca automaticamente e entrega nome, telefone e endereço — tudo pronto para você prospectar." },
-  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre R$ 500 e R$ 3.000 por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
+  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre <span class='text-primary'>R$ 500 e R$ 3.000</span> por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
   { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes e 6 estilos de design diferentes. Cada site sai único e profissional." },
   { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos de comércio), busca de leads em todos os estados do Brasil, dashboard de vendas e todas as atualizações futuras. Pague uma vez, use para sempre." },
   { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
@@ -214,7 +217,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden relative">
+    <div className="min-h-screen bg-[#05050a] overflow-hidden relative">
       {/* Grid Background */}
       <div
         aria-hidden="true"
@@ -379,7 +382,7 @@ const Index = () => {
               {[
                 { step: "01", icon: Zap, title: "Ative sua Ferramenta", desc: "Assine a AxionFly e conecte sua IA em segundos. Sua base de operações está pronta.", color: "blue" },
                 { step: "02", icon: Code2, title: "Crie e Encontre", desc: "Escolha o nicho, gere o site com IA e busque leads qualificados na sua região automaticamente.", color: "blue" },
-                { step: "03", icon: TrendingUp, title: "Venda e Escale", desc: "Aborde pelo WhatsApp com script validado e feche contratos de R$ 500 a R$ 3.000.", color: "blue" }
+                { step: "03", icon: TrendingUp, title: "Venda e Escale", desc: "Aborde pelo WhatsApp com script validado e feche contratos de <span class='text-primary'>R$ 500 a R$ 3.000</span>.", color: "blue" }
               ].map(({ step, icon: Icon, title, desc }, i) => (
                 <motion.div
                   key={step}
