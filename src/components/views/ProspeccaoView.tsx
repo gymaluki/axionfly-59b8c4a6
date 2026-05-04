@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, MessageCircle, MapPin, Loader2, Phone, Check, ChevronDown } from "lucide-react";
+import { Search, MessageCircle, MapPin, Loader2, Phone, Check, ChevronDown, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -214,16 +214,16 @@ const ProspeccaoView = () => {
       className="space-y-6"
     >
       <div>
-        <h2 className="text-2xl font-bold text-foreground">Prospecção de Clientes</h2>
-        <p className="text-muted-foreground text-sm mt-1">Encontre empresas por nicho, cidade e estado — ideais para prospectar</p>
+        <h2 className="text-2xl font-bold text-white">Prospecção de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Clientes</span></h2>
+        <p className="text-[#6b7280] text-sm mt-1 font-medium">Encontre empresas por nicho, cidade e estado — ideais para prospectar</p>
       </div>
 
       {/* Filtros de localização */}
-      <div className="bg-[#0d0d14]/40 backdrop-blur-md border border-white/5 rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div className="bg-[#0f0f1f] border border-[#1e2a4a]/50 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
         <form onSubmit={handleSearch} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
-              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Estado</label>
+              <label className="text-[11px] font-bold text-[#6b7280] uppercase tracking-[0.1em]">Estado</label>
               <Select value={estado} onValueChange={setEstado}>
                 <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all">
                   <SelectValue placeholder="Todos os estados" />
@@ -237,7 +237,7 @@ const ProspeccaoView = () => {
               </Select>
             </div>
             <div className="space-y-2">
-              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Cidade</label>
+              <label className="text-[11px] font-bold text-[#6b7280] uppercase tracking-[0.1em]">Cidade</label>
               <Select value={cidade} onValueChange={setCidade} disabled={!estado || estado === "todos" || loadingCidades}>
                 <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all">
                   <SelectValue placeholder={loadingCidades ? "Carregando..." : !estado || estado === "todos" ? "Selecione o estado" : "Selecione a cidade"} />
@@ -251,9 +251,9 @@ const ProspeccaoView = () => {
               </Select>
             </div>
             <div className="flex items-end">
-              <Button type="submit" variant="neon" disabled={loading} className="w-full h-12 text-base font-black uppercase tracking-widest shimmer-button shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Search className="w-5 h-5 mr-2" />}
-                Buscar Leads
+              <Button type="submit" disabled={loading} className="w-full h-12 text-xs font-bold uppercase tracking-[0.05em] bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white rounded-full transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Zap className="w-4 h-4 mr-2" />}
+                BUSCAR LEADS
               </Button>
             </div>
           </div>
@@ -262,7 +262,7 @@ const ProspeccaoView = () => {
 
       {/* Nichos */}
       <div className="space-y-4">
-        <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider block">Selecione o nicho</label>
+        <label className="text-[11px] font-bold text-[#6b7280] uppercase tracking-[0.1em] block mb-4">SELECIONE O NICHO</label>
         <div className="flex flex-wrap gap-2">
           {quickFilters.map(({ label, emoji }) => {
             const isSelected = activeFilter === label;
@@ -272,17 +272,15 @@ const ProspeccaoView = () => {
                 onClick={() => handleFilterClick(label)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                animate={isSelected ? { scale: [1, 1.1, 1] } : {}}
                 transition={{ duration: 0.2 }}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2",
+                  "px-4 py-1.5 rounded-full text-[13px] font-medium transition-all duration-300 flex items-center gap-2 border uppercase tracking-[0.02em]",
                   isSelected
-                    ? "bg-primary/20 border-primary text-primary shadow-[0_0_15px_rgba(37,99,235,0.2)]"
-                    : "bg-[#0d0d14] border-white/5 text-[#94a3b8] hover:border-white/20 hover:text-white"
+                    ? "bg-[#1e3a5f] border-[#3B82F6] text-[#60A5FA]"
+                    : "bg-[#0f0f1f] border-[#1e2a4a]/50 text-[#9ca3af] hover:border-[#3B82F6] hover:text-white"
                 )}
               >
-                {isSelected && <Check className="w-3.5 h-3.5" />}
-                <span>{emoji}</span> {label}
+                {label}
               </motion.button>
             );
           })}
@@ -290,7 +288,7 @@ const ProspeccaoView = () => {
       </div>
 
       {/* Resultados */}
-      <div className="glass rounded-xl overflow-hidden">
+      <div className="bg-[#0f0f1f] border border-[#1e2a4a]/50 rounded-2xl overflow-hidden shadow-xl">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16 gap-4">
             <motion.div
@@ -306,10 +304,10 @@ const ProspeccaoView = () => {
           <table className="w-full">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Negócio</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden lg:table-cell">Descrição</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Telefone</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Ações</th>
+                <th className="text-left px-6 py-4 text-[11px] font-bold text-[#6b7280] uppercase tracking-[0.1em]">Negócio</th>
+                <th className="text-left px-6 py-4 text-[11px] font-bold text-[#6b7280] uppercase tracking-[0.1em] hidden lg:table-cell">Descrição</th>
+                <th className="text-left px-6 py-4 text-[11px] font-bold text-[#6b7280] uppercase tracking-[0.1em]">Telefone</th>
+                <th className="text-right px-6 py-4 text-[11px] font-bold text-[#6b7280] uppercase tracking-[0.1em]">Ações</th>
               </tr>
             </thead>
             <AnimatePresence mode="wait">

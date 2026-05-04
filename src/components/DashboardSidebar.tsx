@@ -56,27 +56,30 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
   const initials = displayName.slice(0, 2).toUpperCase();
 
   return (
-    <Sidebar collapsible="icon" className="bg-[#0d0d14] border-r border-white/5">
-      <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#0d0d14]">
+    <Sidebar collapsible="icon" className="bg-[#0d0d1a] border-r border-white/5">
+      <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#0d0d1a]">
         <div className="flex items-center gap-3">
-          <div className="p-1.5 rounded-xl bg-primary/10">
-            <Zap className="w-6 h-6 text-primary fill-primary shrink-0" />
+          <div className="p-1.5 flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 22H6L12 8L18 22H22L12 2Z" fill="#3B82F6"/>
+              <path d="M7 16H17L18 18H6L7 16Z" fill="#3B82F6"/>
+            </svg>
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-base font-bold text-foreground tracking-tight leading-none">
-                Axion<span className="text-primary">Fly</span>
+              <span className="text-base font-bold text-white tracking-tight leading-none">
+                AxionFly
               </span>
-              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest mt-0.5">Dashboard</span>
+              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest mt-1">DASHBOARD</span>
             </div>
           )}
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="bg-[#0d0d14]">
+      <SidebarContent className="bg-[#0d0d1a]">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[11px] font-black uppercase tracking-[0.2em] text-[#475569] mb-2 px-4">
-            Ferramentas
+          <SidebarGroupLabel className="text-[10px] font-bold uppercase tracking-[0.1em] text-[#6b7280] mb-2 px-4">
+            FERRAMENTAS
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="px-2 space-y-1">
@@ -89,8 +92,8 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                     className={cn(
                       "transition-all duration-200 h-10 px-3 rounded-lg",
                       active === id 
-                        ? "bg-primary/10 text-primary border-l-[3px] border-primary rounded-l-none" 
-                        : "text-[#94a3b8] hover:bg-white/5 hover:text-white"
+                        ? "bg-[#1a2035] text-[#3B82F6] border-l-2 border-[#3B82F6] rounded-l-none" 
+                        : "text-[#6b7280] hover:bg-white/5 hover:text-white border-l-2 border-transparent"
                     )}
                   >
                     <Icon className={cn("w-4 h-4 shrink-0", active === id ? "text-primary" : "text-inherit")} />
@@ -105,20 +108,20 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
         {/* Minimal Hyperbuild Link */}
         {!collapsed && (
           <div className="mt-auto px-4 py-4">
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-3">
+            <div className="p-4 rounded-2xl bg-white/5 border border-[#3B82F6]/30 space-y-3">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Parceria Ativa</span>
               </div>
               <p className="text-xs text-[#94a3b8] leading-relaxed">
-                Tokens ilimitados com <span className="text-foreground font-semibold">Hyperbuild Pro</span>
+                Tokens ilimitados com <span className="text-white font-bold">Hyperbuild Pro</span>
               </p>
             </div>
           </div>
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-white/5 bg-[#0d0d14] p-4">
+      <SidebarFooter className="border-t border-white/5 bg-[#0d0d1a] p-4">
         <SidebarMenu>
           <SidebarMenuItem>
             <TooltipProvider>
@@ -129,7 +132,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                       <SidebarMenuButton size="lg" className="w-full h-12 rounded-xl hover:bg-white/5 transition-colors">
                         <div className="relative">
                           <Avatar className="w-8 h-8 shrink-0 ring-2 ring-white/5">
-                            <AvatarFallback className="bg-gradient-to-br from-primary to-blue-700 text-white text-xs font-bold">
+                            <AvatarFallback className="bg-[#3B82F6] text-white text-xs font-bold">
                               {initials}
                             </AvatarFallback>
                           </Avatar>
