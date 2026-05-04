@@ -119,7 +119,7 @@ export default function LovablePartnership() {
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto relative z-10">
         {partners.map((partner, idx) => (
           <motion.div
             key={partner.name}
