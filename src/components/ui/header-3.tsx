@@ -46,11 +46,10 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'fixed left-1/2 z-50 -translate-x-1/2 border transition-all duration-700',
-				scrolled && !open
-					? 'top-2 w-auto max-w-fit rounded-full border-primary/40 bg-background/95 backdrop-blur-xl shadow-[0_0_20px_hsl(var(--primary)/0.6),0_0_40px_hsl(var(--primary)/0.4),0_0_80px_hsl(var(--primary)/0.25),inset_0_0_20px_hsl(var(--primary)/0.08)]'
-					: 'top-0 w-full max-w-full rounded-none border-transparent bg-background/80 backdrop-blur-lg',
-				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
+				'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 border-b',
+				scrolled || open
+					? 'bg-background/80 backdrop-blur-xl border-primary/20 shadow-lg'
+					: 'bg-transparent border-transparent'
 			)}
 		>
 			<nav
