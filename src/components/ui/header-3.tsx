@@ -54,8 +54,8 @@ export function Header() {
 		>
 			<nav
 				className={cn(
-					'flex w-full items-center justify-between transition-all duration-700',
-					scrolled ? 'h-8 px-2 md:px-2 gap-1' : 'h-12 md:h-14 px-4 gap-5',
+					'container mx-auto flex items-center justify-between transition-all duration-500',
+					scrolled ? 'h-16 px-4' : 'h-20 px-6',
 				)}
 			>
 			{/* Logo */}
