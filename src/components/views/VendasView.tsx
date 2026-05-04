@@ -355,27 +355,37 @@ const VendasView = () => {
                 return (
                   <motion.tr
                     key={sale.id}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="border-b border-border/50 hover:bg-secondary/30 transition-colors"
+                    className={cn(
+                      "border-b border-white/5 hover:bg-primary/5 transition-all duration-200 group",
+                      i % 2 === 0 ? "bg-white/[0.02]" : "bg-transparent"
+                    )}
                   >
-                    <td className="px-4 py-3 font-medium text-foreground">{sale.client_name}</td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground hidden md:table-cell">{sale.description || "—"}</td>
-                    <td className="px-4 py-3 font-semibold text-foreground">{formatCurrency(Number(sale.amount))}</td>
-                    <td className="px-4 py-3">
-                      <span className={`text-sm font-medium ${statusInfo.color}`}>{statusInfo.label}</span>
+                    <td className="px-6 py-4 font-bold text-foreground">{sale.client_name}</td>
+                    <td className="px-6 py-4 text-sm text-[#94a3b8] hidden md:table-cell font-medium">{sale.description || "—"}</td>
+                    <td className="px-6 py-4 font-black text-foreground tracking-tight">{formatCurrency(Number(sale.amount))}</td>
+                    <td className="px-6 py-4">
+                      <span className={cn(
+                        "text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border",
+                        sale.status === "pago" ? "bg-green-500/10 text-green-500 border-green-500/20" : 
+                        sale.status === "pendente" ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20" : 
+                        "bg-red-500/10 text-red-500 border-red-500/20"
+                      )}>
+                        {statusInfo.label}
+                      </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground hidden md:table-cell">
+                    <td className="px-6 py-4 text-xs text-[#64748b] hidden md:table-cell font-bold">
                       {new Date(sale.sale_date).toLocaleDateString("pt-BR")}
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="flex gap-1 justify-end">
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(sale)}>
-                          <Edit2 className="w-3.5 h-3.5" />
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex gap-1 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(sale)} className="h-8 w-8 hover:bg-primary/10 hover:text-primary">
+                          <Edit2 className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDelete(sale.id)} className="text-destructive hover:text-destructive">
-                          <Trash2 className="w-3.5 h-3.5" />
+                        <Button variant="ghost" size="icon" onClick={() => handleDelete(sale.id)} className="h-8 w-8 text-[#475569] hover:bg-red-500/10 hover:text-red-500">
+                          <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                     </td>
