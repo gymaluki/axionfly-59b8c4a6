@@ -2,14 +2,35 @@ import { Header } from "@/components/ui/header-3";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download, Key, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const ExtensionPage = () => {
   const [copied, setCopied] = useState(false);
-  const extensionToken = "HB-LOVABLE-INFINITO-" + Math.random().toString(36).substring(2, 10).toUpperCase();
+  const [extensionToken, setExtensionToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getLicense = async () => {
+      try {
+        const { data, error } = await supabase.rpc('claim_hyperbuild_license');
+        if (error) throw error;
+        if (data && data.length > 0) {
+          setExtensionToken(data[0].license_key);
+        }
+      } catch (err: any) {
+        console.error("Error claiming license:", err);
+        toast.error(err.message || "Erro ao obter sua licença.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getLicense();
+  }, []);
 
   const handleCopyToken = () => {
+    if (!extensionToken) return;
     navigator.clipboard.writeText(extensionToken);
     setCopied(true);
     toast.success("Token copiado para a área de transferência!");
