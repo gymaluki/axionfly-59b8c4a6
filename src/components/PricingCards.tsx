@@ -62,8 +62,8 @@ interface PricingCardProps {
 }
 
 function PriceCounter({ price }: { price: string }) {
-  const ref = React.useRef(null);
-  const isInView = motion.useInView(ref, { once: true });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
   const count = useCountUp(price, 2000, isInView);
   
   return <span ref={ref}>{count.toLocaleString("pt-BR")}</span>;
