@@ -46,17 +46,16 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				'fixed left-1/2 z-50 -translate-x-1/2 border transition-all duration-700',
-				scrolled && !open
-					? 'top-2 w-auto max-w-fit rounded-full border-primary/40 bg-background/95 backdrop-blur-xl shadow-[0_0_20px_hsl(var(--primary)/0.6),0_0_40px_hsl(var(--primary)/0.4),0_0_80px_hsl(var(--primary)/0.25),inset_0_0_20px_hsl(var(--primary)/0.08)]'
-					: 'top-0 w-full max-w-full rounded-none border-transparent bg-background/80 backdrop-blur-lg',
-				open ? 'top-0 w-full max-w-full rounded-none bg-background/95' : '',
+				'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 border-b',
+				scrolled || open
+					? 'bg-background/80 backdrop-blur-xl border-primary/20 shadow-lg'
+					: 'bg-transparent border-transparent'
 			)}
 		>
 			<nav
 				className={cn(
-					'flex w-full items-center justify-between transition-all duration-700',
-					scrolled ? 'h-8 px-2 md:px-2 gap-1' : 'h-12 md:h-14 px-4 gap-5',
+					'container mx-auto flex items-center justify-between transition-all duration-500',
+					scrolled ? 'h-16 px-4' : 'h-20 px-6',
 				)}
 			>
 			{/* Logo */}
@@ -64,47 +63,44 @@ export function Header() {
 					<img
 						src={axionflyLogo}
 						alt="AxionFly"
-					className={cn(
-							'object-contain transition-all duration-700',
-							scrolled ? 'h-5 w-5' : 'h-8 w-8 md:h-9 md:w-9',
-						)}
+						className="h-10 w-10 md:h-12 md:w-12 object-contain"
 					/>
 				</a>
 
 				{/* Nav links — always visible on desktop */}
 				<NavigationMenu className="hidden md:flex">
-					<NavigationMenuList className={cn('transition-all duration-500', scrolled ? 'gap-0' : 'gap-1')}>
+					<NavigationMenuList className="gap-2">
 						<NavigationMenuItem>
-						<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Início
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#etapas" onClick={(e) => { e.preventDefault(); document.getElementById('etapas')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#etapas" onClick={(e) => { e.preventDefault(); document.getElementById('etapas')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Etapas
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#pricing" onClick={(e) => { e.preventDefault(); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#pricing" onClick={(e) => { e.preventDefault(); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Planos
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#feedbacks" onClick={(e) => { e.preventDefault(); document.getElementById('feedbacks')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#feedbacks" onClick={(e) => { e.preventDefault(); document.getElementById('feedbacks')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Feedbacks
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#faq" onClick={(e) => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#faq" onClick={(e) => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									FAQ
 								</a>
 							</NavigationMenuLink>
@@ -113,12 +109,9 @@ export function Header() {
 				</NavigationMenu>
 
 				{/* Right side buttons */}
-				<div className={cn(
-					'hidden items-center gap-2 md:flex transition-all duration-700',
-					scrolled ? 'gap-1' : 'gap-2',
-				)}>
-					<Button variant="ghost" size={scrolled ? 'sm' : 'default'} onClick={() => navigate('/auth')}>Entrar</Button>
-					<Button variant="neon" size={scrolled ? 'sm' : 'default'} onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>Ver Planos</Button>
+				<div className="hidden items-center gap-4 md:flex">
+					<Button variant="ghost" className="font-bold uppercase tracking-widest text-xs" onClick={() => navigate('/auth')}>Entrar</Button>
+					<Button variant="neon" className="shimmer-button font-bold uppercase tracking-widest text-xs px-6" onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>Ver Planos</Button>
 				</div>
 				<Button
 					size="icon"

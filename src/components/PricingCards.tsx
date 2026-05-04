@@ -1,5 +1,6 @@
-import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { motion, type Easing, AnimatePresence, useInView } from "framer-motion";
+import { Check, Sparkles, ChevronDown, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiPix } from "react-icons/si";
 import { FaCcMastercard, FaCcVisa, FaBarcode } from "react-icons/fa";
@@ -11,6 +12,31 @@ import { resolveCheckoutUrl } from "@/lib/affiliates";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
+
+function useCountUp(endStr: string, duration = 2000, start = false) {
+  const [count, setCount] = React.useState(0);
+  const rafRef = React.useRef<number>();
+  const end = parseInt(endStr.replace(/\D/g, ''));
+
+  React.useEffect(() => {
+    if (!start) { setCount(0); return; }
+    let startTime: number | null = null;
+    const animate = (now: number) => {
+      if (!startTime) startTime = now;
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * end));
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [end, duration, start]);
+
+  return count;
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -35,6 +61,14 @@ interface PricingCardProps {
   comparePrice?: string;
 }
 
+function PriceCounter({ price }: { price: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const count = useCountUp(price, 2000, isInView);
+  
+  return <span ref={ref}>{count.toLocaleString("pt-BR")}</span>;
+}
+
 function PricingCard({
   planName,
   description,
@@ -49,11 +83,10 @@ function PricingCard({
   comparePrice,
 }: PricingCardProps) {
   const navigate = useNavigate();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = async () => {
-    // Resolve dinamicamente: usa link do afiliado ativo (se houver) ou o padrão
     const checkoutUrl = resolveCheckoutUrl(plan);
-
     const { data: { session } } = await supabase.auth.getSession();
 
     if (!session) {
@@ -61,10 +94,10 @@ function PricingCard({
       navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
       return;
     }
-
-    // User is logged in, redirect to payment
     window.location.href = checkoutUrl;
   };
+
+  const visibleFeatures = isExpanded ? features : features.slice(0, 5);
 
   return (
     <motion.div
@@ -73,84 +106,104 @@ function PricingCard({
       viewport={{ once: true }}
       variants={fadeUp}
       custom={index}
-      whileHover={{ scale: 1.03, y: -6, transition: hoverTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-2xl p-6 sm:p-8 transition-transform duration-150 neon-border glow-blue will-change-transform ${isHighlight ? "ring-2 ring-primary/60" : ""}`}
-      style={{
-        backgroundColor: "hsl(var(--card))",
-        backgroundImage: "radial-gradient(at 0% 100%, hsl(220 70% 35% / 0.1) 0px, transparent 60%), radial-gradient(at 100% 100%, hsl(220 70% 50% / 0.08) 0px, transparent 60%)",
-      }}
+      whileHover={{ y: -10, transition: hoverTransition }}
+      className={`relative flex w-full max-w-sm flex-col rounded-3xl p-8 transition-all duration-500 border-2 ${
+        isHighlight 
+          ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] scale-[1.05] z-10 bg-gradient-to-b from-primary/10 to-card" 
+          : savingsBadge 
+            ? "border-primary/40 shadow-[0_0_20px_rgba(37,99,235,0.1)] bg-card"
+            : "border-border/50 bg-card/50"
+      }`}
     >
       {isHighlight && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1 text-xs font-bold text-primary-foreground shadow-lg whitespace-nowrap">
-            <Sparkles className="h-3 w-3" />
-            Mais Escolhido
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
+          <span className="shimmer-button inline-flex items-center gap-1.5 rounded-full bg-primary px-6 py-1.5 text-xs font-black text-primary-foreground shadow-xl uppercase tracking-widest">
+            <Sparkles className="h-3.5 w-3.5 fill-current" />
+            🏆 Melhor Valor
           </span>
         </div>
       )}
 
       {savingsBadge && !isHighlight && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/30 whitespace-nowrap">
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
+          <span className="shimmer-button inline-flex items-center gap-1.5 rounded-full bg-primary/80 px-6 py-1.5 text-xs font-black text-primary-foreground shadow-xl uppercase tracking-widest">
             {savingsBadge}
           </span>
         </div>
       )}
 
-      <div className="mb-6 text-center">
-        <h3 className="text-xl sm:text-2xl font-bold text-foreground">{planName}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+      <div className="mb-8 text-center space-y-2">
+        <h3 className="text-2xl font-black text-foreground">{planName}</h3>
+        <p className="text-sm font-medium text-muted-foreground">{description}</p>
       </div>
 
-      <ul className="flex-1 space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-        {features.map((feature, idx) => (
-          <motion.li
-            key={idx}
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.03, duration: 0.3, ease }}
-            className="flex items-start gap-3 text-sm text-foreground font-medium"
-          >
-            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 mt-0.5">
-              <Check className="h-3 w-3 text-primary" />
-            </div>
-            <span className="leading-snug">{feature}</span>
-          </motion.li>
-        ))}
-      </ul>
-
-      <div className="mb-6 text-center">
+      <div className="mb-8 text-center">
         {comparePrice && (
-          <div className="mb-1 text-sm text-muted-foreground">
-            <span className="line-through">{comparePrice}</span>{" "}
-            <span className="text-xs">no mensal</span>
+          <div className="mb-1 text-sm text-muted-foreground/60">
+            <span className="line-through">{comparePrice}</span>
           </div>
         )}
-        <div className="flex items-baseline justify-center gap-2 flex-nowrap">
-          <span className="text-4xl sm:text-5xl font-black gradient-text whitespace-nowrap">
-            {price}
+        <div className="flex items-baseline justify-center gap-1">
+          <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+            R$ <PriceCounter price={price} />
           </span>
-          <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">{priceDescription}</span>
+          <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
         </div>
         {plan === "quarterly" && (
-          <p className="mt-2 text-xs font-semibold text-primary">
-            Equivale a R$ 32,63/mês • Economize R$ 105,80
+          <p className="mt-2 text-xs font-black text-primary uppercase tracking-wider">
+            Economize R$ 105,80
           </p>
         )}
-        <div className="mt-3 flex items-center justify-center gap-3 text-muted-foreground/70">
-          <SiPix className="h-5 w-5" />
-          <FaCcMastercard className="h-6 w-6" />
-          <FaCcVisa className="h-6 w-6" />
-          <FaBarcode className="h-5 w-5" />
-        </div>
       </div>
 
-      <motion.div whileHover={{ scale: 1.02, transition: hoverTransition }} whileTap={{ scale: 0.98, transition: hoverTransition }}>
-        <Button variant="neon" size="lg" className="w-full text-base" onClick={handleClick}>
+      <div className="flex-1 mb-8">
+        <ul className="space-y-4">
+          <AnimatePresence>
+            {visibleFeatures.map((feature, idx) => (
+              <motion.li
+                key={feature}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.05 }}
+                className="flex items-start gap-3 text-sm text-foreground/90 font-bold"
+              >
+                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 mt-0.5">
+                  <Check className="h-3 w-3 text-primary stroke-[3px]" />
+                </div>
+                <span>{feature}</span>
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </ul>
+        
+        {features.length > 5 && (
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="mt-6 flex items-center gap-2 text-xs font-black text-primary uppercase tracking-widest hover:opacity-80 transition-opacity"
+          >
+            {isExpanded ? "Ver menos" : "Ver todos os recursos"}
+            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+          </button>
+        )}
+      </div>
+
+      <div className="space-y-4">
+        <Button 
+          variant={isHighlight ? "neon" : "outline"} 
+          size="xl" 
+          className={`w-full rounded-full font-black uppercase tracking-[0.2em] text-xs h-14 ${isHighlight ? "shimmer-button" : "border-2"}`} 
+          onClick={handleClick}
+        >
           {buttonText}
         </Button>
-      </motion.div>
+        
+        <div className="flex items-center justify-center gap-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+          <SiPix className="h-6 w-6" />
+          <FaCcMastercard className="h-7 w-7" />
+          <FaCcVisa className="h-7 w-7" />
+          <FaBarcode className="h-6 w-6" />
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -209,55 +262,64 @@ export default function PricingCards() {
   ];
 
   return (
-    <section id="pricing" className="container mx-auto px-4 py-10 md:py-20">
-      <div className="mb-8 flex justify-center">
-        <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-5 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-sm">
-          Planos
-        </span>
-      </div>
+    <section id="pricing" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+      <SectionPill>Investimento Inteligente</SectionPill>
+      
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="mb-14 space-y-5 text-center"
+        className="mb-20 space-y-6 text-center"
       >
-        <h2 className="text-3xl font-black tracking-tight text-foreground md:text-6xl leading-tight">
-          Comece de forma simples.{" "}
-          <br className="hidden md:block" />
-          Escale com <span className="gradient-text">sites prontos e prospecção automática</span>
+        <h2 className="text-4xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1]">
+          O plano ideal para <br />
+          seu <span className="gradient-text">próximo nível</span>
         </h2>
-        <p className="mx-auto max-w-xl text-lg text-muted-foreground">
-          Escolha o plano ideal para você e comece seu negócio com liberdade para crescer ainda mais.
+        <p className="mx-auto max-w-2xl text-lg md:text-xl text-muted-foreground font-medium">
+          Sem taxas escondidas. Sem letras miúdas. Acesso imediato a todas as ferramentas após a confirmação.
         </p>
       </motion.div>
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-8 px-2 sm:px-0 lg:flex-row lg:items-stretch">
+
+      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-6 mb-20 px-4 md:px-0 w-full overflow-x-auto pb-8 snap-x snap-mandatory lg:overflow-visible no-scrollbar">
         {plans.map((plan) => (
-          <PricingCard key={plan.planName} {...plan} />
+          <div key={plan.planName} className="w-full max-w-sm shrink-0 snap-center lg:w-1/3">
+            <PricingCard {...plan} />
+          </div>
         ))}
       </div>
 
+      {/* Guarantee Bar */}
       <motion.div
-        initial="hidden"
-        whileInView="visible"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        variants={fadeUp}
-        custom={3}
-        className="mt-14 flex flex-col items-center gap-4"
+        className="max-w-4xl mx-auto p-6 rounded-2xl border border-primary/20 bg-primary/5 flex flex-wrap items-center justify-center gap-8 md:gap-12"
       >
-        <p className="text-sm text-muted-foreground font-medium">Parcerias oficiais</p>
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-foreground">Lovable</span>
-          </div>
-          <div className="flex items-center gap-2 rounded-full border border-border bg-card/80 px-5 py-2.5 backdrop-blur-sm">
-            <img src={googleMapsLogo} alt="Google Maps" className="h-5 w-5 object-contain" />
-            <span className="text-sm font-semibold text-foreground">Google Maps</span>
-          </div>
+        <div className="flex items-center gap-3">
+          <ShieldCheck className="w-6 h-6 text-primary" />
+          <span className="text-sm font-black uppercase tracking-widest text-foreground">7 Dias de Garantia</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <Zap className="w-6 h-6 text-primary" />
+          <span className="text-sm font-black uppercase tracking-widest text-foreground">Acesso Imediato</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <Check className="w-6 h-6 text-primary" />
+          <span className="text-sm font-black uppercase tracking-widest text-foreground">Suporte 24/7</span>
         </div>
       </motion.div>
     </section>
+  );
+}
+
+function SectionPill({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex justify-center mb-8">
+      <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-sm">
+        {children}
+      </span>
+    </div>
   );
 }
