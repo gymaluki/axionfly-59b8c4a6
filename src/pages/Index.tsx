@@ -508,7 +508,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="relative z-10 max-w-6xl mx-auto rounded-[3rem] border border-primary/20 bg-card/60 backdrop-blur-xl p-12 md:p-24 text-center space-y-12"
           >
-            <h2 className="text-5xl md:text-8xl font-black text-foreground leading-[1.05] tracking-tighter">
+            <h2 className="text-4xl md:text-[58px] font-black text-foreground leading-[1.05] tracking-tighter">
               Comece agora e venda seu <br />
               <span className="gradient-text-animate">primeiro site hoje</span>
             </h2>
