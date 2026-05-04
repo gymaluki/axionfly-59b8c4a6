@@ -63,47 +63,44 @@ export function Header() {
 					<img
 						src={axionflyLogo}
 						alt="AxionFly"
-					className={cn(
-							'object-contain transition-all duration-700',
-							scrolled ? 'h-5 w-5' : 'h-8 w-8 md:h-9 md:w-9',
-						)}
+						className="h-10 w-10 md:h-12 md:w-12 object-contain"
 					/>
 				</a>
 
 				{/* Nav links — always visible on desktop */}
 				<NavigationMenu className="hidden md:flex">
-					<NavigationMenuList className={cn('transition-all duration-500', scrolled ? 'gap-0' : 'gap-1')}>
+					<NavigationMenuList className="gap-2">
 						<NavigationMenuItem>
-						<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Início
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#etapas" onClick={(e) => { e.preventDefault(); document.getElementById('etapas')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#etapas" onClick={(e) => { e.preventDefault(); document.getElementById('etapas')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Etapas
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#pricing" onClick={(e) => { e.preventDefault(); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#pricing" onClick={(e) => { e.preventDefault(); document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Planos
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#feedbacks" onClick={(e) => { e.preventDefault(); document.getElementById('feedbacks')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#feedbacks" onClick={(e) => { e.preventDefault(); document.getElementById('feedbacks')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Feedbacks
 								</a>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm text-muted-foreground hover:text-foreground transition-colors" asChild>
-								<a href="#faq" onClick={(e) => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }); }} className={cn('rounded-md font-medium uppercase tracking-wide', scrolled ? 'text-[10px] px-2 py-1' : 'text-xs px-3 py-2')}>
+							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
+								<a href="#faq" onClick={(e) => { e.preventDefault(); document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									FAQ
 								</a>
 							</NavigationMenuLink>
