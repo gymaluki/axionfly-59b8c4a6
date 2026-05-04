@@ -67,8 +67,10 @@ const PLAN_LABELS: Record<string, string> = {
 const AdminView = () => {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [pendingPayments, setPendingPayments] = useState<PendingPayment[]>([]);
+  const [licenses, setLicenses] = useState<HyperbuildLicense[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [licenseSearch, setLicenseSearch] = useState("");
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   const fetchData = async () => {
@@ -80,6 +82,25 @@ const AdminView = () => {
       if (error) throw error;
       setUsers(data.users || []);
       setPendingPayments(data.pendings || []);
+
+      // Fetch licenses
+      const { data: licenseData, error: licenseError } = await supabase
+        .from('hyperbuild_licenses')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (licenseError) throw licenseError;
+      
+      // Match licenses with user emails
+      const enrichedLicenses = (licenseData || []).map(license => {
+        const user = data.users?.find((u: any) => u.user_id === license.used_by);
+        return {
+          ...license,
+          user_email: user?.email
+        };
+      });
+      
+      setLicenses(enrichedLicenses);
     } catch (err: any) {
       console.error(err);
       toast({ title: "Erro ao carregar", description: err.message, variant: "destructive" });
