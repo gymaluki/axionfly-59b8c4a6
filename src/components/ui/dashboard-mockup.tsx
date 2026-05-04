@@ -17,7 +17,7 @@ export const DashboardMockup = () => {
         className="relative group"
       >
         {/* Glow behind */}
-        <div className="absolute -inset-4 bg-primary/20 blur-3xl opacity-50 group-hover:opacity-75 transition-opacity duration-500 rounded-[2rem] pointer-events-none" />
+        <div className="absolute -inset-10 bg-primary/20 blur-[100px] opacity-60 group-hover:opacity-90 transition-opacity duration-700 rounded-[3rem] pointer-events-none" />
         
         {/* Mockup Container */}
         <div className="relative rounded-2xl border border-primary/20 bg-card/80 backdrop-blur-sm overflow-hidden shadow-2xl shadow-primary/10">
