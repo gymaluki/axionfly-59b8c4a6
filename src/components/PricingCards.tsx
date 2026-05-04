@@ -13,6 +13,31 @@ import { resolveCheckoutUrl } from "@/lib/affiliates";
 const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
 
+function useCountUp(endStr: string, duration = 2000, start = false) {
+  const [count, setCount] = React.useState(0);
+  const rafRef = React.useRef<number>();
+  const end = parseInt(endStr.replace(/\D/g, ''));
+
+  React.useEffect(() => {
+    if (!start) { setCount(0); return; }
+    let startTime: number | null = null;
+    const animate = (now: number) => {
+      if (!startTime) startTime = now;
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * end));
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(animate);
+      }
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+  }, [end, duration, start]);
+
+  return count;
+}
+
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
