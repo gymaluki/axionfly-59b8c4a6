@@ -326,6 +326,7 @@ const SitesView = () => {
   const [isRegisteringCakto, setIsRegisteringCakto] = useState(false);
   const [caktoRegistered, setCaktoRegistered] = useState(false);
   const [caktoCheckoutUrl, setCaktoCheckoutUrl] = useState("");
+  const [caktoProductImageUrl, setCaktoProductImageUrl] = useState("");
   const [hasCaktoConfig, setHasCaktoConfig] = useState(false);
 
   useEffect(() => {
