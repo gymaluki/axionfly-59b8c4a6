@@ -66,14 +66,14 @@ const partners = [
   {
     name: "HyperBuild Pro",
     logo: hyperbuildLogo,
-    title: "Hyperbuild Lovable Créditos Infinitos",
-    description: "Parceria oficial para garantir que sua produção nunca pare.",
-    badgeTitle: "Escala Total",
+    title: "Hyperbuild Lovable",
+    description: "Extensão exclusiva que libera créditos infinitos no Lovable, sem travas e sem limites.",
+    badgeTitle: "Créditos Infinitos no Lovable",
     glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
-      "Processamento veloz",
-      "Infraestrutura dedicada",
-      "Sincronização Cloud"
+      "Créditos infinitos no Lovable",
+      "Extensão exclusiva AxionFly",
+      "Produção sem travas"
     ],
   },
 ];
