@@ -164,7 +164,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                       </div>
                     )}
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${builder.bg} ${
+                      className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${builder.bg} ${
                         builder.recommended ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                       } transition-opacity pointer-events-none`}
                     />
