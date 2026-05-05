@@ -228,9 +228,9 @@ const Index = () => {
         }}
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 pt-[112px] md:pt-[128px]">
         {/* Elegant Anniversary Banner */}
-        <div className="w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center relative z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
+        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
           <div className="container mx-auto px-4 flex items-center justify-center gap-6">
             <motion.span 
               animate={{ rotate: [0, 10, -10, 0] }} 
@@ -253,7 +253,10 @@ const Index = () => {
             </motion.span>
           </div>
         </div>
-        <Header />
+        
+        <div className="fixed top-[44px] left-0 right-0 z-50">
+          <Header />
+        </div>
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
