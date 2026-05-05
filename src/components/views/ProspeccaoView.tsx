@@ -99,17 +99,36 @@ const ProspeccaoView = () => {
   const [searched, setSearched] = useState(false);
   const [key, setKey] = useState(0);
 
+  useEffect(() => {
+    const saved = localStorage.getItem("prospeccao-view-state");
+    if (saved) {
+      try {
+        const state = JSON.parse(saved);
+        setCidade(state.cidade || "");
+        setEstado(state.estado || "");
+        setActiveFilter(state.activeFilter || "");
+        setResults(state.results || []);
+        setSearched(state.searched || false);
+      } catch (e) {
+        console.error("Error loading prospeccao state", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const state = { cidade, estado, activeFilter, results, searched };
+    localStorage.setItem("prospeccao-view-state", JSON.stringify(state));
+  }, [cidade, estado, activeFilter, results, searched]);
+
   // Buscar cidades do IBGE quando o estado muda
   useEffect(() => {
     if (!estado || estado === "todos") {
       setCidades([]);
-      setCidade("");
       return;
     }
 
     const fetchCidades = async () => {
       setLoadingCidades(true);
-      setCidade("");
       try {
         const res = await fetch(
           `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios?orderBy=nome`
