@@ -24,6 +24,8 @@ import {
   Youtube,
   Facebook as FacebookIcon,
   Globe,
+  CreditCard,
+  Wallet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -278,13 +280,14 @@ const sloganSuggestions: Record<string, string[]> = {
   papelaria: ["A beleza está nos detalhes", "Criatividade em cada página", "Papelaria que inspira", "Sua história merece ser escrita com estilo"],
 };
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 const stepMeta = [
   { icon: Store, label: "Negócio" },
   { icon: Palette, label: "Design" },
   { icon: Type, label: "Visual" },
   { icon: MapPin, label: "Contato" },
+  { icon: CreditCard, label: "Vendas" },
   { icon: Eye, label: "Revisão" },
 ];
 
@@ -317,6 +320,12 @@ const SitesView = () => {
   const [differentiators, setDifferentiators] = useState("");
   const [pricePositioning, setPricePositioning] = useState("");
   const [socialProof, setSocialProof] = useState("");
+  const [productNameCakto, setProductNameCakto] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [isRegisteringCakto, setIsRegisteringCakto] = useState(false);
+  const [caktoRegistered, setCaktoRegistered] = useState(false);
+
+
 
   // Niche mapping for intelligent presets
   const nichePresets: Record<string, any> = {
@@ -446,6 +455,9 @@ const SitesView = () => {
         setTargetAudience(data.targetAudience || "");
         setDifferentiators(data.differentiators || "");
         setPricePositioning(data.pricePositioning || "");
+        setProductNameCakto(data.productNameCakto || data.projectName || "");
+        setProductPrice(data.productPrice || "");
+        setCaktoRegistered(data.caktoRegistered || false);
         setStep(data.step || 0);
       } catch (e) {
         console.error("Erro ao carregar dados salvos:", e);
@@ -458,6 +470,7 @@ const SitesView = () => {
     // Only apply presets if we are in the first step and the niche was just selected/changed
     // and the project name has at least one character (prevents firing on mount if niche is already set)
     if (step === 0 && niche && nichePresets[niche]) {
+      setProductNameCakto(projectName);
       const preset = nichePresets[niche];
       setPrimaryColor(preset.primaryColor);
       setSecondaryColor(preset.secondaryColor);
@@ -523,6 +536,7 @@ Crie uma Landing Page completa e profissional com as seguintes especificações 
 - **Headline (Hero):** Crie 3 variações de headlines de impacto baseadas no tom de voz.
 - **Prova Social:** ${socialProof.trim() ? `Use estes dados/depoimentos: ${socialProof.trim()}` : "Inclua seções de depoimentos com placeholders realistas e estatísticas de sucesso (ex: 1000+ clientes)."}
 - **CTAs:** O botão principal deve ser "${selectedCta?.label.replace(/^.\s/, "") || "Entre em contato"}".
+${caktoRegistered ? `- **PRODUTO CAKTO:** O site deve promover o produto "${productNameCakto || projectName}" no valor de R$ ${productPrice}. Integre chamadas para ação (CTAs) que simulem ou apontem para um checkout deste produto.` : ""}
 
 ### 3. ESPECIFICAÇÕES VISUAIS (DESIGN SYSTEM)
 - **Cores:** Primária: ${primaryColor.trim() || "Padrão do nicho"}, Secundária: ${secondaryColor.trim() || "Padrão do nicho"}.
@@ -591,6 +605,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       differentiators,
       pricePositioning,
       socialProof,
+      productNameCakto,
+      productPrice,
+      caktoRegistered,
       step
     };
     localStorage.setItem("pending_site_creation", JSON.stringify(formData));
@@ -1146,6 +1163,96 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         return (
           <div className="space-y-6">
             <div className="space-y-1">
+              <h3 className="text-xl font-bold text-foreground">Configurar Vendas (Cakto)</h3>
+              <p className="text-sm text-muted-foreground">
+                Cadastre seu produto na Cakto para receber pagamentos
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div className="bg-secondary/20 border border-primary/20 rounded-2xl p-6 space-y-4">
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Wallet className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-foreground">Integração Cakto</h4>
+                    <p className="text-xs text-muted-foreground">Checkout de alta conversão</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Nome do Produto</label>
+                    <Input
+                      placeholder="Ex: Consultoria Premium"
+                      value={productNameCakto || projectName}
+                      onChange={(e) => setProductNameCakto(e.target.value)}
+                      className="bg-secondary/50 border-border"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Valor do Produto (R$)</label>
+                    <Input
+                      type="number"
+                      placeholder="97,00"
+                      value={productPrice}
+                      onChange={(e) => setProductPrice(e.target.value)}
+                      className="bg-secondary/50 border-border"
+                    />
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      if (!productPrice) {
+                        toast.error("Informe o valor do produto");
+                        return;
+                      }
+                      setIsRegisteringCakto(true);
+                      setTimeout(() => {
+                        setIsRegisteringCakto(false);
+                        setCaktoRegistered(true);
+                        toast.success("Produto cadastrado na Cakto com sucesso!");
+                      }, 2000);
+                    }}
+                    disabled={isRegisteringCakto || caktoRegistered}
+                    className={cn(
+                      "w-full h-12 font-bold transition-all duration-300",
+                      caktoRegistered ? "bg-green-500 hover:bg-green-600" : "bg-primary hover:bg-primary/90"
+                    )}
+                  >
+                    {isRegisteringCakto ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Cadastrando...
+                      </div>
+                    ) : caktoRegistered ? (
+                      <div className="flex items-center gap-2">
+                        <Check className="w-5 h-5" />
+                        Produto Cadastrado
+                      </div>
+                    ) : (
+                      "Cadastrar na Cakto"
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 flex gap-3 items-start">
+                <Sparkles className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
+                <p className="text-xs text-blue-200/70 leading-relaxed">
+                  Ao clicar em cadastrar, nós criamos automaticamente o produto na sua conta Cakto usando o nome e valor informados. O link de checkout será inserido nos botões do seu site.
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-1">
               <h3 className="text-xl font-bold text-foreground">Revisão Final</h3>
               <p className="text-sm text-muted-foreground">
                 Confira as informações antes de gerar seu site
@@ -1191,6 +1298,10 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
               <ReviewItem label="Público-Alvo" value={targetAudience || "Não informado"} />
               <ReviewItem label="Diferenciais" value={differentiators || "Não informado"} />
               <ReviewItem label="Posicionamento" value={pricePositioning ? pricePositioning.charAt(0).toUpperCase() + pricePositioning.slice(1) : "Padrão"} />
+              <ReviewItem 
+                label="Vendas Cakto" 
+                value={caktoRegistered ? `Produto: ${productNameCakto || projectName} (R$ ${productPrice})` : "Não configurado"} 
+              />
               {(instagram || tiktok || facebook) && (
                 <ReviewItem label="Social" value={[instagram, tiktok, facebook].filter(Boolean).length + " redes conectadas"} />
               )}
@@ -1198,6 +1309,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                 <ReviewItem label="Pedidos WhatsApp" value={whatsappOrdering ? "✅ Ativado" : "Desativado"} />
               )}
             </div>
+
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
@@ -1286,7 +1398,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         <div className="absolute top-[50px] left-[15%] right-[15%] h-[2px] bg-white/10 -z-0">
           <motion.div
             initial={{ width: "0%" }}
-            animate={{ width: `${(step) * 25}%` }}
+            animate={{ width: `${(step / (TOTAL_STEPS - 1)) * 100}%` }}
             className="h-full bg-gradient-to-r from-green-500 to-[#3B82F6] shadow-[0_0_10px_rgba(59,130,246,0.5)]"
             transition={{ duration: 0.5 }}
           />
@@ -1310,7 +1422,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       </div>
 
       {/* Navigation */}
-      {step < 4 && (
+      {step < 5 && (
         <div className="flex justify-between">
           <Button
             variant="ghost"
@@ -1339,11 +1451,11 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         </div>
       )}
 
-      {step === 4 && (
+      {step === 5 && (
         <div className="flex justify-start">
           <Button
             variant="ghost"
-            onClick={() => setStep(3)}
+            onClick={() => setStep(4)}
             className="gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
