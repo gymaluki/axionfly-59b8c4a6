@@ -38,16 +38,16 @@ function LovableLogo({ className }: { className?: string }) {
 
 const partners = [
   {
-    name: "Extensão Lovable",
+    name: "Lovable",
     logo: lovableLogo,
-    title: "Créditos Infinitos",
-    description: "Uso ilimitado da IA para criação de sites sem limites de tokens.",
-    badgeTitle: "Recurso Exclusivo",
+    title: "Lovable",
+    description: "IA que cria sites ultra realistas em minutos, com design profissional e código limpo.",
+    badgeTitle: "IA Criadora de Sites",
     glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
-      "Zero limites de geração",
-      "Sincronização em tempo real",
-      "Exclusivo AxionFly"
+      "Sites ultra realistas",
+      "Design profissional automático",
+      "Código limpo e editável"
     ],
   },
   {
