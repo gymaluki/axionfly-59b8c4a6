@@ -35,6 +35,7 @@ const PerfilView = () => {
   const [displayName, setDisplayName] = useState("");
   const [caktoClientId, setCaktoClientId] = useState("");
   const [caktoClientSecret, setCaktoClientSecret] = useState("");
+  const [caktoProductImageUrl, setCaktoProductImageUrl] = useState("");
   const [savingName, setSavingName] = useState(false);
   const [savingCakto, setSavingCakto] = useState(false);
 
@@ -52,13 +53,14 @@ const PerfilView = () => {
 
     supabase
       .from("profiles")
-      .select("display_name, cakto_client_id, cakto_client_secret")
+      .select("display_name, cakto_client_id, cakto_client_secret, cakto_product_image_url")
       .eq("user_id", user.id)
       .maybeSingle()
       .then(({ data }) => {
         setDisplayName(data?.display_name ?? "");
         setCaktoClientId(data?.cakto_client_id ?? "");
         setCaktoClientSecret(data?.cakto_client_secret ?? "");
+        setCaktoProductImageUrl(data?.cakto_product_image_url ?? "");
       });
 
     const loadAll = async () => {
@@ -106,7 +108,8 @@ const PerfilView = () => {
       .from("profiles")
       .update({ 
         cakto_client_id: caktoClientId.trim() || null,
-        cakto_client_secret: caktoClientSecret.trim() || null
+        cakto_client_secret: caktoClientSecret.trim() || null,
+        cakto_product_image_url: caktoProductImageUrl.trim() || null
       })
       .eq("user_id", user.id);
     setSavingCakto(false);
@@ -443,6 +446,16 @@ const PerfilView = () => {
                   placeholder="Seu Client Secret"
                   className="bg-secondary/50"
                 />
+              </div>
+              <div className="space-y-2">
+                <Label>URL da Imagem do Produto (Opcional)</Label>
+                <Input
+                  value={caktoProductImageUrl}
+                  onChange={(e) => setCaktoProductImageUrl(e.target.value)}
+                  placeholder="https://exemplo.com/imagem.jpg"
+                  className="bg-secondary/50"
+                />
+                <p className="text-[10px] text-muted-foreground italic">Link da imagem que aparecerá no checkout da Cakto.</p>
               </div>
               <Button onClick={handleSaveCakto} variant="neon" disabled={savingCakto} className="w-full sm:w-auto">
                 {savingCakto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}

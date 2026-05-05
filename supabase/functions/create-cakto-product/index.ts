@@ -27,7 +27,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { name, price, description } = await req.json();
+    const { name, price, description, image_url } = await req.json();
 
     if (!name || !price) {
       return new Response(JSON.stringify({ error: 'Name and price are required' }), {
@@ -83,6 +83,7 @@ Deno.serve(async (req) => {
         price: Math.round(parseFloat(price) * 100), // Preço em centavos
         payment_methods: ['pix', 'credit_card', 'boleto'],
         type: 'digital',
+        image_url: image_url || null,
       }),
     });
 

@@ -326,6 +326,7 @@ const SitesView = () => {
   const [isRegisteringCakto, setIsRegisteringCakto] = useState(false);
   const [caktoRegistered, setCaktoRegistered] = useState(false);
   const [caktoCheckoutUrl, setCaktoCheckoutUrl] = useState("");
+  const [caktoProductImageUrl, setCaktoProductImageUrl] = useState("");
   const [hasCaktoConfig, setHasCaktoConfig] = useState(false);
 
   useEffect(() => {
@@ -335,11 +336,14 @@ const SitesView = () => {
       
       const { data: profile } = await supabase
         .from("profiles")
-        .select("cakto_client_id, cakto_client_secret")
+        .select("cakto_client_id, cakto_client_secret, cakto_product_image_url")
         .eq("user_id", user.id)
         .maybeSingle();
         
       setHasCaktoConfig(!!(profile?.cakto_client_id && profile?.cakto_client_secret));
+      if (profile?.cakto_product_image_url) {
+        setCaktoProductImageUrl(profile.cakto_product_image_url);
+      }
     };
     checkConfig();
   }, []);
@@ -362,7 +366,8 @@ const SitesView = () => {
         body: {
           name: productNameCakto || projectName,
           price: productPrice,
-          description: `Venda de ${productNameCakto || projectName} via AxionFly`
+          description: `Venda de ${productNameCakto || projectName} via AxionFly`,
+          image_url: caktoProductImageUrl || null
         }
       });
 
@@ -1261,6 +1266,17 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                       onChange={(e) => setProductPrice(e.target.value)}
                       className="bg-secondary/50 border-border"
                     />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">URL da Imagem do Produto (Opcional)</label>
+                    <Input
+                      placeholder="https://exemplo.com/imagem.jpg"
+                      value={caktoProductImageUrl}
+                      onChange={(e) => setCaktoProductImageUrl(e.target.value)}
+                      className="bg-secondary/50 border-border"
+                    />
+                    <p className="text-[10px] text-muted-foreground italic">Se configurado no Perfil, será carregado automaticamente.</p>
                   </div>
 
                    <Button
