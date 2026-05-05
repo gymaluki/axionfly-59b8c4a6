@@ -280,13 +280,14 @@ const sloganSuggestions: Record<string, string[]> = {
   papelaria: ["A beleza está nos detalhes", "Criatividade em cada página", "Papelaria que inspira", "Sua história merece ser escrita com estilo"],
 };
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
 
 const stepMeta = [
   { icon: Store, label: "Negócio" },
   { icon: Palette, label: "Design" },
   { icon: Type, label: "Visual" },
   { icon: MapPin, label: "Contato" },
+  { icon: CreditCard, label: "Vendas" },
   { icon: Eye, label: "Revisão" },
 ];
 
