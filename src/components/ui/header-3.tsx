@@ -4,6 +4,7 @@ import axionflyLogo from '@/assets/axionfly-logo.png';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -44,7 +45,10 @@ export function Header() {
 	}, [open]);
 
 	return (
-		<header
+		<motion.header
+			initial={{ y: -100, opacity: 0 }}
+			animate={{ y: 0, opacity: 1 }}
+			transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
 			className={cn(
 				'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 border-b border-transparent',
 				scrolled || open
@@ -143,7 +147,7 @@ export function Header() {
 					<Button variant="neon" className="w-full" onClick={() => navigate('/auth')}>Acessar Plataforma</Button>
 				</div>
 			</MobileMenu>
-		</header>
+		</motion.header>
 	);
 }
 

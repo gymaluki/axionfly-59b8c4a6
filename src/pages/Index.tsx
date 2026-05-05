@@ -228,7 +228,7 @@ const Index = () => {
         }}
       />
 
-      <div className="relative z-10 pt-[112px] md:pt-[128px]">
+      <div className="relative z-10">
         {/* Elegant Anniversary Banner */}
         <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
           <div className="container mx-auto px-4 flex items-center justify-center gap-6">
@@ -254,9 +254,12 @@ const Index = () => {
           </div>
         </div>
         
+        {/* Header with offset to avoid covering the banner */}
         <div className="fixed top-[44px] left-0 right-0 z-50">
           <Header />
         </div>
+
+        <div className="pt-[112px] md:pt-[128px]">
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
