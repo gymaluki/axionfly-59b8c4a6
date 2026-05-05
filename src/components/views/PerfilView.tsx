@@ -108,7 +108,8 @@ const PerfilView = () => {
       .from("profiles")
       .update({ 
         cakto_client_id: caktoClientId.trim() || null,
-        cakto_client_secret: caktoClientSecret.trim() || null
+        cakto_client_secret: caktoClientSecret.trim() || null,
+        cakto_product_image_url: caktoProductImageUrl.trim() || null
       })
       .eq("user_id", user.id);
     setSavingCakto(false);
