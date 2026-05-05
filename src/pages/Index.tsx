@@ -637,9 +637,9 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-8 text-left group"
       >
-        <span className="text-lg font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
+        <span className="text-base font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
         <div className={`p-2 rounded-full border border-primary/20 bg-primary/5 transition-transform duration-500 ${isOpen ? "rotate-180 bg-primary text-primary-foreground" : "text-primary"}`}>
-          <ChevronDown className="w-6 h-6" />
+          <ChevronDown className="w-5 h-5" />
         </div>
       </button>
       
@@ -652,7 +652,7 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="p-8 pt-0 border-t border-primary/10">
-              <p className="text-muted-foreground font-medium leading-relaxed text-lg" dangerouslySetInnerHTML={{ __html: answer }} />
+              <p className="text-muted-foreground font-medium leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: answer }} />
             </div>
           </motion.div>
         )}

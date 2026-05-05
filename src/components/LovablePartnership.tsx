@@ -53,10 +53,10 @@ const partners = [
   {
     name: "Google Maps",
     logo: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg",
-    title: "Prospecção Brasil",
+    title: "Prospecção Automática",
     description: "Dados oficiais do Google para encontrar negócios sem site no Brasil.",
     badgeTitle: "Dados Reais",
-    glowColor: "rgba(37, 99, 235, 0.4)", // Changed from green to blue
+    glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
       "Busca em 27 estados",
       "Dados atualizados",
@@ -83,12 +83,6 @@ export default function LovablePartnership() {
     <section className="container mx-auto px-4 py-20 md:py-32 relative">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05)_0%,transparent_70%)] pointer-events-none" />
       
-      <div className="flex justify-center mb-8">
-        <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-6 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-primary shadow-sm backdrop-blur-sm">
-          Infraestrutura de Elite
-        </span>
-      </div>
-
       <motion.div
         initial="hidden"
         whileInView="visible"
