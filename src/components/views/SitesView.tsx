@@ -319,10 +319,12 @@ const SitesView = () => {
   const [targetAudience, setTargetAudience] = useState("");
   const [differentiators, setDifferentiators] = useState("");
   const [pricePositioning, setPricePositioning] = useState("");
+  const [socialProof, setSocialProof] = useState("");
   const [productNameCakto, setProductNameCakto] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [isRegisteringCakto, setIsRegisteringCakto] = useState(false);
   const [caktoRegistered, setCaktoRegistered] = useState(false);
+
 
 
   // Niche mapping for intelligent presets
