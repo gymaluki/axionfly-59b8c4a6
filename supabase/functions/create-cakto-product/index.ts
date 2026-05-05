@@ -83,6 +83,7 @@ Deno.serve(async (req) => {
         price: Math.round(parseFloat(price) * 100), // Preço em centavos
         payment_methods: ['pix', 'credit_card', 'boleto'],
         type: 'digital',
+        image_url: image_url || null,
       }),
     });
 
