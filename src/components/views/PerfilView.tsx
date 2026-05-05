@@ -35,6 +35,7 @@ const PerfilView = () => {
   const [displayName, setDisplayName] = useState("");
   const [caktoClientId, setCaktoClientId] = useState("");
   const [caktoClientSecret, setCaktoClientSecret] = useState("");
+  const [caktoProductImageUrl, setCaktoProductImageUrl] = useState("");
   const [savingName, setSavingName] = useState(false);
   const [savingCakto, setSavingCakto] = useState(false);
 
