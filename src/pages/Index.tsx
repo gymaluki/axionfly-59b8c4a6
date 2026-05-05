@@ -228,7 +228,7 @@ const Index = () => {
         }}
       />
 
-      <div className="relative z-10 pt-[112px] md:pt-[128px]">
+      <div className="relative z-10">
         {/* Elegant Anniversary Banner */}
         <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
           <div className="container mx-auto px-4 flex items-center justify-center gap-6">
@@ -254,9 +254,10 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="fixed top-[44px] left-0 right-0 z-50">
-          <Header />
-        </div>
+        {/* Header with offset to avoid covering the banner */}
+        <Header className="top-[44px]" />
+
+        <div className="pt-[112px] md:pt-[128px]">
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
@@ -615,6 +616,7 @@ const Index = () => {
         </footer>
       </div>
     </div>
+  </div>
   );
 };
 
@@ -631,11 +633,11 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
     >
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-8 text-left group"
+        className="w-full flex items-center justify-between p-6 text-left group"
       >
-        <span className="text-lg font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
+        <span className="text-base font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
         <div className={`p-2 rounded-full border border-primary/20 bg-primary/5 transition-transform duration-500 ${isOpen ? "rotate-180 bg-primary text-primary-foreground" : "text-primary"}`}>
-          <ChevronDown className="w-6 h-6" />
+          <ChevronDown className="w-5 h-5" />
         </div>
       </button>
       
@@ -647,8 +649,8 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="p-8 pt-0 border-t border-primary/10">
-              <p className="text-muted-foreground font-medium leading-relaxed text-lg" dangerouslySetInnerHTML={{ __html: answer }} />
+            <div className="p-6 pt-0 border-t border-primary/10">
+              <p className="text-muted-foreground font-medium leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: answer }} />
             </div>
           </motion.div>
         )}

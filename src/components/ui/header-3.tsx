@@ -4,6 +4,7 @@ import axionflyLogo from '@/assets/axionfly-logo.png';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -27,7 +28,7 @@ type LinkItem = {
 	description?: string;
 };
 
-export function Header() {
+export function Header({ className }: { className?: string }) {
 	const [open, setOpen] = React.useState(false);
 	const scrolled = useScroll(10);
 	const navigate = useNavigate();
@@ -44,9 +45,13 @@ export function Header() {
 	}, [open]);
 
 	return (
-		<header
+		<motion.header
+			initial={{ y: -100, opacity: 0 }}
+			animate={{ y: 0, opacity: 1 }}
+			transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
 			className={cn(
 				'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 border-b border-transparent',
+				className,
 				scrolled || open
 					? 'bg-background/80 backdrop-blur-xl border-[#ffffff10] shadow-lg'
 					: 'bg-transparent'
@@ -61,10 +66,7 @@ export function Header() {
 			{/* Logo */}
 				<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center shrink-0">
 					<div className="p-1.5 flex items-center justify-center">
-						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M12 2L2 22H6L12 8L18 22H22L12 2Z" fill="#3B82F6"/>
-							<path d="M7 16H17L18 18H6L7 16Z" fill="#3B82F6"/>
-						</svg>
+						<img src={axionflyLogo} alt="AxionFly" className="h-8 md:h-10 w-auto" />
 						<span className="text-xl md:text-2xl font-black text-white tracking-tighter ml-2">AxionFly</span>
 					</div>
 				</a>
@@ -127,7 +129,7 @@ export function Header() {
 					<MenuToggleIcon open={open} className="size-5" duration={300} />
 				</Button>
 			</nav>
-			<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
+			<MobileMenu open={open} top={scrolled ? "top-[108px]" : "top-[124px]"} className="flex flex-col justify-between gap-2 overflow-y-auto">
 				<NavigationMenu className="max-w-full">
 					<div className="flex w-full flex-col gap-y-2">
 						<span className="text-sm text-muted-foreground">Ferramentas</span>
@@ -143,15 +145,16 @@ export function Header() {
 					<Button variant="neon" className="w-full" onClick={() => navigate('/auth')}>Acessar Plataforma</Button>
 				</div>
 			</MobileMenu>
-		</header>
+		</motion.header>
 	);
 }
 
 type MobileMenuProps = React.ComponentProps<'div'> & {
 	open: boolean;
+	top?: string;
 };
 
-function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
+function MobileMenu({ open, top, children, className, ...props }: MobileMenuProps) {
 	if (!open || typeof window === 'undefined') return null;
 
 	return createPortal(
@@ -159,7 +162,8 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 			id="mobile-menu"
 			className={cn(
 				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
-				'fixed top-[112px] md:top-[128px] right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y border-border md:hidden',
+				'fixed right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y border-border md:hidden',
+				top || 'top-[112px] md:top-[128px]'
 			)}
 		>
 			<div
