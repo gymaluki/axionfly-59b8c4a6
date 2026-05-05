@@ -604,6 +604,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       differentiators,
       pricePositioning,
       socialProof,
+      productNameCakto,
+      productPrice,
+      caktoRegistered,
       step
     };
     localStorage.setItem("pending_site_creation", JSON.stringify(formData));
