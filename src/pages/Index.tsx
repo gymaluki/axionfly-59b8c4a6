@@ -593,10 +593,10 @@ const Index = () => {
             <div className="flex flex-col items-center justify-center gap-8 mb-16">
               <div className="space-y-6">
                 <div className="flex flex-col items-center gap-4">
-                  <img src={axionflyLogo} alt="AxionFly" className="h-16 w-auto" />
+                  <img src={axionflyLogo} alt="AxionFly" className="h-10 w-auto" />
                   <div className="space-y-2">
-                    <span className="text-3xl font-black text-foreground tracking-tighter block">AxionFly</span>
-                    <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Prospecção Automática</span>
+                    <span className="text-xl font-black text-foreground tracking-tighter block">AxionFly</span>
+                    <span className="text-xs font-black uppercase tracking-[0.3em] text-primary">Prospecção Automática</span>
                   </div>
                 </div>
               </div>
