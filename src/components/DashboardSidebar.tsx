@@ -64,7 +64,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-xl font-black text-white tracking-tighter leading-none">
+              <span className="text-lg font-black text-white tracking-tighter leading-none">
                 AxionFly
               </span>
               <span className="text-[11px] text-muted-foreground font-bold uppercase tracking-[0.1em] mt-1">DASHBOARD</span>
