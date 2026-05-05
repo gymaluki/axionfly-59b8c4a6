@@ -447,6 +447,16 @@ const PerfilView = () => {
                   className="bg-secondary/50"
                 />
               </div>
+              <div className="space-y-2">
+                <Label>URL da Imagem do Produto (Opcional)</Label>
+                <Input
+                  value={caktoProductImageUrl}
+                  onChange={(e) => setCaktoProductImageUrl(e.target.value)}
+                  placeholder="https://exemplo.com/imagem.jpg"
+                  className="bg-secondary/50"
+                />
+                <p className="text-[10px] text-muted-foreground italic">Link da imagem que aparecerá no checkout da Cakto.</p>
+              </div>
               <Button onClick={handleSaveCakto} variant="neon" disabled={savingCakto} className="w-full sm:w-auto">
                 {savingCakto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                 Salvar Credenciais
