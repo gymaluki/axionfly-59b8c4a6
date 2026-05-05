@@ -27,7 +27,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { name, price, description } = await req.json();
+    const { name, price, description, image_url } = await req.json();
 
     if (!name || !price) {
       return new Response(JSON.stringify({ error: 'Name and price are required' }), {
