@@ -633,7 +633,7 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
     >
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-8 text-left group"
+        className="w-full flex items-center justify-between p-6 text-left group"
       >
         <span className="text-base font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
         <div className={`p-2 rounded-full border border-primary/20 bg-primary/5 transition-transform duration-500 ${isOpen ? "rotate-180 bg-primary text-primary-foreground" : "text-primary"}`}>
@@ -649,7 +649,7 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="p-8 pt-0 border-t border-primary/10">
+            <div className="p-6 pt-0 border-t border-primary/10">
               <p className="text-muted-foreground font-medium leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: answer }} />
             </div>
           </motion.div>
