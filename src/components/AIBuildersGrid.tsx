@@ -44,19 +44,19 @@ export const AIBuildersGrid = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: i * 0.03 }}
             whileHover={{ y: -4, scale: 1.02 }}
-            className={`group relative overflow-hidden rounded-2xl border bg-card p-5 transition-colors ${
+            className={`group relative rounded-2xl border bg-card p-5 transition-colors ${
               builder.recommended
-                ? "border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary"
+                ? "mt-4 border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary"
                 : "border-border hover:border-primary/40"
             }`}
           >
             {builder.recommended && (
-              <div className="absolute top-2 right-2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg whitespace-nowrap">
                 <Crown className="w-3 h-3" />
                 MAIS ESCOLHIDO
               </div>
             )}
-            <div className={`absolute inset-0 bg-gradient-to-br ${builder.bg} ${builder.recommended ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity`} />
+            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${builder.bg} ${builder.recommended ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity pointer-events-none`} />
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-start justify-between mb-3">
                 <div className="w-12 h-12 rounded-xl bg-secondary border border-border flex items-center justify-center overflow-hidden p-1.5">
