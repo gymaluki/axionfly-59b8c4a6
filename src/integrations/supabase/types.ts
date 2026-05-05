@@ -175,6 +175,7 @@ export type Database = {
           avatar_url: string | null
           cakto_client_id: string | null
           cakto_client_secret: string | null
+          cakto_product_image_url: string | null
           created_at: string
           display_name: string | null
           id: string
@@ -185,6 +186,7 @@ export type Database = {
           avatar_url?: string | null
           cakto_client_id?: string | null
           cakto_client_secret?: string | null
+          cakto_product_image_url?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
@@ -195,6 +197,7 @@ export type Database = {
           avatar_url?: string | null
           cakto_client_id?: string | null
           cakto_client_secret?: string | null
+          cakto_product_image_url?: string | null
           created_at?: string
           display_name?: string | null
           id?: string
