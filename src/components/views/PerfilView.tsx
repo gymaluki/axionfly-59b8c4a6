@@ -33,7 +33,10 @@ interface ContactedLeadItem {
 const PerfilView = () => {
   const { user } = useAuth();
   const [displayName, setDisplayName] = useState("");
+  const [caktoClientId, setCaktoClientId] = useState("");
+  const [caktoClientSecret, setCaktoClientSecret] = useState("");
   const [savingName, setSavingName] = useState(false);
+  const [savingCakto, setSavingCakto] = useState(false);
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -49,11 +52,13 @@ const PerfilView = () => {
 
     supabase
       .from("profiles")
-      .select("display_name")
+      .select("display_name, cakto_client_id, cakto_client_secret")
       .eq("user_id", user.id)
       .maybeSingle()
       .then(({ data }) => {
         setDisplayName(data?.display_name ?? "");
+        setCaktoClientId(data?.cakto_client_id ?? "");
+        setCaktoClientSecret(data?.cakto_client_secret ?? "");
       });
 
     const loadAll = async () => {
@@ -92,6 +97,24 @@ const PerfilView = () => {
       return;
     }
     toast.success("Nome atualizado!");
+  };
+
+  const handleSaveCakto = async () => {
+    if (!user) return;
+    setSavingCakto(true);
+    const { error } = await supabase
+      .from("profiles")
+      .update({ 
+        cakto_client_id: caktoClientId.trim() || null,
+        cakto_client_secret: caktoClientSecret.trim() || null
+      })
+      .eq("user_id", user.id);
+    setSavingCakto(false);
+    if (error) {
+      toast.error("Erro ao salvar credenciais Cakto");
+      return;
+    }
+    toast.success("Credenciais Cakto atualizadas!");
   };
 
   const handleChangePassword = async (e: React.FormEvent) => {
@@ -207,6 +230,9 @@ const PerfilView = () => {
               </TabsTrigger>
               <TabsTrigger value="leads" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
                 <Users2 className="w-4 h-4" /> Leads
+              </TabsTrigger>
+              <TabsTrigger value="integracoes" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
+                <ExternalLink className="w-4 h-4" /> Integrações
               </TabsTrigger>
             </TabsList>
         <TabsList>
@@ -385,6 +411,50 @@ const PerfilView = () => {
                 </tbody>
               </table>
             )}
+          </div>
+        </TabsContent>
+        {/* INTEGRAÇÕES */}
+        <TabsContent value="integracoes">
+          <div className="glass rounded-xl p-6 space-y-6 max-w-xl">
+            <div className="space-y-2">
+              <h3 className="text-lg font-bold text-foreground">Cakto API</h3>
+              <p className="text-sm text-muted-foreground">
+                Insira suas credenciais da Cakto para que possamos automatizar a criação de seus produtos.
+                Você encontra essas chaves no menu de API dentro do seu painel Cakto.
+              </p>
+            </div>
+            
+            <div className="space-y-4 pt-2">
+              <div className="space-y-2">
+                <Label>Client ID</Label>
+                <Input
+                  value={caktoClientId}
+                  onChange={(e) => setCaktoClientId(e.target.value)}
+                  placeholder="Seu Client ID"
+                  className="bg-secondary/50"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Client Secret</Label>
+                <Input
+                  type="password"
+                  value={caktoClientSecret}
+                  onChange={(e) => setCaktoClientSecret(e.target.value)}
+                  placeholder="Seu Client Secret"
+                  className="bg-secondary/50"
+                />
+              </div>
+              <Button onClick={handleSaveCakto} variant="neon" disabled={savingCakto} className="w-full sm:w-auto">
+                {savingCakto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
+                Salvar Credenciais
+              </Button>
+            </div>
+            
+            <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10">
+              <p className="text-xs text-blue-400 leading-relaxed">
+                As chaves são usadas apenas para autenticar chamadas à API da Cakto em seu nome.
+              </p>
+            </div>
           </div>
         </TabsContent>
           </Tabs>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Check,
@@ -40,6 +40,7 @@ import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 import AIBuildersGrid from "@/components/AIBuildersGrid";
 import AIBuilderPicker from "@/components/AIBuilderPicker";
 
@@ -324,6 +325,63 @@ const SitesView = () => {
   const [productPrice, setProductPrice] = useState("");
   const [isRegisteringCakto, setIsRegisteringCakto] = useState(false);
   const [caktoRegistered, setCaktoRegistered] = useState(false);
+  const [caktoCheckoutUrl, setCaktoCheckoutUrl] = useState("");
+  const [hasCaktoConfig, setHasCaktoConfig] = useState(false);
+
+  useEffect(() => {
+    const checkConfig = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("cakto_client_id, cakto_client_secret")
+        .eq("user_id", user.id)
+        .maybeSingle();
+        
+      setHasCaktoConfig(!!(profile?.cakto_client_id && profile?.cakto_client_secret));
+    };
+    checkConfig();
+  }, []);
+
+  const handleRegisterCakto = async () => {
+    if (!productPrice) {
+      toast.error("Informe o valor do produto");
+      return;
+    }
+    
+    if (!hasCaktoConfig) {
+      toast.error("Configure suas credenciais Cakto no Perfil antes de cadastrar.");
+      navigate("/perfil"); // Opcional: redirecionar
+      return;
+    }
+
+    setIsRegisteringCakto(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-cakto-product", {
+        body: {
+          name: productNameCakto || projectName,
+          price: productPrice,
+          description: `Venda de ${productNameCakto || projectName} via AxionFly`
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.success) {
+        setCaktoCheckoutUrl(data.checkout_url);
+        setCaktoRegistered(true);
+        toast.success("Produto cadastrado na Cakto com sucesso!");
+      } else {
+        throw new Error(data?.error || "Falha ao criar produto");
+      }
+    } catch (error: any) {
+      console.error("Cakto registration error:", error);
+      toast.error(error.message || "Erro ao cadastrar na Cakto");
+    } finally {
+      setIsRegisteringCakto(false);
+    }
+  };
 
 
 
@@ -458,6 +516,7 @@ const SitesView = () => {
         setProductNameCakto(data.productNameCakto || data.projectName || "");
         setProductPrice(data.productPrice || "");
         setCaktoRegistered(data.caktoRegistered || false);
+        setCaktoCheckoutUrl(data.caktoCheckoutUrl || "");
         setStep(data.step || 0);
       } catch (e) {
         console.error("Erro ao carregar dados salvos:", e);
@@ -536,7 +595,7 @@ Crie uma Landing Page completa e profissional com as seguintes especificações 
 - **Headline (Hero):** Crie 3 variações de headlines de impacto baseadas no tom de voz.
 - **Prova Social:** ${socialProof.trim() ? `Use estes dados/depoimentos: ${socialProof.trim()}` : "Inclua seções de depoimentos com placeholders realistas e estatísticas de sucesso (ex: 1000+ clientes)."}
 - **CTAs:** O botão principal deve ser "${selectedCta?.label.replace(/^.\s/, "") || "Entre em contato"}".
-${caktoRegistered ? `- **PRODUTO CAKTO:** O site deve promover o produto "${productNameCakto || projectName}" no valor de R$ ${productPrice}. Integre chamadas para ação (CTAs) que simulem ou apontem para um checkout deste produto.` : ""}
+${caktoRegistered ? `- **PRODUTO CAKTO:** O site deve promover o produto "${productNameCakto || projectName}" no valor de R$ ${productPrice}. O link de checkout oficial é "${caktoCheckoutUrl}". Integre este link em todos os botões de chamada para ação (CTAs) que levam à compra.` : ""}
 
 ### 3. ESPECIFICAÇÕES VISUAIS (DESIGN SYSTEM)
 - **Cores:** Primária: ${primaryColor.trim() || "Padrão do nicho"}, Secundária: ${secondaryColor.trim() || "Padrão do nicho"}.
@@ -608,6 +667,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       productNameCakto,
       productPrice,
       caktoRegistered,
+      caktoCheckoutUrl,
       step
     };
     localStorage.setItem("pending_site_creation", JSON.stringify(formData));
@@ -1203,19 +1263,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                     />
                   </div>
 
-                  <Button
-                    onClick={() => {
-                      if (!productPrice) {
-                        toast.error("Informe o valor do produto");
-                        return;
-                      }
-                      setIsRegisteringCakto(true);
-                      setTimeout(() => {
-                        setIsRegisteringCakto(false);
-                        setCaktoRegistered(true);
-                        toast.success("Produto cadastrado na Cakto com sucesso!");
-                      }, 2000);
-                    }}
+                   <Button
+                    onClick={handleRegisterCakto}
                     disabled={isRegisteringCakto || caktoRegistered}
                     className={cn(
                       "w-full h-12 font-bold transition-all duration-300",
@@ -1235,7 +1284,27 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                     ) : (
                       "Cadastrar na Cakto"
                     )}
-                  </Button>
+                   </Button>
+                  
+                  {caktoRegistered && caktoCheckoutUrl && (
+                    <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] text-green-400 font-bold uppercase">Link de Checkout</span>
+                        <span className="text-xs text-foreground truncate max-w-[200px]">{caktoCheckoutUrl}</span>
+                      </div>
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="h-8 w-8 p-0 hover:bg-green-500/20"
+                        onClick={() => {
+                          navigator.clipboard.writeText(caktoCheckoutUrl);
+                          toast.success("Link copiado!");
+                        }}
+                      >
+                        <ExternalLink className="w-4 h-4 text-green-400" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -1302,6 +1371,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                 label="Vendas Cakto" 
                 value={caktoRegistered ? `Produto: ${productNameCakto || projectName} (R$ ${productPrice})` : "Não configurado"} 
               />
+              {caktoRegistered && caktoCheckoutUrl && (
+                <ReviewItem label="Link Checkout" value={caktoCheckoutUrl} />
+              )}
               {(instagram || tiktok || facebook) && (
                 <ReviewItem label="Social" value={[instagram, tiktok, facebook].filter(Boolean).length + " redes conectadas"} />
               )}
