@@ -366,7 +366,8 @@ const SitesView = () => {
         body: {
           name: productNameCakto || projectName,
           price: productPrice,
-          description: `Venda de ${productNameCakto || projectName} via AxionFly`
+          description: `Venda de ${productNameCakto || projectName} via AxionFly`,
+          image_url: caktoProductImageUrl || null
         }
       });
 
