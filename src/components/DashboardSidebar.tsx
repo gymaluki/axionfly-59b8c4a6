@@ -59,11 +59,8 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
     <Sidebar collapsible="icon" className="bg-[#05050a] border-r border-white/5">
       <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#05050a]">
         <div className="flex items-center gap-3">
-          <div className="p-1.5 flex items-center justify-center">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 22H6L12 8L18 22H22L12 2Z" fill="#3B82F6"/>
-              <path d="M7 16H17L18 18H6L7 16Z" fill="#3B82F6"/>
-            </svg>
+          <div className="flex items-center justify-center">
+            <img src={axionflyLogo} alt="AxionFly" className="h-6 w-auto" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
