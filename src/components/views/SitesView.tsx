@@ -666,6 +666,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       productNameCakto,
       productPrice,
       caktoRegistered,
+      caktoCheckoutUrl,
       step
     };
     localStorage.setItem("pending_site_creation", JSON.stringify(formData));
