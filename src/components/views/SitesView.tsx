@@ -1397,7 +1397,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         <div className="absolute top-[50px] left-[15%] right-[15%] h-[2px] bg-white/10 -z-0">
           <motion.div
             initial={{ width: "0%" }}
-            animate={{ width: `${(step) * 25}%` }}
+            animate={{ width: `${(step / (TOTAL_STEPS - 1)) * 100}%` }}
             className="h-full bg-gradient-to-r from-green-500 to-[#3B82F6] shadow-[0_0_10px_rgba(59,130,246,0.5)]"
             transition={{ duration: 0.5 }}
           />
