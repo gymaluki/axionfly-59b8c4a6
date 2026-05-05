@@ -262,10 +262,6 @@ export default function PricingCards() {
         className="max-w-4xl mx-auto p-6 rounded-2xl border border-primary/20 bg-primary/5 flex flex-wrap items-center justify-center gap-8 md:gap-12"
       >
         <div className="flex items-center gap-3">
-          <ShieldCheck className="w-6 h-6 text-primary" />
-          <span className="text-sm font-black uppercase tracking-widest text-foreground">7 Dias de Garantia</span>
-        </div>
-        <div className="flex items-center gap-3">
           <Zap className="w-6 h-6 text-primary" />
           <span className="text-sm font-black uppercase tracking-widest text-foreground">Acesso Imediato</span>
         </div>
