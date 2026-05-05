@@ -129,7 +129,7 @@ export function Header({ className }: { className?: string }) {
 					<MenuToggleIcon open={open} className="size-5" duration={300} />
 				</Button>
 			</nav>
-			<MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
+			<MobileMenu open={open} top={scrolled ? "top-[108px]" : "top-[124px]"} className="flex flex-col justify-between gap-2 overflow-y-auto">
 				<NavigationMenu className="max-w-full">
 					<div className="flex w-full flex-col gap-y-2">
 						<span className="text-sm text-muted-foreground">Ferramentas</span>
@@ -151,9 +151,10 @@ export function Header({ className }: { className?: string }) {
 
 type MobileMenuProps = React.ComponentProps<'div'> & {
 	open: boolean;
+	top?: string;
 };
 
-function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
+function MobileMenu({ open, top, children, className, ...props }: MobileMenuProps) {
 	if (!open || typeof window === 'undefined') return null;
 
 	return createPortal(
@@ -161,7 +162,8 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 			id="mobile-menu"
 			className={cn(
 				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
-				'fixed top-[112px] md:top-[128px] right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y border-border md:hidden',
+				'fixed right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y border-border md:hidden',
+				top || 'top-[112px] md:top-[128px]'
 			)}
 		>
 			<div
