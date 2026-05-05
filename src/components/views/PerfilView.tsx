@@ -53,13 +53,14 @@ const PerfilView = () => {
 
     supabase
       .from("profiles")
-      .select("display_name, cakto_client_id, cakto_client_secret")
+      .select("display_name, cakto_client_id, cakto_client_secret, cakto_product_image_url")
       .eq("user_id", user.id)
       .maybeSingle()
       .then(({ data }) => {
         setDisplayName(data?.display_name ?? "");
         setCaktoClientId(data?.cakto_client_id ?? "");
         setCaktoClientSecret(data?.cakto_client_secret ?? "");
+        setCaktoProductImageUrl(data?.cakto_product_image_url ?? "");
       });
 
     const loadAll = async () => {
