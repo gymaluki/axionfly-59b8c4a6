@@ -1267,6 +1267,17 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                       className="bg-secondary/50 border-border"
                     />
                   </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">URL da Imagem do Produto (Opcional)</label>
+                    <Input
+                      placeholder="https://exemplo.com/imagem.jpg"
+                      value={caktoProductImageUrl}
+                      onChange={(e) => setCaktoProductImageUrl(e.target.value)}
+                      className="bg-secondary/50 border-border"
+                    />
+                    <p className="text-[10px] text-muted-foreground italic">Se configurado no Perfil, será carregado automaticamente.</p>
+                  </div>
 
                    <Button
                     onClick={handleRegisterCakto}
