@@ -151,14 +151,14 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
                     transition={{ duration: 0.25, delay: i * 0.02 }}
                     whileHover={{ y: -3, scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`group relative overflow-hidden rounded-2xl border bg-card p-3 sm:p-4 text-left transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                    className={`group relative rounded-2xl border bg-card p-3 sm:p-4 text-left transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                       builder.recommended
-                        ? "border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary mt-3"
+                        ? "border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary mt-4"
                         : "border-border hover:border-primary/40"
                     }`}
                   >
                     {builder.recommended && (
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg whitespace-nowrap">
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-30 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg whitespace-nowrap">
                         <Crown className="w-3 h-3" />
                         MAIS ESCOLHIDO
                       </div>
