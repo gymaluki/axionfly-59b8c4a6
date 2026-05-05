@@ -516,6 +516,7 @@ const SitesView = () => {
         setProductNameCakto(data.productNameCakto || data.projectName || "");
         setProductPrice(data.productPrice || "");
         setCaktoRegistered(data.caktoRegistered || false);
+        setCaktoCheckoutUrl(data.caktoCheckoutUrl || "");
         setStep(data.step || 0);
       } catch (e) {
         console.error("Erro ao carregar dados salvos:", e);
