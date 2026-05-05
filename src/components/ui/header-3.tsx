@@ -28,7 +28,7 @@ type LinkItem = {
 	description?: string;
 };
 
-export function Header() {
+export function Header({ className }: { className?: string }) {
 	const [open, setOpen] = React.useState(false);
 	const scrolled = useScroll(10);
 	const navigate = useNavigate();
@@ -51,6 +51,7 @@ export function Header() {
 			transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
 			className={cn(
 				'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 border-b border-transparent',
+				className,
 				scrolled || open
 					? 'bg-background/80 backdrop-blur-xl border-[#ffffff10] shadow-lg'
 					: 'bg-transparent'

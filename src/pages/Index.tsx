@@ -255,9 +255,7 @@ const Index = () => {
         </div>
         
         {/* Header with offset to avoid covering the banner */}
-        <div className="fixed top-[44px] left-0 right-0 z-50">
-          <Header />
-        </div>
+        <Header className="top-[44px]" />
 
         <div className="pt-[112px] md:pt-[128px]">
 
