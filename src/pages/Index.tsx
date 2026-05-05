@@ -8,6 +8,7 @@ import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 import { ParticleBackground } from "@/components/ui/particle-background";
+import axionflyLogo from "@/assets/axionfly-logo.png";
 
 import PricingCards from "@/components/PricingCards";
 import LovablePartnership from "@/components/LovablePartnership";
@@ -592,9 +593,7 @@ const Index = () => {
             <div className="flex flex-col items-center justify-center gap-8 mb-16">
               <div className="space-y-6">
                 <div className="flex flex-col items-center gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center">
-                    <Zap className="w-10 h-10 text-primary fill-primary" />
-                  </div>
+                  <img src={axionflyLogo} alt="AxionFly" className="h-16 w-auto" />
                   <div className="space-y-2">
                     <span className="text-3xl font-black text-foreground tracking-tighter block">AxionFly</span>
                     <span className="text-sm font-black uppercase tracking-[0.3em] text-primary">Prospecção Automática</span>
