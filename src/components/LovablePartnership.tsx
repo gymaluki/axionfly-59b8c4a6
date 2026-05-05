@@ -38,16 +38,16 @@ function LovableLogo({ className }: { className?: string }) {
 
 const partners = [
   {
-    name: "Extensão Lovable",
+    name: "Lovable",
     logo: lovableLogo,
-    title: "Créditos Infinitos",
-    description: "Uso ilimitado da IA para criação de sites sem limites de tokens.",
-    badgeTitle: "Recurso Exclusivo",
+    title: "Lovable",
+    description: "IA que cria sites ultra realistas em minutos, com design profissional e código limpo.",
+    badgeTitle: "IA Criadora de Sites",
     glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
-      "Zero limites de geração",
-      "Sincronização em tempo real",
-      "Exclusivo AxionFly"
+      "Sites ultra realistas",
+      "Design profissional automático",
+      "Código limpo e editável"
     ],
   },
   {
@@ -66,14 +66,14 @@ const partners = [
   {
     name: "HyperBuild Pro",
     logo: hyperbuildLogo,
-    title: "Hyperbuild Lovable Créditos Infinitos",
-    description: "Parceria oficial para garantir que sua produção nunca pare.",
-    badgeTitle: "Escala Total",
+    title: "Hyperbuild Lovable",
+    description: "Extensão exclusiva que libera créditos infinitos no Lovable, sem travas e sem limites.",
+    badgeTitle: "Créditos Infinitos no Lovable",
     glowColor: "rgba(37, 99, 235, 0.4)",
     benefits: [
-      "Processamento veloz",
-      "Infraestrutura dedicada",
-      "Sincronização Cloud"
+      "Créditos infinitos no Lovable",
+      "Extensão exclusiva AxionFly",
+      "Produção sem travas"
     ],
   },
 ];
@@ -100,7 +100,7 @@ export default function LovablePartnership() {
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto relative z-10">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto relative z-10">
         {partners.map((partner, idx) => (
           <motion.div
             key={partner.name}
