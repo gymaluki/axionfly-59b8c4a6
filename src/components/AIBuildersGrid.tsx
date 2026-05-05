@@ -56,7 +56,7 @@ export const AIBuildersGrid = () => {
                 MAIS ESCOLHIDO
               </div>
             )}
-            <div className={`absolute inset-0 bg-gradient-to-br ${builder.bg} ${builder.recommended ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity`} />
+            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${builder.bg} ${builder.recommended ? "opacity-100" : "opacity-0 group-hover:opacity-100"} transition-opacity pointer-events-none`} />
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-start justify-between mb-3">
                 <div className="w-12 h-12 rounded-xl bg-secondary border border-border flex items-center justify-center overflow-hidden p-1.5">
