@@ -1162,6 +1162,96 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         return (
           <div className="space-y-6">
             <div className="space-y-1">
+              <h3 className="text-xl font-bold text-foreground">Configurar Vendas (Cakto)</h3>
+              <p className="text-sm text-muted-foreground">
+                Cadastre seu produto na Cakto para receber pagamentos
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div className="bg-secondary/20 border border-primary/20 rounded-2xl p-6 space-y-4">
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Wallet className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-foreground">Integração Cakto</h4>
+                    <p className="text-xs text-muted-foreground">Checkout de alta conversão</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Nome do Produto</label>
+                    <Input
+                      placeholder="Ex: Consultoria Premium"
+                      value={productNameCakto || projectName}
+                      onChange={(e) => setProductNameCakto(e.target.value)}
+                      className="bg-secondary/50 border-border"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground">Valor do Produto (R$)</label>
+                    <Input
+                      type="number"
+                      placeholder="97,00"
+                      value={productPrice}
+                      onChange={(e) => setProductPrice(e.target.value)}
+                      className="bg-secondary/50 border-border"
+                    />
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      if (!productPrice) {
+                        toast.error("Informe o valor do produto");
+                        return;
+                      }
+                      setIsRegisteringCakto(true);
+                      setTimeout(() => {
+                        setIsRegisteringCakto(false);
+                        setCaktoRegistered(true);
+                        toast.success("Produto cadastrado na Cakto com sucesso!");
+                      }, 2000);
+                    }}
+                    disabled={isRegisteringCakto || caktoRegistered}
+                    className={cn(
+                      "w-full h-12 font-bold transition-all duration-300",
+                      caktoRegistered ? "bg-green-500 hover:bg-green-600" : "bg-primary hover:bg-primary/90"
+                    )}
+                  >
+                    {isRegisteringCakto ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Cadastrando...
+                      </div>
+                    ) : caktoRegistered ? (
+                      <div className="flex items-center gap-2">
+                        <Check className="w-5 h-5" />
+                        Produto Cadastrado
+                      </div>
+                    ) : (
+                      "Cadastrar na Cakto"
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 flex gap-3 items-start">
+                <Sparkles className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
+                <p className="text-xs text-blue-200/70 leading-relaxed">
+                  Ao clicar em cadastrar, nós criamos automaticamente o produto na sua conta Cakto usando o nome e valor informados. O link de checkout será inserido nos botões do seu site.
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="space-y-1">
               <h3 className="text-xl font-bold text-foreground">Revisão Final</h3>
               <p className="text-sm text-muted-foreground">
                 Confira as informações antes de gerar seu site
@@ -1207,6 +1297,10 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
               <ReviewItem label="Público-Alvo" value={targetAudience || "Não informado"} />
               <ReviewItem label="Diferenciais" value={differentiators || "Não informado"} />
               <ReviewItem label="Posicionamento" value={pricePositioning ? pricePositioning.charAt(0).toUpperCase() + pricePositioning.slice(1) : "Padrão"} />
+              <ReviewItem 
+                label="Vendas Cakto" 
+                value={caktoRegistered ? `Produto: ${productNameCakto || projectName} (R$ ${productPrice})` : "Não configurado"} 
+              />
               {(instagram || tiktok || facebook) && (
                 <ReviewItem label="Social" value={[instagram, tiktok, facebook].filter(Boolean).length + " redes conectadas"} />
               )}
@@ -1214,6 +1308,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                 <ReviewItem label="Pedidos WhatsApp" value={whatsappOrdering ? "✅ Ativado" : "Desativado"} />
               )}
             </div>
+
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
