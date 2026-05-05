@@ -44,14 +44,14 @@ export const AIBuildersGrid = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: i * 0.03 }}
             whileHover={{ y: -4, scale: 1.02 }}
-            className={`group relative overflow-hidden rounded-2xl border bg-card p-5 transition-colors ${
+            className={`group relative rounded-2xl border bg-card p-5 transition-colors ${
               builder.recommended
-                ? "border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary"
+                ? "mt-4 border-primary/60 ring-2 ring-primary/40 shadow-[0_0_30px_-10px_hsl(var(--primary)/0.6)] hover:border-primary"
                 : "border-border hover:border-primary/40"
             }`}
           >
             {builder.recommended && (
-              <div className="absolute top-2 right-2 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary text-primary-foreground text-[10px] font-bold shadow-lg whitespace-nowrap">
                 <Crown className="w-3 h-3" />
                 MAIS ESCOLHIDO
               </div>
