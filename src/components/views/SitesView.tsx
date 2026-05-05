@@ -536,6 +536,7 @@ Crie uma Landing Page completa e profissional com as seguintes especificações 
 - **Headline (Hero):** Crie 3 variações de headlines de impacto baseadas no tom de voz.
 - **Prova Social:** ${socialProof.trim() ? `Use estes dados/depoimentos: ${socialProof.trim()}` : "Inclua seções de depoimentos com placeholders realistas e estatísticas de sucesso (ex: 1000+ clientes)."}
 - **CTAs:** O botão principal deve ser "${selectedCta?.label.replace(/^.\s/, "") || "Entre em contato"}".
+${caktoRegistered ? `- **PRODUTO CAKTO:** O site deve promover o produto "${productNameCakto || projectName}" no valor de R$ ${productPrice}. Integre chamadas para ação (CTAs) que simulem ou apontem para um checkout deste produto.` : ""}
 
 ### 3. ESPECIFICAÇÕES VISUAIS (DESIGN SYSTEM)
 - **Cores:** Primária: ${primaryColor.trim() || "Padrão do nicho"}, Secundária: ${secondaryColor.trim() || "Padrão do nicho"}.
