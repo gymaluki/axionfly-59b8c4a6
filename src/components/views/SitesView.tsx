@@ -1421,7 +1421,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       </div>
 
       {/* Navigation */}
-      {step < 4 && (
+      {step < 5 && (
         <div className="flex justify-between">
           <Button
             variant="ghost"
@@ -1450,11 +1450,11 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         </div>
       )}
 
-      {step === 4 && (
+      {step === 5 && (
         <div className="flex justify-start">
           <Button
             variant="ghost"
-            onClick={() => setStep(3)}
+            onClick={() => setStep(4)}
             className="gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
