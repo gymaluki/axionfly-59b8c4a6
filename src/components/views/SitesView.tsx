@@ -336,11 +336,14 @@ const SitesView = () => {
       
       const { data: profile } = await supabase
         .from("profiles")
-        .select("cakto_client_id, cakto_client_secret")
+        .select("cakto_client_id, cakto_client_secret, cakto_product_image_url")
         .eq("user_id", user.id)
         .maybeSingle();
         
       setHasCaktoConfig(!!(profile?.cakto_client_id && profile?.cakto_client_secret));
+      if (profile?.cakto_product_image_url) {
+        setCaktoProductImageUrl(profile.cakto_product_image_url);
+      }
     };
     checkConfig();
   }, []);
