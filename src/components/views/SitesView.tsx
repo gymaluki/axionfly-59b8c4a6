@@ -455,6 +455,9 @@ const SitesView = () => {
         setTargetAudience(data.targetAudience || "");
         setDifferentiators(data.differentiators || "");
         setPricePositioning(data.pricePositioning || "");
+        setProductNameCakto(data.productNameCakto || data.projectName || "");
+        setProductPrice(data.productPrice || "");
+        setCaktoRegistered(data.caktoRegistered || false);
         setStep(data.step || 0);
       } catch (e) {
         console.error("Erro ao carregar dados salvos:", e);
