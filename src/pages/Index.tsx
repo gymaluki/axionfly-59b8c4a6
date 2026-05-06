@@ -242,7 +242,7 @@ const Index = () => {
             </motion.span>
             <p className="text-white text-xs md:text-[13px] font-black uppercase tracking-[0.25em] flex items-center gap-3">
               <span className="opacity-70 hidden sm:inline">—</span>
-              Aniversário 1 Ano AxionFly: 50% de Desconto em toda a plataforma
+              Aniversário 1 Ano AxionFly: 70% de Desconto em toda a plataforma
               <span className="opacity-70 hidden sm:inline">—</span>
             </p>
             <motion.span 
@@ -605,6 +605,7 @@ const Index = () => {
             <div className="pt-12 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-8">
               <p className="text-[#64748b] text-[11px] font-black uppercase tracking-[0.1em] text-center">
                 © 2026 AxionFly · Todos os direitos reservados
+                <span className="ml-4 opacity-20 hover:opacity-100 transition-opacity">A promoção valerá por 1 semana</span>
               </p>
               <div className="flex items-center gap-10 text-xs font-black uppercase tracking-widest text-muted-foreground/60">
                 <a href="#" className="hover:text-primary transition-colors">Privacidade</a>
