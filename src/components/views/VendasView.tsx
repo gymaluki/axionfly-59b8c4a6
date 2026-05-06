@@ -203,17 +203,48 @@ const VendasView = () => {
               <p className="text-3xl font-black text-foreground tracking-tight">{formatCurrency(totalRevenue)}</p>
               <span className="text-[10px] font-bold text-green-500 bg-green-500/10 px-2 py-1 rounded-full">+12.5%</span>
             </div>
-            {/* Mini bar chart placeholder */}
-            <div className="mt-6 flex items-end gap-1 h-12 h-16">
-              {[40, 70, 45, 90, 65, 85, 100].map((h, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${h}%` }}
-                  transition={{ delay: i * 0.1, duration: 1 }}
-                  className="flex-1 bg-green-500/20 rounded-t-sm group-hover:bg-green-500/40 transition-colors"
+            <div className="mt-4 relative h-16 w-full overflow-hidden">
+              <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="emeraldGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#1D9E75" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#1D9E75" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  d="M0 35 Q 15 15, 30 25 T 60 10 T 100 20 L 100 40 L 0 40 Z"
+                  fill="url(#emeraldGradient)"
                 />
-              ))}
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                  d="M0 35 Q 15 15, 30 25 T 60 10 T 100 20"
+                  fill="none"
+                  stroke="#1D9E75"
+                  strokeWidth="2"
+                />
+                {[0, 30, 60, 100].map((x, i) => {
+                  const points = [35, 25, 10, 20];
+                  return (
+                    <motion.circle
+                      key={i}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 1 + i * 0.1 }}
+                      cx={x}
+                      cy={points[i]}
+                      r="2"
+                      fill="white"
+                      stroke="#1D9E75"
+                      strokeWidth="1"
+                    />
+                  );
+                })}
+              </svg>
             </div>
           </CardContent>
         </Card>
@@ -232,16 +263,31 @@ const VendasView = () => {
               <p className="text-3xl font-black text-foreground tracking-tight">{formatCurrency(totalPending)}</p>
               <span className="text-[10px] font-bold text-[#94a3b8] bg-white/5 px-2 py-1 rounded-full">venda futura</span>
             </div>
-            <div className="mt-6 flex items-end gap-1 h-16">
-              {[60, 40, 80, 50, 70, 30, 90].map((h, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${h}%` }}
-                  transition={{ delay: 0.5 + i * 0.1, duration: 1 }}
-                  className="flex-1 bg-yellow-500/20 rounded-t-sm group-hover:bg-yellow-500/40 transition-colors"
+            <div className="mt-4 relative h-16 w-full flex items-center">
+              <svg className="w-full h-4" viewBox="0 0 100 20" preserveAspectRatio="xMidYMid meet">
+                <motion.line
+                  initial={{ x2: 0 }}
+                  animate={{ x2: 100 }}
+                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                  x1="0" y1="10" x2="100" y2="10"
+                  stroke="#EF9F27"
+                  strokeWidth="1"
+                  strokeDasharray="2 2"
+                  opacity="0.3"
                 />
-              ))}
+                {[10, 35, 60, 85].map((x, i) => (
+                  <motion.circle
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.2 }}
+                    cx={x}
+                    cy="10"
+                    r={i === 3 ? "4" : "2"}
+                    fill="#EF9F27"
+                  />
+                ))}
+              </svg>
             </div>
           </CardContent>
         </Card>
@@ -260,16 +306,33 @@ const VendasView = () => {
               <p className="text-3xl font-black text-foreground tracking-tight">{totalSales}</p>
               <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">+4 este mês</span>
             </div>
-            <div className="mt-6 flex items-end gap-1 h-16">
-              {[30, 60, 40, 100, 70, 50, 80].map((h, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${h}%` }}
-                  transition={{ delay: 1 + i * 0.1, duration: 1 }}
-                  className="flex-1 bg-primary/20 rounded-t-sm group-hover:bg-primary/40 transition-colors"
+            <div className="mt-4 relative h-16 w-full flex items-center justify-center">
+              <svg className="h-full aspect-square" viewBox="0 0 40 40">
+                <circle
+                  cx="20" cy="20" r="16"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.05)"
+                  strokeWidth="3"
                 />
-              ))}
+                <motion.circle
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 17/25 }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  cx="20" cy="20" r="16"
+                  fill="none"
+                  stroke="#378ADD"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  transform="rotate(-90 20 20)"
+                />
+                <text
+                  x="20" y="22"
+                  textAnchor="middle"
+                  className="fill-muted-foreground text-[5px] font-bold"
+                >
+                  68%
+                </text>
+              </svg>
             </div>
           </CardContent>
         </Card>
