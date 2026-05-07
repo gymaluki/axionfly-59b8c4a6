@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, MessageCircle, MapPin, Loader2, Phone, Check, ChevronDown, Zap } from "lucide-react";
+import { Search, MessageCircle, MapPin, Loader2, Phone, Check, ChevronDown, Zap, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -232,9 +232,28 @@ const ProspeccaoView = () => {
       transition={{ duration: 0.4 }}
       className="space-y-6"
     >
-      <div>
-        <h2 className="text-2xl font-bold text-white">Prospecção de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Clientes</span></h2>
-        <p className="text-[#6b7280] text-sm mt-1 font-medium">Encontre empresas por nicho, cidade e estado — ideais para prospectar</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Prospecção de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Clientes</span></h2>
+          <p className="text-[#6b7280] text-sm mt-1 font-medium">Encontre empresas por nicho, cidade e estado — ideais para prospectar</p>
+        </div>
+        {(searched || results.length > 0 || activeFilter || cidade || estado) && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              if (!confirm("Limpar a pesquisa salva e reiniciar?")) return;
+              localStorage.removeItem("prospeccao-view-state");
+              setCidade(""); setEstado(""); setActiveFilter("");
+              setResults([]); setSearched(false);
+              toast.success("Pesquisa reiniciada!");
+            }}
+            className="gap-2 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive rounded-full font-bold"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reiniciar pesquisa
+          </Button>
+        )}
       </div>
 
       {/* Filtros de localização */}
