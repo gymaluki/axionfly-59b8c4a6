@@ -218,7 +218,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#05050a] overflow-hidden relative">
+    <div className="min-h-screen bg-[#05050a] overflow-x-hidden relative max-w-[100vw]">
       {/* Grid Background */}
       <div
         aria-hidden="true"
@@ -264,8 +264,8 @@ const Index = () => {
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
           <Suspense fallback={null}>
-            <IsoLevelWarp color="30, 58, 138" density={30} speed={0.9} />
             <div className="hidden md:block">
+              <IsoLevelWarp color="30, 58, 138" density={30} speed={0.9} />
               <BackgroundPaths />
             </div>
           </Suspense>
@@ -533,7 +533,9 @@ const Index = () => {
         {/* ═══════════ CTA FINAL ═══════════ */}
         <section className="container mx-auto px-4 py-20 md:py-40 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.2)_0%,transparent_70%)] pointer-events-none" />
-          <ParticleBackground />
+          <div className="hidden md:block">
+            <ParticleBackground />
+          </div>
           
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
