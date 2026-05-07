@@ -231,34 +231,35 @@ const Index = () => {
 
       <div className="relative z-10">
         {/* Elegant Anniversary Banner */}
-        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-primary via-blue-600 to-primary py-2.5 text-center z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
-          <div className="container mx-auto px-4 flex items-center justify-center gap-6">
-            <motion.span 
-              animate={{ rotate: [0, 10, -10, 0] }} 
+        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-primary via-blue-600 to-primary h-9 md:h-11 flex items-center text-center z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
+          <div className="container mx-auto px-3 flex items-center justify-center gap-2 md:gap-6 overflow-hidden">
+            <motion.span
+              animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
-              className="text-white text-lg"
+              className="text-white text-sm md:text-lg shrink-0"
             >
               🎉
             </motion.span>
-            <p className="text-white text-xs md:text-[13px] font-black uppercase tracking-[0.25em] flex items-center gap-3">
+            <p className="text-white text-[10px] md:text-[13px] font-black uppercase tracking-[0.15em] md:tracking-[0.25em] flex items-center gap-3 whitespace-nowrap truncate">
               <span className="opacity-70 hidden sm:inline">—</span>
-              Aniversário 1 Ano AxionFly: 70% de Desconto em toda a plataforma
+              <span className="hidden sm:inline">Aniversário 1 Ano AxionFly: 70% de Desconto em toda a plataforma</span>
+              <span className="sm:hidden">1 Ano AxionFly · 70% OFF</span>
               <span className="opacity-70 hidden sm:inline">—</span>
             </p>
-            <motion.span 
-              animate={{ rotate: [0, -10, 10, 0] }} 
+            <motion.span
+              animate={{ rotate: [0, -10, 10, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
-              className="text-white text-lg"
+              className="text-white text-sm md:text-lg shrink-0"
             >
               🎉
             </motion.span>
           </div>
         </div>
-        
-        {/* Header with offset to avoid covering the banner */}
-        <Header className="top-[44px]" />
 
-        <div className="pt-[112px] md:pt-[128px]">
+        {/* Header with offset to avoid covering the banner */}
+        <Header className="top-9 md:top-11" />
+
+        <div className="pt-[100px] md:pt-[128px]">
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
