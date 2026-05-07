@@ -6,6 +6,7 @@ import {
   ExternalLink,
   ArrowRight,
   ArrowLeft,
+  RotateCcw,
   Store,
   Palette,
   Type,
