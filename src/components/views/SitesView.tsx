@@ -1593,7 +1593,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       )}
 
       {step === 5 && (
-        <div className="flex justify-start">
+        <div className="flex justify-between">
           <Button
             variant="ghost"
             onClick={() => setStep(4)}
@@ -1601,6 +1601,29 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
           >
             <ArrowLeft className="w-4 h-4" />
             Voltar
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (!confirm("Tem certeza que deseja reiniciar? Todas as respostas serão apagadas.")) return;
+              localStorage.removeItem("sites-view-state");
+              localStorage.removeItem("pending_site_creation");
+              setStep(0);
+              setProjectName(""); setNiche(""); setAddress(""); setPhone("");
+              setPrimaryColor(""); setSecondaryColor(""); setFeatures("");
+              setFont(""); setDesignStyle(""); setSlogan(""); setSiteObjective("");
+              setTone(""); setSelectedPages(["inicio"]); setCtaPrincipal("");
+              setBusinessHours(""); setWhatsappOrdering(false);
+              setInstagram(""); setTiktok(""); setFacebook("");
+              setTargetAudience(""); setDifferentiators(""); setPricePositioning("");
+              setSocialProof(""); setProductNameCakto(""); setProductPrice("");
+              setGeneratedPrompt(""); setCaktoRegistered(false); setCaktoCheckoutUrl("");
+              toast.success("Processo reiniciado!");
+            }}
+            className="gap-2 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive rounded-full font-bold"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reiniciar processo
           </Button>
         </div>
       )}
