@@ -333,10 +333,9 @@ const SitesView = () => {
   const [hasCaktoConfig, setHasCaktoConfig] = useState(false);
 
   useEffect(() => {
+    if (!user) return;
+    
     const loadState = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      
       const savedState = localStorage.getItem(`sites-view-state-${user.id}`);
       if (savedState) {
         try {
@@ -384,25 +383,21 @@ const SitesView = () => {
       }
     };
     loadState();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    const saveState = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      
-      const state = {
-        step, projectName, niche, address, phone, primaryColor, secondaryColor,
-        features, font, designStyle, slogan, siteObjective, tone, selectedPages,
-        ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
-        targetAudience, differentiators, pricePositioning, socialProof,
-        productNameCakto, productPrice
-      };
-      localStorage.setItem(`sites-view-state-${user.id}`, JSON.stringify(state));
+    if (!user) return;
+    
+    const state = {
+      step, projectName, niche, address, phone, primaryColor, secondaryColor,
+      features, font, designStyle, slogan, siteObjective, tone, selectedPages,
+      ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
+      targetAudience, differentiators, pricePositioning, socialProof,
+      productNameCakto, productPrice
     };
-    saveState();
+    localStorage.setItem(`sites-view-state-${user.id}`, JSON.stringify(state));
   }, [
-    step, projectName, niche, address, phone, primaryColor, secondaryColor,
+    user, step, projectName, niche, address, phone, primaryColor, secondaryColor,
     features, font, designStyle, slogan, siteObjective, tone, selectedPages,
     ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
     targetAudience, differentiators, pricePositioning, socialProof,
