@@ -29,6 +29,28 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
   const [uploading, setUploading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [signedVideoUrl, setSignedVideoUrl] = useState<string | null>(null);
+
+  const extractStoragePath = (url: string): string => {
+    const marker = "/storage/v1/object/public/videos/";
+    const altMarker = "/storage/v1/object/sign/videos/";
+    if (url.includes(marker)) return url.split(marker)[1].split("?")[0];
+    if (url.includes(altMarker)) return url.split(altMarker)[1].split("?")[0];
+    return url.split("/").pop() || url;
+  };
+
+  const openVideo = async (video: Video) => {
+    setSelectedVideo(video);
+    setSignedVideoUrl(null);
+    const path = extractStoragePath(video.video_url);
+    const { data, error } = await supabase.storage.from("videos").createSignedUrl(path, 3600);
+    if (!error && data?.signedUrl) {
+      setSignedVideoUrl(data.signedUrl);
+    } else {
+      console.error("Erro ao gerar URL assinada:", error);
+      toast({ title: "Não foi possível carregar o vídeo", variant: "destructive" });
+    }
+  };
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -74,14 +96,12 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
 
       console.log("Upload success:", uploadData);
 
-      const { data: urlData } = supabase.storage.from("videos").getPublicUrl(fileName);
-
       const { data: { user } } = await supabase.auth.getUser();
 
       const { error: insertError } = await supabase.from("videos").insert({
         title: title.trim(),
         description: description.trim() || null,
-        video_url: urlData.publicUrl,
+        video_url: fileName,
         created_by: user?.id || null,
       });
 
@@ -273,7 +293,7 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
               key={video.id}
               whileHover={{ y: -8 }}
               className="group"
-              onClick={() => setSelectedVideo(video)}
+              onClick={() => openVideo(video)}
             >
               <Card className="bg-[#0d0d14]/40 border border-white/5 overflow-hidden transition-all duration-300 group-hover:border-primary/40 cursor-pointer">
                 <div className="aspect-video bg-secondary/20 relative overflow-hidden">
@@ -326,17 +346,21 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
       )}
 
       {/* Video Player Dialog */}
-      <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+      <Dialog open={!!selectedVideo} onOpenChange={() => { setSelectedVideo(null); setSignedVideoUrl(null); }}>
         <DialogContent className="sm:max-w-3xl p-0 overflow-hidden">
           {selectedVideo && (
             <>
-              <div className="aspect-video bg-black">
-                <video
-                  src={selectedVideo.video_url}
-                  controls
-                  autoPlay
-                  className="w-full h-full"
-                />
+              <div className="aspect-video bg-black flex items-center justify-center">
+                {signedVideoUrl ? (
+                  <video
+                    src={signedVideoUrl}
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                )}
               </div>
               <div className="p-4 space-y-1">
                 <h3 className="text-lg font-bold text-foreground">{selectedVideo.title}</h3>
