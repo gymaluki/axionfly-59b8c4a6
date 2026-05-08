@@ -348,13 +348,14 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
       )}
 
       {/* Video Player Dialog */}
-      <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+      <Dialog open={!!selectedVideo} onOpenChange={() => { setSelectedVideo(null); setSignedVideoUrl(null); }}>
         <DialogContent className="sm:max-w-3xl p-0 overflow-hidden">
           {selectedVideo && (
             <>
-              <div className="aspect-video bg-black">
-                <video
-                  src={selectedVideo.video_url}
+              <div className="aspect-video bg-black flex items-center justify-center">
+                {signedVideoUrl ? (
+                  <video
+                    src={signedVideoUrl}
                   controls
                   autoPlay
                   className="w-full h-full"
