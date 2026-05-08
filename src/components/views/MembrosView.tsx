@@ -356,10 +356,13 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
                 {signedVideoUrl ? (
                   <video
                     src={signedVideoUrl}
-                  controls
-                  autoPlay
-                  className="w-full h-full"
-                />
+                    controls
+                    autoPlay
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                )}
               </div>
               <div className="p-4 space-y-1">
                 <h3 className="text-lg font-bold text-foreground">{selectedVideo.title}</h3>
