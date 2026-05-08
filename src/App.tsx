@@ -13,6 +13,7 @@ import PedidosDemo from "./pages/PedidosDemo";
 import QAGrid from "./pages/QAGrid";
 import QAGridFrame from "./pages/QAGridFrame";
 import NotFound from "./pages/NotFound";
+import AffiliateRedirect from "./pages/AffiliateRedirect";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/pedidos-demo" element={<PedidosDemo />} />
           <Route path="/qa-grid" element={<QAGrid />} />
           <Route path="/qa-grid/frame" element={<QAGridFrame />} />
+          <Route path="/i/:slug" element={<AffiliateRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
