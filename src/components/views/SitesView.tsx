@@ -1618,8 +1618,10 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
             variant="outline"
             onClick={() => {
               if (!confirm("Tem certeza que deseja reiniciar? Todas as respostas serão apagadas.")) return;
-              localStorage.removeItem(`sites-view-state-${user.id}`);
-              localStorage.removeItem(`pending_site_creation-${user.id}`);
+              if (user) {
+                localStorage.removeItem(`sites-view-state-${user.id}`);
+                localStorage.removeItem(`pending_site_creation-${user.id}`);
+              }
               setStep(0);
               setProjectName(""); setNiche(""); setAddress(""); setPhone("");
               setPrimaryColor(""); setSecondaryColor(""); setFeatures("");
