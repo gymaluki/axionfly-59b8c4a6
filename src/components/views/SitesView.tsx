@@ -295,6 +295,7 @@ const stepMeta = [
 ];
 
 const SitesView = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [projectName, setProjectName] = useState("");
