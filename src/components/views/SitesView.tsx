@@ -615,10 +615,14 @@ const SitesView = () => {
     }
   }, [niche]);
 
-  const [hasInstalledExtension, setHasInstalledExtension] = useState(() => {
-    return localStorage.getItem(`has_installed_hyperbuild-${user.id}`) === "true";
-  });
+  const [hasInstalledExtension, setHasInstalledExtension] = useState(false);
   const [showExtensionModal, setShowExtensionModal] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setHasInstalledExtension(localStorage.getItem(`has_installed_hyperbuild-${user.id}`) === "true");
+    }
+  }, [user]);
 
   const foodNiches = ["pizzaria", "fine-dining", "restaurante-bairro", "hamburgueria", "acaiteria", "marmitaria"];
 
