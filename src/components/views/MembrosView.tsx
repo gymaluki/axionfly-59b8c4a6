@@ -29,6 +29,28 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
   const [uploading, setUploading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [signedVideoUrl, setSignedVideoUrl] = useState<string | null>(null);
+
+  const extractStoragePath = (url: string): string => {
+    const marker = "/storage/v1/object/public/videos/";
+    const altMarker = "/storage/v1/object/sign/videos/";
+    if (url.includes(marker)) return url.split(marker)[1].split("?")[0];
+    if (url.includes(altMarker)) return url.split(altMarker)[1].split("?")[0];
+    return url.split("/").pop() || url;
+  };
+
+  const openVideo = async (video: Video) => {
+    setSelectedVideo(video);
+    setSignedVideoUrl(null);
+    const path = extractStoragePath(video.video_url);
+    const { data, error } = await supabase.storage.from("videos").createSignedUrl(path, 3600);
+    if (!error && data?.signedUrl) {
+      setSignedVideoUrl(data.signedUrl);
+    } else {
+      console.error("Erro ao gerar URL assinada:", error);
+      toast({ title: "Não foi possível carregar o vídeo", variant: "destructive" });
+    }
+  };
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [videoFile, setVideoFile] = useState<File | null>(null);
