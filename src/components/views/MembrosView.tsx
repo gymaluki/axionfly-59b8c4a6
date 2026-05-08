@@ -96,14 +96,12 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
 
       console.log("Upload success:", uploadData);
 
-      const { data: urlData } = supabase.storage.from("videos").getPublicUrl(fileName);
-
       const { data: { user } } = await supabase.auth.getUser();
 
       const { error: insertError } = await supabase.from("videos").insert({
         title: title.trim(),
         description: description.trim() || null,
-        video_url: urlData.publicUrl,
+        video_url: fileName,
         created_by: user?.id || null,
       });
 
