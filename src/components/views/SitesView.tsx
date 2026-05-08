@@ -738,7 +738,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       caktoCheckoutUrl,
       step
     };
-    localStorage.setItem(`pending_site_creation-${user.id}`, JSON.stringify(formData));
+    if (user) {
+      localStorage.setItem(`pending_site_creation-${user.id}`, JSON.stringify(formData));
+    }
     
     // Redireciona para a seção de extensão dentro do dashboard
     navigate("/dashboard?view=extensao-lovable");
