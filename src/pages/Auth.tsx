@@ -21,11 +21,13 @@ const Auth = () => {
   const paymentRedirect = useMemo(() => {
     const val = new URLSearchParams(location.search).get("redirect_payment");
     if (!val) return null;
-    // Only allow same-origin URLs (relative paths or absolute on same origin)
+    // Same-origin paths
     if (val.startsWith("/") && !val.startsWith("//")) return val;
     try {
       const u = new URL(val, window.location.origin);
       if (u.origin === window.location.origin) return u.pathname + u.search + u.hash;
+      // Allow Cakto checkout URLs (afiliado-aware)
+      if (u.hostname === "pay.cakto.com.br") return u.toString();
     } catch { /* ignore */ }
     return null;
   }, [location.search]);
