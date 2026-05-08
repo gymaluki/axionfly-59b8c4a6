@@ -698,7 +698,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
   };
 
   const handleConfirmExtension = () => {
-    localStorage.setItem(`has_installed_hyperbuild-${user.id}`, "true");
+    if (user) {
+      localStorage.setItem(`has_installed_hyperbuild-${user.id}`, "true");
+    }
     setHasInstalledExtension(true);
     setShowExtensionModal(false);
     setPickerOpen(true);
