@@ -100,24 +100,38 @@ const ProspeccaoView = () => {
   const [key, setKey] = useState(0);
 
   useEffect(() => {
-    const saved = localStorage.getItem("prospeccao-view-state");
-    if (saved) {
-      try {
-        const state = JSON.parse(saved);
-        setCidade(state.cidade || "");
-        setEstado(state.estado || "");
-        setActiveFilter(state.activeFilter || "");
-        setResults(state.results || []);
-        setSearched(state.searched || false);
-      } catch (e) {
-        console.error("Error loading prospeccao state", e);
+    const loadState = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const storageKey = `prospeccao-view-state-${user.id}`;
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        try {
+          const state = JSON.parse(saved);
+          setCidade(state.cidade || "");
+          setEstado(state.estado || "");
+          setActiveFilter(state.activeFilter || "");
+          setResults(state.results || []);
+          setSearched(state.searched || false);
+        } catch (e) {
+          console.error("Error loading prospeccao state", e);
+        }
       }
-    }
+    };
+    loadState();
   }, []);
 
   useEffect(() => {
-    const state = { cidade, estado, activeFilter, results, searched };
-    localStorage.setItem("prospeccao-view-state", JSON.stringify(state));
+    const saveState = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const storageKey = `prospeccao-view-state-${user.id}`;
+      const state = { cidade, estado, activeFilter, results, searched };
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    };
+    saveState();
   }, [cidade, estado, activeFilter, results, searched]);
 
   // Buscar cidades do IBGE quando o estado muda
