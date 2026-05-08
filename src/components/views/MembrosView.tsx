@@ -295,7 +295,7 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
               key={video.id}
               whileHover={{ y: -8 }}
               className="group"
-              onClick={() => setSelectedVideo(video)}
+              onClick={() => openVideo(video)}
             >
               <Card className="bg-[#0d0d14]/40 border border-white/5 overflow-hidden transition-all duration-300 group-hover:border-primary/40 cursor-pointer">
                 <div className="aspect-video bg-secondary/20 relative overflow-hidden">
