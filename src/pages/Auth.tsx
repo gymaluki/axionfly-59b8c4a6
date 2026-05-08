@@ -19,7 +19,15 @@ const Auth = () => {
   const location = useLocation();
 
   const paymentRedirect = useMemo(() => {
-    return new URLSearchParams(location.search).get("redirect_payment");
+    const val = new URLSearchParams(location.search).get("redirect_payment");
+    if (!val) return null;
+    // Only allow same-origin URLs (relative paths or absolute on same origin)
+    if (val.startsWith("/") && !val.startsWith("//")) return val;
+    try {
+      const u = new URL(val, window.location.origin);
+      if (u.origin === window.location.origin) return u.pathname + u.search + u.hash;
+    } catch { /* ignore */ }
+    return null;
   }, [location.search]);
 
   const redirectTo = useMemo(() => {
