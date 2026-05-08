@@ -34,6 +34,43 @@ Deno.serve(async (req) => {
       );
     }
 
+    const normalizedEmailEarly = email.trim().toLowerCase();
+
+    // 🛡️ Bloqueio anti-bot: padrões usados em ataques de criação em massa
+    const ABUSE_PATTERNS: RegExp[] = [
+      /hackedby/i,
+      /lorota|lorata/i,
+      /^hacked[_.\-]?\d+/i,
+      /^user[_.\-]?\d{10,}/i,        // user_<timestamp>_xxx
+      /^test[_.\-]?\d+/i,
+      /^admin@/i,                     // admin@gmail.com, admin@admin.com etc
+      /^axionfly@/i,                  // tentativa de impersonar a marca
+    ];
+    if (ABUSE_PATTERNS.some((re) => re.test(normalizedEmailEarly))) {
+      console.warn("Signup bloqueado (padrão suspeito):", normalizedEmailEarly);
+      return new Response(
+        JSON.stringify({ error: "Cadastro não permitido para este email." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    // Bloqueia subaddressing abusivo (mais de 1 "+" tag)
+    const localPart = normalizedEmailEarly.split("@")[0] ?? "";
+    if ((localPart.match(/\+/g) ?? []).length > 1) {
+      return new Response(
+        JSON.stringify({ error: "Cadastro não permitido para este email." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
+    // Tamanho máximo razoável
+    if (normalizedEmailEarly.length > 120) {
+      return new Response(
+        JSON.stringify({ error: "Email muito longo." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const admin = createClient(supabaseUrl, serviceKey, {
