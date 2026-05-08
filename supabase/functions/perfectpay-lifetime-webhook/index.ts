@@ -19,16 +19,21 @@ Deno.serve(async (req) => {
       throw new Error("Missing Supabase environment variables");
     }
 
-    // Validate webhook token if configured
-    if (PERFECTPAY_WEBHOOK_TOKEN) {
-      const url = new URL(req.url);
-      const token = url.searchParams.get("token");
-      if (token !== PERFECTPAY_WEBHOOK_TOKEN) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
+    // Validação obrigatória do token
+    if (!PERFECTPAY_WEBHOOK_TOKEN) {
+      console.error("Perfect Pay LIFETIME webhook: token não configurado");
+      return new Response(JSON.stringify({ error: "Webhook token not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const url = new URL(req.url);
+    const token = url.searchParams.get("token");
+    if (token !== PERFECTPAY_WEBHOOK_TOKEN) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const body = await req.json();
