@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Admins can delete video objects" ON storage.objects;
