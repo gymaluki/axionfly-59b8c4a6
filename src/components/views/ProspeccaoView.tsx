@@ -255,9 +255,12 @@ const ProspeccaoView = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => {
+            onClick={async () => {
               if (!confirm("Limpar a pesquisa salva e reiniciar?")) return;
-              localStorage.removeItem("prospeccao-view-state");
+              const { data: { user } } = await supabase.auth.getUser();
+              if (user) {
+                localStorage.removeItem(`prospeccao-view-state-${user.id}`);
+              }
               setCidade(""); setEstado(""); setActiveFilter("");
               setResults([]); setSearched(false);
               toast.success("Pesquisa reiniciada!");
