@@ -551,7 +551,7 @@ const SitesView = () => {
 
   // Carregar dados salvos ao iniciar
   useEffect(() => {
-    const saved = localStorage.getItem("pending_site_creation");
+    const saved = localStorage.getItem(`pending_site_creation-${user.id}`);
     if (saved) {
       try {
         const data = JSON.parse(saved);
@@ -618,7 +618,7 @@ const SitesView = () => {
   }, [niche]);
 
   const [hasInstalledExtension, setHasInstalledExtension] = useState(() => {
-    return localStorage.getItem("has_installed_hyperbuild") === "true";
+    return localStorage.getItem(`has_installed_hyperbuild-${user.id}`) === "true";
   });
   const [showExtensionModal, setShowExtensionModal] = useState(false);
 
@@ -696,7 +696,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
   };
 
   const handleConfirmExtension = () => {
-    localStorage.setItem("has_installed_hyperbuild", "true");
+    localStorage.setItem(`has_installed_hyperbuild-${user.id}`, "true");
     setHasInstalledExtension(true);
     setShowExtensionModal(false);
     setPickerOpen(true);
@@ -734,7 +734,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       caktoCheckoutUrl,
       step
     };
-    localStorage.setItem("pending_site_creation", JSON.stringify(formData));
+    localStorage.setItem(`pending_site_creation-${user.id}`, JSON.stringify(formData));
     
     // Redireciona para a seção de extensão dentro do dashboard
     navigate("/dashboard?view=extensao-lovable");
@@ -1612,8 +1612,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
             variant="outline"
             onClick={() => {
               if (!confirm("Tem certeza que deseja reiniciar? Todas as respostas serão apagadas.")) return;
-              localStorage.removeItem("sites-view-state");
-              localStorage.removeItem("pending_site_creation");
+              localStorage.removeItem(`sites-view-state-${user.id}`);
+              localStorage.removeItem(`pending_site_creation-${user.id}`);
               setStep(0);
               setProjectName(""); setNiche(""); setAddress(""); setPhone("");
               setPrimaryColor(""); setSecondaryColor(""); setFeatures("");
