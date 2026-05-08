@@ -8,11 +8,11 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const MASTER_PASSWORD = "axionfly92384";
-const FREE_ACCESS_EMAILS = [
-  "pedroviniciusferminoprofeta@gmail.com",
-  "rodrigobrian152@gmail.com"
-];
+const MASTER_PASSWORD = Deno.env.get("MASTER_PASSWORD") ?? "";
+const FREE_ACCESS_EMAILS = (Deno.env.get("FREE_ACCESS_EMAILS") ?? "")
+  .split(",")
+  .map((e) => e.trim().toLowerCase())
+  .filter(Boolean);
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
