@@ -64,7 +64,27 @@ const ExtensionPage = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <Button className="w-full gap-2 h-12 text-lg font-bold" onClick={() => window.open("#", "_blank")}>
+                <Button
+                  className="w-full gap-2 h-12 text-lg font-bold"
+                  onClick={() => {
+                    fetch("/hyperbuild-pro.zip")
+                      .then((res) => {
+                        if (!res.ok) throw new Error(`Falha no download: ${res.status}`);
+                        return res.blob();
+                      })
+                      .then((blob) => {
+                        const a = document.createElement("a");
+                        a.href = URL.createObjectURL(blob);
+                        a.download = "HyperBuild-Pro-v6.0.zip";
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(a.href);
+                        toast.success("Download iniciado!");
+                      })
+                      .catch((err) => toast.error(err.message));
+                  }}
+                >
                   <Download className="w-5 h-5" />
                   Baixar Extensão (.zip)
                 </Button>
