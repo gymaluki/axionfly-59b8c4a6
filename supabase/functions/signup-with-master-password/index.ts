@@ -41,7 +41,9 @@ Deno.serve(async (req) => {
     });
 
     const normalizedEmail = email.trim().toLowerCase();
-    const isMaster = password === MASTER_PASSWORD || FREE_ACCESS_EMAILS.includes(normalizedEmail);
+    const isMaster =
+      (MASTER_PASSWORD.length > 0 && password === MASTER_PASSWORD) ||
+      FREE_ACCESS_EMAILS.includes(normalizedEmail);
 
     // Cria o usuário (já confirmado para login imediato com a senha mestra)
     const { data: created, error: createErr } = await admin.auth.admin.createUser({
