@@ -548,6 +548,7 @@ const SitesView = () => {
 
   // Carregar dados salvos ao iniciar
   useEffect(() => {
+    if (!user) return;
     const saved = localStorage.getItem(`pending_site_creation-${user.id}`);
     if (saved) {
       try {
