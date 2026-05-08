@@ -27,6 +27,15 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Verifica assinatura ativa
+    const { data: hasAccess } = await supabase.rpc('check_user_access', { check_user_id: user.id });
+    if (!hasAccess) {
+      return new Response(JSON.stringify({ error: 'Subscription required' }), {
+        status: 403,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const { name, price, description, image_url } = await req.json();
 
     if (!name || !price) {

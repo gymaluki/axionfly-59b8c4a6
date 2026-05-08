@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Download, Key, Copy, Check } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 const ExtensionPage = () => {
+  const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const [extensionToken, setExtensionToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -14,6 +16,11 @@ const ExtensionPage = () => {
   useEffect(() => {
     const getLicense = async () => {
       try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          navigate("/auth?redirect=/extensao", { replace: true });
+          return;
+        }
         const { data, error } = await supabase.rpc('claim_hyperbuild_license');
         if (error) throw error;
         if (data && data.length > 0) {
@@ -27,7 +34,7 @@ const ExtensionPage = () => {
       }
     };
     getLicense();
-  }, []);
+  }, [navigate]);
 
   const handleCopyToken = () => {
     if (!extensionToken) return;
