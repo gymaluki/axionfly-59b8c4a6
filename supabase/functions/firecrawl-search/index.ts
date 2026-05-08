@@ -32,6 +32,16 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Verifica assinatura ativa (admin tem passe livre via check_user_access)
+    const serviceClient = createClient(supabaseUrl, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+    const { data: hasAccess } = await serviceClient.rpc('check_user_access', { check_user_id: user.id });
+    if (!hasAccess) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Subscription required' }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { query, options } = await req.json();
 
     if (!query) {
