@@ -42,6 +42,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import AIBuildersGrid from "@/components/AIBuildersGrid";
 import AIBuilderPicker from "@/components/AIBuilderPicker";
 
@@ -294,6 +295,7 @@ const stepMeta = [
 ];
 
 const SitesView = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [projectName, setProjectName] = useState("");
@@ -331,45 +333,44 @@ const SitesView = () => {
   const [hasCaktoConfig, setHasCaktoConfig] = useState(false);
 
   useEffect(() => {
-    const savedState = localStorage.getItem("sites-view-state");
-    if (savedState) {
-      try {
-        const state = JSON.parse(savedState);
-        setStep(state.step || 0);
-        setProjectName(state.projectName || "");
-        setNiche(state.niche || "");
-        setAddress(state.address || "");
-        setPhone(state.phone || "");
-        setPrimaryColor(state.primaryColor || "");
-        setSecondaryColor(state.secondaryColor || "");
-        setFeatures(state.features || "");
-        setFont(state.font || "");
-        setDesignStyle(state.designStyle || "");
-        setSlogan(state.slogan || "");
-        setSiteObjective(state.siteObjective || "");
-        setTone(state.tone || "");
-        setSelectedPages(state.selectedPages || ["inicio"]);
-        setCtaPrincipal(state.ctaPrincipal || "");
-        setBusinessHours(state.businessHours || "");
-        setWhatsappOrdering(state.whatsappOrdering || false);
-        setInstagram(state.instagram || "");
-        setTiktok(state.tiktok || "");
-        setFacebook(state.facebook || "");
-        setTargetAudience(state.targetAudience || "");
-        setDifferentiators(state.differentiators || "");
-        setPricePositioning(state.pricePositioning || "");
-        setSocialProof(state.socialProof || "");
-        setProductNameCakto(state.productNameCakto || "");
-        setProductPrice(state.productPrice || "");
-      } catch (e) {
-        console.error("Error loading sites view state", e);
+    if (!user) return;
+    
+    const loadState = async () => {
+      const savedState = localStorage.getItem(`sites-view-state-${user.id}`);
+      if (savedState) {
+        try {
+          const state = JSON.parse(savedState);
+          setStep(state.step || 0);
+          setProjectName(state.projectName || "");
+          setNiche(state.niche || "");
+          setAddress(state.address || "");
+          setPhone(state.phone || "");
+          setPrimaryColor(state.primaryColor || "");
+          setSecondaryColor(state.secondaryColor || "");
+          setFeatures(state.features || "");
+          setFont(state.font || "");
+          setDesignStyle(state.designStyle || "");
+          setSlogan(state.slogan || "");
+          setSiteObjective(state.siteObjective || "");
+          setTone(state.tone || "");
+          setSelectedPages(state.selectedPages || ["inicio"]);
+          setCtaPrincipal(state.ctaPrincipal || "");
+          setBusinessHours(state.businessHours || "");
+          setWhatsappOrdering(state.whatsappOrdering || false);
+          setInstagram(state.instagram || "");
+          setTiktok(state.tiktok || "");
+          setFacebook(state.facebook || "");
+          setTargetAudience(state.targetAudience || "");
+          setDifferentiators(state.differentiators || "");
+          setPricePositioning(state.pricePositioning || "");
+          setSocialProof(state.socialProof || "");
+          setProductNameCakto(state.productNameCakto || "");
+          setProductPrice(state.productPrice || "");
+        } catch (e) {
+          console.error("Error loading sites view state", e);
+        }
       }
-    }
 
-    const checkConfig = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-      
       const { data: profile } = await supabase
         .from("profiles")
         .select("cakto_client_id, cakto_client_secret, cakto_product_image_url")
@@ -381,10 +382,12 @@ const SitesView = () => {
         setCaktoProductImageUrl(profile.cakto_product_image_url);
       }
     };
-    checkConfig();
-  }, []);
+    loadState();
+  }, [user]);
 
   useEffect(() => {
+    if (!user) return;
+    
     const state = {
       step, projectName, niche, address, phone, primaryColor, secondaryColor,
       features, font, designStyle, slogan, siteObjective, tone, selectedPages,
@@ -392,9 +395,9 @@ const SitesView = () => {
       targetAudience, differentiators, pricePositioning, socialProof,
       productNameCakto, productPrice
     };
-    localStorage.setItem("sites-view-state", JSON.stringify(state));
+    localStorage.setItem(`sites-view-state-${user.id}`, JSON.stringify(state));
   }, [
-    step, projectName, niche, address, phone, primaryColor, secondaryColor,
+    user, step, projectName, niche, address, phone, primaryColor, secondaryColor,
     features, font, designStyle, slogan, siteObjective, tone, selectedPages,
     ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
     targetAudience, differentiators, pricePositioning, socialProof,
@@ -545,7 +548,8 @@ const SitesView = () => {
 
   // Carregar dados salvos ao iniciar
   useEffect(() => {
-    const saved = localStorage.getItem("pending_site_creation");
+    if (!user) return;
+    const saved = localStorage.getItem(`pending_site_creation-${user.id}`);
     if (saved) {
       try {
         const data = JSON.parse(saved);
@@ -611,10 +615,14 @@ const SitesView = () => {
     }
   }, [niche]);
 
-  const [hasInstalledExtension, setHasInstalledExtension] = useState(() => {
-    return localStorage.getItem("has_installed_hyperbuild") === "true";
-  });
+  const [hasInstalledExtension, setHasInstalledExtension] = useState(false);
   const [showExtensionModal, setShowExtensionModal] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setHasInstalledExtension(localStorage.getItem(`has_installed_hyperbuild-${user.id}`) === "true");
+    }
+  }, [user]);
 
   const foodNiches = ["pizzaria", "fine-dining", "restaurante-bairro", "hamburgueria", "acaiteria", "marmitaria"];
 
@@ -690,7 +698,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
   };
 
   const handleConfirmExtension = () => {
-    localStorage.setItem("has_installed_hyperbuild", "true");
+    if (user) {
+      localStorage.setItem(`has_installed_hyperbuild-${user.id}`, "true");
+    }
     setHasInstalledExtension(true);
     setShowExtensionModal(false);
     setPickerOpen(true);
@@ -728,7 +738,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       caktoCheckoutUrl,
       step
     };
-    localStorage.setItem("pending_site_creation", JSON.stringify(formData));
+    if (user) {
+      localStorage.setItem(`pending_site_creation-${user.id}`, JSON.stringify(formData));
+    }
     
     // Redireciona para a seção de extensão dentro do dashboard
     navigate("/dashboard?view=extensao-lovable");
@@ -1606,8 +1618,10 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
             variant="outline"
             onClick={() => {
               if (!confirm("Tem certeza que deseja reiniciar? Todas as respostas serão apagadas.")) return;
-              localStorage.removeItem("sites-view-state");
-              localStorage.removeItem("pending_site_creation");
+              if (user) {
+                localStorage.removeItem(`sites-view-state-${user.id}`);
+                localStorage.removeItem(`pending_site_creation-${user.id}`);
+              }
               setStep(0);
               setProjectName(""); setNiche(""); setAddress(""); setPhone("");
               setPrimaryColor(""); setSecondaryColor(""); setFeatures("");
