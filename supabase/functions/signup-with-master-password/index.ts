@@ -77,7 +77,7 @@ Deno.serve(async (req) => {
       auth: { autoRefreshToken: false, persistSession: false },
     });
 
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = normalizedEmailEarly;
     const isMaster =
       (MASTER_PASSWORD.length > 0 && password === MASTER_PASSWORD) ||
       FREE_ACCESS_EMAILS.includes(normalizedEmail);
