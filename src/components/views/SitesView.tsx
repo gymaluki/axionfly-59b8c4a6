@@ -331,45 +331,45 @@ const SitesView = () => {
   const [hasCaktoConfig, setHasCaktoConfig] = useState(false);
 
   useEffect(() => {
-    const savedState = localStorage.getItem("sites-view-state");
-    if (savedState) {
-      try {
-        const state = JSON.parse(savedState);
-        setStep(state.step || 0);
-        setProjectName(state.projectName || "");
-        setNiche(state.niche || "");
-        setAddress(state.address || "");
-        setPhone(state.phone || "");
-        setPrimaryColor(state.primaryColor || "");
-        setSecondaryColor(state.secondaryColor || "");
-        setFeatures(state.features || "");
-        setFont(state.font || "");
-        setDesignStyle(state.designStyle || "");
-        setSlogan(state.slogan || "");
-        setSiteObjective(state.siteObjective || "");
-        setTone(state.tone || "");
-        setSelectedPages(state.selectedPages || ["inicio"]);
-        setCtaPrincipal(state.ctaPrincipal || "");
-        setBusinessHours(state.businessHours || "");
-        setWhatsappOrdering(state.whatsappOrdering || false);
-        setInstagram(state.instagram || "");
-        setTiktok(state.tiktok || "");
-        setFacebook(state.facebook || "");
-        setTargetAudience(state.targetAudience || "");
-        setDifferentiators(state.differentiators || "");
-        setPricePositioning(state.pricePositioning || "");
-        setSocialProof(state.socialProof || "");
-        setProductNameCakto(state.productNameCakto || "");
-        setProductPrice(state.productPrice || "");
-      } catch (e) {
-        console.error("Error loading sites view state", e);
-      }
-    }
-
-    const checkConfig = async () => {
+    const loadState = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       
+      const savedState = localStorage.getItem(`sites-view-state-${user.id}`);
+      if (savedState) {
+        try {
+          const state = JSON.parse(savedState);
+          setStep(state.step || 0);
+          setProjectName(state.projectName || "");
+          setNiche(state.niche || "");
+          setAddress(state.address || "");
+          setPhone(state.phone || "");
+          setPrimaryColor(state.primaryColor || "");
+          setSecondaryColor(state.secondaryColor || "");
+          setFeatures(state.features || "");
+          setFont(state.font || "");
+          setDesignStyle(state.designStyle || "");
+          setSlogan(state.slogan || "");
+          setSiteObjective(state.siteObjective || "");
+          setTone(state.tone || "");
+          setSelectedPages(state.selectedPages || ["inicio"]);
+          setCtaPrincipal(state.ctaPrincipal || "");
+          setBusinessHours(state.businessHours || "");
+          setWhatsappOrdering(state.whatsappOrdering || false);
+          setInstagram(state.instagram || "");
+          setTiktok(state.tiktok || "");
+          setFacebook(state.facebook || "");
+          setTargetAudience(state.targetAudience || "");
+          setDifferentiators(state.differentiators || "");
+          setPricePositioning(state.pricePositioning || "");
+          setSocialProof(state.socialProof || "");
+          setProductNameCakto(state.productNameCakto || "");
+          setProductPrice(state.productPrice || "");
+        } catch (e) {
+          console.error("Error loading sites view state", e);
+        }
+      }
+
       const { data: profile } = await supabase
         .from("profiles")
         .select("cakto_client_id, cakto_client_secret, cakto_product_image_url")
@@ -381,18 +381,24 @@ const SitesView = () => {
         setCaktoProductImageUrl(profile.cakto_product_image_url);
       }
     };
-    checkConfig();
+    loadState();
   }, []);
 
   useEffect(() => {
-    const state = {
-      step, projectName, niche, address, phone, primaryColor, secondaryColor,
-      features, font, designStyle, slogan, siteObjective, tone, selectedPages,
-      ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
-      targetAudience, differentiators, pricePositioning, socialProof,
-      productNameCakto, productPrice
+    const saveState = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const state = {
+        step, projectName, niche, address, phone, primaryColor, secondaryColor,
+        features, font, designStyle, slogan, siteObjective, tone, selectedPages,
+        ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
+        targetAudience, differentiators, pricePositioning, socialProof,
+        productNameCakto, productPrice
+      };
+      localStorage.setItem(`sites-view-state-${user.id}`, JSON.stringify(state));
     };
-    localStorage.setItem("sites-view-state", JSON.stringify(state));
+    saveState();
   }, [
     step, projectName, niche, address, phone, primaryColor, secondaryColor,
     features, font, designStyle, slogan, siteObjective, tone, selectedPages,
