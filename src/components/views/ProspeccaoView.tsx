@@ -617,8 +617,8 @@ const ProspeccaoView = () => {
               </div>
             </div>
 
-            {/* TABELA DE RESULTADOS (Apenas em modo automático ou durante o loading do manual) */}
-            {(searchMode === "automatic" || (searchMode === "manual" && loading)) && (
+            {/* TABELA DE RESULTADOS (Apenas em modo automático ou durante o loading do manual/fallback) */}
+            {(searchMode === "automatic" || (searchMode === "manual" && (loading || manualRedirectUrl))) && (
               <div className="px-6 pb-8">
               <div
                 style={{
