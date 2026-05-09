@@ -416,26 +416,37 @@ const ProspeccaoView = () => {
             <div
               className="flex items-center justify-between px-6"
               style={{
-                height: 44,
+                height: 52,
                 background: "#0D0D12",
-                borderTop: "1px solid rgba(255,255,255,0.06)",
+                borderTop: "2px solid #2463EB",
                 borderBottom: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <activeNicho.Icon size={16} strokeWidth={1.5} color="#2463EB" />
-                <span className="text-[14px] font-bold" style={{ color: "#FFFFFF" }}>
+                <span className="text-[15px] font-bold" style={{ color: "#FFFFFF" }}>
                   {activeNicho.label}
                 </span>
+                <div 
+                  className="px-2 py-0.5 rounded-full border flex items-center justify-center ml-1"
+                  style={{
+                    background: "rgba(36,99,235,0.1)",
+                    borderColor: "rgba(36,99,235,0.2)",
+                  }}
+                >
+                  <span style={{ color: "#2463EB", fontSize: 11, fontWeight: 700 }}>
+                    Selecionado
+                  </span>
+                </div>
               </div>
               <button
                 type="button"
                 onClick={handleClearNicho}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/[0.05] transition-all group"
-                style={{ fontSize: 12, color: "#6B7280", border: "1px solid rgba(255,255,255,0.04)" }}
+                className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 hover:border-white/20 transition-all group"
+                style={{ fontSize: 12, color: "#6B7280", background: "transparent" }}
               >
-                <RotateCcw size={12} className="group-hover:rotate-[-45deg] transition-transform" />
-                Nova Pesquisa
+                <RotateCcw size={12} className="group-hover:text-white transition-colors" />
+                <span className="group-hover:text-white transition-colors">Limpar seleção</span>
               </button>
             </div>
 
