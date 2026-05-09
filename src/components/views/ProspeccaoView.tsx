@@ -307,15 +307,33 @@ const ProspeccaoView = () => {
 
       {/* HEADER */}
       <div
-        className="px-6 pt-6 pb-5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        className="px-6 pt-6 pb-5 flex items-start justify-between"
+        style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <h1 className="text-[22px] font-bold leading-tight" style={{ color: "#FFFFFF" }}>
-          Prospecção de Clientes
-        </h1>
-        <p className="text-[13px] mt-1" style={{ color: "#6B7280" }}>
-          Selecione um nicho para começar
-        </p>
+        <div>
+          <h1 className="text-[22px] font-bold leading-tight" style={{ color: "#FFFFFF" }}>
+            Prospecção de <span style={{ color: "#2463EB" }}>Clientes</span>
+          </h1>
+          <p className="text-[13px] mt-1" style={{ color: "#6B7280" }}>
+            Selecione um nicho para começar
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          {["50k+ Empresas", "22 Nichos", "27 Estados"].map((pill) => (
+            <div
+              key={pill}
+              className="px-2.5 py-1 rounded-full border flex items-center justify-center"
+              style={{
+                background: "rgba(36,99,235,0.1)",
+                borderColor: "rgba(36,99,235,0.2)",
+              }}
+            >
+              <span style={{ color: "#2463EB", fontSize: 11, fontWeight: 700, letterSpacing: "-0.01em" }}>
+                {pill}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* GRID DE NICHOS */}
