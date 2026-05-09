@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { Search, MessageCircle, MapPin, Loader2, Phone, RotateCcw, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { MessageCircle, MapPin, Loader2, ExternalLink, Download, RotateCcw } from "lucide-react";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
@@ -11,13 +10,6 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 type Categoria = "alimentacao" | "saude" | "beleza" | "servicos";
-
-const categoriaStyles: Record<Categoria, { label: string; style: React.CSSProperties }> = {
-  alimentacao: { label: "🍽️ Alimentação", style: { background: "rgba(16,185,129,0.15)", color: "#10B981" } },
-  saude:       { label: "🏥 Saúde",       style: { background: "rgba(16,185,129,0.15)", color: "#10B981" } },
-  beleza:      { label: "💇 Beleza",      style: { background: "rgba(36,99,235,0.15)", color: "#2F6EED" } },
-  servicos:    { label: "⚙️ Serviços",    style: { background: "rgba(36,99,235,0.15)", color: "#2F6EED" } },
-};
 
 const nichos: { label: string; emoji: string; leads: string; cat: Categoria }[] = [
   { label: "Barbearias",         emoji: "✂️",  leads: "2.4k", cat: "beleza" },
@@ -81,59 +73,6 @@ const openExternalLink = (url: string) => {
   if (w) w.opener = null;
 };
 
-// ━━━━━ Typewriter (apenas no nó dado) ━━━━━
-const Typewriter = ({ before, accent, after, speed = 38 }: { before: string; accent: string; after?: string; speed?: number }) => {
-  const full = before + accent + (after || "");
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    setI(0);
-    const id = setInterval(() => {
-      setI((prev) => {
-        if (prev >= full.length) { clearInterval(id); return prev; }
-        return prev + 1;
-      });
-    }, speed);
-    return () => clearInterval(id);
-  }, [full, speed]);
-
-  const shown = full.slice(0, i);
-  const beforeShown = shown.slice(0, Math.min(i, before.length));
-  const accentShown = shown.length > before.length
-    ? shown.slice(before.length, before.length + accent.length)
-    : "";
-  const afterShown = shown.length > before.length + accent.length
-    ? shown.slice(before.length + accent.length)
-    : "";
-
-  return (
-    <span>
-      {beforeShown}
-      <span style={{ color: "#2463EB" }}>{accentShown}</span>
-      {afterShown}
-      <span className="inline-block w-[2px] h-[0.85em] bg-white/80 ml-1 align-middle animate-pulse" />
-    </span>
-  );
-};
-
-// ━━━━━ Counter ━━━━━
-const Counter = ({ to, suffix = "", duration = 1400 }: { to: number; suffix?: string; duration?: number }) => {
-  const [n, setN] = useState(0);
-  const startRef = useRef<number | null>(null);
-  useEffect(() => {
-    let raf = 0;
-    const step = (t: number) => {
-      if (startRef.current === null) startRef.current = t;
-      const p = Math.min((t - startRef.current) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setN(Math.floor(eased * to));
-      if (p < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [to, duration]);
-  return <>{n.toLocaleString("pt-BR")}{suffix}</>;
-};
-
 const ProspeccaoView = () => {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
@@ -143,7 +82,6 @@ const ProspeccaoView = () => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
-  const [key, setKey] = useState(0);
 
   useEffect(() => {
     const load = async () => {
@@ -220,7 +158,6 @@ const ProspeccaoView = () => {
           };
         });
         setResults(mapped);
-        setKey(k => k + 1);
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
           await supabase.from("search_history").insert({
@@ -247,275 +184,49 @@ const ProspeccaoView = () => {
     try { return new URL(url).hostname.replace("www.", ""); } catch { return url; }
   };
 
+  const handleExportCSV = () => {
+    if (!results.length) return;
+    const header = ["Negócio", "Site", "Descrição", "Telefone", "URL"];
+    const rows = results.map(r => [
+      r.title, extractDomain(r.url), r.description.replace(/[\r\n,]/g, " "),
+      r.phone || "", r.url,
+    ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(","));
+    const csv = [header.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `leads-${activeFilter || "axionfly"}-${Date.now()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("CSV exportado!");
+  };
+
   const cidadeDisabled = !estado || estado === "todos";
 
+  const hasAnyState = searched || results.length > 0 || activeFilter || cidade || estado;
+
   return (
-    <div className="space-y-6" style={{ background: "transparent" }}>
-      {/* ━━━━━━━━ 1. HERO BANNER ━━━━━━━━ */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="relative overflow-hidden p-7 md:p-9"
-        style={{
-          background: "#0D0D12",
-          border: "1px solid rgba(255,255,255,0.06)",
-          borderRadius: 16,
-        }}
-      >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background: "radial-gradient(circle at 80% 20%, rgba(36,99,235,0.08) 0%, transparent 60%)",
-          }}
-        />
-        <div className="relative flex items-start justify-between gap-6 flex-wrap">
-          <div className="max-w-2xl">
-            <h1
-              className="font-bold tracking-tight leading-tight"
-              style={{ color: "#FFFFFF", fontSize: 32 }}
-            >
-              <Typewriter before="Encontre seus próximos " accent="clientes" after=" 🎯" />
-            </h1>
-            <p className="mt-3" style={{ color: "#6B7280", fontSize: 15 }}>
-              Busque empresas reais por nicho e região — pronto pra prospectar
-            </p>
-          </div>
-
-          {(searched || results.length > 0 || activeFilter || cidade || estado) && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={async () => {
-                if (!confirm("Limpar a pesquisa salva e reiniciar?")) return;
-                const { data: { user } } = await supabase.auth.getUser();
-                if (user) localStorage.removeItem(`prospeccao-view-state-${user.id}`);
-                setCidade(""); setEstado(""); setActiveFilter("");
-                setResults([]); setSearched(false);
-                toast.success("Pesquisa reiniciada!");
-              }}
-              className="gap-2 rounded-lg font-semibold"
-              style={{
-                background: "#05050A",
-                border: "1px solid rgba(255,255,255,0.08)",
-                color: "#FFFFFF",
-              }}
-            >
-              <RotateCcw className="w-4 h-4" />
-              Reiniciar
-            </Button>
-          )}
-        </div>
-
-        {/* Stat badges */}
-        <div className="relative mt-6 flex flex-wrap gap-3">
-          {[
-            { icon: "🏢", to: 50000, suffix: "+", label: "EMPRESAS" },
-            { icon: "🎯", to: 20,    suffix: "",  label: "NICHOS" },
-            { icon: "📍", to: 27,    suffix: "",  label: "ESTADOS" },
-          ].map((b, i) => (
-            <motion.div
-              key={b.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 + i * 0.1, ease: "easeOut" }}
-              className="flex items-center gap-3"
-              style={{
-                background: "#05050A",
-                border: "1px solid rgba(255,255,255,0.08)",
-                borderRadius: 12,
-                padding: "12px 20px",
-              }}
-            >
-              <span className="text-xl" style={{ color: "#2463EB" }}>{b.icon}</span>
-              <div className="flex flex-col leading-tight">
-                <span className="font-bold text-white text-base">
-                  <Counter to={b.to} suffix={b.suffix} />
-                </span>
-                <span
-                  className="uppercase font-semibold mt-0.5"
-                  style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.08em" }}
-                >
-                  {b.label}
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* ━━━━━━━━ 2. FILTROS ━━━━━━━━ */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
-        style={{
-          background: "#0D0D12",
-          border: "1px solid rgba(255,255,255,0.06)",
-          borderRadius: 16,
-          padding: 20,
-        }}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="space-y-2">
-            <label
-              className="uppercase font-semibold flex items-center gap-1.5"
-              style={{ color: "#6B7280", fontSize: 12, letterSpacing: "0.05em" }}
-            >
-              <span>📍</span> Estado
-            </label>
-            <Select value={estado} onValueChange={(v) => { setEstado(v); setCidade(""); }}>
-              <SelectTrigger
-                className="h-12 rounded-[10px] text-white focus:ring-0 focus:ring-offset-0"
-                style={{ background: "#05050A", border: "1px solid rgba(255,255,255,0.08)" }}
-                onFocus={(e) => (e.currentTarget.style.borderColor = "#2463EB")}
-                onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
-              >
-                <SelectValue placeholder="Todos os estados" />
-              </SelectTrigger>
-              <SelectContent
-                className="text-white max-h-72"
-                style={{ background: "#0D0D12", border: "1px solid rgba(255,255,255,0.08)" }}
-              >
-                <SelectItem value="todos">Todos os estados</SelectItem>
-                {estados.map(e => (
-                  <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <label
-              className="uppercase font-semibold flex items-center gap-1.5"
-              style={{
-                color: cidadeDisabled ? "#374151" : "#6B7280",
-                fontSize: 12, letterSpacing: "0.05em",
-              }}
-            >
-              <span style={{ opacity: cidadeDisabled ? 0.4 : 1 }}>🏙️</span> Cidade
-            </label>
-            <Select value={cidade} onValueChange={setCidade} disabled={cidadeDisabled || loadingCidades}>
-              <SelectTrigger
-                className="h-12 rounded-[10px] text-white focus:ring-0 focus:ring-offset-0 transition-opacity"
-                style={{
-                  background: "#05050A",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  opacity: cidadeDisabled ? 0.45 : 1,
-                }}
-                onFocus={(e) => { if (!cidadeDisabled) e.currentTarget.style.borderColor = "#2463EB"; }}
-                onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
-              >
-                <SelectValue placeholder={loadingCidades ? "Carregando cidades..." : cidadeDisabled ? "Selecione um estado primeiro" : "Selecione a cidade"} />
-              </SelectTrigger>
-              <SelectContent
-                className="text-white max-h-72"
-                style={{ background: "#0D0D12", border: "1px solid rgba(255,255,255,0.08)" }}
-              >
-                <SelectItem value="todas">Todas as cidades</SelectItem>
-                {cidades.map(c => (<SelectItem key={c} value={c}>{c}</SelectItem>))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ━━━━━━━━ 3. GRID DE NICHOS ━━━━━━━━ */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <label
-            className="uppercase font-bold"
-            style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.12em" }}
-          >
-            Selecione o nicho
-          </label>
-          {activeFilter && (
-            <span
-              className="font-bold flex items-center gap-1.5"
-              style={{ color: "#2463EB", fontSize: 12 }}
-            >
-              <Check className="w-3.5 h-3.5" /> {activeFilter}
-            </span>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {nichos.map((n, idx) => {
-            const isSelected = activeFilter === n.label;
-            const cat = categoriaStyles[n.cat];
-            return (
-              <motion.button
-                key={n.label}
-                type="button"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.035, duration: 0.28, ease: "easeOut" }}
-                onClick={() => setActiveFilter(n.label)}
-                className="nicho-card group relative text-left transition-all"
-                data-selected={isSelected}
-                style={{
-                  background: isSelected ? "rgba(36,99,235,0.08)" : "#0D0D12",
-                  border: isSelected
-                    ? "1.5px solid #2463EB"
-                    : "1px solid rgba(255,255,255,0.06)",
-                  borderRadius: 14,
-                  padding: 20,
-                  transition: "all 180ms ease",
-                }}
-              >
-                <AnimatePresence>
-                  {isSelected && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                      transition={{ duration: 0.15, ease: "easeOut" }}
-                      className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full flex items-center justify-center"
-                      style={{ background: "rgba(36,99,235,0.15)", border: "1px solid rgba(36,99,235,0.4)" }}
-                    >
-                      <Check className="w-3 h-3" strokeWidth={3} style={{ color: "#2463EB" }} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <div className="flex items-start justify-between gap-2">
-                  <span style={{ fontSize: 32, lineHeight: 1 }}>{n.emoji}</span>
-                  {!isSelected && (
-                    <span
-                      className="font-semibold rounded-full"
-                      style={{ ...cat.style, fontSize: 11, padding: "2px 8px", lineHeight: "16px" }}
-                    >
-                      {cat.label}
-                    </span>
-                  )}
-                </div>
-
-                <div
-                  className="mt-3 font-bold text-white leading-tight"
-                  style={{ fontSize: 16 }}
-                >
-                  {n.label}
-                </div>
-
-                <div className="mt-3 mb-3" style={{ height: 1, background: "rgba(255,255,255,0.05)" }} />
-
-                <div className="flex items-center justify-between" style={{ fontSize: 13 }}>
-                  <span style={{ color: "#6B7280" }}>{n.leads} empresas</span>
-                  <span className="font-semibold" style={{ color: "#2463EB" }}>Ver leads →</span>
-                </div>
-              </motion.button>
-            );
-          })}
-        </div>
-      </div>
-
+    <div
+      className="prospeccao-root -m-4 md:-m-8 flex flex-col"
+      style={{
+        height: "calc(100vh - 64px)",
+        background: "#05050A",
+        color: "#FFFFFF",
+      }}
+    >
       <style>{`
-        .nicho-card[data-selected="false"]:hover {
+        .pp-scroll::-webkit-scrollbar { width: 8px; }
+        .pp-scroll::-webkit-scrollbar-track { background: transparent; }
+        .pp-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 8px; }
+        .pp-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
+
+        .nicho-mini[data-selected="false"]:hover {
           background: #111118 !important;
           border-color: rgba(36,99,235,0.4) !important;
-          box-shadow: 0 0 0 1px rgba(36,99,235,0.2);
         }
+        .row-result:hover { background: #0D0D12 !important; }
+
         @keyframes shimmer-sweep {
           from { transform: translateX(-100%); }
           to   { transform: translateX(100%); }
@@ -523,152 +234,437 @@ const ProspeccaoView = () => {
         .btn-search:not(:disabled):hover .shimmer-sweep {
           animation: shimmer-sweep 0.6s ease-out forwards;
         }
-        @keyframes ring-pulse {
-          0%   { transform: scale(0.4); opacity: 0.6; }
-          100% { transform: scale(1.6); opacity: 0; }
+        @keyframes ring-pulse-soft {
+          0%   { transform: scale(0.5); opacity: 0.6; }
+          100% { transform: scale(1.5); opacity: 0; }
         }
-        @keyframes ghost-shimmer-anim {
+        @keyframes skel-shimmer {
           0%   { background-position: -400px 0; }
           100% { background-position: 400px 0; }
         }
-        .ghost-shimmer {
-          background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 100%);
+        .skel {
+          background: linear-gradient(90deg, #111118 0%, #1a1a24 50%, #111118 100%);
           background-size: 800px 100%;
-          animation: ghost-shimmer-anim 1.8s linear infinite;
+          animation: skel-shimmer 1.6s linear infinite;
+          border-radius: 6px;
         }
       `}</style>
 
-      {/* ━━━━━━━━ 4. BOTÃO ━━━━━━━━ */}
-      <motion.button
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
-        onClick={handleSearch}
-        disabled={loading || !activeFilter}
-        className={cn(
-          "btn-search relative w-full overflow-hidden flex items-center justify-center gap-2 font-bold transition-all",
-          (!activeFilter || loading) && "cursor-not-allowed"
-        )}
+      {/* ━━━━ HEADER COMPACTO ━━━━ */}
+      <div
+        className="flex items-center justify-between px-5 shrink-0"
         style={{
-          height: 52,
-          borderRadius: 12,
-          fontSize: 15,
-          background: !activeFilter ? "#1F2937" : "#2463EB",
-          color: !activeFilter ? "#6B7280" : "#FFFFFF",
-          boxShadow: activeFilter && !loading ? "0 4px 20px rgba(36,99,235,0.25)" : "none",
-        }}
-        onMouseEnter={(e) => {
-          if (!activeFilter || loading) return;
-          e.currentTarget.style.background = "#2F6EED";
-          e.currentTarget.style.boxShadow = "0 4px 20px rgba(36,99,235,0.35)";
-        }}
-        onMouseLeave={(e) => {
-          if (!activeFilter || loading) return;
-          e.currentTarget.style.background = "#2463EB";
-          e.currentTarget.style.boxShadow = "0 4px 20px rgba(36,99,235,0.25)";
+          height: 56,
+          background: "#05050A",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        {activeFilter && !loading && (
-          <span
-            aria-hidden
-            className="shimmer-sweep pointer-events-none absolute inset-0 -translate-x-full"
-            style={{
-              background: "linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%)",
-            }}
-          />
-        )}
-        {loading ? (
-          <>
-            <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Buscando leads...</span>
-          </>
-        ) : (
-          <>
-            <span>⚡</span>
-            <span>Buscar Leads Agora</span>
-          </>
-        )}
-      </motion.button>
+        <div className="flex items-center gap-3">
+          <h1 className="text-white font-bold text-[15px] tracking-tight">Busca de Leads</h1>
+          <div className="hidden md:flex items-center gap-1.5">
+            {["50k+ Empresas", "20 Nichos", "27 Estados"].map((b) => (
+              <span
+                key={b}
+                style={{
+                  background: "#0D0D12",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 8,
+                  padding: "4px 10px",
+                  color: "#6B7280",
+                  fontSize: 12,
+                }}
+              >
+                {b}
+              </span>
+            ))}
+          </div>
+        </div>
 
-      {/* ━━━━━━━━ 5. RESULTADOS / VAZIO ━━━━━━━━ */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
-      >
-        {results.length > 0 ? (
-          <div
-            className="overflow-hidden"
+        {hasAnyState && (
+          <button
+            onClick={async () => {
+              if (!confirm("Limpar a pesquisa salva e reiniciar?")) return;
+              const { data: { user } } = await supabase.auth.getUser();
+              if (user) localStorage.removeItem(`prospeccao-view-state-${user.id}`);
+              setCidade(""); setEstado(""); setActiveFilter("");
+              setResults([]); setSearched(false);
+              toast.success("Pesquisa reiniciada!");
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors"
             style={{
               background: "#0D0D12",
               border: "1px solid rgba(255,255,255,0.06)",
-              borderRadius: 16,
+              color: "#6B7280",
+              fontSize: 12,
             }}
           >
-            <div className="overflow-x-auto">
+            <RotateCcw className="w-3.5 h-3.5" />
+            Reiniciar
+          </button>
+        )}
+      </div>
+
+      {/* ━━━━ DOIS PAINÉIS ━━━━ */}
+      <div className="flex flex-1 min-h-0">
+        {/* PAINEL ESQUERDO */}
+        <aside
+          className="flex flex-col shrink-0"
+          style={{
+            width: 380,
+            background: "#0D0D12",
+            borderRight: "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
+          <div className="pp-scroll flex-1 overflow-y-auto">
+            {/* Filtros */}
+            <div className="p-4 space-y-3">
+              <div className="space-y-1.5">
+                <label
+                  className="uppercase font-bold flex items-center gap-1.5"
+                  style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}
+                >
+                  <span>📍</span> Estado
+                </label>
+                <Select value={estado} onValueChange={(v) => { setEstado(v); setCidade(""); }}>
+                  <SelectTrigger
+                    className="rounded-lg text-white text-sm focus:ring-0 focus:ring-offset-0"
+                    style={{
+                      height: 38,
+                      background: "#05050A",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = "#2463EB")}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                  >
+                    <SelectValue placeholder="Todos os estados" />
+                  </SelectTrigger>
+                  <SelectContent
+                    className="text-white max-h-72"
+                    style={{ background: "#0D0D12", border: "1px solid rgba(255,255,255,0.08)" }}
+                  >
+                    <SelectItem value="todos">Todos os estados</SelectItem>
+                    {estados.map(e => (
+                      <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label
+                  className="uppercase font-bold flex items-center gap-1.5"
+                  style={{
+                    color: cidadeDisabled ? "#374151" : "#6B7280",
+                    fontSize: 11, letterSpacing: "0.1em",
+                  }}
+                >
+                  <span style={{ opacity: cidadeDisabled ? 0.4 : 1 }}>🏙️</span> Cidade
+                </label>
+                <Select value={cidade} onValueChange={setCidade} disabled={cidadeDisabled || loadingCidades}>
+                  <SelectTrigger
+                    className="rounded-lg text-white text-sm focus:ring-0 focus:ring-offset-0"
+                    style={{
+                      height: 38,
+                      background: "#05050A",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      opacity: cidadeDisabled ? 0.45 : 1,
+                    }}
+                    onFocus={(e) => { if (!cidadeDisabled) e.currentTarget.style.borderColor = "#2463EB"; }}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                  >
+                    <SelectValue
+                      placeholder={
+                        loadingCidades ? "Carregando..." :
+                        cidadeDisabled ? "Selecione um estado" : "Selecione a cidade"
+                      }
+                    />
+                  </SelectTrigger>
+                  <SelectContent
+                    className="text-white max-h-72"
+                    style={{ background: "#0D0D12", border: "1px solid rgba(255,255,255,0.08)" }}
+                  >
+                    <SelectItem value="todas">Todas as cidades</SelectItem>
+                    {cidades.map(c => (<SelectItem key={c} value={c}>{c}</SelectItem>))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div style={{ height: 1, background: "rgba(255,255,255,0.06)" }} />
+
+            {/* Nichos */}
+            <div className="px-4 py-3 space-y-3">
+              <label
+                className="block uppercase font-bold"
+                style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.12em" }}
+              >
+                Selecione o nicho
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {nichos.map((n, idx) => {
+                  const isSelected = activeFilter === n.label;
+                  return (
+                    <motion.button
+                      key={n.label}
+                      type="button"
+                      title={n.label}
+                      data-selected={isSelected}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.025, duration: 0.2, ease: "easeOut" }}
+                      onClick={() => setActiveFilter(n.label)}
+                      className="nicho-mini relative flex items-center gap-2.5 text-left transition-all"
+                      style={{
+                        height: 56,
+                        padding: "10px 12px",
+                        borderRadius: 10,
+                        background: isSelected ? "rgba(36,99,235,0.08)" : "#05050A",
+                        border: isSelected
+                          ? "1.5px solid #2463EB"
+                          : "1px solid rgba(255,255,255,0.06)",
+                        transition: "all 180ms ease",
+                      }}
+                    >
+                      {isSelected && (
+                        <span
+                          className="absolute"
+                          style={{
+                            top: 6, right: 6, width: 6, height: 6,
+                            borderRadius: "50%", background: "#2463EB",
+                          }}
+                        />
+                      )}
+                      <span style={{ fontSize: 18, lineHeight: 1 }}>{n.emoji}</span>
+                      <div className="flex flex-col min-w-0 leading-tight">
+                        <span
+                          className="font-bold text-white truncate"
+                          style={{ fontSize: 13 }}
+                        >
+                          {n.label}
+                        </span>
+                        <span style={{ color: "#6B7280", fontSize: 10, marginTop: 2 }}>
+                          {n.leads}
+                        </span>
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Sticky bottom button */}
+          <div
+            className="shrink-0"
+            style={{
+              padding: "12px 16px",
+              background: "#0D0D12",
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+            }}
+          >
+            <button
+              onClick={handleSearch}
+              disabled={loading || !activeFilter}
+              className={cn(
+                "btn-search relative w-full overflow-hidden flex items-center justify-center gap-2 font-bold transition-all",
+                (!activeFilter || loading) && "cursor-not-allowed"
+              )}
+              style={{
+                height: 44,
+                borderRadius: 10,
+                fontSize: 14,
+                background: !activeFilter ? "#1a1a24" : "#2463EB",
+                color: !activeFilter ? "#374151" : "#FFFFFF",
+                boxShadow: activeFilter && !loading ? "0 4px 16px rgba(36,99,235,0.25)" : "none",
+              }}
+              onMouseEnter={(e) => {
+                if (!activeFilter || loading) return;
+                e.currentTarget.style.background = "#2F6EED";
+                e.currentTarget.style.boxShadow = "0 4px 16px rgba(36,99,235,0.35)";
+              }}
+              onMouseLeave={(e) => {
+                if (!activeFilter || loading) return;
+                e.currentTarget.style.background = "#2463EB";
+                e.currentTarget.style.boxShadow = "0 4px 16px rgba(36,99,235,0.25)";
+              }}
+            >
+              {activeFilter && !loading && (
+                <span
+                  aria-hidden
+                  className="shimmer-sweep pointer-events-none absolute inset-0 -translate-x-full"
+                  style={{
+                    background: "linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.22) 50%, transparent 70%)",
+                  }}
+                />
+              )}
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Buscando...</span>
+                </>
+              ) : (
+                <>
+                  <span>⚡</span>
+                  <span>Buscar Leads Agora</span>
+                </>
+              )}
+            </button>
+          </div>
+        </aside>
+
+        {/* PAINEL DIREITO */}
+        <main
+          className="flex-1 flex flex-col min-w-0"
+          style={{ background: "#05050A" }}
+        >
+          {/* Header de resultados */}
+          <AnimatePresence initial={false}>
+            {(results.length > 0 || loading) && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="flex items-center justify-between gap-3 shrink-0"
+                style={{
+                  padding: "12px 20px",
+                  background: "#0D0D12",
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                }}
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="text-white font-bold text-sm">
+                    {loading ? "Buscando leads..." : `${results.length} leads encontrados`}
+                  </span>
+                  {activeFilter && (
+                    <span
+                      className="font-semibold rounded-full"
+                      style={{
+                        background: "rgba(36,99,235,0.15)",
+                        color: "#2F6EED",
+                        fontSize: 11,
+                        padding: "2px 10px",
+                      }}
+                    >
+                      {activeFilter}
+                    </span>
+                  )}
+                </div>
+                <button
+                  onClick={handleExportCSV}
+                  disabled={!results.length || loading}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40"
+                  style={{
+                    background: "#05050A",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    color: "#FFFFFF",
+                    fontSize: 12,
+                  }}
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  Exportar CSV
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="pp-scroll flex-1 overflow-y-auto">
+            {loading ? (
+              /* Loading skeleton */
+              <div>
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3"
+                    style={{
+                      padding: "14px 20px",
+                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    <div className="skel w-8 h-8 rounded-lg" />
+                    <div className="flex-1 space-y-2">
+                      <div className="skel h-3 w-1/3" />
+                      <div className="skel h-2.5 w-2/3" />
+                    </div>
+                    <div className="skel h-6 w-24" />
+                    <div className="skel h-6 w-16" />
+                  </div>
+                ))}
+              </div>
+            ) : results.length > 0 ? (
+              /* Tabela */
               <table className="w-full">
-                <thead>
-                  <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                    <th className="text-left px-6 py-4 uppercase font-bold" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Negócio</th>
-                    <th className="text-left px-6 py-4 uppercase font-bold hidden lg:table-cell" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Descrição</th>
-                    <th className="text-left px-6 py-4 uppercase font-bold" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Telefone</th>
-                    <th className="text-right px-6 py-4 uppercase font-bold" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Ações</th>
+                <thead className="sticky top-0" style={{ background: "#05050A" }}>
+                  <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                    {["Negócio", "Descrição", "Telefone", "Ações"].map((h, i) => (
+                      <th
+                        key={h}
+                        className={cn(
+                          "uppercase font-bold",
+                          i === 1 && "hidden lg:table-cell",
+                          i === 3 && "text-right"
+                        )}
+                        style={{
+                          textAlign: i === 3 ? "right" : "left",
+                          padding: "12px 20px",
+                          color: "#6B7280",
+                          fontSize: 11,
+                          letterSpacing: "0.1em",
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
-                <tbody key={key}>
+                <tbody>
                   {results.map((r, i) => (
                     <motion.tr
                       key={r.url + i}
-                      initial={{ opacity: 0, x: -12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.04, duration: 0.3, ease: "easeOut" }}
-                      className="group transition-colors"
-                      style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "#111118")}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.02, duration: 0.2, ease: "easeOut" }}
+                      className="row-result"
+                      style={{
+                        borderBottom: "1px solid rgba(255,255,255,0.04)",
+                        transition: "background 180ms ease",
+                      }}
                     >
-                      <td className="px-6 py-5">
-                        <div className="flex items-start gap-3">
-                          <div
-                            className="p-2 rounded-lg shrink-0"
-                            style={{ background: "rgba(36,99,235,0.1)", color: "#2F6EED" }}
-                          >
-                            <MapPin className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <span className="font-bold text-white block text-base">{r.title}</span>
-                            <span className="text-xs mt-0.5 block" style={{ color: "#374151" }}>{extractDomain(r.url)}</span>
+                      <td style={{ padding: "14px 20px" }}>
+                        <div className="flex items-start gap-2.5">
+                          <MapPin className="w-3.5 h-3.5 mt-1 shrink-0" style={{ color: "#2463EB" }} />
+                          <div className="min-w-0">
+                            <div className="font-bold text-white truncate" style={{ fontSize: 14 }}>{r.title}</div>
+                            <div className="truncate" style={{ color: "#6B7280", fontSize: 12 }}>{extractDomain(r.url)}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-5 text-sm hidden lg:table-cell max-w-xs truncate font-medium" style={{ color: "#6B7280" }}>
+                      <td
+                        className="hidden lg:table-cell max-w-xs truncate"
+                        style={{ padding: "14px 20px", color: "#6B7280", fontSize: 13 }}
+                      >
                         {r.description || "—"}
                       </td>
-                      <td className="px-6 py-5">
+                      <td style={{ padding: "14px 20px" }}>
                         {r.phone ? (
-                          <span
-                            className="inline-flex items-center gap-2 text-sm font-bold text-white px-3 py-1.5 rounded-lg"
-                            style={{ background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.3)" }}
-                          >
-                            <Phone className="w-3.5 h-3.5" style={{ color: "#10B981" }} />
-                            {r.phone}
-                          </span>
+                          <span className="text-white" style={{ fontSize: 13 }}>{r.phone}</span>
                         ) : (
-                          <span className="text-xs font-medium" style={{ color: "#374151" }}>—</span>
+                          <span style={{ color: "#374151", fontSize: 13 }}>—</span>
                         )}
                       </td>
-                      <td className="px-6 py-5 text-right">
+                      <td style={{ padding: "14px 20px", textAlign: "right" }}>
                         <div className="flex gap-2 justify-end">
-                          <Button
-                            size="sm" variant="outline"
+                          <button
                             onClick={() => openExternalLink(`https://www.google.com/maps/search/${encodeURIComponent(r.title)}`)}
-                            className="gap-2 font-semibold text-white"
-                            style={{ background: "#05050A", border: "1px solid rgba(255,255,255,0.08)" }}
+                            className="p-1.5 rounded-md transition-colors"
+                            style={{ color: "#2463EB" }}
+                            title="Ver no Google Maps"
+                            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(36,99,235,0.1)")}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                           >
-                            <MapPin className="w-3.5 h-3.5" /> Maps
-                          </Button>
-                          <Button
-                            size="sm"
+                            <ExternalLink className="w-4 h-4" />
+                          </button>
+                          <button
                             onClick={async () => {
                               const phoneNum = r.phone ? r.phone.replace(/\D/g, "") : "";
                               const fullNum = phoneNum.startsWith("55") ? phoneNum : `55${phoneNum}`;
@@ -682,101 +678,58 @@ const ProspeccaoView = () => {
                               }
                               openExternalLink(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`);
                             }}
-                            className="gap-2 font-bold text-white border-0"
-                            style={{ background: "#2463EB" }}
+                            className="p-1.5 rounded-md transition-colors"
+                            style={{ color: "#10B981" }}
+                            title="WhatsApp"
+                            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(16,185,129,0.1)")}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                           >
-                            <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
-                          </Button>
+                            <MessageCircle className="w-4 h-4" />
+                          </button>
                         </div>
                       </td>
                     </motion.tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
-        ) : searched && !loading ? (
-          <div
-            className="flex flex-col items-center justify-center py-20 gap-4"
-            style={{
-              background: "#0D0D12",
-              border: "1px solid rgba(255,255,255,0.06)",
-              borderRadius: 16,
-            }}
-          >
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(255,255,255,0.03)" }}
-            >
-              <Search className="w-10 h-10" style={{ color: "#374151" }} />
-            </div>
-            <div className="text-center space-y-1">
-              <p className="text-base font-bold text-white">Nenhum lead encontrado</p>
-              <p className="text-sm" style={{ color: "#6B7280" }}>Tente mudar o nicho ou buscar em outra cidade/estado.</p>
-            </div>
-          </div>
-        ) : (
-          /* ESTADO VAZIO */
-          <div className="space-y-4">
-            <div
-              className="relative overflow-hidden flex flex-col items-center justify-center py-16 px-6"
-              style={{
-                background: "#0D0D12",
-                border: "1px solid rgba(255,255,255,0.06)",
-                borderRadius: 16,
-              }}
-            >
-              <div className="relative w-40 h-40 flex items-center justify-center">
-                {[0, 1, 2].map((i) => (
-                  <span
-                    key={i}
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      border: "2px solid #2463EB",
-                      animation: "ring-pulse 2.4s cubic-bezier(0.4,0,0.6,1) infinite",
-                      animationDelay: `${i * 0.8}s`,
-                      opacity: 0,
-                    }}
-                  />
-                ))}
-                <div style={{ fontSize: 80, lineHeight: 1, filter: "drop-shadow(0 0 24px rgba(36,99,235,0.45))" }}>
-                  🎯
-                </div>
-              </div>
-              <div className="mt-6 text-center space-y-2 max-w-md">
-                <p className="font-bold text-white" style={{ fontSize: 17 }}>
-                  Selecione um nicho e a região acima
-                </p>
-                <p style={{ color: "#6B7280", fontSize: 14 }}>
-                  Você verá empresas reais prontas para receber sua proposta
+            ) : searched ? (
+              /* Sem resultados */
+              <div className="h-full flex flex-col items-center justify-center text-center px-6 py-16">
+                <div style={{ fontSize: 40 }}>🔍</div>
+                <p className="text-white font-bold mt-3" style={{ fontSize: 15 }}>Nenhum lead encontrado</p>
+                <p style={{ color: "#6B7280", fontSize: 13, marginTop: 4 }}>
+                  Tente mudar o nicho ou buscar em outra cidade/estado.
                 </p>
               </div>
-            </div>
-
-            {/* Skeleton ghost cards */}
-            <div className="space-y-3">
-              {[0, 1].map((i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-4 p-5"
-                  style={{
-                    background: "#0D0D12",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                    borderRadius: 14,
-                  }}
-                >
-                  <div className="w-12 h-12 rounded-xl ghost-shimmer shrink-0" />
-                  <div className="flex-1 space-y-2.5">
-                    <div className="h-3.5 rounded ghost-shimmer w-1/3" />
-                    <div className="h-2.5 rounded ghost-shimmer w-2/3" />
-                  </div>
-                  <div className="w-24 h-9 rounded-lg ghost-shimmer" />
+            ) : (
+              /* Estado vazio inicial */
+              <div className="h-full flex flex-col items-center justify-center text-center px-6">
+                <div className="relative w-32 h-32 flex items-center justify-center">
+                  {[0, 1].map((i) => (
+                    <span
+                      key={i}
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        border: "2px solid #2463EB",
+                        opacity: i === 0 ? 0.08 : 0.04,
+                        animation: "ring-pulse-soft 2.6s cubic-bezier(0.4,0,0.6,1) infinite",
+                        animationDelay: `${i * 0.9}s`,
+                      }}
+                    />
+                  ))}
+                  <div style={{ fontSize: 40, lineHeight: 1 }}>🎯</div>
                 </div>
-              ))}
-            </div>
+                <p className="text-white font-bold mt-2" style={{ fontSize: 15 }}>
+                  Selecione um nicho e região
+                </p>
+                <p style={{ color: "#6B7280", fontSize: 13, marginTop: 4 }}>
+                  Os leads aparecerão aqui
+                </p>
+              </div>
+            )}
           </div>
-        )}
-      </motion.div>
+        </main>
+      </div>
     </div>
   );
 };
