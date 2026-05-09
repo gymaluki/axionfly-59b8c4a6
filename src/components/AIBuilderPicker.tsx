@@ -93,11 +93,9 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
       }
     }
 
-    // Fallback: tenta abrir agora (pode ser bloqueado, então oferece botão manual)
-    const win = window.open(url, "_blank", "noopener,noreferrer");
-    if (win) {
-      setGenerating(null);
-      onClose();
+    window.location.href = url;
+    setGenerating(null);
+    onClose();
     } else {
       // Popup bloqueado — mostra botão "Abrir Lovable" pro usuário clicar
       setNeedsManualOpen(true);
