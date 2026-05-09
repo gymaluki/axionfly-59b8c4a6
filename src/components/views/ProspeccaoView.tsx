@@ -609,13 +609,13 @@ const ProspeccaoView = () => {
                         <tr
                           style={{
                             borderBottom: "1px solid rgba(255,255,255,0.06)",
-                            background: "#0D0D12",
+                            background: "#05050A",
                           }}
                         >
-                          <th className="text-left font-medium px-5 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Negócio</th>
-                          <th className="text-left font-medium px-3 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Descrição</th>
-                          <th className="text-left font-medium px-3 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Telefone</th>
-                          <th className="text-right font-medium px-5 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Ações</th>
+                          <th className="text-left font-medium px-6 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Negócio</th>
+                          <th className="text-left font-medium px-4 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Descrição</th>
+                          <th className="text-left font-medium px-4 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Telefone</th>
+                          <th className="text-right font-medium px-6 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Ações</th>
                         </tr>
                       </thead>
                       <tbody>
