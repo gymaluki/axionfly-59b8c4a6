@@ -746,7 +746,9 @@ const ProspeccaoView = () => {
                                       const text = encodeURIComponent(`Olá, sou da AxionFly. Vi que o seu negócio "${r.title}" tem um grande potencial, mas ainda não está aproveitando todo o poder do digital para fechar mais contratos.
 
 Gostaria de apresentar como podemos automatizar sua prospecção e escalar seu faturamento de forma profissional. Podemos conversar hoje?`);
-                                      openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}?text=${text}`);
+                                      const cleanPhone = r.phone!.replace(/\D/g, "");
+                                      const waNumber = cleanPhone.length === 11 ? cleanPhone : (cleanPhone.length === 10 ? `11${cleanPhone}` : cleanPhone);
+                                      openExternalLink(`https://wa.me/55${waNumber}?text=${text}`);
                                     }}
                                     title="Fechar Contrato no WhatsApp"
                                     className="flex items-center justify-center bg-[#22c55e]/10 hover:bg-[#22c55e]/20 transition-all group"
