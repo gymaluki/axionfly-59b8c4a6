@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {
-  Loader2, ExternalLink, Download, X, MessageCircle, MapPin,
+  Loader2, ExternalLink, Download, MessageCircle, MapPin, Search,
   Scissors, Pizza, Sandwich, Sparkles, Stethoscope, Building2,
   Dumbbell, PawPrint, UtensilsCrossed, Wrench, Smile, Wand2,
   Home, Scale, Calculator, BookOpen, ShoppingBag, Pill, Glasses,
@@ -232,64 +232,108 @@ const ProspeccaoView = () => {
       style={{ background: "#05050A", color: "#FFFFFF" }}
     >
       <style>{`
-        .pp-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+        .pp-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .pp-scroll::-webkit-scrollbar-track { background: transparent; }
-        .pp-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 8px; }
+        .pp-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 10px; }
         .pp-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
 
         .nicho-card { transition: all 160ms ease; }
         .nicho-card:hover:not([data-selected="true"]) {
           background: #111118 !important;
-          border-color: rgba(36,99,235,0.35) !important;
+          border-color: rgba(36,99,235,0.3) !important;
+          box-shadow: 0 0 0 1px rgba(36,99,235,0.1);
         }
         .nicho-card:hover:not([data-selected="true"]) .nicho-icon { color: #2463EB !important; }
+        .nicho-card:hover:not([data-selected="true"]) span { color: #FFFFFF !important; }
 
-        .row-result { transition: background 160ms ease; }
-        .row-result:hover { background: #111118 !important; }
+        @keyframes pulse-blue {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.4); opacity: 0.4; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        .pulse-dot {
+          animation: pulse-blue 2s infinite;
+        }
 
-        .btn-primary { transition: all 180ms ease; }
-        .btn-primary:not(:disabled):hover {
+        .row-result { transition: all 120ms ease-out; }
+        .row-result:hover { background: #0D0D12 !important; }
+
+        .btn-buscar { transition: all 160ms ease; position: relative; overflow: hidden; }
+        .btn-buscar:not(:disabled):hover {
           background: #2F6EED !important;
-          box-shadow: 0 0 20px rgba(36,99,235,0.25);
+          box-shadow: 0 4px 20px rgba(36,99,235,0.35);
+        }
+        .btn-buscar:not(:disabled):active { transform: scale(0.97); background: #1D4ED8 !important; }
+        
+        .btn-buscar::after {
+          content: "";
+          position: absolute;
+          top: 0; left: -100%;
+          width: 50%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+          transition: none;
+        }
+        .btn-buscar:hover::after {
+          left: 100%;
+          transition: left 500ms linear;
         }
 
         .pp-select-trigger {
           background: #0D0D12 !important;
           border: 1px solid rgba(255,255,255,0.08) !important;
           color: #FFFFFF !important;
-          height: 40px !important;
+          height: 42px !important;
           border-radius: 8px !important;
           font-size: 14px !important;
+          transition: all 160ms ease !important;
         }
         .pp-select-trigger:focus, .pp-select-trigger[data-state="open"] {
           border-color: #2463EB !important;
           outline: none !important;
-          box-shadow: none !important;
+          box-shadow: 0 0 0 3px rgba(36,99,235,0.12) !important;
         }
 
         @keyframes skel-shimmer {
-          0% { background-position: -400px 0; }
-          100% { background-position: 400px 0; }
+          0% { background-position: -400% 0; }
+          100% { background-position: 400% 0; }
         }
         .skel {
-          background: linear-gradient(90deg, #0D0D12 0%, #16161e 50%, #0D0D12 100%);
-          background-size: 800px 100%;
-          animation: skel-shimmer 1.6s linear infinite;
-          border-radius: 6px;
+          background: linear-gradient(90deg, #0D0D12 0%, #111118 50%, #0D0D12 100%);
+          background-size: 400% 100%;
+          animation: skel-shimmer 1.4s ease infinite;
+          border-radius: 4px;
         }
       `}</style>
 
       {/* HEADER */}
       <div
-        className="px-6 pt-6 pb-5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        className="px-6 pt-6 pb-5 flex items-start justify-between"
+        style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
       >
-        <h1 className="text-[22px] font-bold leading-tight" style={{ color: "#FFFFFF" }}>
-          Prospecção de Clientes
-        </h1>
-        <p className="text-[13px] mt-1" style={{ color: "#6B7280" }}>
-          Selecione um nicho para começar
-        </p>
+        <div>
+          <h1 className="text-[22px] font-bold leading-tight" style={{ color: "#FFFFFF" }}>
+            Prospecção de <span style={{ color: "#2463EB" }}>Clientes</span>
+          </h1>
+          <p className="text-[13px] mt-1" style={{ color: "#6B7280" }}>
+            Selecione um nicho para começar
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          {["50k+ Empresas", "22 Nichos", "27 Estados"].map((pill) => (
+            <div
+              key={pill}
+              className="px-2.5 py-1 rounded-full border flex items-center justify-center"
+              style={{
+                background: "rgba(36,99,235,0.1)",
+                borderColor: "rgba(36,99,235,0.2)",
+              }}
+            >
+              <span style={{ color: "#2463EB", fontSize: 11, fontWeight: 700, letterSpacing: "-0.01em" }}>
+                {pill}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* GRID DE NICHOS */}
@@ -307,39 +351,50 @@ const ProspeccaoView = () => {
                 type="button"
                 onClick={() => handleSelectNicho(n.label)}
                 data-selected={selected}
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut", delay: idx * 0.02 }}
+                transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.018 }}
                 className="nicho-card relative flex items-center text-left"
                 style={{
-                  height: 48,
-                  padding: "0 16px",
+                  height: 52,
+                  padding: "0 14px",
                   gap: 10,
                   borderRadius: 10,
-                  background: selected ? "rgba(36,99,235,0.08)" : "#0D0D12",
+                  background: selected 
+                    ? "linear-gradient(135deg, #0F1629 0%, #0a1220 100%)" 
+                    : "#0D0D12",
                   border: selected
                     ? "1px solid #2463EB"
-                    : "1px solid rgba(255,255,255,0.06)",
-                  borderLeft: selected ? "3px solid #2463EB" : "1px solid rgba(255,255,255,0.06)",
-                  paddingLeft: selected ? 14 : 16,
+                    : "1px solid rgba(255,255,255,0.07)",
+                  boxShadow: selected 
+                    ? "0 0 0 1px rgba(36,99,235,0.2), 0 4px 24px rgba(36,99,235,0.15)" 
+                    : "none",
+                  borderLeft: selected ? "3px solid #2463EB" : "1px solid rgba(255,255,255,0.07)",
+                  paddingLeft: selected ? 12 : 14,
                 }}
               >
                 <Icon
                   className="nicho-icon shrink-0"
-                  size={16}
+                  size={15}
                   strokeWidth={1.5}
-                  color={selected ? "#2463EB" : "#6B7280"}
+                  color={selected ? "#2463EB" : "#374151"}
                 />
                 <span
                   className="truncate"
                   style={{
                     fontSize: 13,
                     fontWeight: selected ? 700 : 500,
-                    color: "#FFFFFF",
+                    color: selected ? "#FFFFFF" : "#9CA3AF",
                   }}
                 >
                   {n.label}
                 </span>
+                {selected && (
+                  <div 
+                    className="pulse-dot absolute top-2 right-2 w-[5px] h-[5px] rounded-full"
+                    style={{ background: "#2463EB" }}
+                  />
+                )}
               </motion.button>
             );
           })}
@@ -354,43 +409,54 @@ const ProspeccaoView = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
             style={{ overflow: "hidden" }}
           >
             {/* BARRA DE CONTEXTO */}
             <div
               className="flex items-center justify-between px-6"
               style={{
-                height: 44,
+                height: 52,
                 background: "#0D0D12",
-                borderTop: "1px solid rgba(255,255,255,0.06)",
+                borderTop: "2px solid #2463EB",
                 borderBottom: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-3">
                 <activeNicho.Icon size={16} strokeWidth={1.5} color="#2463EB" />
-                <span className="text-[14px] font-bold" style={{ color: "#FFFFFF" }}>
+                <span className="text-[15px] font-bold" style={{ color: "#FFFFFF" }}>
                   {activeNicho.label}
                 </span>
+                <div 
+                  className="px-2 py-0.5 rounded-full border flex items-center justify-center ml-1"
+                  style={{
+                    background: "rgba(36,99,235,0.1)",
+                    borderColor: "rgba(36,99,235,0.2)",
+                  }}
+                >
+                  <span style={{ color: "#2463EB", fontSize: 11, fontWeight: 700 }}>
+                    Selecionado
+                  </span>
+                </div>
               </div>
               <button
                 type="button"
                 onClick={handleClearNicho}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/[0.05] transition-all group"
-                style={{ fontSize: 12, color: "#6B7280", border: "1px solid rgba(255,255,255,0.04)" }}
+                className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 hover:border-white/20 transition-all group"
+                style={{ fontSize: 12, color: "#6B7280", background: "transparent" }}
               >
-                <RotateCcw size={12} className="group-hover:rotate-[-45deg] transition-transform" />
-                Nova Pesquisa
+                <RotateCcw size={12} className="group-hover:text-white transition-colors" />
+                <span className="group-hover:text-white transition-colors">Limpar seleção</span>
               </button>
             </div>
 
             {/* FILTROS DE LOCALIZAÇÃO */}
             <div className="px-6 py-5" style={{ background: "#05050A" }}>
               <div className="flex items-end gap-3">
-                <div className="flex-1">
+                <div style={{ flex: 1 }}>
                   <label
-                    className="block uppercase tracking-widest mb-1.5"
-                    style={{ fontSize: 11, color: "#6B7280", letterSpacing: "0.1em" }}
+                    className="block uppercase tracking-[0.08em] mb-1.5"
+                    style={{ fontSize: 10, color: "#6B7280" }}
                   >
                     Estado
                   </label>
@@ -409,10 +475,10 @@ const ProspeccaoView = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="flex-1">
+                <div style={{ flex: 1 }}>
                   <label
-                    className="block uppercase tracking-widest mb-1.5"
-                    style={{ fontSize: 11, color: "#6B7280", letterSpacing: "0.1em" }}
+                    className="block uppercase tracking-[0.08em] mb-1.5"
+                    style={{ fontSize: 10, color: "#6B7280" }}
                   >
                     Cidade
                   </label>
@@ -442,14 +508,15 @@ const ProspeccaoView = () => {
                   type="button"
                   onClick={handleSearch}
                   disabled={loading}
-                  className="btn-primary flex items-center justify-center gap-2"
+                  className="btn-buscar flex items-center justify-center gap-2"
                   style={{
-                    width: 140,
-                    height: 40,
+                    width: "auto",
+                    padding: "0 24px",
+                    height: 42,
                     borderRadius: 8,
                     background: "#2463EB",
                     color: "#FFFFFF",
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: 700,
                     border: "none",
                     cursor: loading ? "default" : "pointer",
@@ -457,9 +524,9 @@ const ProspeccaoView = () => {
                   }}
                 >
                   {loading ? (
-                    <><Loader2 size={14} className="animate-spin" /> Buscando</>
+                    <><Loader2 size={14} className="animate-spin" /> Buscando...</>
                   ) : (
-                    "Buscar Leads"
+                    <><Search size={14} /> Buscar Leads</>
                   )}
                 </button>
               </div>
@@ -477,53 +544,53 @@ const ProspeccaoView = () => {
               >
                 {/* Header da tabela */}
                 <div
-                  className="flex items-center justify-between px-5"
+                  className="flex items-center justify-between px-6"
                   style={{
-                    height: 48,
+                    height: 52,
+                    background: "#0D0D12",
                     borderBottom: "1px solid rgba(255,255,255,0.06)",
                   }}
                 >
-                  <span style={{ fontSize: 12, color: "#6B7280" }}>
-                    {loading
-                      ? "Buscando leads..."
-                      : results.length > 0
-                        ? `${results.length} leads encontrados`
-                        : searched
-                          ? "Nenhum lead encontrado"
-                          : "Configure os filtros e clique em Buscar"}
-                  </span>
                   <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={handleClearNicho}
-                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
-                      style={{
-                        height: 32,
-                        borderRadius: 8,
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        fontSize: 12,
-                        color: "#6B7280",
-                        background: "transparent",
-                      }}
-                    >
-                      <RotateCcw size={13} /> Nova Pesquisa
-                    </button>
+                    <span style={{ fontSize: 12, color: "#6B7280" }}>
+                      {loading
+                        ? "Buscando leads..."
+                        : results.length > 0
+                          ? `${results.length} leads encontrados`
+                          : searched
+                            ? "Nenhum lead encontrado"
+                            : "Configure os filtros e clique em Buscar"}
+                    </span>
+                    {results.length > 0 && (
+                      <div 
+                        className="px-2 py-0.5 rounded-full border border-[rgba(36,99,235,0.15)] bg-[rgba(36,99,235,0.1)]"
+                        style={{ marginLeft: 4 }}
+                      >
+                        <span style={{ color: "#2463EB", fontSize: 11, fontWeight: 700 }}>
+                          {activeFilter}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={handleExportCSV}
                       disabled={!results.length}
-                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
+                      className="flex items-center gap-1.5 px-3 transition-colors"
                       style={{
                         height: 32,
-                        borderRadius: 8,
+                        borderRadius: 7,
                         border: "1px solid rgba(255,255,255,0.08)",
                         fontSize: 12,
                         color: results.length ? "#FFFFFF" : "#374151",
                         cursor: results.length ? "pointer" : "default",
                         background: "transparent",
                       }}
+                      onMouseEnter={(e) => { if (results.length) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "#FFFFFF"; } }}
+                      onMouseLeave={(e) => { if (results.length) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "#FFFFFF"; } }}
                     >
-                      <Download size={13} /> Exportar CSV
+                      <Download size={12} /> Exportar CSV
                     </button>
                   </div>
                 </div>
@@ -542,66 +609,63 @@ const ProspeccaoView = () => {
                         <tr
                           style={{
                             borderBottom: "1px solid rgba(255,255,255,0.06)",
-                            background: "#0D0D12",
+                            background: "#05050A",
                           }}
                         >
-                          <th className="text-left font-medium px-5 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Negócio</th>
-                          <th className="text-left font-medium px-3 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Descrição</th>
-                          <th className="text-left font-medium px-3 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Telefone</th>
-                          <th className="text-right font-medium px-5 py-3" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Ações</th>
+                          <th className="text-left font-medium px-6 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Negócio</th>
+                          <th className="text-left font-medium px-4 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Descrição</th>
+                          <th className="text-left font-medium px-4 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Telefone</th>
+                          <th className="text-right font-medium px-6 py-2.5" style={{ color: "#374151", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Ações</th>
                         </tr>
                       </thead>
                       <tbody>
                         {results.map((r, i) => (
-                          <tr
+                          <motion.tr
                             key={i}
+                            initial={{ opacity: 0, x: -6 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.18, ease: "easeOut", delay: i * 0.025 }}
                             className="row-result"
                             style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
                           >
-                            <td className="px-5 py-3 align-top" style={{ maxWidth: 240 }}>
-                              <div className="font-semibold truncate" style={{ color: "#FFFFFF" }}>{r.title}</div>
-                              <div className="truncate text-[11px] mt-0.5" style={{ color: "#6B7280" }}>{extractDomain(r.url)}</div>
+                            <td className="px-6 py-3.5 align-top" style={{ maxWidth: 240 }}>
+                              <div className="flex items-center gap-1.5 font-medium truncate" style={{ color: "#FFFFFF", fontSize: 14 }}>
+                                <MapPin size={12} strokeWidth={1.5} color="#2463EB" className="shrink-0" />
+                                {r.title}
+                              </div>
+                              <div className="truncate text-[11px] mt-0.5 ml-[18px]" style={{ color: "#374151" }}>{extractDomain(r.url)}</div>
                             </td>
-                            <td className="px-3 py-3 align-top" style={{ color: "#9CA3AF", maxWidth: 360 }}>
-                              <div className="line-clamp-2">{r.description || "—"}</div>
+                            <td className="px-4 py-3.5 align-top" style={{ color: "#6B7280", maxWidth: 360 }}>
+                              <div className="line-clamp-1 text-[13px]">{r.description || "—"}</div>
                             </td>
-                            <td className="px-3 py-3 align-top whitespace-nowrap" style={{ color: r.phone ? "#FFFFFF" : "#374151" }}>
+                            <td className="px-4 py-3.5 align-top whitespace-nowrap text-[13px]" style={{ color: r.phone ? "#FFFFFF" : "#374151" }}>
                               {r.phone || "—"}
                             </td>
-                            <td className="px-5 py-3 align-top">
-                              <div className="flex items-center justify-end gap-1.5">
+                            <td className="px-6 py-3.5 align-top">
+                              <div className="flex items-center justify-end gap-2">
                                 {r.phone && (
                                   <button
                                     type="button"
                                     onClick={() => openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}`)}
                                     title="WhatsApp"
-                                    className="flex items-center justify-center hover:bg-white/[0.05] transition-colors"
+                                    className="flex items-center justify-center hover:bg-[#111118] transition-colors"
                                     style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
                                   >
-                                    <MessageCircle size={13} color="#6B7280" />
+                                    <MessageCircle size={14} color="#6B7280" />
                                   </button>
                                 )}
                                 <button
                                   type="button"
-                                  onClick={() => openExternalLink(`https://www.google.com/maps/search/${encodeURIComponent(r.title)}`)}
-                                  title="Maps"
-                                  className="flex items-center justify-center hover:bg-white/[0.05] transition-colors"
-                                  style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
-                                >
-                                  <MapPin size={13} color="#6B7280" />
-                                </button>
-                                <button
-                                  type="button"
                                   onClick={() => openExternalLink(r.url)}
                                   title="Abrir site"
-                                  className="flex items-center justify-center hover:bg-white/[0.05] transition-colors"
-                                  style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
+                                  className="flex items-center justify-center transition-colors group"
+                                  style={{ width: 28, height: 28 }}
                                 >
-                                  <ExternalLink size={13} color="#6B7280" />
+                                  <ExternalLink size={14} className="text-[#6B7280] group-hover:text-[#2463EB] transition-colors" />
                                 </button>
                               </div>
                             </td>
-                          </tr>
+                          </motion.tr>
                         ))}
                       </tbody>
                     </table>
@@ -609,25 +673,11 @@ const ProspeccaoView = () => {
                 ) : (
                   <div
                     className="flex flex-col items-center justify-center text-center"
-                    style={{ padding: "48px 24px" }}
+                    style={{ padding: "56px 24px" }}
                   >
-                    <div
-                      className="flex items-center justify-center mb-3"
-                      style={{
-                        width: 40, height: 40, borderRadius: 10,
-                        background: "#111118",
-                        border: "1px solid rgba(255,255,255,0.06)",
-                      }}
-                    >
-                      <activeNicho.Icon size={18} strokeWidth={1.5} color="#6B7280" />
-                    </div>
-                    <p style={{ fontSize: 13, color: "#FFFFFF", fontWeight: 500 }}>
-                      {searched ? "Nenhum lead encontrado" : "Pronto para buscar"}
-                    </p>
-                    <p style={{ fontSize: 12, color: "#6B7280", marginTop: 4 }}>
-                      {searched
-                        ? "Tente ajustar os filtros de localização."
-                        : "Defina os filtros acima e clique em Buscar Leads."}
+                    <Search size={28} strokeWidth={1.5} color="#1F2937" />
+                    <p style={{ fontSize: 13, color: "#374151", marginTop: 12 }}>
+                      Configure os filtros e clique em Buscar
                     </p>
                   </div>
                 )}
