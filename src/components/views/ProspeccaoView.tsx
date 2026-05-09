@@ -508,14 +508,15 @@ const ProspeccaoView = () => {
                   type="button"
                   onClick={handleSearch}
                   disabled={loading}
-                  className="btn-primary flex items-center justify-center gap-2"
+                  className="btn-buscar flex items-center justify-center gap-2"
                   style={{
-                    width: 140,
-                    height: 40,
+                    width: "auto",
+                    padding: "0 24px",
+                    height: 42,
                     borderRadius: 8,
                     background: "#2463EB",
                     color: "#FFFFFF",
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: 700,
                     border: "none",
                     cursor: loading ? "default" : "pointer",
@@ -523,9 +524,9 @@ const ProspeccaoView = () => {
                   }}
                 >
                   {loading ? (
-                    <><Loader2 size={14} className="animate-spin" /> Buscando</>
+                    <><Loader2 size={14} className="animate-spin" /> Buscando...</>
                   ) : (
-                    "Buscar Leads"
+                    <><Search size={14} /> Buscar Leads</>
                   )}
                 </button>
               </div>
