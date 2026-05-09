@@ -461,6 +461,46 @@ const ProspeccaoView = () => {
               </button>
             </div>
 
+            {/* MODOS DE BUSCA */}
+            <div className="px-6 pt-4 flex gap-4">
+              <button
+                type="button"
+                onClick={() => setSearchMode("automatic")}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border transition-all"
+                style={{
+                  background: searchMode === "automatic" ? "rgba(36,99,235,0.1)" : "#0D0D12",
+                  borderColor: searchMode === "automatic" ? "#2463EB" : "rgba(255,255,255,0.06)",
+                  color: searchMode === "automatic" ? "#FFFFFF" : "#6B7280",
+                  fontSize: 13,
+                  fontWeight: searchMode === "automatic" ? 700 : 500,
+                }}
+              >
+                <div 
+                  className="w-2 h-2 rounded-full" 
+                  style={{ background: searchMode === "automatic" ? "#2463EB" : "#374151" }} 
+                />
+                Prospecção Automática
+              </button>
+              <button
+                type="button"
+                onClick={() => setSearchMode("manual")}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border transition-all"
+                style={{
+                  background: searchMode === "manual" ? "rgba(36,99,235,0.1)" : "#0D0D12",
+                  borderColor: searchMode === "manual" ? "#2463EB" : "rgba(255,255,255,0.06)",
+                  color: searchMode === "manual" ? "#FFFFFF" : "#6B7280",
+                  fontSize: 13,
+                  fontWeight: searchMode === "manual" ? 700 : 500,
+                }}
+              >
+                <div 
+                  className="w-2 h-2 rounded-full" 
+                  style={{ background: searchMode === "manual" ? "#2463EB" : "#374151" }} 
+                />
+                Prospecção Manual (Google)
+              </button>
+            </div>
+
             {/* FILTROS DE LOCALIZAÇÃO */}
             <div className="px-6 py-5" style={{ background: "#05050A" }}>
               <div className="flex items-end gap-3">
