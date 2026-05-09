@@ -93,13 +93,8 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
       }
     }
 
+    // Se o popup falhou ou foi bloqueado, redireciona a própria aba atual para não perder o fluxo
     window.location.href = url;
-    setGenerating(null);
-    onClose();
-    } else {
-      // Popup bloqueado — mostra botão "Abrir Lovable" pro usuário clicar
-      setNeedsManualOpen(true);
-    }
   };
 
   const handleManualOpen = () => {
