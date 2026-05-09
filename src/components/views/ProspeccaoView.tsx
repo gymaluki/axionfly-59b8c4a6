@@ -636,7 +636,7 @@ const ProspeccaoView = () => {
                         ? (
                           <div className="flex items-center gap-2">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#2463EB] animate-pulse" />
-                            <span>Escaneando a web em busca de leads...</span>
+                            <span>{searchMode === "manual" ? "Preparando redirecionamento para o Google Maps..." : "Escaneando a web em busca de leads..."}</span>
                           </div>
                         )
                         : results.length > 0
