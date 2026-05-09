@@ -701,12 +701,15 @@ const ProspeccaoView = () => {
                                 {r.phone && (
                                   <button
                                     type="button"
-                                    onClick={() => openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}`)}
-                                    title="WhatsApp"
-                                    className="flex items-center justify-center hover:bg-[#111118] transition-colors"
+                                    onClick={() => {
+                                      const text = encodeURIComponent(`Olá, vi que o seu negócio "${r.title}" ainda não possui um site profissional. Sou especialista em criação de sites e gostaria de apresentar uma proposta para ajudar a escalar seu faturamento. Podemos conversar?`);
+                                      openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}?text=${text}`);
+                                    }}
+                                    title="Enviar proposta no WhatsApp"
+                                    className="flex items-center justify-center hover:bg-[#111118] transition-colors group"
                                     style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
                                   >
-                                    <MessageCircle size={14} color="#6B7280" />
+                                    <MessageCircle size={14} className="text-[#6B7280] group-hover:text-[#22c55e] transition-colors" />
                                   </button>
                                 )}
                                 <button

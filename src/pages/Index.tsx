@@ -214,6 +214,45 @@ const faqItems = [
   { q: "Funciona em qualquer cidade do Brasil?", a: "Sim! A busca de leads cobre todos os 27 estados e todas as cidades do Brasil. Basta selecionar o estado e a cidade para encontrar comércios sem site na sua região." },
 ];
 
+const CountdownTimer = () => {
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(0, 0, 0, 0);
+      
+      const difference = tomorrow.getTime() - now.getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const format = (n: number) => n.toString().padStart(2, "0");
+
+  return (
+    <div className="flex items-center gap-1 font-black">
+      <div className="bg-white/10 px-1.5 py-0.5 rounded border border-white/10">{format(timeLeft.hours)}</div>
+      <span className="opacity-70">:</span>
+      <div className="bg-white/10 px-1.5 py-0.5 rounded border border-white/10">{format(timeLeft.minutes)}</div>
+      <span className="opacity-70">:</span>
+      <div className="bg-white/10 px-1.5 py-0.5 rounded border border-white/10">{format(timeLeft.seconds)}</div>
+    </div>
+  );
+};
+
 const Index = () => {
   const navigate = useNavigate();
 
@@ -240,12 +279,16 @@ const Index = () => {
             >
               🎉
             </motion.span>
-            <p className="text-white text-[10px] md:text-[13px] font-black uppercase tracking-[0.15em] md:tracking-[0.25em] flex items-center gap-3 whitespace-nowrap truncate">
-              <span className="opacity-70 hidden sm:inline">—</span>
+            <div className="text-white text-[10px] md:text-[13px] font-black uppercase tracking-[0.1em] md:tracking-[0.15em] flex items-center gap-2 md:gap-4 whitespace-nowrap overflow-hidden">
+              <span className="hidden lg:inline opacity-70">—</span>
               <span className="hidden sm:inline">Aniversário 1 Ano AxionFly: 70% de Desconto em toda a plataforma</span>
               <span className="sm:hidden">1 Ano AxionFly · 70% OFF</span>
               <span className="opacity-70 hidden sm:inline">—</span>
-            </p>
+              <div className="flex items-center gap-2 bg-black/20 px-3 py-1 rounded-full border border-white/10">
+                <span className="text-[9px] opacity-70 hidden xs:inline">TERMINA EM:</span>
+                <CountdownTimer />
+              </div>
+            </div>
             <motion.span
               animate={{ rotate: [0, -10, 10, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
