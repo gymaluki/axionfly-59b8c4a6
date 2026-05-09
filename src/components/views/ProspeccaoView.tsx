@@ -221,6 +221,9 @@ const ProspeccaoView = () => {
     setActiveFilter("");
     setResults([]);
     setSearched(false);
+    setEstado("");
+    setCidade("");
+    toast.info("Processo reiniciado");
   };
 
   return (
