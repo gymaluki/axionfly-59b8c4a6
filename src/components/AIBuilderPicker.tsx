@@ -56,7 +56,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
       localStorage.setItem("axionfly_lovable_prompt", normalizedPrompt);
     } catch {}
 
-    const targetUrl = `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(normalizedPrompt)}`;
+    const targetUrl = LOVABLE_BASE_URL;
 
     copySync(normalizedPrompt);
     if (navigator.clipboard && window.isSecureContext) {
