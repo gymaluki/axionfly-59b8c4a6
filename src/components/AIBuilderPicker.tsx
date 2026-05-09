@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
 
-const LOVABLE_BASE_URL = "https://lovable.dev/projects/05dc5255-abe9-4867-8917-0cab3eafda1b";
+const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
 
 interface AIBuilderPickerProps {
   open: boolean;
