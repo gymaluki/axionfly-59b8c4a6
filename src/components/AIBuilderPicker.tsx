@@ -64,9 +64,8 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     }
 
     // Abre a nova aba IMEDIATAMENTE (ainda dentro da janela do gesto do usuário).
-    // Mantemos ela em about:blank até a animação terminar — aí redirecionamos.
     try {
-      popupRef.current = window.open("about:blank", "_blank", "noopener,noreferrer");
+      popupRef.current = window.open("", "_blank");
     } catch {
       popupRef.current = null;
     }
@@ -84,30 +83,23 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     const popup = popupRef.current;
     if (popup && !popup.closed) {
       try {
-        popup.location.href = url;
+        popup.location.assign(url);
         popupRef.current = null;
         setGenerating(null);
         onClose();
         return;
-      } catch {
-        // cross-origin block — cai pro fallback
+      } catch (e) {
+        console.error("Erro ao redirecionar popup:", e);
       }
     }
 
-    // Fallback: tenta abrir agora (pode ser bloqueado, então oferece botão manual)
-    const win = window.open(url, "_blank", "noopener,noreferrer");
-    if (win) {
-      setGenerating(null);
-      onClose();
-    } else {
-      // Popup bloqueado — mostra botão "Abrir Lovable" pro usuário clicar
-      setNeedsManualOpen(true);
-    }
+    // Se o popup falhou ou foi bloqueado, redireciona a própria aba atual para não perder o fluxo
+    window.location.href = url;
   };
 
   const handleManualOpen = () => {
     if (generating) {
-      window.open(generating, "_blank", "noopener,noreferrer");
+      window.location.href = generating;
     }
     setGenerating(null);
     setNeedsManualOpen(false);

@@ -186,11 +186,16 @@ const ProspeccaoView = () => {
     if (!activeFilter) { toast.error("Selecione um nicho antes de buscar"); return; }
     
     if (searchMode === "manual") {
+      setLoading(true);
       const location = buildLocation();
       const query = `${activeFilter} em ${location}`.trim();
       const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
-      openExternalLink(mapsUrl);
-      toast.success("Redirecionando para o Google Maps...");
+      
+      setTimeout(() => {
+        setLoading(false);
+        openExternalLink(mapsUrl);
+        toast.success("Redirecionando para o Google Maps...");
+      }, 3000);
       return;
     }
     
@@ -605,8 +610,8 @@ const ProspeccaoView = () => {
               </div>
             </div>
 
-            {/* TABELA DE RESULTADOS (Apenas em modo automático) */}
-            {searchMode === "automatic" && (
+            {/* TABELA DE RESULTADOS (Apenas em modo automático ou durante o loading do manual) */}
+            {(searchMode === "automatic" || (searchMode === "manual" && loading)) && (
               <div className="px-6 pb-8">
               <div
                 style={{
@@ -631,7 +636,7 @@ const ProspeccaoView = () => {
                         ? (
                           <div className="flex items-center gap-2">
                             <div className="w-1.5 h-1.5 rounded-full bg-[#2463EB] animate-pulse" />
-                            <span>Escaneando a web em busca de leads...</span>
+                            <span>{searchMode === "manual" ? "Preparando redirecionamento para o Google Maps..." : "Escaneando a web em busca de leads..."}</span>
                           </div>
                         )
                         : results.length > 0
@@ -741,7 +746,9 @@ const ProspeccaoView = () => {
                                       const text = encodeURIComponent(`Olá, sou da AxionFly. Vi que o seu negócio "${r.title}" tem um grande potencial, mas ainda não está aproveitando todo o poder do digital para fechar mais contratos.
 
 Gostaria de apresentar como podemos automatizar sua prospecção e escalar seu faturamento de forma profissional. Podemos conversar hoje?`);
-                                      openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}?text=${text}`);
+                                      const cleanPhone = r.phone!.replace(/\D/g, "");
+                                      const waNumber = cleanPhone.length === 11 ? cleanPhone : (cleanPhone.length === 10 ? `11${cleanPhone}` : cleanPhone);
+                                      openExternalLink(`https://wa.me/55${waNumber}?text=${text}`);
                                     }}
                                     title="Fechar Contrato no WhatsApp"
                                     className="flex items-center justify-center bg-[#22c55e]/10 hover:bg-[#22c55e]/20 transition-all group"
