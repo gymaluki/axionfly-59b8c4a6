@@ -728,29 +728,44 @@ const ProspeccaoView = () => {
                               {r.phone || "—"}
                             </td>
                             <td className="px-6 py-3.5 align-top">
-                              <div className="flex items-center justify-end gap-2">
+                              <div className="flex items-center justify-end gap-2.5">
                                 {r.phone && (
                                   <button
                                     type="button"
                                     onClick={() => {
-                                      const text = encodeURIComponent(`Olá, vi que o seu negócio "${r.title}" ainda não possui um site profissional. Sou especialista em criação de sites e gostaria de apresentar uma proposta para ajudar a escalar seu faturamento. Podemos conversar?`);
+                                      const text = encodeURIComponent(`Olá, sou da AxionFly. Vi que o seu negócio "${r.title}" tem um grande potencial, mas ainda não está aproveitando todo o poder do digital para fechar mais contratos.
+
+Gostaria de apresentar como podemos automatizar sua prospecção e escalar seu faturamento de forma profissional. Podemos conversar hoje?`);
                                       openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}?text=${text}`);
                                     }}
-                                    title="Enviar proposta no WhatsApp"
-                                    className="flex items-center justify-center hover:bg-[#111118] transition-colors group"
-                                    style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
+                                    title="Fechar Contrato no WhatsApp"
+                                    className="flex items-center justify-center bg-[#22c55e]/10 hover:bg-[#22c55e]/20 transition-all group"
+                                    style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(34,197,94,0.2)" }}
                                   >
-                                    <MessageCircle size={14} className="text-[#6B7280] group-hover:text-[#22c55e] transition-colors" />
+                                    <MessageCircle size={15} className="text-[#22c55e] transition-colors" />
                                   </button>
                                 )}
                                 <button
                                   type="button"
-                                  onClick={() => openExternalLink(r.url)}
-                                  title="Abrir site"
-                                  className="flex items-center justify-center transition-colors group"
-                                  style={{ width: 28, height: 28 }}
+                                  onClick={() => {
+                                    const loc = buildLocation();
+                                    const q = `${r.title} ${loc}`.trim();
+                                    openExternalLink(`https://www.google.com/maps/search/${encodeURIComponent(q)}`);
+                                  }}
+                                  title="Ver no Google Maps"
+                                  className="flex items-center justify-center bg-[#2463EB]/10 hover:bg-[#2463EB]/20 transition-all group"
+                                  style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(36,99,235,0.2)" }}
                                 >
-                                  <ExternalLink size={14} className="text-[#6B7280] group-hover:text-[#2463EB] transition-colors" />
+                                  <MapPin size={15} className="text-[#2463EB] transition-colors" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => openExternalLink(r.url)}
+                                  title="Abrir Site"
+                                  className="flex items-center justify-center bg-white/5 hover:bg-white/10 transition-all group"
+                                  style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)" }}
+                                >
+                                  <ExternalLink size={15} className="text-[#6B7280] group-hover:text-white transition-colors" />
                                 </button>
                               </div>
                             </td>
