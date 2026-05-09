@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {
-  Loader2, ExternalLink, Download, X, MessageCircle, MapPin,
+  Loader2, ExternalLink, Download, MessageCircle, MapPin, Search,
   Scissors, Pizza, Sandwich, Sparkles, Stethoscope, Building2,
   Dumbbell, PawPrint, UtensilsCrossed, Wrench, Smile, Wand2,
   Home, Scale, Calculator, BookOpen, ShoppingBag, Pill, Glasses,
