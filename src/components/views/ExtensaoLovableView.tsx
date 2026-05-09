@@ -175,10 +175,6 @@ const ExtensaoLovableView = () => {
               <ExternalLink className="w-4 h-4" />
             </a>
           </Button>
-              Baixar Extensão e Gerar Token
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </Button>
         </div>
       </motion.div>
     </div>
