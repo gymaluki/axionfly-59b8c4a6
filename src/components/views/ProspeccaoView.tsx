@@ -113,7 +113,7 @@ const ProspeccaoView = () => {
       if (!user) return;
       localStorage.setItem(
         `prospeccao-view-state-${user.id}`,
-        JSON.stringify({ cidade, estado, activeFilter, results, searched })
+        JSON.stringify({ cidade, estado, activeFilter, results, searched, searchMode })
       );
     };
     save();
