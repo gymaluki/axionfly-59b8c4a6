@@ -628,7 +628,12 @@ const ProspeccaoView = () => {
                   <div className="flex items-center gap-2">
                     <span style={{ fontSize: 12, color: "#6B7280" }}>
                       {loading
-                        ? "Buscando leads..."
+                        ? (
+                          <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#2463EB] animate-pulse" />
+                            <span>Escaneando a web em busca de leads...</span>
+                          </div>
+                        )
                         : results.length > 0
                           ? `${results.length} leads encontrados`
                           : searched
