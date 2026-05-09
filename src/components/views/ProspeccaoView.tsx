@@ -737,6 +737,7 @@ const ProspeccaoView = () => {
                 )}
               </div>
             </div>
+            )}
           </motion.section>
         )}
       </AnimatePresence>
