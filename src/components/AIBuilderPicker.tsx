@@ -64,9 +64,8 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     }
 
     // Abre a nova aba IMEDIATAMENTE (ainda dentro da janela do gesto do usuário).
-    // Mantemos ela em about:blank até a animação terminar — aí redirecionamos.
     try {
-      popupRef.current = window.open("about:blank", "_blank", "noopener,noreferrer");
+      popupRef.current = window.open("", "_blank");
     } catch {
       popupRef.current = null;
     }
