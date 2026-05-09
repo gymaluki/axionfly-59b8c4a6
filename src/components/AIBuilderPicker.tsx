@@ -81,11 +81,30 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     // 1) Copia SÍNCRONO primeiro (dentro do gesto do usuário)
     const okSync = copySync(normalizedPrompt);
 
-    // 2) Abre a janela IMEDIATAMENTE (evita popup blocker)
-    const newWindow = window.open(builder.url, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = null;
+    // 2) Abre janela em branco IMEDIATAMENTE (preserva o gesto do usuário, evita popup blocker)
+    //    Vamos redirecionar essa aba para o Lovable depois da animação de 6s.
+    const newWindow = window.open("about:blank", "_blank");
+    if (newWindow) {
+      try {
+        newWindow.opener = null;
+        newWindow.document.write(`
+          <html><head><title>Abrindo Lovable...</title><style>
+            body{margin:0;background:#000;color:#60a5fa;font-family:ui-monospace,Menlo,monospace;
+            display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px}
+            .spinner{width:48px;height:48px;border:3px solid rgba(96,165,250,.2);border-top-color:#60a5fa;
+            border-radius:50%;animation:s 1s linear infinite}
+            @keyframes s{to{transform:rotate(360deg)}}
+          </style></head><body>
+            <div class="spinner"></div>
+            <div>Preparando seu projeto no Lovable...</div>
+          </body></html>
+        `);
+      } catch {
+        // ignore
+      }
+    }
 
-    // 3) Tenta também a Clipboard API moderna como reforço (não-bloqueante)
+    // 3) Reforço com Clipboard API moderna (não-bloqueante)
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(normalizedPrompt).catch(() => {});
     }
@@ -96,10 +115,26 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
       toast.error("Não foi possível copiar. Copie manualmente o prompt da tela anterior.");
     }
 
-    setTimeout(() => {
-      setCopying(null);
-      onClose();
-    }, 600);
+    // 4) Mostra overlay futurista por 6s e depois redireciona a aba aberta
+    setGenerating({ url: builder.url, win: newWindow });
+  };
+
+  const handleGenerationComplete = () => {
+    if (generating) {
+      try {
+        if (generating.win && !generating.win.closed) {
+          generating.win.location.href = generating.url;
+        } else {
+          // fallback caso a aba tenha sido fechada / bloqueada
+          window.open(generating.url, "_blank", "noopener,noreferrer");
+        }
+      } catch {
+        window.open(generating.url, "_blank", "noopener,noreferrer");
+      }
+    }
+    setGenerating(null);
+    setCopying(null);
+    onClose();
   };
 
   return (
