@@ -4,7 +4,7 @@ import {
   Scissors, Pizza, Sandwich, Sparkles, Stethoscope, Building2,
   Dumbbell, PawPrint, UtensilsCrossed, Wrench, Smile, Wand2,
   Home, Scale, Calculator, BookOpen, ShoppingBag, Pill, Glasses,
-  Flower2, Car, Camera,
+  Flower2, Car, Camera, RotateCcw,
 } from "lucide-react";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
