@@ -188,14 +188,20 @@ const ProspeccaoView = () => {
     
     if (searchMode === "manual") {
       setLoading(true);
+      setManualRedirectUrl(null);
       const location = buildLocation();
       const query = `${activeFilter} em ${location}`.trim();
       const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
       
       setTimeout(() => {
         setLoading(false);
-        openExternalLink(mapsUrl);
-        toast.success("Redirecionando para o Google Maps...");
+        const win = window.open(mapsUrl, "_blank", "noopener,noreferrer");
+        if (win) {
+          toast.success("Redirecionando para o Google Maps...");
+        } else {
+          setManualRedirectUrl(mapsUrl);
+          toast.error("Popup bloqueado pelo navegador");
+        }
       }, 6000);
       return;
     }
