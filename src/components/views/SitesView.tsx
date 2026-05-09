@@ -45,6 +45,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import AIBuildersGrid from "@/components/AIBuildersGrid";
 import AIBuilderPicker from "@/components/AIBuilderPicker";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface NicheTemplate {
   label: string;
@@ -308,6 +312,7 @@ const SitesView = () => {
   const [font, setFont] = useState("");
   const [designStyle, setDesignStyle] = useState("");
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [slogan, setSlogan] = useState("");
   const [siteObjective, setSiteObjective] = useState("");
@@ -1616,24 +1621,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
           </Button>
           <Button
             variant="outline"
-            onClick={() => {
-              if (!confirm("Tem certeza que deseja reiniciar? Todas as respostas serão apagadas.")) return;
-              if (user) {
-                localStorage.removeItem(`sites-view-state-${user.id}`);
-                localStorage.removeItem(`pending_site_creation-${user.id}`);
-              }
-              setStep(0);
-              setProjectName(""); setNiche(""); setAddress(""); setPhone("");
-              setPrimaryColor(""); setSecondaryColor(""); setFeatures("");
-              setFont(""); setDesignStyle(""); setSlogan(""); setSiteObjective("");
-              setTone(""); setSelectedPages(["inicio"]); setCtaPrincipal("");
-              setBusinessHours(""); setWhatsappOrdering(false);
-              setInstagram(""); setTiktok(""); setFacebook("");
-              setTargetAudience(""); setDifferentiators(""); setPricePositioning("");
-              setSocialProof(""); setProductNameCakto(""); setProductPrice("");
-              setGeneratedPrompt(""); setCaktoRegistered(false); setCaktoCheckoutUrl("");
-              toast.success("Processo reiniciado!");
-            }}
+            onClick={() => setResetConfirmOpen(true)}
             className="gap-2 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive rounded-full font-bold"
           >
             <RotateCcw className="w-4 h-4" />
@@ -1641,6 +1629,44 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
           </Button>
         </div>
       )}
+
+      <AlertDialog open={resetConfirmOpen} onOpenChange={setResetConfirmOpen}>
+        <AlertDialogContent className="bg-[#0D0D12] border border-white/10">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Reiniciar processo?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/60">
+              Todas as respostas e configurações deste site serão apagadas. Essa ação não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-transparent border-white/10 text-white hover:bg-white/5 hover:text-white">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (user) {
+                  localStorage.removeItem(`sites-view-state-${user.id}`);
+                  localStorage.removeItem(`pending_site_creation-${user.id}`);
+                }
+                setStep(0);
+                setProjectName(""); setNiche(""); setAddress(""); setPhone("");
+                setPrimaryColor(""); setSecondaryColor(""); setFeatures("");
+                setFont(""); setDesignStyle(""); setSlogan(""); setSiteObjective("");
+                setTone(""); setSelectedPages(["inicio"]); setCtaPrincipal("");
+                setBusinessHours(""); setWhatsappOrdering(false);
+                setInstagram(""); setTiktok(""); setFacebook("");
+                setTargetAudience(""); setDifferentiators(""); setPricePositioning("");
+                setSocialProof(""); setProductNameCakto(""); setProductPrice("");
+                setGeneratedPrompt(""); setCaktoRegistered(false); setCaktoCheckoutUrl("");
+                toast.success("Processo reiniciado!");
+              }}
+              className="bg-destructive hover:bg-destructive/90 text-white"
+            >
+              Sim, reiniciar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <AIBuilderPicker
         open={pickerOpen}
