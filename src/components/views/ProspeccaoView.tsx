@@ -453,10 +453,10 @@ const ProspeccaoView = () => {
             {/* FILTROS DE LOCALIZAÇÃO */}
             <div className="px-6 py-5" style={{ background: "#05050A" }}>
               <div className="flex items-end gap-3">
-                <div className="flex-1">
+                <div style={{ flex: 1 }}>
                   <label
-                    className="block uppercase tracking-widest mb-1.5"
-                    style={{ fontSize: 11, color: "#6B7280", letterSpacing: "0.1em" }}
+                    className="block uppercase tracking-[0.08em] mb-1.5"
+                    style={{ fontSize: 10, color: "#6B7280" }}
                   >
                     Estado
                   </label>
