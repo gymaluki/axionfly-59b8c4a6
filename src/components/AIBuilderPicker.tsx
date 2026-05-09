@@ -75,10 +75,13 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     setGenerating(null);
     onClose();
     if (url) {
-      // Abre em nova aba; se o navegador bloquear, navega na própria aba
+      // Tenta abrir em nova aba primeiro (pode ser bloqueado se não for trigger direto do usuário)
+      // Como estamos vindo de um timeout (onComplete do overlay), o navegador costuma bloquear.
       const win = window.open(url, "_blank", "noopener,noreferrer");
+      
+      // Fallback: se for bloqueado ou se o usuário estiver no iframe, navegamos na mesma aba
       if (!win) {
-        window.location.href = url;
+        window.location.assign(url);
       }
     }
   };

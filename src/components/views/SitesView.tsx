@@ -1664,8 +1664,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
               className="w-full max-w-md bg-card border border-border rounded-2xl shadow-2xl p-6 space-y-6"
             >
               <div className="text-center space-y-2">
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Sparkles className="w-8 h-8 text-primary" />
+                <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 border border-primary/20 shadow-[0_0_15px_rgba(59,130,246,0.15)] overflow-hidden">
+                  <img src="/placeholder.svg" alt="Lovable" className="w-14 h-14 object-contain" />
                 </div>
                 <h2 className="text-2xl font-bold text-foreground">
                   Lovable Infinito
