@@ -87,6 +87,7 @@ const ProspeccaoView = () => {
   const [searchMode, setSearchMode] = useState<"automatic" | "manual">("automatic");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [manualRedirectUrl, setManualRedirectUrl] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
 
   useEffect(() => {
