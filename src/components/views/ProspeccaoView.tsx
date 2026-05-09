@@ -492,23 +492,40 @@ const ProspeccaoView = () => {
                           ? "Nenhum lead encontrado"
                           : "Configure os filtros e clique em Buscar"}
                   </span>
-                  <button
-                    type="button"
-                    onClick={handleExportCSV}
-                    disabled={!results.length}
-                    className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
-                    style={{
-                      height: 32,
-                      borderRadius: 8,
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      fontSize: 12,
-                      color: results.length ? "#FFFFFF" : "#374151",
-                      cursor: results.length ? "pointer" : "default",
-                      background: "transparent",
-                    }}
-                  >
-                    <Download size={13} /> Exportar CSV
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleClearNicho}
+                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
+                      style={{
+                        height: 32,
+                        borderRadius: 8,
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        fontSize: 12,
+                        color: "#6B7280",
+                        background: "transparent",
+                      }}
+                    >
+                      <RotateCcw size={13} /> Nova Pesquisa
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleExportCSV}
+                      disabled={!results.length}
+                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
+                      style={{
+                        height: 32,
+                        borderRadius: 8,
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        fontSize: 12,
+                        color: results.length ? "#FFFFFF" : "#374151",
+                        cursor: results.length ? "pointer" : "default",
+                        background: "transparent",
+                      }}
+                    >
+                      <Download size={13} /> Exportar CSV
+                    </button>
+                  </div>
                 </div>
 
                 {/* Conteúdo */}
