@@ -406,7 +406,7 @@ const SitesView = () => {
     features, font, designStyle, slogan, siteObjective, tone, selectedPages,
     ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
     targetAudience, differentiators, pricePositioning, socialProof,
-    productNameCakto, productPrice
+    productNameCakto, productPrice, caktoRegistered, caktoCheckoutUrl
   ]);
 
   const handleRegisterCakto = async () => {
