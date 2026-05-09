@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Crown, ExternalLink, X, Check } from "lucide-react";
 import { toast } from "sonner";
+import { GeneratingOverlay } from "@/components/ui/generating-overlay";
 
 interface Builder {
   name: string;
