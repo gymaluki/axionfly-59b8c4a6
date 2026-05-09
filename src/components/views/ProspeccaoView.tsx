@@ -4,7 +4,7 @@ import {
   Scissors, Pizza, Sandwich, Sparkles, Stethoscope, Building2,
   Dumbbell, PawPrint, UtensilsCrossed, Wrench, Smile, Wand2,
   Home, Scale, Calculator, BookOpen, ShoppingBag, Pill, Glasses,
-  Flower2, Car, Camera,
+  Flower2, Car, Camera, RotateCcw,
 } from "lucide-react";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
@@ -221,6 +221,9 @@ const ProspeccaoView = () => {
     setActiveFilter("");
     setResults([]);
     setSearched(false);
+    setEstado("");
+    setCidade("");
+    toast.info("Processo reiniciado");
   };
 
   return (
@@ -373,10 +376,11 @@ const ProspeccaoView = () => {
               <button
                 type="button"
                 onClick={handleClearNicho}
-                className="flex items-center gap-1 hover:text-white transition-colors"
-                style={{ fontSize: 12, color: "#6B7280" }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/[0.05] transition-all group"
+                style={{ fontSize: 12, color: "#6B7280", border: "1px solid rgba(255,255,255,0.04)" }}
               >
-                <X size={12} /> Limpar
+                <RotateCcw size={12} className="group-hover:rotate-[-45deg] transition-transform" />
+                Nova Pesquisa
               </button>
             </div>
 
@@ -488,23 +492,40 @@ const ProspeccaoView = () => {
                           ? "Nenhum lead encontrado"
                           : "Configure os filtros e clique em Buscar"}
                   </span>
-                  <button
-                    type="button"
-                    onClick={handleExportCSV}
-                    disabled={!results.length}
-                    className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
-                    style={{
-                      height: 32,
-                      borderRadius: 8,
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      fontSize: 12,
-                      color: results.length ? "#FFFFFF" : "#374151",
-                      cursor: results.length ? "pointer" : "default",
-                      background: "transparent",
-                    }}
-                  >
-                    <Download size={13} /> Exportar CSV
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleClearNicho}
+                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
+                      style={{
+                        height: 32,
+                        borderRadius: 8,
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        fontSize: 12,
+                        color: "#6B7280",
+                        background: "transparent",
+                      }}
+                    >
+                      <RotateCcw size={13} /> Nova Pesquisa
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleExportCSV}
+                      disabled={!results.length}
+                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
+                      style={{
+                        height: 32,
+                        borderRadius: 8,
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        fontSize: 12,
+                        color: results.length ? "#FFFFFF" : "#374151",
+                        cursor: results.length ? "pointer" : "default",
+                        background: "transparent",
+                      }}
+                    >
+                      <Download size={13} /> Exportar CSV
+                    </button>
+                  </div>
                 </div>
 
                 {/* Conteúdo */}
