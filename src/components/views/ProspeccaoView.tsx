@@ -195,7 +195,7 @@ const ProspeccaoView = () => {
         setLoading(false);
         openExternalLink(mapsUrl);
         toast.success("Redirecionando para o Google Maps...");
-      }, 3000);
+      }, 6000);
       return;
     }
     
