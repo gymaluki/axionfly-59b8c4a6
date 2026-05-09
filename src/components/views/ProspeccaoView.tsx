@@ -183,6 +183,16 @@ const ProspeccaoView = () => {
 
   const handleSearch = () => {
     if (!activeFilter) { toast.error("Selecione um nicho antes de buscar"); return; }
+    
+    if (searchMode === "manual") {
+      const location = buildLocation();
+      const query = `${activeFilter} em ${location}`.trim();
+      const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+      openExternalLink(mapsUrl);
+      toast.success("Redirecionando para o Google Maps...");
+      return;
+    }
+    
     doSearch(activeFilter);
   };
 
