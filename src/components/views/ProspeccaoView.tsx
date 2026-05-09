@@ -646,7 +646,9 @@ const ProspeccaoView = () => {
                             <span>{searchMode === "manual" ? "Preparando redirecionamento para o Google Maps..." : "Escaneando a web em busca de leads..."}</span>
                           </div>
                         )
-                        : results.length > 0
+                        : manualRedirectUrl 
+                          ? "Ação necessária: Clique no botão abaixo para abrir o Google Maps"
+                          : results.length > 0
                           ? `${results.length} leads encontrados`
                           : searched
                             ? "Nenhum lead encontrado"
