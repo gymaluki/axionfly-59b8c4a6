@@ -45,6 +45,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import AIBuildersGrid from "@/components/AIBuildersGrid";
 import AIBuilderPicker from "@/components/AIBuilderPicker";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface NicheTemplate {
   label: string;
