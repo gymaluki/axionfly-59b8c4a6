@@ -671,10 +671,22 @@ const ProspeccaoView = () => {
 
                 {/* Conteúdo */}
                 {loading ? (
-                  <div className="px-5 py-4 space-y-3">
-                    {[0, 1, 2, 3, 4].map(i => (
-                      <div key={i} className="skel" style={{ height: 56 }} />
-                    ))}
+                  <div className="relative overflow-hidden">
+                    <div className="scanner-line" />
+                    <div className="px-5 py-6 space-y-4">
+                      <div className="flex items-center gap-4 mb-2">
+                        <div className="skel h-4 w-32" />
+                        <div className="skel h-4 w-48" />
+                      </div>
+                      {[0, 1, 2, 3, 4, 5].map(i => (
+                        <div key={i} className="flex gap-4 items-center">
+                          <div className="skel h-12 flex-1" />
+                          <div className="skel h-12 flex-1 hidden md:block" />
+                          <div className="skel h-12 w-32 hidden md:block" />
+                          <div className="skel h-10 w-24" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ) : results.length > 0 ? (
                   <div className="pp-scroll" style={{ maxHeight: 520, overflowY: "auto" }}>
