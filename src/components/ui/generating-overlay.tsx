@@ -210,7 +210,7 @@ export const GeneratingOverlay = ({ open, durationMs = 6000, onComplete }: Gener
             </div>
 
             <p className="mt-4 text-center text-xs text-blue-300/60 font-mono">
-              [ NÃO FECHE ESTA JANELA — abrindo Lovable em uma nova aba ]
+              [ NÃO FECHE ESTA JANELA — preparando seu prompt ]
             </p>
           </motion.div>
         </motion.div>

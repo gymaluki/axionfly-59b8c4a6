@@ -89,14 +89,14 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
           <h2 className="text-2xl font-bold text-white">Tudo pronto!</h2>
           <p className="mt-2 text-sm text-blue-200/70">
             Seu prompt foi gerado e copiado para a área de transferência.
-            Clique abaixo para abrir o Lovable em uma nova aba e cole com <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-xs font-mono">Ctrl+V</kbd>.
+            Clique no botão abaixo para finalizar — o Lovable vai abrir em uma nova aba e basta colar com <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-xs font-mono">Ctrl+V</kbd>.
           </p>
           <button
             onClick={handleOpenLovable}
             className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-3.5 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
             <ExternalLink className="h-5 w-5" />
-            Abrir Lovable agora
+            Clique aqui para finalizar
           </button>
           <button
             onClick={() => { setReadyToOpen(false); setGenerating(null); onClose(); }}
