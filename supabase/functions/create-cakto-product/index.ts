@@ -139,7 +139,7 @@ Deno.serve(async (req) => {
 
   } catch (error) {
     console.error('Error creating Cakto product:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: 'Falha ao processar a requisição' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
