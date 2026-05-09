@@ -164,11 +164,17 @@ const ExtensaoLovableView = () => {
             asChild
             variant="neon"
             size="lg"
-            className="gap-2"
+            className="gap-2 px-8"
           >
             <a
               href="/extensao"
+              target="_blank"
+              rel="noopener noreferrer"
             >
+              Baixar Extensão e Gerar Token
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </Button>
               Baixar Extensão e Gerar Token
               <ExternalLink className="w-4 h-4" />
             </a>
