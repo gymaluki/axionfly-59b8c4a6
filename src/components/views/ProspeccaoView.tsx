@@ -84,6 +84,7 @@ const ProspeccaoView = () => {
   const [cidades, setCidades] = useState<string[]>([]);
   const [loadingCidades, setLoadingCidades] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
+  const [searchMode, setSearchMode] = useState<"automatic" | "manual">("automatic");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
