@@ -620,55 +620,52 @@ const ProspeccaoView = () => {
                       </thead>
                       <tbody>
                         {results.map((r, i) => (
-                          <tr
+                          <motion.tr
                             key={i}
+                            initial={{ opacity: 0, x: -6 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.18, ease: "easeOut", delay: i * 0.025 }}
                             className="row-result"
                             style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
                           >
-                            <td className="px-5 py-3 align-top" style={{ maxWidth: 240 }}>
-                              <div className="font-semibold truncate" style={{ color: "#FFFFFF" }}>{r.title}</div>
-                              <div className="truncate text-[11px] mt-0.5" style={{ color: "#6B7280" }}>{extractDomain(r.url)}</div>
+                            <td className="px-6 py-3.5 align-top" style={{ maxWidth: 240 }}>
+                              <div className="flex items-center gap-1.5 font-medium truncate" style={{ color: "#FFFFFF", fontSize: 14 }}>
+                                <MapPin size={12} strokeWidth={1.5} color="#2463EB" className="shrink-0" />
+                                {r.title}
+                              </div>
+                              <div className="truncate text-[11px] mt-0.5 ml-[18px]" style={{ color: "#374151" }}>{extractDomain(r.url)}</div>
                             </td>
-                            <td className="px-3 py-3 align-top" style={{ color: "#9CA3AF", maxWidth: 360 }}>
-                              <div className="line-clamp-2">{r.description || "—"}</div>
+                            <td className="px-4 py-3.5 align-top" style={{ color: "#6B7280", maxWidth: 360 }}>
+                              <div className="line-clamp-1 text-[13px]">{r.description || "—"}</div>
                             </td>
-                            <td className="px-3 py-3 align-top whitespace-nowrap" style={{ color: r.phone ? "#FFFFFF" : "#374151" }}>
+                            <td className="px-4 py-3.5 align-top whitespace-nowrap text-[13px]" style={{ color: r.phone ? "#FFFFFF" : "#374151" }}>
                               {r.phone || "—"}
                             </td>
-                            <td className="px-5 py-3 align-top">
-                              <div className="flex items-center justify-end gap-1.5">
+                            <td className="px-6 py-3.5 align-top">
+                              <div className="flex items-center justify-end gap-2">
                                 {r.phone && (
                                   <button
                                     type="button"
                                     onClick={() => openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}`)}
                                     title="WhatsApp"
-                                    className="flex items-center justify-center hover:bg-white/[0.05] transition-colors"
+                                    className="flex items-center justify-center hover:bg-[#111118] transition-colors"
                                     style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
                                   >
-                                    <MessageCircle size={13} color="#6B7280" />
+                                    <MessageCircle size={14} color="#6B7280" />
                                   </button>
                                 )}
                                 <button
                                   type="button"
-                                  onClick={() => openExternalLink(`https://www.google.com/maps/search/${encodeURIComponent(r.title)}`)}
-                                  title="Maps"
-                                  className="flex items-center justify-center hover:bg-white/[0.05] transition-colors"
-                                  style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
-                                >
-                                  <MapPin size={13} color="#6B7280" />
-                                </button>
-                                <button
-                                  type="button"
                                   onClick={() => openExternalLink(r.url)}
                                   title="Abrir site"
-                                  className="flex items-center justify-center hover:bg-white/[0.05] transition-colors"
-                                  style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
+                                  className="flex items-center justify-center transition-colors group"
+                                  style={{ width: 28, height: 28 }}
                                 >
-                                  <ExternalLink size={13} color="#6B7280" />
+                                  <ExternalLink size={14} className="text-[#6B7280] group-hover:text-[#2463EB] transition-colors" />
                                 </button>
                               </div>
                             </td>
-                          </tr>
+                          </motion.tr>
                         ))}
                       </tbody>
                     </table>
