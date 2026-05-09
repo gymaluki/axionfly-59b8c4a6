@@ -235,7 +235,7 @@ const ProspeccaoView = () => {
     setSearched(false);
     setEstado("");
     setCidade("");
-    toast.info("Processo reiniciado");
+    toast.info("Pesquisa reiniciada");
   };
 
   return (
@@ -458,7 +458,7 @@ const ProspeccaoView = () => {
                 style={{ fontSize: 12, color: "#6B7280", background: "transparent" }}
               >
                 <RotateCcw size={12} className="group-hover:text-white transition-colors" />
-                <span className="group-hover:text-white transition-colors">Limpar seleção</span>
+                <span className="group-hover:text-white transition-colors">Reiniciar pesquisa</span>
               </button>
             </div>
 
@@ -498,7 +498,7 @@ const ProspeccaoView = () => {
                   className="w-2 h-2 rounded-full" 
                   style={{ background: searchMode === "manual" ? "#2463EB" : "#374151" }} 
                 />
-                Prospecção Manual (Google)
+                Prospecção Manual
               </button>
             </div>
 
