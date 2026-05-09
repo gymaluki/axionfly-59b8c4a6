@@ -310,11 +310,30 @@ const ProspeccaoView = () => {
           100% { background-position: 400% 0; }
         }
         .skel {
-          background: linear-gradient(90deg, #0D0D12 0%, #111118 50%, #0D0D12 100%);
+          background: linear-gradient(90deg, #0D0D12 0%, #16161E 50%, #0D0D12 100%);
           background-size: 400% 100%;
-          animation: skel-shimmer 1.4s ease infinite;
-          border-radius: 4px;
+          animation: skel-shimmer 2s ease infinite;
+          border-radius: 8px;
         }
+
+        @keyframes scan-line {
+          0% { top: 0; opacity: 0; }
+          5% { opacity: 0.5; }
+          50% { opacity: 0.8; }
+          95% { opacity: 0.5; }
+          100% { top: 100%; opacity: 0; }
+        }
+        .scanner-line {
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #2463EB, transparent);
+          box-shadow: 0 0 15px #2463EB;
+          animation: scan-line 2.5s ease-in-out infinite;
+          z-index: 10;
+        }
+
       `}</style>
 
       {/* HEADER */}
@@ -609,7 +628,12 @@ const ProspeccaoView = () => {
                   <div className="flex items-center gap-2">
                     <span style={{ fontSize: 12, color: "#6B7280" }}>
                       {loading
-                        ? "Buscando leads..."
+                        ? (
+                          <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#2463EB] animate-pulse" />
+                            <span>Escaneando a web em busca de leads...</span>
+                          </div>
+                        )
                         : results.length > 0
                           ? `${results.length} leads encontrados`
                           : searched
@@ -652,10 +676,22 @@ const ProspeccaoView = () => {
 
                 {/* Conteúdo */}
                 {loading ? (
-                  <div className="px-5 py-4 space-y-3">
-                    {[0, 1, 2, 3, 4].map(i => (
-                      <div key={i} className="skel" style={{ height: 56 }} />
-                    ))}
+                  <div className="relative overflow-hidden">
+                    <div className="scanner-line" />
+                    <div className="px-5 py-6 space-y-4">
+                      <div className="flex items-center gap-4 mb-2">
+                        <div className="skel h-4 w-32" />
+                        <div className="skel h-4 w-48" />
+                      </div>
+                      {[0, 1, 2, 3, 4, 5].map(i => (
+                        <div key={i} className="flex gap-4 items-center">
+                          <div className="skel h-12 flex-1" />
+                          <div className="skel h-12 flex-1 hidden md:block" />
+                          <div className="skel h-12 w-32 hidden md:block" />
+                          <div className="skel h-10 w-24" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ) : results.length > 0 ? (
                   <div className="pp-scroll" style={{ maxHeight: 520, overflowY: "auto" }}>
@@ -697,29 +733,44 @@ const ProspeccaoView = () => {
                               {r.phone || "—"}
                             </td>
                             <td className="px-6 py-3.5 align-top">
-                              <div className="flex items-center justify-end gap-2">
+                              <div className="flex items-center justify-end gap-2.5">
                                 {r.phone && (
                                   <button
                                     type="button"
                                     onClick={() => {
-                                      const text = encodeURIComponent(`Olá, vi que o seu negócio "${r.title}" ainda não possui um site profissional. Sou especialista em criação de sites e gostaria de apresentar uma proposta para ajudar a escalar seu faturamento. Podemos conversar?`);
+                                      const text = encodeURIComponent(`Olá, sou da AxionFly. Vi que o seu negócio "${r.title}" tem um grande potencial, mas ainda não está aproveitando todo o poder do digital para fechar mais contratos.
+
+Gostaria de apresentar como podemos automatizar sua prospecção e escalar seu faturamento de forma profissional. Podemos conversar hoje?`);
                                       openExternalLink(`https://wa.me/55${r.phone!.replace(/\D/g, "")}?text=${text}`);
                                     }}
-                                    title="Enviar proposta no WhatsApp"
-                                    className="flex items-center justify-center hover:bg-[#111118] transition-colors group"
-                                    style={{ width: 28, height: 28, borderRadius: 6, border: "1px solid rgba(255,255,255,0.06)" }}
+                                    title="Fechar Contrato no WhatsApp"
+                                    className="flex items-center justify-center bg-[#22c55e]/10 hover:bg-[#22c55e]/20 transition-all group"
+                                    style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(34,197,94,0.2)" }}
                                   >
-                                    <MessageCircle size={14} className="text-[#6B7280] group-hover:text-[#22c55e] transition-colors" />
+                                    <MessageCircle size={15} className="text-[#22c55e] transition-colors" />
                                   </button>
                                 )}
                                 <button
                                   type="button"
-                                  onClick={() => openExternalLink(r.url)}
-                                  title="Abrir site"
-                                  className="flex items-center justify-center transition-colors group"
-                                  style={{ width: 28, height: 28 }}
+                                  onClick={() => {
+                                    const loc = buildLocation();
+                                    const q = `${r.title} ${loc}`.trim();
+                                    openExternalLink(`https://www.google.com/maps/search/${encodeURIComponent(q)}`);
+                                  }}
+                                  title="Ver no Google Maps"
+                                  className="flex items-center justify-center bg-[#2463EB]/10 hover:bg-[#2463EB]/20 transition-all group"
+                                  style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(36,99,235,0.2)" }}
                                 >
-                                  <ExternalLink size={14} className="text-[#6B7280] group-hover:text-[#2463EB] transition-colors" />
+                                  <MapPin size={15} className="text-[#2463EB] transition-colors" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => openExternalLink(r.url)}
+                                  title="Abrir Site"
+                                  className="flex items-center justify-center bg-white/5 hover:bg-white/10 transition-all group"
+                                  style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)" }}
+                                >
+                                  <ExternalLink size={15} className="text-[#6B7280] group-hover:text-white transition-colors" />
                                 </button>
                               </div>
                             </td>
