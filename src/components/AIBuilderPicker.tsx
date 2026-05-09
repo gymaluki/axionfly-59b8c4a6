@@ -258,6 +258,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   );
 };
 
