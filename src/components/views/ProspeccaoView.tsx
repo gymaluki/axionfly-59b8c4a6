@@ -100,6 +100,7 @@ const ProspeccaoView = () => {
         setCidade(s.cidade || "");
         setEstado(s.estado || "");
         setActiveFilter(s.activeFilter || "");
+        setSearchMode(s.searchMode || "automatic");
         setResults(s.results || []);
         setSearched(s.searched || false);
       } catch {}
