@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
+import { ExternalLink, Check } from "lucide-react";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
 
@@ -32,15 +33,14 @@ const copySync = (text: string): boolean => {
 export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps) => {
   const normalizedPrompt = prompt.trim();
   const [generating, setGenerating] = useState<string | null>(null);
-  const [needsManualOpen, setNeedsManualOpen] = useState(false);
+  const [readyToOpen, setReadyToOpen] = useState(false);
   const startedRef = useRef(false);
-  const popupRef = useRef<Window | null>(null);
 
   useEffect(() => {
     if (!open) {
       startedRef.current = false;
-      popupRef.current = null;
-      setNeedsManualOpen(false);
+      setReadyToOpen(false);
+      setGenerating(null);
       return;
     }
     if (startedRef.current) return;
@@ -63,62 +63,46 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
       navigator.clipboard.writeText(normalizedPrompt).catch(() => {});
     }
 
-    // Abre a nova aba IMEDIATAMENTE (ainda dentro da janela do gesto do usuário).
-    try {
-      popupRef.current = window.open("", "_blank");
-    } catch {
-      popupRef.current = null;
-    }
-
     setGenerating(targetUrl);
   }, [open, normalizedPrompt, onClose]);
 
   const handleGenerationComplete = () => {
-    const url = generating;
-    if (!url) {
-      onClose();
-      return;
-    }
-
-    const popup = popupRef.current;
-    if (popup && !popup.closed) {
-      try {
-        popup.location.assign(url);
-        popupRef.current = null;
-        setGenerating(null);
-        onClose();
-        return;
-      } catch (e) {
-        console.error("Erro ao redirecionar popup:", e);
-      }
-    }
-
-    // Se o popup falhou ou foi bloqueado, redireciona a própria aba atual para não perder o fluxo
-    window.location.href = url;
+    setReadyToOpen(true);
   };
 
-  const handleManualOpen = () => {
+  const handleOpenLovable = () => {
     if (generating) {
-      window.location.href = generating;
+      window.open(generating, "_blank", "noopener,noreferrer");
     }
+    setReadyToOpen(false);
     setGenerating(null);
-    setNeedsManualOpen(false);
     onClose();
   };
 
-  if (open && needsManualOpen && generating) {
+  if (open && readyToOpen && generating) {
     return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm">
-        <div className="bg-[#0d0d14] border border-white/10 rounded-2xl p-8 max-w-md mx-4 text-center space-y-4">
-          <h2 className="text-xl font-bold text-white">Abrir no Lovable</h2>
-          <p className="text-sm text-[#9ca3af]">
-            Seu navegador bloqueou a abertura automática. Clique abaixo para continuar no Lovable.
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
+        <div className="relative w-full max-w-md rounded-2xl border border-primary/30 bg-[#0a0a14] p-8 text-center shadow-[0_0_60px_-10px_hsl(var(--primary)/0.5)]">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-green-500/30 bg-green-500/10">
+            <Check className="h-8 w-8 text-green-400" />
+          </div>
+          <h2 className="text-2xl font-bold text-white">Tudo pronto!</h2>
+          <p className="mt-2 text-sm text-blue-200/70">
+            Seu prompt foi gerado e copiado para a área de transferência.
+            Clique abaixo para abrir o Lovable em uma nova aba e cole com <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-xs font-mono">Ctrl+V</kbd>.
           </p>
           <button
-            onClick={handleManualOpen}
-            className="w-full h-12 rounded-xl bg-gradient-to-r from-[#4f6ef7] to-[#7b5cff] text-white font-bold shadow-[0_0_30px_rgba(79,110,247,0.45)] hover:scale-[1.02] transition-transform"
+            onClick={handleOpenLovable}
+            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-3.5 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            Abrir Lovable em nova aba
+            <ExternalLink className="h-5 w-5" />
+            Abrir Lovable agora
+          </button>
+          <button
+            onClick={() => { setReadyToOpen(false); setGenerating(null); onClose(); }}
+            className="mt-3 text-xs text-white/40 hover:text-white/70 transition-colors"
+          >
+            Fechar
           </button>
         </div>
       </div>
@@ -127,7 +111,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
 
   return (
     <GeneratingOverlay
-      open={open && generating !== null && !needsManualOpen}
+      open={open && generating !== null && !readyToOpen}
       durationMs={6000}
       onComplete={handleGenerationComplete}
     />
