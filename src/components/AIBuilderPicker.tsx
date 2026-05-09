@@ -106,7 +106,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
 
   const handleManualOpen = () => {
     if (generating) {
-      window.open(generating, "_blank", "noopener,noreferrer");
+      window.location.href = generating;
     }
     setGenerating(null);
     setNeedsManualOpen(false);
