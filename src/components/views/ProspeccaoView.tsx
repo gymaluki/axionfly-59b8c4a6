@@ -118,7 +118,7 @@ const ProspeccaoView = () => {
       );
     };
     save();
-  }, [cidade, estado, activeFilter, results, searched]);
+  }, [cidade, estado, activeFilter, results, searched, searchMode]);
 
   useEffect(() => {
     if (!estado || estado === "todos") { setCidades([]); return; }
@@ -195,7 +195,7 @@ const ProspeccaoView = () => {
         setLoading(false);
         openExternalLink(mapsUrl);
         toast.success("Redirecionando para o Google Maps...");
-      }, 3000);
+      }, 6000);
       return;
     }
     
