@@ -87,6 +87,7 @@ const ProspeccaoView = () => {
   const [searchMode, setSearchMode] = useState<"automatic" | "manual">("automatic");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [manualRedirectUrl, setManualRedirectUrl] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
 
   useEffect(() => {
@@ -187,14 +188,20 @@ const ProspeccaoView = () => {
     
     if (searchMode === "manual") {
       setLoading(true);
+      setManualRedirectUrl(null);
       const location = buildLocation();
       const query = `${activeFilter} em ${location}`.trim();
       const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
       
       setTimeout(() => {
         setLoading(false);
-        openExternalLink(mapsUrl);
-        toast.success("Redirecionando para o Google Maps...");
+        const win = window.open(mapsUrl, "_blank", "noopener,noreferrer");
+        if (win) {
+          toast.success("Redirecionando para o Google Maps...");
+        } else {
+          setManualRedirectUrl(mapsUrl);
+          toast.error("Popup bloqueado pelo navegador");
+        }
       }, 6000);
       return;
     }
@@ -610,8 +617,8 @@ const ProspeccaoView = () => {
               </div>
             </div>
 
-            {/* TABELA DE RESULTADOS (Apenas em modo automático ou durante o loading do manual) */}
-            {(searchMode === "automatic" || (searchMode === "manual" && loading)) && (
+            {/* TABELA DE RESULTADOS (Apenas em modo automático ou durante o loading do manual/fallback) */}
+            {(searchMode === "automatic" || (searchMode === "manual" && (loading || manualRedirectUrl))) && (
               <div className="px-6 pb-8">
               <div
                 style={{
@@ -639,7 +646,9 @@ const ProspeccaoView = () => {
                             <span>{searchMode === "manual" ? "Preparando redirecionamento para o Google Maps..." : "Escaneando a web em busca de leads..."}</span>
                           </div>
                         )
-                        : results.length > 0
+                        : manualRedirectUrl 
+                          ? "Ação necessária: Clique no botão abaixo para abrir o Google Maps"
+                          : results.length > 0
                           ? `${results.length} leads encontrados`
                           : searched
                             ? "Nenhum lead encontrado"
@@ -697,6 +706,28 @@ const ProspeccaoView = () => {
                         </div>
                       ))}
                     </div>
+                  </div>
+                ) : manualRedirectUrl ? (
+                  <div className="flex flex-col items-center justify-center py-16 px-6 text-center space-y-6">
+                    <div className="w-16 h-16 rounded-2xl bg-[#2463EB]/10 flex items-center justify-center border border-[#2463EB]/20">
+                      <MapPin size={32} className="text-[#2463EB]" />
+                    </div>
+                    <div className="max-w-md space-y-2">
+                      <h3 className="text-xl font-bold text-white">Redirecionamento bloqueado</h3>
+                      <p className="text-[#6B7280] text-sm">
+                        O seu navegador bloqueou o popup automático. Clique no botão abaixo para prosseguir com a prospecção manual no Google Maps.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        window.open(manualRedirectUrl, "_blank", "noopener,noreferrer");
+                        setManualRedirectUrl(null);
+                      }}
+                      className="flex items-center gap-2 px-8 h-12 bg-[#2463EB] hover:bg-[#2F6EED] text-white rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(36,99,235,0.3)] active:scale-95"
+                    >
+                      <ExternalLink size={18} />
+                      Abrir no Google Maps
+                    </button>
                   </div>
                 ) : results.length > 0 ? (
                   <div className="pp-scroll" style={{ maxHeight: 520, overflowY: "auto" }}>
