@@ -351,39 +351,50 @@ const ProspeccaoView = () => {
                 type="button"
                 onClick={() => handleSelectNicho(n.label)}
                 data-selected={selected}
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut", delay: idx * 0.02 }}
+                transition={{ duration: 0.2, ease: "easeOut", delay: idx * 0.018 }}
                 className="nicho-card relative flex items-center text-left"
                 style={{
-                  height: 48,
-                  padding: "0 16px",
+                  height: 52,
+                  padding: "0 14px",
                   gap: 10,
                   borderRadius: 10,
-                  background: selected ? "rgba(36,99,235,0.08)" : "#0D0D12",
+                  background: selected 
+                    ? "linear-gradient(135deg, #0F1629 0%, #0a1220 100%)" 
+                    : "#0D0D12",
                   border: selected
                     ? "1px solid #2463EB"
-                    : "1px solid rgba(255,255,255,0.06)",
-                  borderLeft: selected ? "3px solid #2463EB" : "1px solid rgba(255,255,255,0.06)",
-                  paddingLeft: selected ? 14 : 16,
+                    : "1px solid rgba(255,255,255,0.07)",
+                  boxShadow: selected 
+                    ? "0 0 0 1px rgba(36,99,235,0.2), 0 4px 24px rgba(36,99,235,0.15)" 
+                    : "none",
+                  borderLeft: selected ? "3px solid #2463EB" : "1px solid rgba(255,255,255,0.07)",
+                  paddingLeft: selected ? 12 : 14,
                 }}
               >
                 <Icon
                   className="nicho-icon shrink-0"
-                  size={16}
+                  size={15}
                   strokeWidth={1.5}
-                  color={selected ? "#2463EB" : "#6B7280"}
+                  color={selected ? "#2463EB" : "#374151"}
                 />
                 <span
                   className="truncate"
                   style={{
                     fontSize: 13,
                     fontWeight: selected ? 700 : 500,
-                    color: "#FFFFFF",
+                    color: selected ? "#FFFFFF" : "#9CA3AF",
                   }}
                 >
                   {n.label}
                 </span>
+                {selected && (
+                  <div 
+                    className="pulse-dot absolute top-2 right-2 w-[5px] h-[5px] rounded-full"
+                    style={{ background: "#2463EB" }}
+                  />
+                )}
               </motion.button>
             );
           })}
