@@ -544,53 +544,53 @@ const ProspeccaoView = () => {
               >
                 {/* Header da tabela */}
                 <div
-                  className="flex items-center justify-between px-5"
+                  className="flex items-center justify-between px-6"
                   style={{
-                    height: 48,
+                    height: 52,
+                    background: "#0D0D12",
                     borderBottom: "1px solid rgba(255,255,255,0.06)",
                   }}
                 >
-                  <span style={{ fontSize: 12, color: "#6B7280" }}>
-                    {loading
-                      ? "Buscando leads..."
-                      : results.length > 0
-                        ? `${results.length} leads encontrados`
-                        : searched
-                          ? "Nenhum lead encontrado"
-                          : "Configure os filtros e clique em Buscar"}
-                  </span>
                   <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={handleClearNicho}
-                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
-                      style={{
-                        height: 32,
-                        borderRadius: 8,
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        fontSize: 12,
-                        color: "#6B7280",
-                        background: "transparent",
-                      }}
-                    >
-                      <RotateCcw size={13} /> Nova Pesquisa
-                    </button>
+                    <span style={{ fontSize: 12, color: "#6B7280" }}>
+                      {loading
+                        ? "Buscando leads..."
+                        : results.length > 0
+                          ? `${results.length} leads encontrados`
+                          : searched
+                            ? "Nenhum lead encontrado"
+                            : "Configure os filtros e clique em Buscar"}
+                    </span>
+                    {results.length > 0 && (
+                      <div 
+                        className="px-2 py-0.5 rounded-full border border-[rgba(36,99,235,0.15)] bg-[rgba(36,99,235,0.1)]"
+                        style={{ marginLeft: 4 }}
+                      >
+                        <span style={{ color: "#2463EB", fontSize: 11, fontWeight: 700 }}>
+                          {activeFilter}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={handleExportCSV}
                       disabled={!results.length}
-                      className="flex items-center gap-1.5 px-3 hover:bg-white/[0.03] transition-colors"
+                      className="flex items-center gap-1.5 px-3 transition-colors"
                       style={{
                         height: 32,
-                        borderRadius: 8,
+                        borderRadius: 7,
                         border: "1px solid rgba(255,255,255,0.08)",
                         fontSize: 12,
                         color: results.length ? "#FFFFFF" : "#374151",
                         cursor: results.length ? "pointer" : "default",
                         background: "transparent",
                       }}
+                      onMouseEnter={(e) => { if (results.length) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; e.currentTarget.style.color = "#FFFFFF"; } }}
+                      onMouseLeave={(e) => { if (results.length) { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "#FFFFFF"; } }}
                     >
-                      <Download size={13} /> Exportar CSV
+                      <Download size={12} /> Exportar CSV
                     </button>
                   </div>
                 </div>
