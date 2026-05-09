@@ -398,7 +398,7 @@ const SitesView = () => {
       features, font, designStyle, slogan, siteObjective, tone, selectedPages,
       ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
       targetAudience, differentiators, pricePositioning, socialProof,
-      productNameCakto, productPrice
+      productNameCakto, productPrice, caktoRegistered, caktoCheckoutUrl
     };
     localStorage.setItem(`sites-view-state-${user.id}`, JSON.stringify(state));
   }, [
