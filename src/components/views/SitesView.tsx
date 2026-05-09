@@ -312,6 +312,7 @@ const SitesView = () => {
   const [font, setFont] = useState("");
   const [designStyle, setDesignStyle] = useState("");
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [slogan, setSlogan] = useState("");
   const [siteObjective, setSiteObjective] = useState("");
