@@ -46,7 +46,6 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     startedRef.current = true;
 
     if (!normalizedPrompt) {
-      toast.error("O prompt ainda não foi gerado. Gere o site novamente para continuar.");
       onClose();
       return;
     }
@@ -75,14 +74,8 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     setGenerating(null);
     onClose();
     if (url) {
-      // Tenta abrir em nova aba primeiro (pode ser bloqueado se não for trigger direto do usuário)
-      // Como estamos vindo de um timeout (onComplete do overlay), o navegador costuma bloquear.
-      const win = window.open(url, "_blank", "noopener,noreferrer");
-      
-      // Fallback: se for bloqueado ou se o usuário estiver no iframe, navegamos na mesma aba
-      if (!win) {
-        window.location.assign(url);
-      }
+      // Redireciona na mesma aba — garante que sempre funcione (sem popup blocker)
+      window.location.href = url;
     }
   };
 
