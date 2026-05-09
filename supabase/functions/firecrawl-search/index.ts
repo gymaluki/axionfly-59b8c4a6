@@ -69,12 +69,11 @@ Deno.serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query,
-        limit: options?.limit || 10,
-        lang: options?.lang || 'pt-br',
-        country: options?.country || 'br',
-        tbs: options?.tbs,
-        scrapeOptions: options?.scrapeOptions,
+        query: String(query).slice(0, 500),
+        limit: Math.min(Math.max(parseInt(String(options?.limit)) || 10, 1), 20),
+        lang: ['pt-br', 'en', 'es'].includes(options?.lang) ? options.lang : 'pt-br',
+        country: /^[a-z]{2}$/i.test(String(options?.country || '')) ? options.country : 'br',
+        tbs: ['qdr:h', 'qdr:d', 'qdr:w', 'qdr:m', 'qdr:y'].includes(options?.tbs) ? options.tbs : undefined,
       }),
     });
 
