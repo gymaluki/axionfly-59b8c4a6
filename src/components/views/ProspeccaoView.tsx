@@ -232,50 +232,76 @@ const ProspeccaoView = () => {
       style={{ background: "#05050A", color: "#FFFFFF" }}
     >
       <style>{`
-        .pp-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+        .pp-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .pp-scroll::-webkit-scrollbar-track { background: transparent; }
-        .pp-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 8px; }
+        .pp-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 10px; }
         .pp-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
 
         .nicho-card { transition: all 160ms ease; }
         .nicho-card:hover:not([data-selected="true"]) {
           background: #111118 !important;
-          border-color: rgba(36,99,235,0.35) !important;
+          border-color: rgba(36,99,235,0.3) !important;
+          box-shadow: 0 0 0 1px rgba(36,99,235,0.1);
         }
         .nicho-card:hover:not([data-selected="true"]) .nicho-icon { color: #2463EB !important; }
+        .nicho-card:hover:not([data-selected="true"]) span { color: #FFFFFF !important; }
 
-        .row-result { transition: background 160ms ease; }
-        .row-result:hover { background: #111118 !important; }
+        @keyframes pulse-blue {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.4); opacity: 0.4; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        .pulse-dot {
+          animation: pulse-blue 2s infinite;
+        }
 
-        .btn-primary { transition: all 180ms ease; }
-        .btn-primary:not(:disabled):hover {
+        .row-result { transition: all 120ms ease-out; }
+        .row-result:hover { background: #0D0D12 !important; }
+
+        .btn-buscar { transition: all 160ms ease; position: relative; overflow: hidden; }
+        .btn-buscar:not(:disabled):hover {
           background: #2F6EED !important;
-          box-shadow: 0 0 20px rgba(36,99,235,0.25);
+          box-shadow: 0 4px 20px rgba(36,99,235,0.35);
+        }
+        .btn-buscar:not(:disabled):active { transform: scale(0.97); background: #1D4ED8 !important; }
+        
+        .btn-buscar::after {
+          content: "";
+          position: absolute;
+          top: 0; left: -100%;
+          width: 50%; height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+          transition: none;
+        }
+        .btn-buscar:hover::after {
+          left: 100%;
+          transition: left 500ms linear;
         }
 
         .pp-select-trigger {
           background: #0D0D12 !important;
           border: 1px solid rgba(255,255,255,0.08) !important;
           color: #FFFFFF !important;
-          height: 40px !important;
+          height: 42px !important;
           border-radius: 8px !important;
           font-size: 14px !important;
+          transition: all 160ms ease !important;
         }
         .pp-select-trigger:focus, .pp-select-trigger[data-state="open"] {
           border-color: #2463EB !important;
           outline: none !important;
-          box-shadow: none !important;
+          box-shadow: 0 0 0 3px rgba(36,99,235,0.12) !important;
         }
 
         @keyframes skel-shimmer {
-          0% { background-position: -400px 0; }
-          100% { background-position: 400px 0; }
+          0% { background-position: -400% 0; }
+          100% { background-position: 400% 0; }
         }
         .skel {
-          background: linear-gradient(90deg, #0D0D12 0%, #16161e 50%, #0D0D12 100%);
-          background-size: 800px 100%;
-          animation: skel-shimmer 1.6s linear infinite;
-          border-radius: 6px;
+          background: linear-gradient(90deg, #0D0D12 0%, #111118 50%, #0D0D12 100%);
+          background-size: 400% 100%;
+          animation: skel-shimmer 1.4s ease infinite;
+          border-radius: 4px;
         }
       `}</style>
 
