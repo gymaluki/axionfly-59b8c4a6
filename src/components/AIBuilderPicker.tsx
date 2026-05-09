@@ -83,13 +83,13 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     const popup = popupRef.current;
     if (popup && !popup.closed) {
       try {
-        popup.location.href = url;
+        popup.location.assign(url);
         popupRef.current = null;
         setGenerating(null);
         onClose();
         return;
-      } catch {
-        // cross-origin block — cai pro fallback
+      } catch (e) {
+        console.error("Erro ao redirecionar popup:", e);
       }
     }
 
