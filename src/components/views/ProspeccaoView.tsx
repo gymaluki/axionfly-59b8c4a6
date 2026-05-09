@@ -310,11 +310,30 @@ const ProspeccaoView = () => {
           100% { background-position: 400% 0; }
         }
         .skel {
-          background: linear-gradient(90deg, #0D0D12 0%, #111118 50%, #0D0D12 100%);
+          background: linear-gradient(90deg, #0D0D12 0%, #16161E 50%, #0D0D12 100%);
           background-size: 400% 100%;
-          animation: skel-shimmer 1.4s ease infinite;
-          border-radius: 4px;
+          animation: skel-shimmer 2s ease infinite;
+          border-radius: 8px;
         }
+
+        @keyframes scan-line {
+          0% { top: 0; opacity: 0; }
+          5% { opacity: 0.5; }
+          50% { opacity: 0.8; }
+          95% { opacity: 0.5; }
+          100% { top: 100%; opacity: 0; }
+        }
+        .scanner-line {
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #2463EB, transparent);
+          box-shadow: 0 0 15px #2463EB;
+          animation: scan-line 2.5s ease-in-out infinite;
+          z-index: 10;
+        }
+
       `}</style>
 
       {/* HEADER */}
