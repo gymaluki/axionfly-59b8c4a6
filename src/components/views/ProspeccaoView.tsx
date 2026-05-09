@@ -707,6 +707,28 @@ const ProspeccaoView = () => {
                       ))}
                     </div>
                   </div>
+                ) : manualRedirectUrl ? (
+                  <div className="flex flex-col items-center justify-center py-16 px-6 text-center space-y-6">
+                    <div className="w-16 h-16 rounded-2xl bg-[#2463EB]/10 flex items-center justify-center border border-[#2463EB]/20">
+                      <MapPin size={32} className="text-[#2463EB]" />
+                    </div>
+                    <div className="max-w-md space-y-2">
+                      <h3 className="text-xl font-bold text-white">Redirecionamento bloqueado</h3>
+                      <p className="text-[#6B7280] text-sm">
+                        O seu navegador bloqueou o popup automático. Clique no botão abaixo para prosseguir com a prospecção manual no Google Maps.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        window.open(manualRedirectUrl, "_blank", "noopener,noreferrer");
+                        setManualRedirectUrl(null);
+                      }}
+                      className="flex items-center gap-2 px-8 h-12 bg-[#2463EB] hover:bg-[#2F6EED] text-white rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(36,99,235,0.3)] active:scale-95"
+                    >
+                      <ExternalLink size={18} />
+                      Abrir no Google Maps
+                    </button>
+                  </div>
                 ) : results.length > 0 ? (
                   <div className="pp-scroll" style={{ maxHeight: 520, overflowY: "auto" }}>
                     <table className="w-full" style={{ fontSize: 13 }}>
