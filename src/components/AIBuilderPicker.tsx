@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
 import { ExternalLink, Check } from "lucide-react";
+import { motion } from "framer-motion";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
 
@@ -79,32 +80,39 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     onClose();
   };
 
+  // If readyToOpen is true, show the final modal
   if (open && readyToOpen && generating) {
     return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
-        <div className="relative w-full max-w-md rounded-2xl border border-primary/30 bg-[#0a0a14] p-8 text-center shadow-[0_0_60px_-10px_hsl(var(--primary)/0.5)]">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-green-500/30 bg-green-500/10">
-            <Check className="h-8 w-8 text-green-400" />
+      <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 backdrop-blur-xl p-4">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          className="relative w-full max-w-md rounded-2xl border border-primary/40 bg-[#0a0a14] p-8 text-center shadow-[0_0_80px_-10px_hsl(var(--primary)/0.6)]"
+        >
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-green-500/30 bg-green-500/10 shadow-[0_0_30px_-5px_rgba(34,197,94,0.4)]">
+            <Check className="h-10 w-10 text-green-400" />
           </div>
-          <h2 className="text-2xl font-bold text-white">Tudo pronto!</h2>
-          <p className="mt-2 text-sm text-blue-200/70">
-            Seu prompt foi gerado e copiado para a área de transferência.
-            Clique no botão abaixo para finalizar — o Lovable vai abrir em uma nova aba e basta colar com <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-xs font-mono">Ctrl+V</kbd>.
+          <h2 className="text-3xl font-bold text-white tracking-tight">Tudo pronto!</h2>
+          <p className="mt-4 text-base text-blue-100/80 leading-relaxed">
+            Seu prompt foi gerado e copiado automaticamente.
+          </p>
+          <p className="mt-2 text-sm text-blue-300/60 leading-relaxed">
+            Clique no botão abaixo para finalizar e abrir o editor. Lá, basta colar com <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-xs font-mono border border-white/10">Ctrl+V</kbd>.
           </p>
           <button
             onClick={handleOpenLovable}
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-3.5 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            className="mt-8 flex w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-primary to-blue-600 px-6 py-4 font-bold text-white shadow-[0_0_40px_rgba(36,99,235,0.5)] transition-all hover:scale-[1.03] hover:shadow-[0_0_50px_rgba(36,99,235,0.6)] active:scale-[0.98]"
           >
             <ExternalLink className="h-5 w-5" />
             Clique aqui para finalizar
           </button>
           <button
             onClick={() => { setReadyToOpen(false); setGenerating(null); onClose(); }}
-            className="mt-3 text-xs text-white/40 hover:text-white/70 transition-colors"
+            className="mt-4 w-full py-2 text-sm font-medium text-white/30 hover:text-white/60 transition-colors"
           >
-            Fechar
+            Voltar
           </button>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -117,5 +125,8 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     />
   );
 };
+
+// Add framer-motion import to the top if not already present
+// ... keep existing code
 
 export default AIBuilderPicker;
