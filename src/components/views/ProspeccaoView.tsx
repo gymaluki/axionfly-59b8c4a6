@@ -10,38 +10,38 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-type Categoria = "alimentacao" | "beleza" | "saude" | "servicos";
+type Categoria = "alimentacao" | "saude" | "beleza" | "servicos";
 
-const categoriaStyles: Record<Categoria, { label: string; bg: string; text: string; ring: string }> = {
-  alimentacao: { label: "🍽️ Alimentação", bg: "bg-emerald-500/15", text: "text-emerald-300", ring: "ring-emerald-500/20" },
-  beleza:      { label: "💆 Beleza",      bg: "bg-pink-500/15",    text: "text-pink-300",    ring: "ring-pink-500/20" },
-  saude:       { label: "🏥 Saúde",       bg: "bg-sky-500/15",     text: "text-sky-300",     ring: "ring-sky-500/20" },
-  servicos:    { label: "⚙️ Serviços",    bg: "bg-orange-500/15",  text: "text-orange-300",  ring: "ring-orange-500/20" },
+const categoriaStyles: Record<Categoria, { label: string; style: React.CSSProperties }> = {
+  alimentacao: { label: "🍽️ Alimentação", style: { background: "rgba(16,185,129,0.15)", color: "#10B981" } },
+  saude:       { label: "🏥 Saúde",       style: { background: "rgba(16,185,129,0.15)", color: "#10B981" } },
+  beleza:      { label: "💇 Beleza",      style: { background: "rgba(36,99,235,0.15)", color: "#2F6EED" } },
+  servicos:    { label: "⚙️ Serviços",    style: { background: "rgba(36,99,235,0.15)", color: "#2F6EED" } },
 };
 
 const nichos: { label: string; emoji: string; leads: string; cat: Categoria }[] = [
-  { label: "Barbearias",          emoji: "✂️",  leads: "2.4k", cat: "beleza" },
-  { label: "Pizzarias",           emoji: "🍕",  leads: "1.8k", cat: "alimentacao" },
-  { label: "Hamburguerias",       emoji: "🍔",  leads: "1.2k", cat: "alimentacao" },
-  { label: "Manicures",           emoji: "💅",  leads: "3.1k", cat: "beleza" },
-  { label: "Dentistas",           emoji: "🦷",  leads: "4.5k", cat: "saude" },
-  { label: "Clínicas",            emoji: "🏥",  leads: "2.7k", cat: "saude" },
-  { label: "Academias",           emoji: "🏋️",  leads: "1.9k", cat: "saude" },
-  { label: "Pet Shops",           emoji: "🐾",  leads: "1.4k", cat: "servicos" },
-  { label: "Restaurantes",        emoji: "🍽️", leads: "5.2k", cat: "alimentacao" },
-  { label: "Mecânicas",           emoji: "🔧",  leads: "2.1k", cat: "servicos" },
-  { label: "Salões de Beleza",    emoji: "💇",  leads: "3.8k", cat: "beleza" },
-  { label: "Estética",            emoji: "✨",  leads: "2.9k", cat: "beleza" },
-  { label: "Imobiliárias",        emoji: "🏠",  leads: "1.6k", cat: "servicos" },
-  { label: "Advogados",           emoji: "⚖️",  leads: "3.3k", cat: "servicos" },
-  { label: "Contadores",          emoji: "📊",  leads: "1.1k", cat: "servicos" },
-  { label: "Escolas de Idiomas",  emoji: "🗣️",  leads: "0.9k", cat: "servicos" },
-  { label: "Padarias",            emoji: "🍞",  leads: "2.6k", cat: "alimentacao" },
-  { label: "Farmácias",           emoji: "💊",  leads: "2.0k", cat: "saude" },
-  { label: "Óticas",              emoji: "👓",  leads: "0.8k", cat: "saude" },
-  { label: "Floricultura",        emoji: "🌸",  leads: "0.6k", cat: "servicos" },
-  { label: "Lava Jato",           emoji: "🚗",  leads: "1.3k", cat: "servicos" },
-  { label: "Fotógrafos",          emoji: "📸",  leads: "1.0k", cat: "servicos" },
+  { label: "Barbearias",         emoji: "✂️",  leads: "2.4k", cat: "beleza" },
+  { label: "Pizzarias",          emoji: "🍕",  leads: "1.8k", cat: "alimentacao" },
+  { label: "Hamburguerias",      emoji: "🍔",  leads: "1.2k", cat: "alimentacao" },
+  { label: "Manicures",          emoji: "💅",  leads: "3.1k", cat: "beleza" },
+  { label: "Dentistas",          emoji: "🦷",  leads: "4.5k", cat: "saude" },
+  { label: "Clínicas",           emoji: "🏥",  leads: "2.7k", cat: "saude" },
+  { label: "Academias",          emoji: "🏋️",  leads: "1.9k", cat: "saude" },
+  { label: "Pet Shops",          emoji: "🐾",  leads: "1.4k", cat: "servicos" },
+  { label: "Restaurantes",       emoji: "🍽️", leads: "5.2k", cat: "alimentacao" },
+  { label: "Mecânicas",          emoji: "🔧",  leads: "2.1k", cat: "servicos" },
+  { label: "Salões de Beleza",   emoji: "💇",  leads: "3.8k", cat: "beleza" },
+  { label: "Estética",           emoji: "✨",  leads: "2.9k", cat: "beleza" },
+  { label: "Imobiliárias",       emoji: "🏠",  leads: "1.6k", cat: "servicos" },
+  { label: "Advogados",          emoji: "⚖️",  leads: "3.3k", cat: "servicos" },
+  { label: "Contadores",         emoji: "📊",  leads: "1.1k", cat: "servicos" },
+  { label: "Escolas de Idiomas", emoji: "🗣️", leads: "0.9k", cat: "servicos" },
+  { label: "Padarias",           emoji: "🍞",  leads: "2.6k", cat: "alimentacao" },
+  { label: "Farmácias",          emoji: "💊",  leads: "2.0k", cat: "saude" },
+  { label: "Óticas",             emoji: "👓",  leads: "0.8k", cat: "saude" },
+  { label: "Floricultura",       emoji: "🌸",  leads: "0.6k", cat: "servicos" },
+  { label: "Lava Jato",          emoji: "🚗",  leads: "1.3k", cat: "servicos" },
+  { label: "Fotógrafos",         emoji: "📸",  leads: "1.0k", cat: "servicos" },
 ];
 
 const estados = [
@@ -81,23 +81,36 @@ const openExternalLink = (url: string) => {
   if (w) w.opener = null;
 };
 
-// ━━━━━ Typewriter ━━━━━
-const Typewriter = ({ text, speed = 38 }: { text: string; speed?: number }) => {
-  const [shown, setShown] = useState("");
+// ━━━━━ Typewriter (apenas no nó dado) ━━━━━
+const Typewriter = ({ before, accent, after, speed = 38 }: { before: string; accent: string; after?: string; speed?: number }) => {
+  const full = before + accent + (after || "");
+  const [i, setI] = useState(0);
   useEffect(() => {
-    setShown("");
-    let i = 0;
+    setI(0);
     const id = setInterval(() => {
-      i++;
-      setShown(text.slice(0, i));
-      if (i >= text.length) clearInterval(id);
+      setI((prev) => {
+        if (prev >= full.length) { clearInterval(id); return prev; }
+        return prev + 1;
+      });
     }, speed);
     return () => clearInterval(id);
-  }, [text, speed]);
+  }, [full, speed]);
+
+  const shown = full.slice(0, i);
+  const beforeShown = shown.slice(0, Math.min(i, before.length));
+  const accentShown = shown.length > before.length
+    ? shown.slice(before.length, before.length + accent.length)
+    : "";
+  const afterShown = shown.length > before.length + accent.length
+    ? shown.slice(before.length + accent.length)
+    : "";
+
   return (
     <span>
-      {shown}
-      <span className="inline-block w-[3px] h-[0.9em] bg-white/80 ml-1 animate-pulse align-middle" />
+      {beforeShown}
+      <span style={{ color: "#2463EB" }}>{accentShown}</span>
+      {afterShown}
+      <span className="inline-block w-[2px] h-[0.85em] bg-white/80 ml-1 align-middle animate-pulse" />
     </span>
   );
 };
@@ -132,7 +145,6 @@ const ProspeccaoView = () => {
   const [searched, setSearched] = useState(false);
   const [key, setKey] = useState(0);
 
-  // Load saved state
   useEffect(() => {
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -151,7 +163,6 @@ const ProspeccaoView = () => {
     load();
   }, []);
 
-  // Save state
   useEffect(() => {
     const save = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -164,7 +175,6 @@ const ProspeccaoView = () => {
     save();
   }, [cidade, estado, activeFilter, results, searched]);
 
-  // Cities
   useEffect(() => {
     if (!estado || estado === "todos") { setCidades([]); return; }
     const fetchCidades = async () => {
@@ -237,155 +247,137 @@ const ProspeccaoView = () => {
     try { return new URL(url).hostname.replace("www.", ""); } catch { return url; }
   };
 
+  const cidadeDisabled = !estado || estado === "todos";
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-6" style={{ background: "transparent" }}>
       {/* ━━━━━━━━ 1. HERO BANNER ━━━━━━━━ */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="relative overflow-hidden rounded-3xl border border-white/10 p-6 md:p-10"
-        style={{
-          background:
-            "linear-gradient(135deg, #4f6ef7 0%, #5d4fe8 45%, #7c3aed 100%)",
-        }}
-      >
-        {/* Noise overlay */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>\")",
-          }}
-        />
-        {/* Dot grid */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.18]"
-          style={{
-            backgroundImage: "radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-          }}
-        />
-        {/* Floating particles */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          {[...Array(12)].map((_, i) => (
-            <motion.span
-              key={i}
-              className="absolute w-1 h-1 rounded-full bg-white/60"
-              initial={{
-                x: `${(i * 83) % 100}%`,
-                y: `${(i * 47) % 100}%`,
-                opacity: 0.2,
-              }}
-              animate={{
-                y: [`${(i * 47) % 100}%`, `${((i * 47) % 100) - 30}%`, `${(i * 47) % 100}%`],
-                opacity: [0.2, 0.7, 0.2],
-              }}
-              transition={{
-                duration: 6 + (i % 5),
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.3,
-              }}
-            />
-          ))}
-        </div>
-        {/* Glow blobs */}
-        <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -left-20 w-96 h-96 rounded-full bg-[#7c3aed]/40 blur-3xl" />
-
-        <div className="relative">
-          <div className="flex items-start justify-between gap-6 flex-wrap">
-            <div className="max-w-2xl">
-              <motion.h1
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-3xl md:text-5xl font-black tracking-tight text-white leading-[1.05]"
-              >
-                <Typewriter text="Encontre seus próximos clientes 🎯" />
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.6 }}
-                className="text-white/85 text-sm md:text-base mt-3 font-medium"
-              >
-                Mais de 50.000 empresas reais prontas pra prospectar
-              </motion.p>
-            </div>
-
-            {(searched || results.length > 0 || activeFilter || cidade || estado) && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={async () => {
-                  if (!confirm("Limpar a pesquisa salva e reiniciar?")) return;
-                  const { data: { user } } = await supabase.auth.getUser();
-                  if (user) localStorage.removeItem(`prospeccao-view-state-${user.id}`);
-                  setCidade(""); setEstado(""); setActiveFilter("");
-                  setResults([]); setSearched(false);
-                  toast.success("Pesquisa reiniciada!");
-                }}
-                className="gap-2 border-white/30 bg-white/10 text-white hover:bg-white/20 hover:text-white rounded-full font-bold backdrop-blur-md"
-              >
-                <RotateCcw className="w-4 h-4" />
-                Reiniciar
-              </Button>
-            )}
-          </div>
-
-          {/* Badges com counters */}
-          <div className="grid grid-cols-3 gap-2 md:gap-4 mt-7 max-w-2xl">
-            {[
-              { icon: "🏢", to: 50000, suffix: "+", label: "Empresas" },
-              { icon: "🎯", to: 20,    suffix: "",  label: "Nichos" },
-              { icon: "🇧🇷", to: 27,   suffix: "",  label: "Estados" },
-            ].map((b, i) => (
-              <motion.div
-                key={b.label}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: 1.8 + i * 0.12, ease: "easeOut" }}
-                className="rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md px-3 md:px-4 py-3 flex items-center gap-2 md:gap-3"
-              >
-                <span className="text-xl md:text-2xl">{b.icon}</span>
-                <div className="min-w-0">
-                  <div className="text-white font-black text-base md:text-xl leading-none">
-                    <Counter to={b.to} suffix={b.suffix} />
-                    {b.to >= 1000 ? "" : ""}
-                    {b.to === 50000 ? "" : ""}
-                  </div>
-                  <div className="text-white/70 text-[10px] md:text-xs font-bold uppercase tracking-wider mt-1">
-                    {b.label}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* ━━━━━━━━ 2. FILTROS DE LOCALIZAÇÃO ━━━━━━━━ */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
-        className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl p-6 md:p-7 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="relative overflow-hidden p-7 md:p-9"
+        style={{
+          background: "#0D0D12",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: 16,
+        }}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "radial-gradient(circle at 80% 20%, rgba(36,99,235,0.08) 0%, transparent 60%)",
+          }}
+        />
+        <div className="relative flex items-start justify-between gap-6 flex-wrap">
+          <div className="max-w-2xl">
+            <h1
+              className="font-bold tracking-tight leading-tight"
+              style={{ color: "#FFFFFF", fontSize: 32 }}
+            >
+              <Typewriter before="Encontre seus próximos " accent="clientes" after=" 🎯" />
+            </h1>
+            <p className="mt-3" style={{ color: "#6B7280", fontSize: 15 }}>
+              Busque empresas reais por nicho e região — pronto pra prospectar
+            </p>
+          </div>
+
+          {(searched || results.length > 0 || activeFilter || cidade || estado) && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={async () => {
+                if (!confirm("Limpar a pesquisa salva e reiniciar?")) return;
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) localStorage.removeItem(`prospeccao-view-state-${user.id}`);
+                setCidade(""); setEstado(""); setActiveFilter("");
+                setResults([]); setSearched(false);
+                toast.success("Pesquisa reiniciada!");
+              }}
+              className="gap-2 rounded-lg font-semibold"
+              style={{
+                background: "#05050A",
+                border: "1px solid rgba(255,255,255,0.08)",
+                color: "#FFFFFF",
+              }}
+            >
+              <RotateCcw className="w-4 h-4" />
+              Reiniciar
+            </Button>
+          )}
+        </div>
+
+        {/* Stat badges */}
+        <div className="relative mt-6 flex flex-wrap gap-3">
+          {[
+            { icon: "🏢", to: 50000, suffix: "+", label: "EMPRESAS" },
+            { icon: "🎯", to: 20,    suffix: "",  label: "NICHOS" },
+            { icon: "📍", to: 27,    suffix: "",  label: "ESTADOS" },
+          ].map((b, i) => (
+            <motion.div
+              key={b.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 + i * 0.1, ease: "easeOut" }}
+              className="flex items-center gap-3"
+              style={{
+                background: "#05050A",
+                border: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: 12,
+                padding: "12px 20px",
+              }}
+            >
+              <span className="text-xl" style={{ color: "#2463EB" }}>{b.icon}</span>
+              <div className="flex flex-col leading-tight">
+                <span className="font-bold text-white text-base">
+                  <Counter to={b.to} suffix={b.suffix} />
+                </span>
+                <span
+                  className="uppercase font-semibold mt-0.5"
+                  style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.08em" }}
+                >
+                  {b.label}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* ━━━━━━━━ 2. FILTROS ━━━━━━━━ */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+        style={{
+          background: "#0D0D12",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: 16,
+          padding: 20,
+        }}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Estado */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-[#cbd5e1] flex items-center gap-2">
+            <label
+              className="uppercase font-semibold flex items-center gap-1.5"
+              style={{ color: "#6B7280", fontSize: 12, letterSpacing: "0.05em" }}
+            >
               <span>📍</span> Estado
             </label>
             <Select value={estado} onValueChange={(v) => { setEstado(v); setCidade(""); }}>
-              <SelectTrigger className="h-12 bg-[#111827] border-white/10 hover:border-[#4f6ef7]/50 focus:border-[#4f6ef7] focus:ring-4 focus:ring-[#4f6ef7]/20 rounded-xl transition-all duration-300">
+              <SelectTrigger
+                className="h-12 rounded-[10px] text-white focus:ring-0 focus:ring-offset-0"
+                style={{ background: "#05050A", border: "1px solid rgba(255,255,255,0.08)" }}
+                onFocus={(e) => (e.currentTarget.style.borderColor = "#2463EB")}
+                onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+              >
                 <SelectValue placeholder="Todos os estados" />
               </SelectTrigger>
-              <SelectContent className="bg-[#0d0d14] border-white/10 text-white max-h-72">
+              <SelectContent
+                className="text-white max-h-72"
+                style={{ background: "#0D0D12", border: "1px solid rgba(255,255,255,0.08)" }}
+              >
                 <SelectItem value="todos">Todos os estados</SelectItem>
                 {estados.map(e => (
                   <SelectItem key={e.sigla} value={e.sigla}>{e.sigla} — {e.nome}</SelectItem>
@@ -394,69 +386,61 @@ const ProspeccaoView = () => {
             </Select>
           </div>
 
-          {/* Cidade — slide-down */}
-          <AnimatePresence mode="wait">
-            {estado && estado !== "todos" ? (
-              <motion.div
-                key="cidade-field"
-                initial={{ opacity: 0, y: -12, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: "auto" }}
-                exit={{ opacity: 0, y: -12, height: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="space-y-2"
+          <div className="space-y-2">
+            <label
+              className="uppercase font-semibold flex items-center gap-1.5"
+              style={{
+                color: cidadeDisabled ? "#374151" : "#6B7280",
+                fontSize: 12, letterSpacing: "0.05em",
+              }}
+            >
+              <span style={{ opacity: cidadeDisabled ? 0.4 : 1 }}>🏙️</span> Cidade
+            </label>
+            <Select value={cidade} onValueChange={setCidade} disabled={cidadeDisabled || loadingCidades}>
+              <SelectTrigger
+                className="h-12 rounded-[10px] text-white focus:ring-0 focus:ring-offset-0 transition-opacity"
+                style={{
+                  background: "#05050A",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  opacity: cidadeDisabled ? 0.45 : 1,
+                }}
+                onFocus={(e) => { if (!cidadeDisabled) e.currentTarget.style.borderColor = "#2463EB"; }}
+                onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
               >
-                <label className="text-xs font-bold text-[#cbd5e1] flex items-center gap-2">
-                  <span>🏙️</span> Cidade
-                </label>
-                <Select value={cidade} onValueChange={setCidade} disabled={loadingCidades}>
-                  <SelectTrigger className="h-12 bg-[#111827] border-white/10 hover:border-[#4f6ef7]/50 focus:border-[#4f6ef7] focus:ring-4 focus:ring-[#4f6ef7]/20 rounded-xl transition-all duration-300">
-                    <SelectValue placeholder={loadingCidades ? "Carregando cidades..." : "Selecione a cidade"} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#0d0d14] border-white/10 text-white max-h-72">
-                    <SelectItem value="todas">Todas as cidades</SelectItem>
-                    {cidades.map(c => (<SelectItem key={c} value={c}>{c}</SelectItem>))}
-                  </SelectContent>
-                </Select>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="cidade-placeholder"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="space-y-2"
+                <SelectValue placeholder={loadingCidades ? "Carregando cidades..." : cidadeDisabled ? "Selecione um estado primeiro" : "Selecione a cidade"} />
+              </SelectTrigger>
+              <SelectContent
+                className="text-white max-h-72"
+                style={{ background: "#0D0D12", border: "1px solid rgba(255,255,255,0.08)" }}
               >
-                <label className="text-xs font-bold text-[#cbd5e1]/40 flex items-center gap-2">
-                  <span className="opacity-50">🏙️</span> Cidade
-                </label>
-                <div className="h-12 rounded-xl border border-dashed border-white/10 bg-white/[0.02] flex items-center px-4 text-sm text-[#6b7280]">
-                  Selecione um estado primeiro
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <SelectItem value="todas">Todas as cidades</SelectItem>
+                {cidades.map(c => (<SelectItem key={c} value={c}>{c}</SelectItem>))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </motion.div>
 
       {/* ━━━━━━━━ 3. GRID DE NICHOS ━━━━━━━━ */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.25, ease: "easeOut" }}
-        className="space-y-4"
-      >
+      <div className="space-y-3">
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <label className="text-xs font-bold text-[#cbd5e1] uppercase tracking-[0.1em]">
+          <label
+            className="uppercase font-bold"
+            style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.12em" }}
+          >
             Selecione o nicho
           </label>
           {activeFilter && (
-            <span className="text-xs text-[#7c9bff] font-bold flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5" /> {activeFilter} selecionado
+            <span
+              className="font-bold flex items-center gap-1.5"
+              style={{ color: "#2463EB", fontSize: 12 }}
+            >
+              <Check className="w-3.5 h-3.5" /> {activeFilter}
             </span>
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {nichos.map((n, idx) => {
             const isSelected = activeFilter === n.label;
             const cat = categoriaStyles[n.cat];
@@ -464,185 +448,222 @@ const ProspeccaoView = () => {
               <motion.button
                 key={n.label}
                 type="button"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.04, duration: 0.4, ease: "easeOut" }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                transition={{ delay: idx * 0.035, duration: 0.28, ease: "easeOut" }}
                 onClick={() => setActiveFilter(n.label)}
-                className={cn(
-                  "group relative text-left p-4 rounded-2xl border transition-all duration-200 ease-out overflow-hidden",
-                  isSelected
-                    ? "border-2 border-[#4f6ef7] shadow-[0_0_30px_rgba(79,110,247,0.35)]"
-                    : "border border-white/[0.06] hover:border-[#4f6ef7] hover:shadow-[0_0_20px_rgba(79,110,247,0.3)]"
-                )}
+                className="nicho-card group relative text-left transition-all"
+                data-selected={isSelected}
                 style={{
-                  background: isSelected
-                    ? "linear-gradient(135deg, rgba(79,110,247,0.18), rgba(124,58,237,0.10))"
-                    : "#111827",
+                  background: isSelected ? "rgba(36,99,235,0.08)" : "#0D0D12",
+                  border: isSelected
+                    ? "1.5px solid #2463EB"
+                    : "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 14,
+                  padding: 20,
+                  transition: "all 180ms ease",
                 }}
               >
-                {/* Hover lighten */}
-                <div className="pointer-events-none absolute inset-0 bg-white/0 group-hover:bg-white/[0.02] transition-colors duration-200" />
-
-                {/* Checkmark */}
                 <AnimatePresence>
                   {isSelected && (
                     <motion.div
-                      initial={{ scale: 0, rotate: -90 }}
-                      animate={{ scale: 1, rotate: 0 }}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      transition={{ type: "spring", stiffness: 420, damping: 16 }}
-                      className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-[#4f6ef7] flex items-center justify-center shadow-[0_0_14px_rgba(79,110,247,0.7)] z-10"
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full flex items-center justify-center"
+                      style={{ background: "rgba(36,99,235,0.15)", border: "1px solid rgba(36,99,235,0.4)" }}
                     >
-                      <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                      <Check className="w-3 h-3" strokeWidth={3} style={{ color: "#2463EB" }} />
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                <div className="relative flex items-start justify-between gap-2">
-                  <span className="text-[40px] leading-none">{n.emoji}</span>
+                <div className="flex items-start justify-between gap-2">
+                  <span style={{ fontSize: 32, lineHeight: 1 }}>{n.emoji}</span>
                   {!isSelected && (
                     <span
-                      className={cn(
-                        "text-[10px] font-bold px-2 py-1 rounded-full ring-1",
-                        cat.bg, cat.text, cat.ring
-                      )}
+                      className="font-semibold rounded-full"
+                      style={{ ...cat.style, fontSize: 11, padding: "2px 8px", lineHeight: "16px" }}
                     >
                       {cat.label}
                     </span>
                   )}
                 </div>
 
-                <div className="relative font-bold text-[18px] text-white mt-3 leading-tight">
+                <div
+                  className="mt-3 font-bold text-white leading-tight"
+                  style={{ fontSize: 16 }}
+                >
                   {n.label}
                 </div>
 
-                <div className="relative mt-3 mb-3 h-px bg-white/5" />
+                <div className="mt-3 mb-3" style={{ height: 1, background: "rgba(255,255,255,0.05)" }} />
 
-                <div className="relative flex items-center justify-between">
-                  <span className="text-xs text-[#94a3b8] font-medium">{n.leads} empresas</span>
-                  <span className="text-xs text-[#7c9bff] font-bold">Ver leads →</span>
+                <div className="flex items-center justify-between" style={{ fontSize: 13 }}>
+                  <span style={{ color: "#6B7280" }}>{n.leads} empresas</span>
+                  <span className="font-semibold" style={{ color: "#2463EB" }}>Ver leads →</span>
                 </div>
               </motion.button>
             );
           })}
         </div>
-      </motion.div>
+      </div>
 
-      {/* ━━━━━━━━ 4. BOTÃO PRINCIPAL ━━━━━━━━ */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
+      <style>{`
+        .nicho-card[data-selected="false"]:hover {
+          background: #111118 !important;
+          border-color: rgba(36,99,235,0.4) !important;
+          box-shadow: 0 0 0 1px rgba(36,99,235,0.2);
+        }
+        @keyframes shimmer-sweep {
+          from { transform: translateX(-100%); }
+          to   { transform: translateX(100%); }
+        }
+        .btn-search:not(:disabled):hover .shimmer-sweep {
+          animation: shimmer-sweep 0.6s ease-out forwards;
+        }
+        @keyframes ring-pulse {
+          0%   { transform: scale(0.4); opacity: 0.6; }
+          100% { transform: scale(1.6); opacity: 0; }
+        }
+        @keyframes ghost-shimmer-anim {
+          0%   { background-position: -400px 0; }
+          100% { background-position: 400px 0; }
+        }
+        .ghost-shimmer {
+          background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 100%);
+          background-size: 800px 100%;
+          animation: ghost-shimmer-anim 1.8s linear infinite;
+        }
+      `}</style>
+
+      {/* ━━━━━━━━ 4. BOTÃO ━━━━━━━━ */}
+      <motion.button
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
+        transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+        onClick={handleSearch}
+        disabled={loading || !activeFilter}
+        className={cn(
+          "btn-search relative w-full overflow-hidden flex items-center justify-center gap-2 font-bold transition-all",
+          (!activeFilter || loading) && "cursor-not-allowed"
+        )}
+        style={{
+          height: 52,
+          borderRadius: 12,
+          fontSize: 15,
+          background: !activeFilter ? "#1F2937" : "#2463EB",
+          color: !activeFilter ? "#6B7280" : "#FFFFFF",
+          boxShadow: activeFilter && !loading ? "0 4px 20px rgba(36,99,235,0.25)" : "none",
+        }}
+        onMouseEnter={(e) => {
+          if (!activeFilter || loading) return;
+          e.currentTarget.style.background = "#2F6EED";
+          e.currentTarget.style.boxShadow = "0 4px 20px rgba(36,99,235,0.35)";
+        }}
+        onMouseLeave={(e) => {
+          if (!activeFilter || loading) return;
+          e.currentTarget.style.background = "#2463EB";
+          e.currentTarget.style.boxShadow = "0 4px 20px rgba(36,99,235,0.25)";
+        }}
       >
-        <button
-          onClick={handleSearch}
-          disabled={loading || !activeFilter}
-          className={cn(
-            "shimmer-btn relative w-full h-14 rounded-[14px] font-bold text-base tracking-wide overflow-hidden",
-            "flex items-center justify-center gap-3 transition-all duration-300",
-            !activeFilter || loading
-              ? "bg-[#1f2937] text-[#6b7280] cursor-not-allowed"
-              : "text-white shadow-[0_0_30px_rgba(79,110,247,0.45)] hover:shadow-[0_0_45px_rgba(124,58,237,0.55)] hover:scale-[1.01] active:scale-[0.99]"
-          )}
-          style={
-            !activeFilter || loading
-              ? undefined
-              : { background: "linear-gradient(90deg, #4f6ef7 0%, #7c3aed 100%)" }
-          }
-        >
-          {/* Shimmer sweep */}
-          {activeFilter && !loading && (
-            <span
-              aria-hidden
-              className="shimmer-sweep pointer-events-none absolute inset-0 -translate-x-full"
-              style={{
-                background:
-                  "linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%)",
-              }}
-            />
-          )}
-          {loading ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Buscando leads...</span>
-            </>
-          ) : (
-            <>
-              <span className="text-lg">⚡</span>
-              <span>Buscar Leads Agora</span>
-            </>
-          )}
-        </button>
-        <style>{`
-          .shimmer-btn:hover .shimmer-sweep {
-            animation: shimmer-sweep 0.6s ease-out forwards;
-          }
-          @keyframes shimmer-sweep {
-            from { transform: translateX(-100%); }
-            to   { transform: translateX(100%); }
-          }
-        `}</style>
-      </motion.div>
+        {activeFilter && !loading && (
+          <span
+            aria-hidden
+            className="shimmer-sweep pointer-events-none absolute inset-0 -translate-x-full"
+            style={{
+              background: "linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%)",
+            }}
+          />
+        )}
+        {loading ? (
+          <>
+            <Loader2 className="w-5 h-5 animate-spin" />
+            <span>Buscando leads...</span>
+          </>
+        ) : (
+          <>
+            <span>⚡</span>
+            <span>Buscar Leads Agora</span>
+          </>
+        )}
+      </motion.button>
 
-      {/* ━━━━━━━━ 5. RESULTADOS / ESTADO VAZIO ━━━━━━━━ */}
+      {/* ━━━━━━━━ 5. RESULTADOS / VAZIO ━━━━━━━━ */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.45, ease: "easeOut" }}
+        transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
       >
         {results.length > 0 ? (
-          <div className="bg-[#0f172a]/80 border border-white/10 rounded-2xl overflow-hidden shadow-xl backdrop-blur-sm">
+          <div
+            className="overflow-hidden"
+            style={{
+              background: "#0D0D12",
+              border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: 16,
+            }}
+          >
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/5">
-                    <th className="text-left px-6 py-4 text-[11px] font-bold text-[#94a3b8] uppercase tracking-[0.1em]">Negócio</th>
-                    <th className="text-left px-6 py-4 text-[11px] font-bold text-[#94a3b8] uppercase tracking-[0.1em] hidden lg:table-cell">Descrição</th>
-                    <th className="text-left px-6 py-4 text-[11px] font-bold text-[#94a3b8] uppercase tracking-[0.1em]">Telefone</th>
-                    <th className="text-right px-6 py-4 text-[11px] font-bold text-[#94a3b8] uppercase tracking-[0.1em]">Ações</th>
+                  <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                    <th className="text-left px-6 py-4 uppercase font-bold" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Negócio</th>
+                    <th className="text-left px-6 py-4 uppercase font-bold hidden lg:table-cell" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Descrição</th>
+                    <th className="text-left px-6 py-4 uppercase font-bold" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Telefone</th>
+                    <th className="text-right px-6 py-4 uppercase font-bold" style={{ color: "#6B7280", fontSize: 11, letterSpacing: "0.1em" }}>Ações</th>
                   </tr>
                 </thead>
                 <tbody key={key}>
                   {results.map((r, i) => (
                     <motion.tr
                       key={r.url + i}
-                      initial={{ opacity: 0, x: -16 }}
+                      initial={{ opacity: 0, x: -12 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05, duration: 0.35, ease: "easeOut" }}
-                      className="border-b border-white/5 hover:bg-[#4f6ef7]/5 transition-all duration-200 group"
+                      transition={{ delay: i * 0.04, duration: 0.3, ease: "easeOut" }}
+                      className="group transition-colors"
+                      style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "#111118")}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                     >
                       <td className="px-6 py-5">
                         <div className="flex items-start gap-3">
-                          <div className="p-2 rounded-lg bg-[#4f6ef7]/10 text-[#7c9bff] shrink-0">
+                          <div
+                            className="p-2 rounded-lg shrink-0"
+                            style={{ background: "rgba(36,99,235,0.1)", color: "#2F6EED" }}
+                          >
                             <MapPin className="w-4 h-4" />
                           </div>
                           <div>
                             <span className="font-bold text-white block text-base">{r.title}</span>
-                            <span className="text-xs text-[#64748b] mt-0.5 block">{extractDomain(r.url)}</span>
+                            <span className="text-xs mt-0.5 block" style={{ color: "#374151" }}>{extractDomain(r.url)}</span>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-5 text-sm text-[#94a3b8] hidden lg:table-cell max-w-xs truncate font-medium">
+                      <td className="px-6 py-5 text-sm hidden lg:table-cell max-w-xs truncate font-medium" style={{ color: "#6B7280" }}>
                         {r.description || "—"}
                       </td>
                       <td className="px-6 py-5">
                         {r.phone ? (
-                          <span className="inline-flex items-center gap-2 text-sm font-bold text-white bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/30">
-                            <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                          <span
+                            className="inline-flex items-center gap-2 text-sm font-bold text-white px-3 py-1.5 rounded-lg"
+                            style={{ background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.3)" }}
+                          >
+                            <Phone className="w-3.5 h-3.5" style={{ color: "#10B981" }} />
                             {r.phone}
                           </span>
                         ) : (
-                          <span className="text-xs text-[#475569] font-medium">—</span>
+                          <span className="text-xs font-medium" style={{ color: "#374151" }}>—</span>
                         )}
                       </td>
                       <td className="px-6 py-5 text-right">
-                        <div className="flex gap-2 justify-end opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex gap-2 justify-end">
                           <Button
                             size="sm" variant="outline"
                             onClick={() => openExternalLink(`https://www.google.com/maps/search/${encodeURIComponent(r.title)}`)}
-                            className="gap-2 font-bold border-white/10 hover:bg-white/5"
+                            className="gap-2 font-semibold text-white"
+                            style={{ background: "#05050A", border: "1px solid rgba(255,255,255,0.08)" }}
                           >
                             <MapPin className="w-3.5 h-3.5" /> Maps
                           </Button>
@@ -661,10 +682,10 @@ const ProspeccaoView = () => {
                               }
                               openExternalLink(`https://wa.me/${phoneNum ? fullNum : ""}?text=${msg}`);
                             }}
-                            className="gap-2 font-black uppercase text-[10px] tracking-widest text-white shadow-[0_0_15px_rgba(79,110,247,0.3)] border-0"
-                            style={{ background: "linear-gradient(90deg, #4f6ef7, #7c3aed)" }}
+                            className="gap-2 font-bold text-white border-0"
+                            style={{ background: "#2463EB" }}
                           >
-                            <MessageCircle className="w-3.5 h-3.5 fill-current" /> WhatsApp
+                            <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
                           </Button>
                         </div>
                       </td>
@@ -675,60 +696,61 @@ const ProspeccaoView = () => {
             </div>
           </div>
         ) : searched && !loading ? (
-          <div className="bg-[#0f172a]/80 border border-white/10 rounded-2xl flex flex-col items-center justify-center py-20 text-[#64748b] gap-4">
-            <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center">
-              <Search className="w-10 h-10 opacity-20" />
+          <div
+            className="flex flex-col items-center justify-center py-20 gap-4"
+            style={{
+              background: "#0D0D12",
+              border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: 16,
+            }}
+          >
+            <div
+              className="w-20 h-20 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(255,255,255,0.03)" }}
+            >
+              <Search className="w-10 h-10" style={{ color: "#374151" }} />
             </div>
             <div className="text-center space-y-1">
               <p className="text-base font-bold text-white">Nenhum lead encontrado</p>
-              <p className="text-sm">Tente mudar o nicho ou buscar em outra cidade/estado.</p>
+              <p className="text-sm" style={{ color: "#6B7280" }}>Tente mudar o nicho ou buscar em outra cidade/estado.</p>
             </div>
           </div>
         ) : (
-          /* ━━ ESTADO VAZIO ━━ */
-          <div className="space-y-6">
-            <div className="relative bg-gradient-to-b from-[#0f172a]/80 to-[#0a0f1e]/80 border border-white/10 rounded-2xl py-16 px-6 overflow-hidden">
-              <div className="relative flex flex-col items-center gap-6">
-                <div className="relative w-40 h-40 flex items-center justify-center">
-                  {[0, 1, 2].map((i) => (
-                    <span
-                      key={i}
-                      className="absolute inset-0 rounded-full border-2 border-[#4f6ef7]"
-                      style={{
-                        animation: `target-pulse 2.4s cubic-bezier(0.4,0,0.6,1) infinite`,
-                        animationDelay: `${i * 0.8}s`,
-                        opacity: 0,
-                      }}
-                    />
-                  ))}
-                  <div className="relative text-[80px] leading-none drop-shadow-[0_0_30px_rgba(79,110,247,0.6)]">
-                    🎯
-                  </div>
-                </div>
-                <div className="text-center space-y-2 max-w-md">
-                  <p className="text-lg font-black text-white tracking-tight">
-                    Selecione um nicho e a região acima
-                  </p>
-                  <p className="text-sm text-[#94a3b8] font-medium leading-relaxed">
-                    Você verá empresas reais prontas para receber sua proposta
-                  </p>
+          /* ESTADO VAZIO */
+          <div className="space-y-4">
+            <div
+              className="relative overflow-hidden flex flex-col items-center justify-center py-16 px-6"
+              style={{
+                background: "#0D0D12",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 16,
+              }}
+            >
+              <div className="relative w-40 h-40 flex items-center justify-center">
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      border: "2px solid #2463EB",
+                      animation: "ring-pulse 2.4s cubic-bezier(0.4,0,0.6,1) infinite",
+                      animationDelay: `${i * 0.8}s`,
+                      opacity: 0,
+                    }}
+                  />
+                ))}
+                <div style={{ fontSize: 80, lineHeight: 1, filter: "drop-shadow(0 0 24px rgba(36,99,235,0.45))" }}>
+                  🎯
                 </div>
               </div>
-              <style>{`
-                @keyframes target-pulse {
-                  0%   { transform: scale(0.4); opacity: 0.7; }
-                  100% { transform: scale(1.6); opacity: 0; }
-                }
-                @keyframes ghost-shimmer {
-                  0%   { background-position: -400px 0; }
-                  100% { background-position: 400px 0; }
-                }
-                .ghost-shimmer {
-                  background: linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 100%);
-                  background-size: 800px 100%;
-                  animation: ghost-shimmer 1.8s linear infinite;
-                }
-              `}</style>
+              <div className="mt-6 text-center space-y-2 max-w-md">
+                <p className="font-bold text-white" style={{ fontSize: 17 }}>
+                  Selecione um nicho e a região acima
+                </p>
+                <p style={{ color: "#6B7280", fontSize: 14 }}>
+                  Você verá empresas reais prontas para receber sua proposta
+                </p>
+              </div>
             </div>
 
             {/* Skeleton ghost cards */}
@@ -736,7 +758,12 @@ const ProspeccaoView = () => {
               {[0, 1].map((i) => (
                 <div
                   key={i}
-                  className="bg-[#0f172a]/60 border border-white/[0.06] rounded-2xl p-5 flex items-center gap-4"
+                  className="flex items-center gap-4 p-5"
+                  style={{
+                    background: "#0D0D12",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                    borderRadius: 14,
+                  }}
                 >
                   <div className="w-12 h-12 rounded-xl ghost-shimmer shrink-0" />
                   <div className="flex-1 space-y-2.5">
