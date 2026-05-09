@@ -673,25 +673,11 @@ const ProspeccaoView = () => {
                 ) : (
                   <div
                     className="flex flex-col items-center justify-center text-center"
-                    style={{ padding: "48px 24px" }}
+                    style={{ padding: "56px 24px" }}
                   >
-                    <div
-                      className="flex items-center justify-center mb-3"
-                      style={{
-                        width: 40, height: 40, borderRadius: 10,
-                        background: "#111118",
-                        border: "1px solid rgba(255,255,255,0.06)",
-                      }}
-                    >
-                      <activeNicho.Icon size={18} strokeWidth={1.5} color="#6B7280" />
-                    </div>
-                    <p style={{ fontSize: 13, color: "#FFFFFF", fontWeight: 500 }}>
-                      {searched ? "Nenhum lead encontrado" : "Pronto para buscar"}
-                    </p>
-                    <p style={{ fontSize: 12, color: "#6B7280", marginTop: 4 }}>
-                      {searched
-                        ? "Tente ajustar os filtros de localização."
-                        : "Defina os filtros acima e clique em Buscar Leads."}
+                    <Search size={28} strokeWidth={1.5} color="#1F2937" />
+                    <p style={{ fontSize: 13, color: "#374151", marginTop: 12 }}>
+                      Configure os filtros e clique em Buscar
                     </p>
                   </div>
                 )}
