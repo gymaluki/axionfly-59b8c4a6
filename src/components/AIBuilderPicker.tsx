@@ -138,8 +138,14 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
   };
 
   return (
+    <>
+    <GeneratingOverlay
+      open={generating !== null}
+      durationMs={6000}
+      onComplete={handleGenerationComplete}
+    />
     <AnimatePresence>
-      {open && (
+      {open && generating === null && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
