@@ -373,10 +373,11 @@ const ProspeccaoView = () => {
               <button
                 type="button"
                 onClick={handleClearNicho}
-                className="flex items-center gap-1 hover:text-white transition-colors"
-                style={{ fontSize: 12, color: "#6B7280" }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/[0.05] transition-all group"
+                style={{ fontSize: 12, color: "#6B7280", border: "1px solid rgba(255,255,255,0.04)" }}
               >
-                <X size={12} /> Limpar
+                <RotateCcw size={12} className="group-hover:rotate-[-45deg] transition-transform" />
+                Nova Pesquisa
               </button>
             </div>
 
