@@ -30,6 +30,7 @@ interface AIBuilderPickerProps {
 
 export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps) => {
   const [copying, setCopying] = useState<string | null>(null);
+  const [generating, setGenerating] = useState<{ url: string; win: Window | null } | null>(null);
   const normalizedPrompt = prompt.trim();
 
   // Copia SÍNCRONA via textarea + execCommand — funciona em iframe/preview
