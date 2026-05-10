@@ -121,7 +121,7 @@ export const GeneratingOverlay = ({ open, durationMs = 6000, onComplete }: Gener
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 22, stiffness: 220 }}
-            className="relative z-10 w-full max-w-3xl"
+            className="relative z-10 w-full max-w-3xl pointer-events-none select-none"
           >
             {/* Status header */}
             <div className="mb-4 flex items-center gap-3 px-1">
