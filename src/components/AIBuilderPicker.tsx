@@ -85,7 +85,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     <>
       <GeneratingOverlay
         open={open && generating !== null}
-        durationMs={6000}
+        durationMs={8000}
         onComplete={handleGenerationComplete}
       />
 
