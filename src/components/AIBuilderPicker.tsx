@@ -100,10 +100,23 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
             </p>
             <button
               onClick={handleOpenLovable}
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-3.5 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              className={cn(
+                "mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-3.5 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-all",
+                !readyToOpen ? "opacity-50 cursor-not-allowed grayscale" : "hover:scale-[1.02] active:scale-[0.98]"
+              )}
+              disabled={!readyToOpen}
             >
-              <ExternalLink className="h-5 w-5" />
-              Clique aqui para finalizar
+              {readyToOpen ? (
+                <>
+                  <ExternalLink className="h-5 w-5" />
+                  Finalizar meu site profissional
+                </>
+              ) : (
+                <>
+                  <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Gerando projeto...
+                </>
+              )}
             </button>
             <button
               onClick={() => { setReadyToOpen(false); setGenerating(null); onClose(); }}
