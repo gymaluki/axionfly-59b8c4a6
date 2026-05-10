@@ -71,14 +71,15 @@ export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
-    const slug = (params.get("aff") || params.get("ref") || params.get("d") || params.get("e") || params.get("o") || "").toLowerCase().trim();
+    const slug = (params.get("aff") || params.get("ref") || params.get("d") || params.get("e") || params.get("o") || params.get("g") || "").toLowerCase().trim();
     
-    // Se usar ?d=... e não tiver valor, assume que é o slug "d"
+    // Se usar ?d=... e não tiver valor, assume que é o slug correspondente
     let finalSlug = slug;
     if (!slug) {
       if (params.has("d")) finalSlug = "d";
       else if (params.has("e")) finalSlug = "e";
       else if (params.has("o")) finalSlug = "o";
+      else if (params.has("g")) finalSlug = "g";
     }
     
     // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
