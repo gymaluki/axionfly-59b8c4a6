@@ -69,12 +69,15 @@ export const GeneratingOverlay = ({
 
     let lineIndex = 0;
     const lineTimer = window.setInterval(() => {
-      setVisibleLines((prev) => {
-        if (lineIndex >= CODE_LINES.length) return prev;
-        const next = [...prev, CODE_LINES[lineIndex]];
-        lineIndex += 1;
-        return next;
-      });
+      const nextLine = CODE_LINES[lineIndex];
+
+      if (typeof nextLine !== "string") {
+        window.clearInterval(lineTimer);
+        return;
+      }
+
+      setVisibleLines((prev) => [...prev, nextLine]);
+      lineIndex += 1;
     }, lineInterval);
 
     const progressTimer = window.setInterval(() => {
