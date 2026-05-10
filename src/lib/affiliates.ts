@@ -42,8 +42,8 @@ export const AFFILIATES: Record<string, Affiliate> = {
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
   },
   diogo: {
-    slug: "diogo",
-    name: "Diogo",
+    slug: "d",
+    name: "D",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=RSTFakbs",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=RSTFakbs",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
@@ -71,11 +71,21 @@ export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
-    const slug = (params.get("aff") || params.get("ref") || "").toLowerCase().trim();
-    if (!slug || !AFFILIATES[slug]) return;
+    const slug = (params.get("aff") || params.get("ref") || params.get("d") || "").toLowerCase().trim();
+    
+    // Se usar ?d=... e não tiver valor, assume que é o slug "d"
+    let finalSlug = slug;
+    if (!slug && params.has("d")) {
+      finalSlug = "d";
+    }
+    
+    // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
+    const affiliate = Object.values(AFFILIATES).find(a => a.slug === finalSlug) || AFFILIATES[finalSlug];
+    
+    if (!affiliate) return;
 
     const data: StoredAffiliate = {
-      slug,
+      slug: affiliate.slug,
       expiresAt: Date.now() + TTL_DAYS * 24 * 60 * 60 * 1000,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -95,7 +105,8 @@ export function getActiveAffiliate(): Affiliate | null {
       localStorage.removeItem(STORAGE_KEY);
       return null;
     }
-    return AFFILIATES[data.slug] || null;
+    // Busca o afiliado pelo slug
+    return Object.values(AFFILIATES).find(a => a.slug === data.slug) || null;
   } catch {
     return null;
   }
