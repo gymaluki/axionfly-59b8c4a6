@@ -37,7 +37,7 @@ const STAGES = [
   { icon: CheckCircle2, label: "Tudo pronto!", sub: "Cole o prompt (Ctrl+V) e publique" },
 ];
 
-export const GeneratingOverlay = ({ open, durationMs = 6000, onComplete }: GeneratingOverlayProps) => {
+export const GeneratingOverlay = ({ open, durationMs = 8000, onComplete }: GeneratingOverlayProps) => {
   const [visibleLines, setVisibleLines] = useState<string[]>([]);
   const [stageIndex, setStageIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -94,7 +94,7 @@ export const GeneratingOverlay = ({ open, durationMs = 6000, onComplete }: Gener
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
         >
           {/* Animated grid bg */}
           <div className="absolute inset-0 opacity-30 pointer-events-none"
@@ -121,7 +121,7 @@ export const GeneratingOverlay = ({ open, durationMs = 6000, onComplete }: Gener
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 22, stiffness: 220 }}
-            className="relative z-10 w-full max-w-3xl"
+            className="relative z-10 w-full max-w-3xl pointer-events-none select-none"
           >
             {/* Status header */}
             <div className="mb-4 flex items-center gap-3 px-1">
