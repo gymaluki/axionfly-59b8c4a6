@@ -5,8 +5,9 @@ import { AFFILIATES } from "@/lib/affiliates";
 const STORAGE_KEY = "axionfly_affiliate";
 const TTL_DAYS = 30;
 
-export default function AffiliateRedirect() {
-  const { slug } = useParams<{ slug: string }>();
+export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }) {
+  const { slug: paramsSlug } = useParams<{ slug: string }>();
+  const slug = propsSlug || paramsSlug;
   const navigate = useNavigate();
 
   useEffect(() => {
