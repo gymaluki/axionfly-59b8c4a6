@@ -91,13 +91,19 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
 
       {open && generating && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
-          <div className="relative w-full max-w-md rounded-2xl border border-primary/30 bg-[#0a0a14] p-8 text-center shadow-[0_0_60px_-10px_hsl(var(--primary)/0.5)]">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-green-500/30 bg-green-500/10">
-              <Check className="h-8 w-8 text-green-400" />
+          <div className="relative w-full max-w-md rounded-2xl border border-primary/30 bg-[#0a0a14] p-8 text-center shadow-[0_0_60px_-10px_hsl(var(--primary)/0.5)] overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-primary/20" />
+            
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-primary/30 bg-primary/10">
+              <Sparkles className={cn("h-8 w-8 text-primary", !readyToOpen && "animate-pulse")} />
             </div>
-            <h2 className="text-2xl font-bold text-white">Tudo pronto!</h2>
+            <h2 className="text-2xl font-bold text-white">
+              {readyToOpen ? "Tudo pronto!" : "Preparando prompt..."}
+            </h2>
             <p className="mt-2 text-sm text-blue-200/70">
-              Seu prompt foi gerado e copiado. Clique no botão abaixo para abrir o Lovable e colar o comando.
+              {readyToOpen 
+                ? "Seu prompt foi gerado e copiado. Clique no botão abaixo para abrir o Lovable e colar o comando."
+                : "Aguarde enquanto nossa IA estrutura a arquitetura e os gatilhos do seu novo site."}
             </p>
             <button
               onClick={handleOpenLovable}
