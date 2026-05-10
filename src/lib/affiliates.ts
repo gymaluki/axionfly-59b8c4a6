@@ -75,8 +75,10 @@ export function captureAffiliateFromUrl(): void {
     
     // Se usar ?d=... e não tiver valor, assume que é o slug "d"
     let finalSlug = slug;
-    if (!slug && params.has("d")) {
-      finalSlug = "d";
+    if (!slug) {
+      if (params.has("d")) finalSlug = "d";
+      else if (params.has("e")) finalSlug = "e";
+      else if (params.has("o")) finalSlug = "o";
     }
     
     // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
