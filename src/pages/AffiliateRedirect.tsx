@@ -12,11 +12,14 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
 
   useEffect(() => {
     const key = (slug || "").toLowerCase().trim();
-    if (key && AFFILIATES[key]) {
+    const affiliate = Object.values(AFFILIATES).find(a => a.slug === key) || AFFILIATES[key];
+    
+    if (key && affiliate) {
+      const affiliateSlug = affiliate.slug;
       try {
         localStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({ slug: key, expiresAt: Date.now() + TTL_DAYS * 24 * 60 * 60 * 1000 })
+          JSON.stringify({ slug: affiliateSlug, expiresAt: Date.now() + TTL_DAYS * 24 * 60 * 60 * 1000 })
         );
       } catch {
         // ignore
