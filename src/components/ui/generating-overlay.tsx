@@ -94,7 +94,7 @@ export const GeneratingOverlay = ({ open, durationMs = 6000, onComplete }: Gener
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
         >
           {/* Animated grid bg */}
           <div className="absolute inset-0 opacity-30 pointer-events-none"
