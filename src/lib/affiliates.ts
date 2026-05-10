@@ -14,8 +14,8 @@ export interface Affiliate {
 // Registro central de afiliados. Para adicionar um novo, basta acrescentar aqui.
 export const AFFILIATES: Record<string, Affiliate> = {
   jonathan: {
-    slug: "jonathan",
-    name: "Jonathan Ferreira",
+    slug: "o",
+    name: "O",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=ZsdtBDJP",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
@@ -35,8 +35,8 @@ export const AFFILIATES: Record<string, Affiliate> = {
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=LEGLH5Bd",
   },
   pedro: {
-    slug: "pedro",
-    name: "Pedro",
+    slug: "e",
+    name: "E",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=RSTFakbs",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=RSTFakbs",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
@@ -71,12 +71,14 @@ export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
-    const slug = (params.get("aff") || params.get("ref") || params.get("d") || "").toLowerCase().trim();
+    const slug = (params.get("aff") || params.get("ref") || params.get("d") || params.get("e") || params.get("o") || "").toLowerCase().trim();
     
     // Se usar ?d=... e não tiver valor, assume que é o slug "d"
     let finalSlug = slug;
-    if (!slug && params.has("d")) {
-      finalSlug = "d";
+    if (!slug) {
+      if (params.has("d")) finalSlug = "d";
+      else if (params.has("e")) finalSlug = "e";
+      else if (params.has("o")) finalSlug = "o";
     }
     
     // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
