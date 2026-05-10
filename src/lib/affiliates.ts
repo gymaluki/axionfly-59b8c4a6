@@ -14,8 +14,8 @@ export interface Affiliate {
 // Registro central de afiliados. Para adicionar um novo, basta acrescentar aqui.
 export const AFFILIATES: Record<string, Affiliate> = {
   jonathan: {
-    slug: "jonathan",
-    name: "Jonathan Ferreira",
+    slug: "o",
+    name: "O",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=ZsdtBDJP",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
