@@ -84,41 +84,14 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
   return (
     <>
       <GeneratingOverlay
-        open={open && generating !== null && !readyToOpen}
+        open={open && generating !== null}
         durationMs={8000}
         onComplete={handleGenerationComplete}
+        showButton={readyToOpen}
+        onButtonClick={handleOpenLovable}
+        onClose={onClose}
       />
 
-      {open && generating && readyToOpen && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
-          <div className="relative w-full max-w-md rounded-2xl border border-primary/30 bg-[#0a0a14] p-8 text-center shadow-[0_0_60px_-10px_hsl(var(--primary)/0.5)] overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-primary/20" />
-            
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-primary/30 bg-primary/10">
-              <Sparkles className="h-8 w-8 text-primary" />
-            </div>
-            <h2 className="text-2xl font-bold text-white">
-              Prompt gerado!
-            </h2>
-            <p className="mt-2 text-sm text-blue-200/70">
-              Agora é só clicar no botão abaixo para finalizar seu site profissional no Lovable.
-            </p>
-            <button
-              onClick={handleOpenLovable}
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-3.5 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <ExternalLink className="h-5 w-5" />
-              Finalizar meu site profissional
-            </button>
-            <button
-              onClick={() => { setReadyToOpen(false); setGenerating(null); onClose(); }}
-              className="mt-3 text-xs text-white/40 hover:text-white/70 transition-colors"
-            >
-              Fechar
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };
