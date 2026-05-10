@@ -92,11 +92,11 @@ export default function FeaturesCarousel() {
               }}
             >
               {/* Image */}
-              <div className="w-full h-full bg-[#05050a] flex items-center justify-center">
+              <div className="w-full h-full bg-[#05050a]">
                 <img
                   src={slide.src}
                   alt={slide.title}
-                  className="max-w-full max-h-full object-contain pointer-events-none group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover pointer-events-none group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                   draggable={false}
                 />
