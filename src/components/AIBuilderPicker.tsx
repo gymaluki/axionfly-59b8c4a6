@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
-import { ExternalLink, Check, Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
 
@@ -82,17 +80,14 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
   };
 
   return (
-    <>
-      <GeneratingOverlay
-        open={open && generating !== null}
-        durationMs={8000}
-        onComplete={handleGenerationComplete}
-        showButton={readyToOpen}
-        onButtonClick={handleOpenLovable}
-        onClose={onClose}
-      />
-
-    </>
+    <GeneratingOverlay
+      open={open && generating !== null}
+      durationMs={6000}
+      onComplete={handleGenerationComplete}
+      showButton={readyToOpen}
+      onButtonClick={handleOpenLovable}
+      onClose={onClose}
+    />
   );
 };
 
