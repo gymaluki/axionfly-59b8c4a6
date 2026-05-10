@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
-import { ExternalLink, Check } from "lucide-react";
+import { ExternalLink, Check, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
