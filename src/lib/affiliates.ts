@@ -105,7 +105,8 @@ export function getActiveAffiliate(): Affiliate | null {
       localStorage.removeItem(STORAGE_KEY);
       return null;
     }
-    return AFFILIATES[data.slug] || null;
+    // Busca o afiliado pelo slug
+    return Object.values(AFFILIATES).find(a => a.slug === data.slug) || null;
   } catch {
     return null;
   }
