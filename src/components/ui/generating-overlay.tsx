@@ -40,7 +40,14 @@ const STAGES = [
   { icon: CheckCircle2, label: "Tudo pronto!", sub: "Cole o prompt (Ctrl+V) e publique" },
 ];
 
-export const GeneratingOverlay = ({ open, durationMs = 8000, onComplete }: GeneratingOverlayProps) => {
+export const GeneratingOverlay = ({ 
+  open, 
+  durationMs = 8000, 
+  onComplete,
+  showButton,
+  onButtonClick,
+  onClose
+}: GeneratingOverlayProps) => {
   const [visibleLines, setVisibleLines] = useState<string[]>([]);
   const [stageIndex, setStageIndex] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -212,9 +219,36 @@ export const GeneratingOverlay = ({ open, durationMs = 8000, onComplete }: Gener
               </div>
             </div>
 
-            <p className="mt-4 text-center text-xs text-blue-300/60 font-mono">
-              [ NÃO FECHE ESTA JANELA — preparando seu prompt ]
-            </p>
+            {!showButton ? (
+              <p className="mt-4 text-center text-xs text-blue-300/60 font-mono">
+                [ NÃO FECHE ESTA JANELA — preparando seu prompt ]
+              </p>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-6 flex flex-col items-center gap-4"
+              >
+                <div className="text-center">
+                  <p className="text-sm text-blue-200/90 font-medium">
+                    Agora é só clicar no botão abaixo para finalizar seu site profissional no Lovable com a extensão de créditos infinitos.
+                  </p>
+                </div>
+                <button
+                  onClick={onButtonClick}
+                  className="pointer-events-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-4 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  Finalizar meu site profissional
+                </button>
+                <button
+                  onClick={onClose}
+                  className="pointer-events-auto text-xs text-white/40 hover:text-white/70 transition-colors"
+                >
+                  Fechar
+                </button>
+              </motion.div>
+            )}
           </motion.div>
         </motion.div>
       )}
