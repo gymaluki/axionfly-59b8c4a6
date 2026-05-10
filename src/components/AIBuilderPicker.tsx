@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
@@ -31,62 +31,66 @@ const copySync = (text: string): boolean => {
 
 export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps) => {
   const normalizedPrompt = prompt.trim();
-  const [generating, setGenerating] = useState<string | null>(null);
   const [readyToOpen, setReadyToOpen] = useState(false);
-  const startedRef = useRef(false);
+  const hasInitializedRef = useRef(false);
+
+  const targetUrl = useMemo(() => {
+    if (!normalizedPrompt) return "";
+    return `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(normalizedPrompt)}`;
+  }, [normalizedPrompt]);
 
   useEffect(() => {
     if (!open) {
-      startedRef.current = false;
+      hasInitializedRef.current = false;
       setReadyToOpen(false);
-      setGenerating(null);
       return;
     }
-    if (startedRef.current) return;
-    startedRef.current = true;
 
-    if (!normalizedPrompt) {
-      onClose();
+    if (hasInitializedRef.current || !normalizedPrompt) {
       return;
     }
+
+    hasInitializedRef.current = true;
+    setReadyToOpen(false);
 
     try {
       sessionStorage.setItem("axionfly_lovable_prompt", normalizedPrompt);
       localStorage.setItem("axionfly_lovable_prompt", normalizedPrompt);
     } catch {}
 
-    const targetUrl = `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(normalizedPrompt)}`;
-
     copySync(normalizedPrompt);
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(normalizedPrompt).catch(() => {});
     }
-
-    setGenerating(targetUrl);
-  }, [open, normalizedPrompt, onClose]);
+  }, [open, normalizedPrompt]);
 
   const handleGenerationComplete = () => {
-    console.log("Generation complete - showing button");
     setReadyToOpen(true);
   };
 
   const handleOpenLovable = () => {
-    if (generating) {
-      window.open(generating, "_blank", "noopener,noreferrer");
+    if (targetUrl) {
+      window.open(targetUrl, "_blank", "noopener,noreferrer");
     }
     setReadyToOpen(false);
-    setGenerating(null);
+    hasInitializedRef.current = false;
+    onClose();
+  };
+
+  const handleClose = () => {
+    setReadyToOpen(false);
+    hasInitializedRef.current = false;
     onClose();
   };
 
   return (
     <GeneratingOverlay
-      open={open && generating !== null}
+      open={open && Boolean(normalizedPrompt)}
       durationMs={6000}
       onComplete={handleGenerationComplete}
       showButton={readyToOpen}
       onButtonClick={handleOpenLovable}
-      onClose={onClose}
+      onClose={handleClose}
     />
   );
 };
