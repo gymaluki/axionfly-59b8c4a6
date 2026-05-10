@@ -96,8 +96,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
             </div>
             <h2 className="text-2xl font-bold text-white">Tudo pronto!</h2>
             <p className="mt-2 text-sm text-blue-200/70">
-              Seu prompt foi gerado e copiado para a área de transferência.
-              Clique no botão abaixo para finalizar.
+              Seu prompt foi gerado e copiado. Clique no botão abaixo para abrir o Lovable e colar o comando.
             </p>
             <button
               onClick={handleOpenLovable}
