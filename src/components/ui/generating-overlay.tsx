@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Code2, Cpu, Zap, CheckCircle2 } from "lucide-react";
+import { Sparkles, Code2, Cpu, Zap, CheckCircle2, ExternalLink } from "lucide-react";
 
 interface GeneratingOverlayProps {
   open: boolean;
   durationMs?: number;
   onComplete?: () => void;
+  showButton?: boolean;
+  onButtonClick?: () => void;
+  onClose?: () => void;
 }
 
 const CODE_LINES = [
