@@ -40,7 +40,8 @@ const App = () => (
           <Route path="/pedidos-demo" element={<PedidosDemo />} />
           <Route path="/qa-grid" element={<QAGrid />} />
           <Route path="/qa-grid/frame" element={<QAGridFrame />} />
-          <Route path="/u/:slug" element={<AffiliateRedirect />} />
+          <Route path="/i/:slug" element={<AffiliateRedirect />} />
+          <Route path="/g" element={<AffiliateRedirect slug="g" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
