@@ -42,9 +42,9 @@ const STAGES = [
 
 export const GeneratingOverlay = ({ 
   open, 
-  durationMs = 8000, 
+  durationMs = 6000, 
   onComplete,
-  showButton,
+  showButton = false,
   onButtonClick,
   onClose
 }: GeneratingOverlayProps) => {
@@ -104,7 +104,7 @@ export const GeneratingOverlay = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-background/95 backdrop-blur-sm p-4"
         >
           {/* Animated grid bg */}
           <div className="absolute inset-0 opacity-30 pointer-events-none"
@@ -131,7 +131,7 @@ export const GeneratingOverlay = ({
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 22, stiffness: 220 }}
-            className="relative z-10 w-full max-w-3xl pointer-events-none select-none"
+            className="relative z-10 w-full max-w-3xl select-none"
           >
             {/* Status header */}
             <div className="mb-4 flex items-center gap-3 px-1">
@@ -236,14 +236,14 @@ export const GeneratingOverlay = ({
                 </div>
                 <button
                   onClick={onButtonClick}
-                  className="pointer-events-auto inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-4 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-500 px-6 py-4 font-bold text-white shadow-[0_0_30px_rgba(36,99,235,0.45)] transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <ExternalLink className="h-5 w-5" />
                   Finalizar meu site profissional
                 </button>
                 <button
                   onClick={onClose}
-                  className="pointer-events-auto text-xs text-white/40 hover:text-white/70 transition-colors"
+                  className="text-xs text-white/40 hover:text-white/70 transition-colors"
                 >
                   Fechar
                 </button>
