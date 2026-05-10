@@ -12,7 +12,10 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
 
   useEffect(() => {
     const key = (slug || "").toLowerCase().trim();
-    if (key && AFFILIATES[key]) {
+    const affiliate = Object.values(AFFILIATES).find(a => a.slug === key) || AFFILIATES[key];
+    
+    if (key && affiliate) {
+      const affiliateSlug = affiliate.slug;
       try {
         localStorage.setItem(
           STORAGE_KEY,
