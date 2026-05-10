@@ -98,12 +98,12 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
               <Sparkles className={cn("h-8 w-8 text-primary", !readyToOpen && "animate-pulse")} />
             </div>
             <h2 className="text-2xl font-bold text-white">
-              {readyToOpen ? "Tudo pronto!" : "Preparando prompt..."}
+              {readyToOpen ? "Prompt gerado!" : "Criando estrutura..."}
             </h2>
             <p className="mt-2 text-sm text-blue-200/70">
               {readyToOpen 
-                ? "Seu prompt foi gerado e copiado. Clique no botão abaixo para abrir o Lovable e colar o comando."
-                : "Aguarde enquanto nossa IA estrutura a arquitetura e os gatilhos do seu novo site."}
+                ? "Agora é só clicar no botão abaixo para finalizar seu site profissional no Lovable."
+                : "Estamos montando as melhores seções e gatilhos de venda para o seu nicho."}
             </p>
             <button
               onClick={handleOpenLovable}
