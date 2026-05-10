@@ -166,9 +166,9 @@ function PricingCard({
         </div>
 
         {comparePrice && (
-          <div className="mb-2 flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-2">
+          <div className="mb-2 flex flex-col items-center gap-1.5 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
-            <span className="text-primary font-bold text-sm bg-primary/10 px-2 py-0.5 rounded-full border border-primary/20">70% OFF</span>
+            <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">70% OFF</span>
           </div>
         )}
         <div className="flex items-baseline justify-center gap-1">
