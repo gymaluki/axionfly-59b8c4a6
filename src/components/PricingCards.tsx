@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, type Easing, AnimatePresence } from "framer-motion";
 import { Check, Sparkles, ChevronDown, ShieldCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,45 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
+
+const CountdownTimer = () => {
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(0, 0, 0, 0);
+      
+      const difference = tomorrow.getTime() - now.getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const format = (n: number) => n.toString().padStart(2, "0");
+
+  return (
+    <span className="inline-flex items-center gap-0.5">
+      <span>{format(timeLeft.hours)}</span>
+      <span className="opacity-50 text-[8px]">:</span>
+      <span>{format(timeLeft.minutes)}</span>
+      <span className="opacity-50 text-[8px]">:</span>
+      <span>{format(timeLeft.seconds)}</span>
+    </span>
+  );
+};
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 const hoverTransition = { type: "tween" as const, duration: 0.12, ease: "easeOut" as const };
@@ -81,9 +120,9 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-3xl p-8 transition-all duration-500 border-2 ${
+      className={`relative flex w-full max-w-sm flex-col rounded-3xl p-6 sm:p-8 transition-all duration-500 border-2 ${
         isHighlight 
-          ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] scale-[1.05] z-10 bg-gradient-to-b from-primary/10 to-card" 
+          ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] lg:scale-[1.05] z-10 bg-gradient-to-b from-primary/10 to-card" 
           : savingsBadge 
             ? "border-primary/40 shadow-[0_0_20px_rgba(37,99,235,0.1)] bg-card"
             : "border-border/50 bg-card/50"
@@ -112,9 +151,24 @@ function PricingCard({
       </div>
 
       <div className="mb-8 text-center">
+        <div className="flex flex-col items-center justify-center gap-1 mb-2">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="bg-primary/10 text-primary text-[10px] font-black px-2 py-0.5 rounded-full border border-primary/20 uppercase tracking-wider">
+              Promoção de Aniversário
+            </span>
+            <div className="flex items-center gap-1 bg-black/20 px-2 py-0.5 rounded-full border border-white/5">
+              <span className="text-[9px] font-bold text-white/50 uppercase">Expira em:</span>
+              <div className="text-[10px] font-black text-white">
+                <CountdownTimer />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {comparePrice && (
           <div className="mb-1 text-sm text-muted-foreground/60">
             <span className="line-through">{comparePrice}</span>
+            <span className="ml-2 text-primary font-bold">70% OFF</span>
           </div>
         )}
         <div className="flex items-baseline justify-center gap-1">
@@ -123,11 +177,6 @@ function PricingCard({
           </span>
           <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
         </div>
-        {plan === "quarterly" && (
-          <p className="mt-2 text-xs font-black text-primary uppercase tracking-wider">
-            Economize R$ 105,80
-          </p>
-        )}
       </div>
 
       <div className="flex-1 mb-8">
