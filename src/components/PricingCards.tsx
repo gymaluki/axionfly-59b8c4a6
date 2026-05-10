@@ -120,7 +120,7 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-3xl px-6 pb-6 pt-10 sm:px-8 sm:pb-8 sm:pt-8 transition-all duration-500 border-2 ${
+      className={`relative flex w-full max-w-sm flex-col rounded-3xl px-6 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-8 transition-all duration-500 border-2 ${
         isHighlight 
           ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] lg:scale-[1.05] z-10 bg-gradient-to-b from-primary/10 to-card" 
           : savingsBadge 
@@ -166,9 +166,9 @@ function PricingCard({
         </div>
 
         {comparePrice && (
-          <div className="mb-1 text-sm text-muted-foreground/60">
-            <span className="line-through">{comparePrice}</span>
-            <span className="ml-2 text-primary font-bold">70% OFF</span>
+          <div className="mb-2 flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-2">
+            <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
+            <span className="text-primary font-bold text-sm bg-primary/10 px-2 py-0.5 rounded-full border border-primary/20">70% OFF</span>
           </div>
         )}
         <div className="flex items-baseline justify-center gap-1">
