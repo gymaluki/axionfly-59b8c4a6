@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
@@ -64,24 +64,24 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     }
   }, [open, normalizedPrompt]);
 
-  const handleGenerationComplete = () => {
+  const handleGenerationComplete = useCallback(() => {
     setReadyToOpen(true);
-  };
+  }, []);
 
-  const handleOpenLovable = () => {
+  const handleOpenLovable = useCallback(() => {
     if (targetUrl) {
       window.open(targetUrl, "_blank", "noopener,noreferrer");
     }
     setReadyToOpen(false);
     hasInitializedRef.current = false;
     onClose();
-  };
+  }, [onClose, targetUrl]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setReadyToOpen(false);
     hasInitializedRef.current = false;
     onClose();
-  };
+  }, [onClose]);
 
   return (
     <GeneratingOverlay
