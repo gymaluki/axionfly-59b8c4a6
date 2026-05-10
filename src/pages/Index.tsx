@@ -306,22 +306,22 @@ const Index = () => {
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
-          <Suspense fallback={null}>
-            <div className="hidden md:block">
+          <div className="hidden lg:block absolute inset-0">
+            <Suspense fallback={null}>
               <IsoLevelWarp color="30, 58, 138" density={30} speed={0.9} />
               <BackgroundPaths />
-            </div>
-          </Suspense>
+            </Suspense>
+          </div>
           <div className="relative z-10">
             <HeroSection />
           </div>
         </div>
 
         {/* ═══════════ FUNCIONALIDADES ═══════════ */}
-        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
           <SectionPill>Funcionalidades Premium</SectionPill>
 
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
+          <div className="text-center mb-24">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Tudo o que você precisa <br />
               para <span className="gradient-text">escalar seu negócio</span>
@@ -329,7 +329,7 @@ const Index = () => {
             <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
             </p>
-          </motion.div>
+          </div>
 
           <div className="space-y-32 md:space-y-48">
             {features.map(({ icon: Icon, title, desc, tag, visual }, i) => (
