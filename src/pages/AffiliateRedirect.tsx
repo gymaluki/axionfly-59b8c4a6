@@ -19,7 +19,7 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
       try {
         localStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({ slug: key, expiresAt: Date.now() + TTL_DAYS * 24 * 60 * 60 * 1000 })
+          JSON.stringify({ slug: affiliateSlug, expiresAt: Date.now() + TTL_DAYS * 24 * 60 * 60 * 1000 })
         );
       } catch {
         // ignore
