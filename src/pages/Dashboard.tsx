@@ -44,7 +44,23 @@ class DashboardViewErrorBoundary extends Component<
               <ShieldX className="w-7 h-7 text-destructive" />
             </div>
             <h2 className="text-xl font-bold text-foreground">Não foi possível carregar esta área</h2>
-            <p className="text-sm text-muted-foreground">Atualize a página e tente novamente.</p>
+            <p className="text-sm text-muted-foreground mb-4">A conexão falhou ou ocorreu um erro no carregamento. Tente atualizar a página.</p>
+            <div className="flex flex-col gap-2">
+              <Button 
+                variant="neon" 
+                onClick={() => window.location.reload()}
+                className="w-full font-bold"
+              >
+                Atualizar Página
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => window.open("https://lovable.dev/projects", "_blank")}
+                className="w-full font-bold border-white/10"
+              >
+                Ir para o Lovable
+              </Button>
+            </div>
           </div>
         </div>
       );
