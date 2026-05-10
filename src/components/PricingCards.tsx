@@ -120,7 +120,7 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-3xl p-6 sm:p-8 transition-all duration-500 border-2 ${
+      className={`relative flex w-full max-w-sm flex-col rounded-3xl px-6 pb-6 pt-10 sm:px-8 sm:pb-8 sm:pt-8 transition-all duration-500 border-2 ${
         isHighlight 
           ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] lg:scale-[1.05] z-10 bg-gradient-to-b from-primary/10 to-card" 
           : savingsBadge 

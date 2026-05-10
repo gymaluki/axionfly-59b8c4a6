@@ -648,14 +648,18 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="pt-12 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-8">
-              <p className="text-[#64748b] text-[11px] font-black uppercase tracking-[0.1em] text-center">
-                © 2026 AxionFly · Todos os direitos reservados
-                <span className="ml-4 opacity-20 hover:opacity-100 transition-opacity">A promoção valerá por 1 semana</span>
+            <div className="pt-12 border-t border-primary/10 flex flex-col gap-6">
+              <p className="text-center text-[11px] font-black uppercase tracking-[0.15em] text-primary/80">
+                ⚡ Aviso: Por alta demanda de novos cadastros, a Promoção de Aniversário foi estendida por mais 1 dia.
               </p>
-              <div className="flex items-center gap-10 text-xs font-black uppercase tracking-widest text-muted-foreground/60">
-                <a href="#" className="hover:text-primary transition-colors">Privacidade</a>
-                <a href="#" className="hover:text-primary transition-colors">Termos de Uso</a>
+              <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                <p className="text-[#64748b] text-[11px] font-black uppercase tracking-[0.1em] text-center">
+                  © 2026 AxionFly · Todos os direitos reservados
+                </p>
+                <div className="flex items-center gap-10 text-xs font-black uppercase tracking-widest text-muted-foreground/60">
+                  <a href="#" className="hover:text-primary transition-colors">Privacidade</a>
+                  <a href="#" className="hover:text-primary transition-colors">Termos de Uso</a>
+                </div>
               </div>
             </div>
           </div>
