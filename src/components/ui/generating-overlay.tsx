@@ -37,7 +37,7 @@ const STAGES = [
   { icon: CheckCircle2, label: "Tudo pronto!", sub: "Cole o prompt (Ctrl+V) e publique" },
 ];
 
-export const GeneratingOverlay = ({ open, durationMs = 6000, onComplete }: GeneratingOverlayProps) => {
+export const GeneratingOverlay = ({ open, durationMs = 8000, onComplete }: GeneratingOverlayProps) => {
   const [visibleLines, setVisibleLines] = useState<string[]>([]);
   const [stageIndex, setStageIndex] = useState(0);
   const [progress, setProgress] = useState(0);
