@@ -119,7 +119,7 @@ export default function LegalLayout({ eyebrow, title, description, updatedAt, se
               <div className="mt-10 rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8">
                 <h3 className="text-lg font-bold">Ainda tem dúvidas?</h3>
                 <p className="mt-2 text-sm text-[#94a3b8]">
-                  Nossa equipe está disponível para esclarecer qualquer ponto deste documento.
+                  Nossa equipe está disponível para ajudar com qualquer dúvida sobre a plataforma e estas informações.
                 </p>
                 <a
                   href="mailto:contato@axionfly.site"
