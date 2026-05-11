@@ -859,36 +859,51 @@ const Index = () => {
 };
 
 /* ── FAQ Item Component ── */
-function FAQItem({ question, answer, defaultOpen = false }: { question: string, answer: string, defaultOpen?: boolean }) {
+function FAQItem({ num, question, answer, defaultOpen = false }: { num?: string; question: string; answer: string; defaultOpen?: boolean }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  
+
   return (
-    <motion.div 
+    <motion.div
       initial={false}
-      className={`rounded-3xl border transition-all duration-500 overflow-hidden ${
-        isOpen ? "border-primary/40 bg-primary/5" : "border-border/50 bg-card/40"
+      whileHover={{ y: -2 }}
+      className={`rounded-2xl overflow-hidden transition-all duration-300 ${
+        isOpen ? "bg-primary/[0.06]" : "bg-[#0D1221]/60 hover:bg-[#0D1221]"
       }`}
+      style={{
+        border: isOpen
+          ? "1px solid rgba(59,130,246,0.4)"
+          : "1px solid rgba(59,130,246,0.12)",
+        boxShadow: isOpen ? "0 0 0 1px rgba(59,130,246,0.1), 0 8px 32px -12px rgba(59,130,246,0.25)" : "none",
+      }}
     >
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-6 text-left group"
+        className="w-full flex items-center gap-4 p-5 md:p-6 text-left group"
       >
-        <span className="text-base font-black text-foreground pr-8 group-hover:text-primary transition-colors">{question}</span>
-        <div className={`p-2 rounded-full border border-primary/20 bg-primary/5 transition-transform duration-500 ${isOpen ? "rotate-180 bg-primary text-primary-foreground" : "text-primary"}`}>
-          <ChevronDown className="w-5 h-5" />
+        {num && (
+          <span className={`text-[11px] font-black tabular-nums tracking-[0.2em] shrink-0 transition-colors ${isOpen ? "text-primary" : "text-primary/50"}`}>
+            {num}
+          </span>
+        )}
+        <span className={`flex-1 text-[15px] md:text-base font-black pr-4 transition-colors ${isOpen ? "text-foreground" : "text-foreground/90 group-hover:text-foreground"}`}>
+          {question}
+        </span>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen ? "bg-primary text-primary-foreground rotate-45" : "bg-primary/10 text-primary border border-primary/20"}`}>
+          <Plus className="w-4 h-4" strokeWidth={2.5} />
         </div>
       </button>
-      
-      <AnimatePresence>
+
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: "hidden" }}
           >
-            <div className="p-6 pt-0 border-t border-primary/10">
-              <p className="text-muted-foreground font-medium leading-relaxed text-sm" dangerouslySetInnerHTML={{ __html: answer }} />
+            <div className="px-5 md:px-6 pb-6 pt-0 ml-0 md:ml-9">
+              <p className="text-sm text-[#94a3b8] leading-relaxed" dangerouslySetInnerHTML={{ __html: answer }} />
             </div>
           </motion.div>
         )}
