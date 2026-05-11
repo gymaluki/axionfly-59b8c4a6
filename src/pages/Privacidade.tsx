@@ -5,19 +5,16 @@ export default function Privacidade() {
     <LegalLayout
       eyebrow="Privacidade"
       title="Política de Privacidade"
-      description="Saiba como a AxionFly coleta, utiliza, armazena e protege os dados pessoais dos seus usuários, em conformidade com a LGPD e o GDPR."
+      description="Entenda de forma simples quais dados a AxionFly usa, por que usa e como protegemos essas informações."
       updatedAt="11 de maio de 2026"
       sections={[
         {
           id: "introducao",
-          title: "Introdução",
+          title: "Nosso compromisso",
           content: (
             <p>
-              A privacidade dos nossos usuários é prioridade. Esta política descreve como
-              tratamos dados pessoais coletados através do site, da plataforma e dos demais
-              canais oficiais da AxionFly, sempre em conformidade com a Lei Geral de
-              Proteção de Dados (LGPD - Lei 13.709/18) e com o Regulamento Geral de
-              Proteção de Dados europeu (GDPR).
+              A AxionFly trata dados com foco em segurança, melhoria da experiência e operação da plataforma.
+              Coletamos apenas o que faz sentido para entregar acesso, suporte, faturamento e evolução do produto.
             </p>
           ),
         },
@@ -28,10 +25,10 @@ export default function Privacidade() {
             <>
               <p>Coletamos os seguintes tipos de informação:</p>
               <ul className="list-disc pl-5 space-y-1.5">
-                <li><strong>Cadastro:</strong> nome, e-mail, telefone, documento e dados de pagamento.</li>
-                <li><strong>Uso da plataforma:</strong> logs de acesso, IP, navegador, dispositivo e ações realizadas.</li>
-                <li><strong>Comunicação:</strong> mensagens trocadas com nossa equipe de suporte e comercial.</li>
-                <li><strong>Marketing:</strong> origem do lead, campanhas e interações realizadas.</li>
+                <li><strong>Cadastro:</strong> nome, e-mail e informações necessárias para sua conta.</li>
+                <li><strong>Uso:</strong> dados de navegação, dispositivo e interações com a plataforma.</li>
+                <li><strong>Atendimento:</strong> mensagens enviadas para suporte, comercial ou contato.</li>
+                <li><strong>Pagamento:</strong> informações ligadas à assinatura e cobranças.</li>
               </ul>
             </>
           ),
@@ -46,8 +43,8 @@ export default function Privacidade() {
                 <li>Operar, manter e aprimorar a plataforma.</li>
                 <li>Processar pagamentos e gerenciar assinaturas.</li>
                 <li>Enviar comunicações transacionais e de suporte.</li>
-                <li>Personalizar a experiência e oferecer recursos relevantes.</li>
-                <li>Cumprir obrigações legais, regulatórias e contratuais.</li>
+                <li>Personalizar a experiência e melhorar recursos.</li>
+                <li>Prevenir fraudes, abusos e acessos indevidos.</li>
               </ul>
             </>
           ),
@@ -58,14 +55,14 @@ export default function Privacidade() {
           content: (
             <>
               <p>
-                A AxionFly não vende dados pessoais. Compartilhamos informações apenas com
-                operadores estritamente necessários para o funcionamento do serviço:
+                A AxionFly não vende seus dados. Quando necessário, compartilhamos informações apenas com
+                parceiros que ajudam a operar a plataforma:
               </p>
               <ul className="list-disc pl-5 space-y-1.5">
-                <li>Provedores de infraestrutura em nuvem e hospedagem.</li>
-                <li>Gateways e processadoras de pagamento.</li>
-                <li>Ferramentas de analytics e suporte ao cliente.</li>
-                <li>Autoridades, mediante ordem judicial ou exigência legal.</li>
+                <li>Serviços de hospedagem e infraestrutura.</li>
+                <li>Provedores de pagamento e cobrança.</li>
+                <li>Ferramentas de atendimento, análise e estabilidade.</li>
+                <li>Autoridades, quando houver exigência legal.</li>
               </ul>
             </>
           ),
@@ -75,11 +72,9 @@ export default function Privacidade() {
           title: "Segurança das informações",
           content: (
             <p>
-              Adotamos medidas técnicas e administrativas adequadas para proteger os dados
-              contra acesso não autorizado, perda, alteração ou destruição. Isso inclui
-              criptografia em trânsito (TLS), controle de acesso por papéis, monitoramento
-              de logs e backups periódicos. Apesar disso, nenhum sistema é 100% imune e o
-              usuário também é responsável por manter suas credenciais seguras.
+              Aplicamos medidas técnicas e operacionais para reduzir riscos de acesso indevido,
+              perda ou uso incorreto das informações. Mesmo assim, também é importante que você
+              mantenha sua conta e suas credenciais protegidas.
             </p>
           ),
         },
@@ -88,9 +83,9 @@ export default function Privacidade() {
           title: "Retenção de dados",
           content: (
             <p>
-              Os dados são mantidos pelo tempo necessário para cumprir as finalidades para
-              as quais foram coletados, observados os prazos legais. Após esse período, os
-              dados são anonimizados ou excluídos de forma segura.
+              Mantemos os dados pelo tempo necessário para operar sua conta, cumprir obrigações
+              legais e preservar a continuidade do serviço. Depois disso, os dados podem ser excluídos
+              ou anonimizados de forma segura.
             </p>
           ),
         },
@@ -99,30 +94,18 @@ export default function Privacidade() {
           title: "Direitos do titular",
           content: (
             <>
-              <p>Em conformidade com a LGPD e o GDPR, você pode a qualquer momento:</p>
+              <p>Você pode solicitar, sempre que fizer sentido:</p>
               <ul className="list-disc pl-5 space-y-1.5">
-                <li>Confirmar a existência de tratamento dos seus dados.</li>
-                <li>Acessar e solicitar correção de dados incompletos ou desatualizados.</li>
-                <li>Solicitar a portabilidade dos dados a outro fornecedor.</li>
-                <li>Solicitar a exclusão dos dados pessoais, salvo hipóteses legais de retenção.</li>
-                <li>Revogar consentimentos previamente concedidos.</li>
+                <li>Acesso e correção de dados cadastrais.</li>
+                <li>Informações sobre como seus dados são usados.</li>
+                <li>Solicitação de exclusão, quando aplicável.</li>
+                <li>Atualização ou revisão de informações da conta.</li>
               </ul>
               <p>
-                As solicitações devem ser enviadas para
-                <a href="mailto:privacidade@axionfly.site" className="text-primary hover:underline"> privacidade@axionfly.site</a>.
+                Para isso, entre em contato pelo e-mail
+                <a href="mailto:contato@axionfly.site" className="text-primary hover:underline"> contato@axionfly.site</a>.
               </p>
             </>
-          ),
-        },
-        {
-          id: "transferencia",
-          title: "Transferência internacional",
-          content: (
-            <p>
-              Para viabilizar o serviço, alguns dados podem ser processados por provedores
-              localizados fora do Brasil. Nessas hipóteses, garantimos a adoção de cláusulas
-              contratuais e mecanismos de proteção compatíveis com a LGPD e o GDPR.
-            </p>
           ),
         },
         {
@@ -130,9 +113,8 @@ export default function Privacidade() {
           title: "Alterações nesta política",
           content: (
             <p>
-              Podemos atualizar esta Política periodicamente. Mudanças relevantes serão
-              comunicadas com antecedência razoável pelos canais oficiais. Recomendamos a
-              leitura periódica para se manter informado.
+              Esta política pode ser atualizada para refletir melhorias no produto, ajustes operacionais
+              ou mudanças de contexto. A versão mais recente estará sempre disponível nesta página.
             </p>
           ),
         },
