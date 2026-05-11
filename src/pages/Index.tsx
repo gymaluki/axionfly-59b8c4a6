@@ -688,7 +688,7 @@ const Index = () => {
               }}
             />
 
-            <div className="relative z-10 px-6 py-16 md:px-16 md:py-24 text-center">
+            <div className="relative z-10 px-5 py-14 sm:px-8 sm:py-16 md:px-16 md:py-24 text-center">
               {/* Urgency pill */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
