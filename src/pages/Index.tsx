@@ -7,7 +7,7 @@ import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
-import { ParticleBackground } from "@/components/ui/particle-background";
+
 import axionflyLogo from "@/assets/axionfly-logo.png";
 
 
@@ -601,64 +601,61 @@ const Index = () => {
 
           <div className="max-w-4xl mx-auto space-y-4">
             {faqItems.map((item, i) => (
-              <FAQItem key={i} question={item.q} answer={item.a} />
+              <FAQItem key={i} question={item.q} answer={item.a} defaultOpen={i === 0} />
             ))}
           </div>
         </section>
 
         {/* ═══════════ CTA FINAL ═══════════ */}
-        <section className="container mx-auto px-4 py-20 md:py-40 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.2)_0%,transparent_70%)] pointer-events-none" />
-          <div className="hidden md:block">
-            <ParticleBackground />
-          </div>
-          
+        <section className="container mx-auto px-4 pt-12 pb-20 md:pt-16 md:pb-28 relative">
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative z-10 max-w-6xl mx-auto rounded-[3rem] border border-primary/20 bg-card/60 backdrop-blur-xl p-12 md:p-24 text-center space-y-12"
+            className="relative z-10 max-w-6xl mx-auto bg-[#0D1221] text-center overflow-hidden"
+            style={{
+              borderRadius: "24px",
+              border: "1px solid rgba(59,130,246,0.2)",
+              padding: "clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px)",
+              backgroundImage: "radial-gradient(circle at center, rgba(59,130,246,0.12) 0%, transparent 60%)",
+            }}
           >
-            <h2 className="text-4xl md:text-[58px] font-black text-foreground leading-[1.05] tracking-tighter">
-              Comece agora e venda seu <br />
+            <h2 className="text-3xl md:text-[48px] font-black text-foreground leading-[1.1] tracking-tight mb-8">
+              Comece agora e venda seu <br className="hidden sm:block" />
               <span className="gradient-text-animate">primeiro site hoje</span>
             </h2>
             
             <div className="flex flex-col items-center space-y-8">
-              <motion.div 
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="inline-flex items-center gap-3 px-8 py-2.5 rounded-full bg-primary/10 border border-primary/20"
-              >
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-                <span className="text-sm font-black text-primary uppercase tracking-[0.2em]">🔥 Últimas vagas com preço atual</span>
-              </motion.div>
+              <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-black/40 border border-primary/20">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500" style={{ animation: "pulse 1.5s ease-in-out infinite" }} />
+                <span className="text-xs md:text-sm font-black text-primary uppercase tracking-[0.15em]">🔥 Últimas vagas com preço atual</span>
+              </div>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full max-w-2xl mx-auto pt-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-2xl mx-auto">
                 <Button 
                   variant="neon" 
                   size="xl" 
-                  className="rounded-full shimmer-button px-12 h-18 text-xl font-black uppercase tracking-[0.2em] w-full sm:w-auto shadow-[0_0_40px_rgba(37,99,235,0.4)]"
+                  className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto"
                   onClick={() => navigate("/auth")}
                 >
-                  <Zap className="mr-3 w-6 h-6 fill-current" />
+                  <Zap className="mr-2 w-5 h-5 fill-current" />
                   Assinar agora
                 </Button>
                 <Button 
                   variant="outline" 
                   size="xl" 
-                  className="rounded-full px-12 h-18 text-xl font-black uppercase tracking-[0.2em] border-2 w-full sm:w-auto hover:bg-primary/10"
+                  className="rounded-full px-10 h-14 text-base font-black uppercase tracking-[0.15em] border-2 w-full sm:w-auto hover:bg-primary/10"
                   onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
                 >
-                  Ver Planos <ArrowRight className="ml-3 w-6 h-6" />
+                  Ver Planos <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </div>
               
-              <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 pt-8 border-t border-primary/10 w-full">
+              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 pt-6 w-full">
                 {['Sem experiência necessária', 'Setup em 5 minutos', 'Suporte em português'].map((item) => (
-                  <div key={item} className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-primary stroke-[3px]" />
-                    <span className="text-sm font-bold text-muted-foreground uppercase tracking-widest">{item}</span>
+                  <div key={item} className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-primary stroke-[3px]" />
+                    <span className="text-[11px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest">{item}</span>
                   </div>
                 ))}
               </div>
@@ -667,32 +664,57 @@ const Index = () => {
         </section>
 
         {/* ═══════════ FOOTER ═══════════ */}
-        <footer className="border-t border-primary/20 bg-[#05050a] relative z-10 pt-24 pb-12">
-          <div className="container mx-auto px-4 text-center">
-            <div className="flex flex-col items-center justify-center gap-8 mb-16">
-              <div className="space-y-6">
-                <div className="flex flex-col items-center gap-4">
-                  <img src={axionflyLogo} alt="AxionFly" className="h-10 w-auto" />
-                  <div className="space-y-2">
-                    <span className="text-xl font-black text-foreground tracking-tighter block">AxionFly</span>
-                    <span className="text-xs font-black uppercase tracking-[0.3em] text-primary">Prospecção Automática</span>
-                  </div>
+        <footer className="bg-[#050709] relative z-10 pt-16 pb-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="container mx-auto px-4">
+            {/* Topo: logo + nav + socials */}
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-10 pb-10">
+              {/* Logo + tagline */}
+              <div className="flex flex-col items-center md:items-start gap-3 max-w-xs text-center md:text-left">
+                <div className="flex items-center gap-3">
+                  <img src={axionflyLogo} alt="AxionFly" className="h-9 w-auto" />
+                  <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
                 </div>
+                <p className="text-sm text-[#94a3b8] leading-relaxed">
+                  A plataforma completa para criar e vender sites com IA.
+                </p>
+              </div>
+
+              {/* Nav */}
+              <nav className="flex flex-wrap justify-center items-center gap-x-8 gap-y-3 text-sm font-bold text-[#94a3b8]">
+                {[
+                  { label: "Início", href: "#inicio" },
+                  { label: "Etapas", href: "#etapas" },
+                  { label: "Planos", href: "#pricing" },
+                  { label: "Feedbacks", href: "#feedbacks" },
+                  { label: "FAQ", href: "#faq" },
+                ].map((l) => (
+                  <a key={l.href} href={l.href} className="hover:text-primary transition-colors">{l.label}</a>
+                ))}
+              </nav>
+
+              {/* Socials */}
+              <div className="flex items-center justify-center gap-4">
+                <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 transition-colors">
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a href="#" aria-label="YouTube" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 transition-colors">
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <a href="#" aria-label="WhatsApp" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 transition-colors">
+                  <Phone className="w-4 h-4" />
+                </a>
               </div>
             </div>
-            
-            <div className="pt-12 border-t border-primary/10 flex flex-col gap-6">
-              <p className="text-center text-[11px] font-black uppercase tracking-[0.15em] text-primary/80">
-                ⚡ Aviso: Por alta demanda de novos cadastros, a Promoção de Aniversário foi estendida por mais 1 dia.
+
+            {/* Linha inferior */}
+            <div className="pt-6 flex flex-col md:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <p className="text-[#64748b] text-xs">
+                © 2025 AxionFly. Todos os direitos reservados.
               </p>
-              <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-                <p className="text-[#64748b] text-[11px] font-black uppercase tracking-[0.1em] text-center">
-                  © 2026 AxionFly · Todos os direitos reservados
-                </p>
-                <div className="flex items-center gap-10 text-xs font-black uppercase tracking-widest text-muted-foreground/60">
-                  <a href="#" className="hover:text-primary transition-colors">Privacidade</a>
-                  <a href="#" className="hover:text-primary transition-colors">Termos de Uso</a>
-                </div>
+              <div className="flex items-center gap-6 text-xs text-[#64748b]">
+                <a href="#" className="hover:text-primary transition-colors">Privacidade</a>
+                <span className="opacity-30">·</span>
+                <a href="#" className="hover:text-primary transition-colors">Termos de Uso</a>
               </div>
             </div>
           </div>
@@ -704,8 +726,8 @@ const Index = () => {
 };
 
 /* ── FAQ Item Component ── */
-function FAQItem({ question, answer }: { question: string, answer: string }) {
-  const [isOpen, setIsOpen] = useState(false);
+function FAQItem({ question, answer, defaultOpen = false }: { question: string, answer: string, defaultOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   
   return (
     <motion.div 
