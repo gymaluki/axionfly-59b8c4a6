@@ -15,7 +15,7 @@ const sharedStyles = `
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    aspect-ratio: 16/10;
+    aspect-ratio: 16/9;
     border-radius: 12px;
     border: 1px solid var(--border);
     background:
