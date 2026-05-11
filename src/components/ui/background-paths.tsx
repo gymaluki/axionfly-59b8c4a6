@@ -10,7 +10,7 @@ function FloatingPaths({ position }: { position: number }) {
     } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
       684 - i * 5 * position
     } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-    width: 0.5 + i * 0.03,
+    width: 0.28 + i * 0.018,
   }));
 
   return (
@@ -18,7 +18,7 @@ function FloatingPaths({ position }: { position: number }) {
       <svg
         className="w-full h-full"
         viewBox="0 0 696 316"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="xMidYMax slice"
         fill="none"
       >
         <title>Background Paths</title>
@@ -28,7 +28,7 @@ function FloatingPaths({ position }: { position: number }) {
             d={path.d}
             stroke="hsl(var(--primary))"
             strokeWidth={path.width}
-            strokeOpacity={0.06 + path.id * 0.015}
+            strokeOpacity={0.05 + path.id * 0.012}
             initial={{ pathLength: 0.3, opacity: 0.6 }}
             animate={{
               pathLength: 1,
@@ -49,7 +49,7 @@ function FloatingPaths({ position }: { position: number }) {
 
 export function BackgroundPaths() {
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-x-0 -bottom-[10%] top-[10%] overflow-hidden">
       <FloatingPaths position={1} />
       <FloatingPaths position={-1} />
     </div>
