@@ -160,26 +160,6 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
 
   return (
     <div className="space-y-6">
-      {/* Strategy Card */}
-      <Card className="bg-gradient-to-br from-[#0d0d14] to-primary/10 border border-white/5 overflow-hidden relative group">
-        <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
-        <CardContent className="p-8 relative z-10">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center shrink-0 shadow-[0_0_30px_rgba(37,99,235,0.2)]">
-              <Sparkles className="w-8 h-8 text-primary" />
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Estratégia para Criar Sites Infinitos</h3>
-              <p className="text-[#94a3b8] text-base leading-relaxed max-w-2xl font-medium">
-                Aprenda o método oficial para escalar sua produção sem limites. Ao renovar suas contas Lovable, você mantém o fluxo constante de criação. 
-                <span className="block mt-2 text-primary font-bold">Use com responsabilidade para garantir seus resultados.</span>
-              </p>
-            </div>
-          </div>
-        </CardContent>
-        <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/10 blur-[80px] rounded-full pointer-events-none" />
-      </Card>
-
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Área de Membros</h2>

@@ -2,12 +2,14 @@ import { useRef, useState } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import aulaDashboard from "@/assets/carousel-dashboard.jpg";
-import aulaVenda from "@/assets/carousel-venda.jpg";
+import slideAcessar from "@/assets/carousel-acessar.png";
+import slideVenda from "@/assets/carousel-venda-sem-gastar.png";
+import slideSuporte from "@/assets/carousel-suporte.png";
 
 const slides = [
-  { id: "aula1", src: aulaDashboard, title: "Área de Membros", desc: "Aulas completas sobre como configurar sua estrutura e dashboard." },
-  { id: "aula2", src: aulaVenda, title: "Estratégias de Venda", desc: "Scripts e métodos validados para fechar contratos de alto valor." },
+  { id: "acessar", src: slideAcessar, title: "Como Acessar a Ferramenta", desc: "Passo a passo completo para configurar e acessar seu painel." },
+  { id: "venda", src: slideVenda, title: "Venda Sem Gastar", desc: "Estratégias para vender por R$1 e escalar sem investimento inicial." },
+  { id: "suporte", src: slideSuporte, title: "Suporte Premium", desc: "Atendimento dedicado para você crescer com automações precisas." },
 ];
 
 const CARD_W_MD = 350;
