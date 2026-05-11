@@ -10,7 +10,7 @@ function FloatingPaths({ position }: { position: number }) {
     } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
       684 - i * 5 * position
     } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-    width: 0.28 + i * 0.018,
+    width: 0.18 + i * 0.012,
   }));
 
   return (
@@ -49,7 +49,7 @@ function FloatingPaths({ position }: { position: number }) {
 
 export function BackgroundPaths() {
   return (
-    <div className="absolute inset-x-0 -bottom-[10%] top-[10%] overflow-hidden">
+    <div className="absolute inset-x-0 -bottom-[16%] top-[2%] overflow-hidden">
       <FloatingPaths position={1} />
       <FloatingPaths position={-1} />
     </div>
