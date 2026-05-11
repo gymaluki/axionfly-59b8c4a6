@@ -312,6 +312,7 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          niche: string | null
           prompt: string
           site_name: string | null
           url: string
@@ -320,6 +321,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          niche?: string | null
           prompt: string
           site_name?: string | null
           url: string
@@ -328,6 +330,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          niche?: string | null
           prompt?: string
           site_name?: string | null
           url?: string
