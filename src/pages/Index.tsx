@@ -549,7 +549,9 @@ const Index = () => {
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section className="py-12 md:py-16">
           <SectionPill>Conheça Área de Membros</SectionPill>
-          <FeaturesCarousel />
+          <Suspense fallback={<div className="min-h-[300px]" />}>
+            <FeaturesCarousel />
+          </Suspense>
         </section>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
@@ -574,13 +576,19 @@ const Index = () => {
         </section>
 
         {/* ═══════════ PLANOS ═══════════ */}
-        <PricingCards />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <PricingCards />
+        </Suspense>
 
         {/* ═══════════ PARCERIAS ═══════════ */}
-        <LovablePartnership />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <LovablePartnership />
+        </Suspense>
 
         {/* ═══════════ FEEDBACKS ═══════════ */}
-        <Testimonials />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <Testimonials />
+        </Suspense>
 
         {/* ═══════════ FAQ ═══════════ */}
         <section id="faq" className="container mx-auto px-4 py-24 md:py-32 relative">
