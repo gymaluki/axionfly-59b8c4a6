@@ -32,6 +32,42 @@ export type Database = {
         }
         Relationships: []
       }
+      affiliates: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          id: string
+          lifetime_url: string | null
+          monthly_url: string | null
+          name: string
+          quarterly_url: string | null
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          lifetime_url?: string | null
+          monthly_url?: string | null
+          name: string
+          quarterly_url?: string | null
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          lifetime_url?: string | null
+          monthly_url?: string | null
+          name?: string
+          quarterly_url?: string | null
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       contacted_leads: {
         Row: {
           created_at: string
@@ -136,6 +172,7 @@ export type Database = {
       }
       pending_payments: {
         Row: {
+          affiliate_slug: string | null
           created_at: string
           email: string
           expires_at: string | null
@@ -147,6 +184,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          affiliate_slug?: string | null
           created_at?: string
           email: string
           expires_at?: string | null
@@ -158,6 +196,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          affiliate_slug?: string | null
           created_at?: string
           email?: string
           expires_at?: string | null
@@ -169,6 +208,56 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      platform_sales: {
+        Row: {
+          affiliate_slug: string | null
+          amount: number | null
+          created_at: string | null
+          email: string
+          id: string
+          payload: Json | null
+          payment_method: string | null
+          plan: string | null
+          status: string
+          transaction_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          affiliate_slug?: string | null
+          amount?: number | null
+          created_at?: string | null
+          email: string
+          id?: string
+          payload?: Json | null
+          payment_method?: string | null
+          plan?: string | null
+          status: string
+          transaction_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          affiliate_slug?: string | null
+          amount?: number | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          payload?: Json | null
+          payment_method?: string | null
+          plan?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "platform_sales_affiliate_slug_fkey"
+            columns: ["affiliate_slug"]
+            isOneToOne: false
+            referencedRelation: "affiliates"
+            referencedColumns: ["slug"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -274,6 +363,7 @@ export type Database = {
       }
       subscriptions: {
         Row: {
+          affiliate_slug: string | null
           created_at: string
           expires_at: string | null
           id: string
@@ -285,6 +375,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          affiliate_slug?: string | null
           created_at?: string
           expires_at?: string | null
           id?: string
@@ -296,6 +387,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          affiliate_slug?: string | null
           created_at?: string
           expires_at?: string | null
           id?: string
