@@ -88,27 +88,18 @@ export default function FeaturesCarousel() {
           {allSlides.map((slide, i) => (
             <div
               key={`${slide.id}-${i}`}
-              className="shrink-0 w-[280px] md:w-[350px] aspect-[16/10] rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group"
+              className="shrink-0 w-[280px] md:w-[350px] aspect-[4/5] rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group bg-[#05050a]"
               style={{
-                boxShadow: "0 0 40px -15px hsl(var(--primary) / 0.2)",
+                boxShadow: "0 0 40px -15px hsl(var(--primary) / 0.25)",
               }}
             >
-              {/* Image */}
-              <div className="w-full h-full bg-[#05050a]">
-                <img
-                  src={slide.src}
-                  alt={slide.title}
-                  className="w-full h-full object-cover pointer-events-none group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                  draggable={false}
-                />
-              </div>
-              
-              {/* Overlay removido para mostrar imagens em brilho natural */}
-              
-              {/* Content removed per user request */}
-              
-              {/* Hover Glow */}
+              <img
+                src={slide.src}
+                alt={slide.title}
+                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+                draggable={false}
+              />
               <div className="absolute -inset-1 border-2 border-primary/0 group-hover:border-primary/40 rounded-[2rem] transition-all duration-500" />
             </div>
           ))}
