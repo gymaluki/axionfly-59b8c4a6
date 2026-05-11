@@ -39,7 +39,7 @@ const sharedStyles = `
 
   /* Browser window */
   .pfv-browser {
-    position: absolute; top: 18px; left: 18px; right: 18px; bottom: 56px;
+    position: absolute; top: 18px; left: 18px; right: 18px; bottom: 18px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
