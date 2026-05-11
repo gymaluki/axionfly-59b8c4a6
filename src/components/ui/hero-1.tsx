@@ -2,62 +2,52 @@ import { Button } from "@/components/ui/button";
 import { ArrowRightIcon, Zap, Sparkles, BarChart3, Users, Globe, ArrowUpRight, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import phoneFrame from "@/assets/mockup-phone-frame.png";
-import laptopFrame from "@/assets/mockup-laptop-frame.png";
 
-/* Realistic laptop with axionfly dashboard inside the screen */
+/* Laptop mockup with axionfly dashboard */
 function LaptopMockup() {
   return (
-    <div className="relative w-full">
-      {/* Frame */}
-      <img
-        src={laptopFrame}
-        alt=""
-        loading="eager"
-        decoding="async"
-        className="block w-full h-auto select-none pointer-events-none drop-shadow-[0_30px_60px_rgba(37,99,235,0.35)]"
-      />
-      {/* Screen overlay — positioned over the laptop's display area */}
+    <div className="relative w-full" style={{ perspective: "1500px" }}>
       <div
-        className="absolute overflow-hidden bg-[#05060d]"
-        style={{ top: "5.5%", left: "11.2%", right: "11.2%", bottom: "37%" }}
+        className="relative"
+        style={{ transform: "rotateY(-14deg) rotateX(6deg)", transformStyle: "preserve-3d" }}
       >
-        <div className="h-full w-full flex flex-col">
+        {/* Screen */}
+        <div className="rounded-[14px] border border-primary/30 bg-[#05060d] shadow-[0_30px_80px_-20px_rgba(37,99,235,0.45)] overflow-hidden">
           {/* Title bar */}
-          <div className="h-5 border-b border-primary/15 bg-[#0a0c18] flex items-center px-2 gap-1 shrink-0">
-            <div className="w-1.5 h-1.5 rounded-full bg-red-500/60" />
-            <div className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60" />
-            <div className="mx-auto bg-black/40 rounded px-1.5 py-0.5 text-[7px] text-muted-foreground font-mono">
+          <div className="h-7 border-b border-primary/15 bg-[#0a0c18] flex items-center px-3 gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-red-500/60" />
+            <div className="w-2 h-2 rounded-full bg-amber-500/60" />
+            <div className="w-2 h-2 rounded-full bg-emerald-500/60" />
+            <div className="mx-auto bg-black/40 rounded px-2 py-0.5 text-[8px] text-muted-foreground font-mono">
               axionfly.site/dashboard
             </div>
           </div>
           {/* Content */}
-          <div className="flex-1 p-2 grid grid-cols-3 gap-1.5 min-h-0">
-            <div className="space-y-1.5 flex flex-col">
-              <div className="flex-1 p-1.5 rounded-md bg-black/40 border border-primary/15">
-                <div className="flex justify-between items-start mb-1">
-                  <div className="p-0.5 rounded bg-primary/15"><Users className="w-2.5 h-2.5 text-primary" /></div>
-                  <span className="text-[7px] text-emerald-500 font-bold flex items-center"><ArrowUpRight className="w-2 h-2" />+12%</span>
+          <div className="p-3 grid grid-cols-3 gap-2.5">
+            <div className="space-y-2">
+              <div className="p-2.5 rounded-lg bg-black/40 border border-primary/15">
+                <div className="flex justify-between items-start mb-1.5">
+                  <div className="p-1 rounded bg-primary/15"><Users className="w-3 h-3 text-primary" /></div>
+                  <span className="text-[8px] text-emerald-500 font-bold flex items-center"><ArrowUpRight className="w-2.5 h-2.5" />+12%</span>
                 </div>
-                <p className="text-[7px] text-muted-foreground leading-none">Leads</p>
-                <p className="text-[11px] font-black text-foreground leading-tight">1.284</p>
+                <p className="text-[8px] text-muted-foreground">Leads</p>
+                <p className="text-sm font-black text-foreground">1.284</p>
               </div>
-              <div className="flex-1 p-1.5 rounded-md bg-black/40 border border-primary/15">
-                <div className="flex justify-between items-start mb-1">
-                  <div className="p-0.5 rounded bg-primary/15"><Globe className="w-2.5 h-2.5 text-primary" /></div>
-                  <span className="text-[7px] text-emerald-500 font-bold flex items-center"><ArrowUpRight className="w-2 h-2" />+8%</span>
+              <div className="p-2.5 rounded-lg bg-black/40 border border-primary/15">
+                <div className="flex justify-between items-start mb-1.5">
+                  <div className="p-1 rounded bg-primary/15"><Globe className="w-3 h-3 text-primary" /></div>
+                  <span className="text-[8px] text-emerald-500 font-bold flex items-center"><ArrowUpRight className="w-2.5 h-2.5" />+8%</span>
                 </div>
-                <p className="text-[7px] text-muted-foreground leading-none">Sites</p>
-                <p className="text-[11px] font-black text-foreground leading-tight">542</p>
+                <p className="text-[8px] text-muted-foreground">Sites</p>
+                <p className="text-sm font-black text-foreground">542</p>
               </div>
             </div>
-            <div className="col-span-2 p-2 rounded-md bg-black/40 border border-primary/15 flex flex-col">
-              <div className="flex justify-between items-center mb-1.5">
-                <h4 className="text-[9px] font-bold text-foreground">Receita</h4>
-                <BarChart3 className="w-2.5 h-2.5 text-primary" />
+            <div className="col-span-2 p-3 rounded-lg bg-black/40 border border-primary/15 flex flex-col">
+              <div className="flex justify-between items-center mb-2">
+                <h4 className="text-[10px] font-bold text-foreground">Receita</h4>
+                <BarChart3 className="w-3 h-3 text-primary" />
               </div>
-              <div className="flex-1 flex items-end gap-1">
+              <div className="flex items-end gap-1 h-20 mt-auto">
                 {[40, 70, 45, 90, 65, 85, 100].map((h, i) => (
                   <div key={i} className="flex-1 rounded-t-sm bg-gradient-to-t from-primary/30 to-primary" style={{ height: `${h}%` }} />
                 ))}
@@ -65,60 +55,57 @@ function LaptopMockup() {
             </div>
           </div>
         </div>
+        {/* Base */}
+        <div className="mx-auto h-2 w-[105%] -mt-[1px] rounded-b-2xl bg-gradient-to-b from-[#1a1d2c] to-[#05060d] border-x border-b border-primary/20" />
       </div>
     </div>
   );
 }
 
-/* Realistic phone with axionfly app inside the screen */
+/* Phone mockup */
 function PhoneMockup() {
   return (
-    <div className="relative w-[150px] sm:w-[180px]">
-      <img
-        src={phoneFrame}
-        alt=""
-        loading="eager"
-        decoding="async"
-        className="block w-full h-auto select-none pointer-events-none drop-shadow-[0_25px_45px_rgba(37,99,235,0.5)]"
-      />
-      {/* Screen overlay */}
+    <div className="relative" style={{ perspective: "1500px" }}>
       <div
-        className="absolute overflow-hidden bg-gradient-to-b from-[#0a0c18] to-[#05060d] rounded-[10px]"
-        style={{ top: "4.5%", left: "8%", right: "8%", bottom: "4.5%" }}
+        className="relative w-[150px] sm:w-[170px] rounded-[28px] border-[3px] border-[#1a1d2c] bg-[#05060d] shadow-[0_25px_60px_-10px_rgba(37,99,235,0.5)] overflow-hidden"
+        style={{ transform: "rotateY(12deg) rotateX(-4deg)", transformStyle: "preserve-3d", aspectRatio: "9/19" }}
       >
-        <div className="h-full w-full pt-5 px-2 pb-2 flex flex-col gap-1.5">
-          <div className="flex items-center gap-1">
-            <div className="w-4 h-4 rounded-md bg-primary/20 flex items-center justify-center">
-              <Sparkles className="w-2.5 h-2.5 text-primary" />
+        {/* Notch */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-14 h-3 rounded-full bg-black z-10" />
+        {/* Screen content */}
+        <div className="h-full bg-gradient-to-b from-[#0a0c18] to-[#05060d] pt-7 px-2.5 pb-3 flex flex-col gap-2">
+          <div className="flex items-center gap-1.5">
+            <div className="w-5 h-5 rounded-md bg-primary/20 flex items-center justify-center">
+              <Sparkles className="w-3 h-3 text-primary" />
             </div>
-            <span className="text-[7px] font-black text-foreground">AxionFly</span>
+            <span className="text-[8px] font-black text-foreground">AxionFly</span>
           </div>
-          <div className="rounded-md bg-primary/10 border border-primary/30 p-1.5">
-            <p className="text-[6px] text-muted-foreground leading-none">Saldo</p>
-            <p className="text-[12px] font-black text-foreground leading-tight">R$ 15.400</p>
-            <div className="flex items-center gap-0.5">
+          <div className="rounded-lg bg-primary/10 border border-primary/30 p-2">
+            <p className="text-[7px] text-muted-foreground">Saldo</p>
+            <p className="text-sm font-black text-foreground">R$ 15.400</p>
+            <div className="flex items-center gap-0.5 mt-0.5">
               <TrendingUp className="w-2 h-2 text-emerald-500" />
-              <span className="text-[6px] font-bold text-emerald-500">+24%</span>
+              <span className="text-[7px] font-bold text-emerald-500">+24%</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-1">
-            <div className="rounded bg-black/40 border border-primary/15 p-1">
-              <Users className="w-2 h-2 text-primary mb-0.5" />
-              <p className="text-[5px] text-muted-foreground leading-none">Leads</p>
-              <p className="text-[9px] font-black text-foreground leading-tight">1.284</p>
+          <div className="grid grid-cols-2 gap-1.5">
+            <div className="rounded-md bg-black/40 border border-primary/15 p-1.5">
+              <Users className="w-2.5 h-2.5 text-primary mb-0.5" />
+              <p className="text-[6px] text-muted-foreground">Leads</p>
+              <p className="text-[10px] font-black text-foreground">1.284</p>
             </div>
-            <div className="rounded bg-black/40 border border-primary/15 p-1">
-              <Globe className="w-2 h-2 text-primary mb-0.5" />
-              <p className="text-[5px] text-muted-foreground leading-none">Sites</p>
-              <p className="text-[9px] font-black text-foreground leading-tight">542</p>
+            <div className="rounded-md bg-black/40 border border-primary/15 p-1.5">
+              <Globe className="w-2.5 h-2.5 text-primary mb-0.5" />
+              <p className="text-[6px] text-muted-foreground">Sites</p>
+              <p className="text-[10px] font-black text-foreground">542</p>
             </div>
           </div>
-          <div className="rounded bg-gradient-to-r from-primary to-primary/70 py-1 text-center">
-            <span className="text-[7px] font-black text-white uppercase tracking-wider">Criar site</span>
+          <div className="rounded-md bg-gradient-to-r from-primary to-primary/70 py-1.5 text-center">
+            <span className="text-[8px] font-black text-white uppercase tracking-wider">Criar site</span>
           </div>
-          <div className="space-y-0.5 mt-auto">
+          <div className="space-y-1 mt-auto">
             {[60, 80, 45].map((w, i) => (
-              <div key={i} className="h-0.5 rounded-full bg-primary/20" style={{ width: `${w}%` }} />
+              <div key={i} className="h-1 rounded-full bg-primary/20" style={{ width: `${w}%` }} />
             ))}
           </div>
         </div>
