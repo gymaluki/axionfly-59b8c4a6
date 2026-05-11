@@ -1,10 +1,15 @@
 import { motion } from "framer-motion";
 import { Star, CheckCircle2, Quote, TrendingUp, Users, Heart } from "lucide-react";
+import woman1 from "@/assets/testimonial-woman-1.jpeg";
+import woman2 from "@/assets/testimonial-woman-2.jpeg";
+import man1 from "@/assets/testimonial-man-1.jpeg";
+import man2 from "@/assets/testimonial-man-2.jpeg";
 
 const testimonials = [
   {
     name: "Estter Oliveira",
     initials: "EO",
+    avatar: woman1,
     city: "São Paulo, SP",
     result: "R$ 1.500 no 1º site",
     text: "Criar sites pra comércio e já ter os clientes pra poder vender é a melhor coisa já feita, sensacional!",
@@ -12,8 +17,9 @@ const testimonials = [
     featured: true,
   },
   {
-    name: "Igor Freitosa",
+    name: "Igor Freitas",
     initials: "IF",
+    avatar: man1,
     city: "Curitiba, PR",
     result: "3 clientes em 1 semana",
     text: "Adorei demais, hoje mesmo já vendi até pra uma amiga minha que tem barbearia. O sistema de leads é surreal.",
@@ -22,14 +28,16 @@ const testimonials = [
   {
     name: "Raphael Calderon",
     initials: "RC",
+    avatar: man2,
     city: "Belo Horizonte, MG",
     result: "Faturamento 5k/mês",
     text: "Fácil, prático e incrível. Vale o investimento! A IA cria sites que realmente convencem os donos de comércio.",
     stars: 5,
   },
   {
-    name: "Fogaça",
-    initials: "FG",
+    name: "Camila Fogaça",
+    initials: "CF",
+    avatar: woman2,
     city: "Rio de Janeiro, RJ",
     result: "Escalando para agência",
     text: "Parabéns aos criadores, fiz minhas primeiras vendas online e juntei uma boa grana para escalar.",
