@@ -789,7 +789,7 @@ const Index = () => {
               {/* Brand */}
               <div className="col-span-2 md:col-span-1 space-y-4">
                 <div className="flex items-center gap-2.5">
-                  <img src={axionflyLogo} alt="AxionFly" className="h-9 w-auto" />
+                  <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
                   <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
                 </div>
                 <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
