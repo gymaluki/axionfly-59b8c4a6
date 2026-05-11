@@ -21,7 +21,7 @@ async function report(payload: {
 
     const { data: { user } } = await supabase.auth.getUser();
 
-    await supabase.from("system_errors").insert({
+    await supabase.from("system_errors").insert([{
       level: payload.level || "error",
       message: payload.message.slice(0, 2000),
       stack: payload.stack?.slice(0, 4000) ?? null,
@@ -31,7 +31,7 @@ async function report(payload: {
       user_id: user?.id ?? null,
       user_email: user?.email ?? null,
       context: payload.context ?? null,
-    });
+    }]);
   } catch {
     // silently ignore — never crash the app from the logger
   }
