@@ -16,6 +16,10 @@ const QAGrid = lazy(() => import("./pages/QAGrid"));
 const QAGridFrame = lazy(() => import("./pages/QAGridFrame"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AffiliateRedirect = lazy(() => import("./pages/AffiliateRedirect"));
+const Legal = lazy(() => import("./pages/Legal"));
+const Termos = lazy(() => import("./pages/Termos"));
+const Privacidade = lazy(() => import("./pages/Privacidade"));
+const Cookies = lazy(() => import("./pages/Cookies"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,6 +53,10 @@ const App = () => (
             <Route path="/o" element={<AffiliateRedirect slug="o" />} />
             <Route path="/l" element={<AffiliateRedirect slug="l" />} />
             <Route path="/u/:slug" element={<AffiliateRedirect />} />
+            <Route path="/legal" element={<Legal />} />
+            <Route path="/termos" element={<Termos />} />
+            <Route path="/privacidade" element={<Privacidade />} />
+            <Route path="/cookies" element={<Cookies />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
