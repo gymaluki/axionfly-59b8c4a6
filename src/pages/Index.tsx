@@ -615,7 +615,7 @@ const Index = () => {
               <motion.div
                 whileHover={{ y: -3 }}
                 className="rounded-2xl bg-gradient-to-br from-primary/[0.12] to-transparent p-6"
-                style={{ border: "1px solid rgba(59,130,246,0.25)" }}
+                style={{ border: "1px solid rgba(36,99,235,0.25)" }}
               >
                 <div className="flex items-start gap-4">
                   <div className="w-11 h-11 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center shrink-0">
@@ -664,9 +664,9 @@ const Index = () => {
             className="relative max-w-6xl mx-auto overflow-hidden"
             style={{
               borderRadius: "32px",
-              border: "1px solid rgba(59,130,246,0.25)",
+              border: "1px solid rgba(36,99,235,0.25)",
               background:
-                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.18) 0%, transparent 60%), linear-gradient(180deg, #0D1221 0%, #080B14 100%)",
+                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(36,99,235,0.18) 0%, transparent 60%), linear-gradient(180deg, #0D1221 0%, #080B14 100%)",
             }}
           >
             {/* Animated orb */}
@@ -682,7 +682,7 @@ const Index = () => {
               className="absolute inset-0 opacity-[0.06] pointer-events-none"
               style={{
                 backgroundImage:
-                  "linear-gradient(rgba(59,130,246,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.5) 1px, transparent 1px)",
+                  "linear-gradient(rgba(36,99,235,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(36,99,235,0.5) 1px, transparent 1px)",
                 backgroundSize: "48px 48px",
                 maskImage: "radial-gradient(ellipse at center, #000 30%, transparent 80%)",
               }}
@@ -721,7 +721,7 @@ const Index = () => {
                 <Button
                   variant="neon"
                   size="xl"
-                  className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(59,130,246,0.5)]"
+                  className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(36,99,235,0.5)]"
                   onClick={() => navigate("/auth")}
                 >
                   <Zap className="mr-2 w-5 h-5 fill-current" />
@@ -882,9 +882,9 @@ function FAQItem({ num, question, answer, defaultOpen = false }: { num?: string;
       }`}
       style={{
         border: isOpen
-          ? "1px solid rgba(59,130,246,0.4)"
-          : "1px solid rgba(59,130,246,0.12)",
-        boxShadow: isOpen ? "0 0 0 1px rgba(59,130,246,0.1), 0 8px 32px -12px rgba(59,130,246,0.25)" : "none",
+          ? "1px solid rgba(36,99,235,0.4)"
+          : "1px solid rgba(36,99,235,0.12)",
+        boxShadow: isOpen ? "0 0 0 1px rgba(36,99,235,0.1), 0 8px 32px -12px rgba(36,99,235,0.25)" : "none",
       }}
     >
       <button
