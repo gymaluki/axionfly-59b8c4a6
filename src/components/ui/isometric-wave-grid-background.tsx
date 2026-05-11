@@ -110,6 +110,10 @@ const IsoLevelWarp = ({
     container.addEventListener("mousemove", handleMouseMove);
     container.addEventListener("mouseleave", handleMouseLeave);
 
+    // Observe container size changes (lazy-loaded content, font swaps, mockup mounting)
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(container);
+
     resize();
     draw();
 
@@ -117,6 +121,7 @@ const IsoLevelWarp = ({
       window.removeEventListener("resize", resize);
       container.removeEventListener("mousemove", handleMouseMove);
       container.removeEventListener("mouseleave", handleMouseLeave);
+      resizeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, [color, speed, density]);
