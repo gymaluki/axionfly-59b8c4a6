@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
+import { supabase } from "@/integrations/supabase/client";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
 
@@ -39,6 +40,31 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     return `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(normalizedPrompt)}`;
   }, [normalizedPrompt]);
 
+  const saveSiteToHistory = useCallback(async () => {
+    if (!normalizedPrompt || !targetUrl) return;
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Extract a name from the prompt if possible, or use a default
+      let siteName = "Meu Site Profissional";
+      const nameMatch = normalizedPrompt.match(/chamada ["']([^"']+)["']/i);
+      if (nameMatch && nameMatch[1]) {
+        siteName = nameMatch[1];
+      }
+
+      await supabase.from("user_sites").insert({
+        user_id: user.id,
+        prompt: normalizedPrompt,
+        url: targetUrl,
+        site_name: siteName
+      });
+    } catch (error) {
+      console.error("Error saving site to history:", error);
+    }
+  }, [normalizedPrompt, targetUrl]);
+
   useEffect(() => {
     if (!open) {
       hasInitializedRef.current = false;
@@ -62,7 +88,10 @@ export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps)
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(normalizedPrompt).catch(() => {});
     }
-  }, [open, normalizedPrompt]);
+
+    // Save to database as soon as it's initialized
+    saveSiteToHistory();
+  }, [open, normalizedPrompt, saveSiteToHistory]);
 
   const handleGenerationComplete = useCallback(() => {
     setReadyToOpen(true);
