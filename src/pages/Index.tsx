@@ -84,39 +84,64 @@ function SectionPill({ children }: { children: React.ReactNode }) {
 
 const features = [
   {
-    icon: LucideInfinity,
-    title: "Extensão Lovable Infinito",
-    desc: "Crie sites sem limites de créditos. Parceria exclusiva com Hyperbuild Pro para garantir sua escala total. Comece agora sem preocupações com tokens.",
-    tag: "INFINITO",
-    visual: "extension"
-  },
-  {
     icon: Code2,
     title: "Criador de Sites com IA",
     desc: "Escolha entre 20+ nichos, personalize cores, fontes e estilo de design — a IA monta o site completo em minutos. Design profissional pronto para vender.",
     tag: "PRINCIPAL",
-    visual: "builder"
+    visual: "builder",
+    bullets: [
+      "Mais de 20 nichos prontos para personalizar",
+      "Site profissional gerado em menos de 10 minutos",
+      "Design responsivo e pronto para vender"
+    ]
+  },
+  {
+    icon: LucideInfinity,
+    title: "Extensão Lovable Infinito",
+    desc: "Crie sites sem limites de créditos. Parceria exclusiva com Hyperbuild Pro para garantir sua escala total. Comece agora sem preocupações com tokens.",
+    tag: "INFINITO",
+    visual: "extension",
+    bullets: [
+      "Crie sites sem limite de créditos ou tokens",
+      "Parceria exclusiva com Hyperbuild Pro inclusa",
+      "Escale sem interrupções ou custos extras"
+    ]
   },
   {
     icon: MapPin,
     title: "Prospecção Automática Brasil",
     desc: "Selecione qualquer estado e cidade brasileira. O sistema busca negócios sem site e entrega nome, telefone e endereço pronto pra fechar negócio.",
     tag: "27 ESTADOS",
-    visual: "globe"
+    visual: "globe",
+    bullets: [
+      "Encontre negócios sem site em qualquer cidade do Brasil",
+      "Receba nome, telefone e endereço prontos para contato",
+      "Integração com dados reais do Google Maps"
+    ]
   },
   {
     icon: FileText,
     title: "Gerador de Contrato",
     desc: "Gere contratos profissionais personalizados com nome do cliente, serviço e valores — prontos para enviar e fechar negócio na hora, com segurança jurídica.",
     tag: "AUTOMÁTICO",
-    visual: "contract"
+    visual: "contract",
+    bullets: [
+      "Contrato profissional com validade jurídica",
+      "Personalizado com nome, serviço e valor em 2 cliques",
+      "Pronto para enviar pelo WhatsApp na hora do fechamento"
+    ]
   },
   {
     icon: BarChart3,
     title: "Dashboard de Vendas",
     desc: "Acompanhe seus lucros, clientes atendidos e sites criados em um painel completo. Tenha controle total do seu faturamento e crescimento.",
     tag: "GESTÃO",
-    visual: "dashboard"
+    visual: "dashboard",
+    bullets: [
+      "Acompanhe lucros, leads e sites criados em tempo real",
+      "Controle total do seu faturamento semanal e mensal",
+      "Visão clara do seu crescimento em um único painel"
+    ]
   },
 ];
 
@@ -332,7 +357,7 @@ const Index = () => {
           </div>
 
           <div className="space-y-32 md:space-y-48">
-            {features.map(({ icon: Icon, title, desc, tag, visual }, i) => (
+            {features.map(({ icon: Icon, title, desc, tag, visual, bullets }, i) => (
               <div key={title} className={cn(
                 "flex flex-col gap-12 items-center",
                 i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
@@ -361,7 +386,7 @@ const Index = () => {
                   </p>
                   
                   <ul className="space-y-4">
-                    {['Recurso exclusivo', 'Aumento de produtividade', 'Pronto para uso'].map((item) => (
+                    {bullets?.map((item) => (
                       <li key={item} className="flex items-center gap-3 text-foreground/80 font-bold">
                         <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
                           <Zap className="w-3 h-3 text-primary" />
@@ -426,7 +451,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════ ETAPAS ═══════════ */}
-        <section id="etapas" className="container mx-auto px-4 py-20 md:py-32 relative">
+        <section id="etapas" className="container mx-auto px-4 pt-20 pb-0 md:pt-32 md:pb-0 relative">
           <SectionPill>Processo AxionFly</SectionPill>
           
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
@@ -498,7 +523,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-20 text-center"
+              className="mt-12 mb-0 text-center"
             >
               <Button 
                 variant="outline" 
@@ -506,14 +531,14 @@ const Index = () => {
                 className="rounded-full font-black uppercase tracking-[0.2em] px-12 border-2 hover:bg-primary/10 group"
                 onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
               >
-                Pronto pra começar? <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                QUERO COMEÇAR AGORA →
               </Button>
             </motion.div>
           </div>
         </section>
 
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
-        <section className="py-20 md:py-32">
+        <section className="py-12 md:py-16">
           <SectionPill>Conheça Área de Membros</SectionPill>
           <FeaturesCarousel />
         </section>
