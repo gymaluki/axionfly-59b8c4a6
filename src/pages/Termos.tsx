@@ -3,19 +3,18 @@ import LegalLayout from "@/components/LegalLayout";
 export default function Termos() {
   return (
     <LegalLayout
-      eyebrow="Documento Legal"
+      eyebrow="Termos"
       title="Termos de Uso"
-      description="Condições que regem o acesso, contratação e uso da plataforma AxionFly por todos os usuários."
+      description="Regras simples para uso da AxionFly, contratação de planos e manutenção de uma experiência segura para todos."
       updatedAt="11 de maio de 2026"
       sections={[
         {
           id: "aceite",
-          title: "Aceite dos termos",
+          title: "Ao usar a plataforma",
           content: (
             <p>
               Ao criar uma conta, contratar um plano ou utilizar qualquer recurso da AxionFly,
-              o usuário declara que leu, compreendeu e concorda integralmente com estes Termos
-              de Uso, com a Política de Privacidade e com a Política de Cookies.
+              você concorda com estes Termos, com a Política de Privacidade e com a Política de Cookies.
             </p>
           ),
         },
@@ -25,13 +24,12 @@ export default function Termos() {
           content: (
             <>
               <p>
-                Para utilizar a plataforma, é necessário criar uma conta com informações
-                verdadeiras, completas e atualizadas. O acesso é pessoal e intransferível.
+                Para usar a AxionFly, é necessário manter seus dados corretos e sua conta protegida.
               </p>
               <ul className="list-disc pl-5 space-y-1.5">
-                <li>O usuário é responsável por manter a confidencialidade de suas credenciais.</li>
-                <li>É proibido compartilhar a conta com terceiros sem autorização contratual.</li>
-                <li>Atividades realizadas com sua conta são de sua inteira responsabilidade.</li>
+                <li>O acesso é pessoal e vinculado ao plano contratado.</li>
+                <li>Você é responsável pelas atividades realizadas com sua conta.</li>
+                <li>Não compartilhe credenciais sem autorização expressa da plataforma.</li>
               </ul>
             </>
           ),
@@ -43,10 +41,10 @@ export default function Termos() {
             <>
               <p>O usuário se compromete a:</p>
               <ul className="list-disc pl-5 space-y-1.5">
-                <li>Utilizar a plataforma em conformidade com a legislação aplicável.</li>
-                <li>Não realizar ações que comprometam a segurança ou estabilidade do serviço.</li>
-                <li>Não utilizar a plataforma para finalidades ilegais, fraudulentas ou abusivas.</li>
-                <li>Respeitar os direitos de propriedade intelectual da AxionFly e de terceiros.</li>
+                <li>Usar a plataforma de forma ética, segura e dentro da lei.</li>
+                <li>Não prejudicar a estabilidade, segurança ou reputação do serviço.</li>
+                <li>Não utilizar a AxionFly para práticas ilegais, fraudulentas ou abusivas.</li>
+                <li>Respeitar a marca, o conteúdo e a propriedade intelectual da AxionFly.</li>
               </ul>
             </>
           ),
@@ -56,9 +54,8 @@ export default function Termos() {
           title: "Propriedade intelectual",
           content: (
             <p>
-              Todos os direitos sobre a plataforma, seu código-fonte, design, marca, conteúdo
-              e funcionalidades pertencem à AxionFly. A contratação concede ao usuário apenas
-              uma licença limitada, não exclusiva e revogável de uso, restrita ao plano ativo.
+              A contratação dá direito de uso da plataforma conforme o plano ativo, mas não transfere
+              a propriedade do produto, da marca, do design ou da tecnologia utilizada pela AxionFly.
             </p>
           ),
         },
@@ -72,9 +69,9 @@ export default function Termos() {
               </p>
               <ul className="list-disc pl-5 space-y-1.5">
                 <li>Resultados comerciais específicos como faturamento ou número de vendas.</li>
-                <li>Decisões tomadas pelo usuário com base em dados gerados pela plataforma.</li>
-                <li>Indisponibilidades causadas por terceiros, manutenções programadas ou força maior.</li>
-                <li>Conteúdo gerado, importado ou tratado pelo próprio usuário.</li>
+                <li>Decisões comerciais tomadas a partir das informações da plataforma.</li>
+                <li>Indisponibilidades causadas por terceiros, manutenção ou fatores externos.</li>
+                <li>Conteúdo, abordagem comercial ou uso feito diretamente pelo usuário.</li>
               </ul>
             </>
           ),
@@ -84,9 +81,8 @@ export default function Termos() {
           title: "Pagamentos e renovação",
           content: (
             <p>
-              As assinaturas são processadas por meio de gateways de pagamento certificados.
-              A renovação ocorre de forma automática conforme a periodicidade contratada,
-              salvo cancelamento expresso pelo usuário antes do vencimento do ciclo vigente.
+              Planos recorrentes podem ser renovados automaticamente conforme o ciclo contratado.
+              Se não quiser renovar, basta cancelar antes da próxima cobrança.
             </p>
           ),
         },
@@ -97,12 +93,11 @@ export default function Termos() {
             <>
               <p>
                 O usuário pode cancelar sua assinatura a qualquer momento dentro do painel.
-                O cancelamento encerra a renovação automática, mas mantém o acesso até o
-                final do período já pago.
+                O cancelamento interrompe novas cobranças e mantém o acesso até o fim do período já pago.
               </p>
               <p>
-                A AxionFly poderá suspender ou encerrar contas que violem estes Termos,
-                pratiquem fraudes ou comprometam a segurança da plataforma e de outros usuários.
+                A AxionFly poderá suspender contas em caso de fraude, abuso, violação destes termos
+                ou risco à segurança da plataforma.
               </p>
             </>
           ),
@@ -112,20 +107,8 @@ export default function Termos() {
           title: "Alterações dos termos",
           content: (
             <p>
-              Estes Termos podem ser atualizados periodicamente. Alterações relevantes serão
-              comunicadas por e-mail ou através da plataforma. O uso continuado após a
-              publicação implica aceitação da versão mais recente.
-            </p>
-          ),
-        },
-        {
-          id: "foro",
-          title: "Lei aplicável e foro",
-          content: (
-            <p>
-              Estes Termos são regidos pelas leis da República Federativa do Brasil. Fica
-              eleito o foro da comarca da sede da AxionFly como competente para dirimir
-              quaisquer controvérsias, com renúncia expressa a qualquer outro.
+              Estes Termos podem ser atualizados para refletir melhorias, mudanças operacionais
+              ou exigências legais. Ao continuar usando a plataforma, você concorda com a versão vigente.
             </p>
           ),
         },
