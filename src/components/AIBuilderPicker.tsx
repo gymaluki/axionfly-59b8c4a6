@@ -34,7 +34,8 @@ const copySync = (text: string): boolean => {
   }
 };
 
-export const AIBuilderPicker = ({ open, onClose, prompt }: AIBuilderPickerProps) => {
+export const AIBuilderPicker = ({ open, onClose, prompt, siteName, niche }: AIBuilderPickerProps) => {
+  const { user } = useAuth();
   const normalizedPrompt = prompt.trim();
   const [readyToOpen, setReadyToOpen] = useState(false);
   const hasInitializedRef = useRef(false);
