@@ -706,7 +706,7 @@ const Index = () => {
               </motion.div>
 
               {/* Title */}
-              <h2 className="text-3xl md:text-[56px] font-black text-foreground leading-[1.05] tracking-tight max-w-4xl mx-auto mb-5">
+              <h2 className="text-[28px] sm:text-4xl md:text-[56px] font-black text-foreground leading-[1.1] tracking-tight max-w-4xl mx-auto mb-5 break-words">
                 Comece agora e venda seu <br className="hidden md:block" />
                 <span className="gradient-text-animate">primeiro site ainda hoje</span>
               </h2>
