@@ -88,7 +88,7 @@ export default function FeaturesCarousel() {
           {allSlides.map((slide, i) => (
             <div
               key={`${slide.id}-${i}`}
-              className="shrink-0 w-[280px] md:w-[350px] aspect-[16/9] rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group"
+              className="shrink-0 w-[280px] md:w-[350px] aspect-video rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group"
               style={{
                 boxShadow: "0 0 40px -15px hsl(var(--primary) / 0.2)",
               }}
