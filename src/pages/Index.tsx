@@ -8,13 +8,14 @@ import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 
-import axionflyLogo from "@/assets/axionfly-logo.png";
+import axionflyLogo from "@/assets/axionfly-logo.webp";
 
 
-import PricingCards from "@/components/PricingCards";
-import LovablePartnership from "@/components/LovablePartnership";
-import FeaturesCarousel from "@/components/FeaturesCarousel";
-import Testimonials from "@/components/Testimonials";
+// Below-the-fold heavy components: lazy for faster initial paint
+const PricingCards = lazy(() => import("@/components/PricingCards"));
+const LovablePartnership = lazy(() => import("@/components/LovablePartnership"));
+const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
+const Testimonials = lazy(() => import("@/components/Testimonials"));
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 
 // Lazy load heavy visual components
@@ -548,7 +549,9 @@ const Index = () => {
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section className="py-12 md:py-16">
           <SectionPill>Conheça Área de Membros</SectionPill>
-          <FeaturesCarousel />
+          <Suspense fallback={<div className="min-h-[300px]" />}>
+            <FeaturesCarousel />
+          </Suspense>
         </section>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
@@ -573,13 +576,19 @@ const Index = () => {
         </section>
 
         {/* ═══════════ PLANOS ═══════════ */}
-        <PricingCards />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <PricingCards />
+        </Suspense>
 
         {/* ═══════════ PARCERIAS ═══════════ */}
-        <LovablePartnership />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <LovablePartnership />
+        </Suspense>
 
         {/* ═══════════ FEEDBACKS ═══════════ */}
-        <Testimonials />
+        <Suspense fallback={<div className="min-h-[400px]" />}>
+          <Testimonials />
+        </Suspense>
 
         {/* ═══════════ FAQ ═══════════ */}
         <section id="faq" className="container mx-auto px-4 py-24 md:py-32 relative">
@@ -780,7 +789,7 @@ const Index = () => {
               {/* Brand */}
               <div className="col-span-2 md:col-span-1 space-y-4">
                 <div className="flex items-center gap-2.5">
-                  <img src={axionflyLogo} alt="AxionFly" className="h-9 w-auto" />
+                  <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
                   <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
                 </div>
                 <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Check, Sparkles, Shield, Zap, ArrowUpRight } from "lucide-react";
-import googleMapsLogo from "@/assets/google-maps-logo.png";
-import lovableLogo from "@/assets/lovable-logo.png";
-import hyperbuildLogo from "@/assets/hyperbuild-logo.jpg";
+import googleMapsLogo from "@/assets/google-maps-logo.webp";
+import lovableLogo from "@/assets/lovable-logo.webp";
+import hyperbuildLogo from "@/assets/hyperbuild-logo.webp";
 
 const partners = [
   {

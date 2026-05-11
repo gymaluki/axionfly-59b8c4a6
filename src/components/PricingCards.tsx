@@ -23,7 +23,7 @@ const FaBarcode = ({ className }: { className?: string }) => (
     <path d="M0 32v448h512V32H0zm64 384h-32V96h32v320zm64 0h-16V96h16v320zm64 0h-32V96h32v320zm80 0h-32V96h32v320zm48 0h-32V96h32v320zm80 0h-48V96h48v320zm80 0h-48V96h48v320z"/>
   </svg>
 );
-import googleMapsLogo from "@/assets/google-maps-logo.png";
+import googleMapsLogo from "@/assets/google-maps-logo.webp";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
