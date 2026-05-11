@@ -159,7 +159,7 @@ const sharedStyles = `
   }
 
   /* ===== CARD 2 — Plano Infinito ===== */
-  .pfv-pl-body { padding: 12px; height: calc(100% - 38px); display: flex; flex-direction: column; gap: 8px; }
+  .pfv-pl-body { padding: 10px; height: calc(100% - 34px); display: flex; flex-direction: column; gap: 6px; }
   .pfv-pl-card {
     flex: 1;
     background: linear-gradient(180deg, rgba(36,99,235,0.10), transparent 60%), var(--surface-2);
