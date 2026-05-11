@@ -638,7 +638,7 @@ const SitesView = () => {
 
   const progress = ((step + 1) / TOTAL_STEPS) * 100;
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     const template = nicheTemplates[niche];
     if (!template) return;
 
@@ -694,6 +694,19 @@ BASE DO TEMPLATE:
 ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.trim(), features.trim())}`;
 
     setGeneratedPrompt(generated);
+
+    // Salvar site no histórico do usuário
+    if (user) {
+      const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
+      const targetUrl = `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(generated)}`;
+      
+      await supabase.from("user_sites").insert({
+        user_id: user.id,
+        site_name: projectName.trim(),
+        niche: template.label,
+        url: targetUrl
+      } as any);
+    }
 
     if (!hasInstalledExtension) {
       setShowExtensionModal(true);

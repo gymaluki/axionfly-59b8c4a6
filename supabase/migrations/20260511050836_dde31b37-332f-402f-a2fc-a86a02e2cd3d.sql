@@ -1,0 +1,1 @@
+ALTER TABLE public.user_sites ADD COLUMN IF NOT EXISTS url TEXT;

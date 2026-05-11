@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Loader2, User, Lock, History, Users2, Trash2, ExternalLink, Check, Calendar, CreditCard, Rocket, MapPin } from "lucide-react";
+import { Loader2, User, Lock, History, Users2, Trash2, ExternalLink, Check, Calendar, CreditCard, Rocket, MapPin, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -46,6 +46,7 @@ const PerfilView = () => {
 
   const [history, setHistory] = useState<SearchHistoryItem[]>([]);
   const [leads, setLeads] = useState<ContactedLeadItem[]>([]);
+  const [userSites, setUserSites] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const PerfilView = () => {
 
     const loadAll = async () => {
       setLoadingData(true);
-      const [h, l] = await Promise.all([
+      const [h, l, s] = await Promise.all([
         supabase
           .from("search_history")
           .select("*")
@@ -78,9 +79,15 @@ const PerfilView = () => {
           .eq("user_id", user.id)
           .order("created_at", { ascending: false })
           .limit(100),
+        supabase
+          .from("user_sites")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false }),
       ]);
       if (h.data) setHistory(h.data as SearchHistoryItem[]);
       if (l.data) setLeads(l.data as ContactedLeadItem[]);
+      if (s.data) setUserSites(s.data);
       setLoadingData(false);
     };
     loadAll();
@@ -182,6 +189,16 @@ const PerfilView = () => {
     setLeads((l) => l.filter((x) => x.id !== id));
   };
 
+  const deleteSite = async (id: string) => {
+    const { error } = await supabase.from("user_sites").delete().eq("id", id);
+    if (error) {
+      toast.error("Erro ao remover site");
+      return;
+    }
+    setUserSites((s) => s.filter((x) => x.id !== id));
+    toast.success("Site removido!");
+  };
+
   const formatDate = (iso: string) =>
     new Date(iso).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
 
@@ -227,6 +244,9 @@ const PerfilView = () => {
               </TabsTrigger>
               <TabsTrigger value="senha" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
                 <Lock className="w-4 h-4" /> Senha
+              </TabsTrigger>
+              <TabsTrigger value="sites" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
+                <Globe className="w-4 h-4" /> Meus Sites
               </TabsTrigger>
               <TabsTrigger value="historico" className="flex-1 md:flex-none h-full rounded-xl gap-2 font-bold data-[state=active]:bg-primary data-[state=active]:text-white">
                 <History className="w-4 h-4" /> Buscas
@@ -322,6 +342,55 @@ const PerfilView = () => {
               Se você se cadastrou com Google, não é possível alterar a senha por aqui.
             </p>
           </form>
+        </TabsContent>
+
+        {/* MEUS SITES */}
+        <TabsContent value="sites">
+          <div className="glass rounded-xl overflow-hidden">
+            {loadingData ? (
+              <div className="py-12 flex justify-center">
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
+              </div>
+            ) : userSites.length === 0 ? (
+              <div className="py-12 text-center text-muted-foreground text-sm">
+                Você ainda não criou nenhum site.
+              </div>
+            ) : (
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase">Site</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase">Nicho</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase">Data</th>
+                    <th className="px-4 py-3" />
+                  </tr>
+                </thead>
+                <tbody>
+                  {userSites.map((s) => (
+                    <tr key={s.id} className="border-b border-border/50 hover:bg-secondary/30">
+                      <td className="px-4 py-3 text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-2">
+                          {s.site_name}
+                          {s.url && (
+                            <a href={s.url} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="w-3 h-3 text-primary" />
+                            </a>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-sm text-muted-foreground">{s.niche || "—"}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground">{formatDate(s.created_at)}</td>
+                      <td className="px-4 py-3 text-right">
+                        <Button size="sm" variant="ghost" onClick={() => deleteSite(s.id)}>
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </TabsContent>
 
         {/* HISTÓRICO */}
