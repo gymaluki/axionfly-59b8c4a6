@@ -16,6 +16,10 @@ const QAGrid = lazy(() => import("./pages/QAGrid"));
 const QAGridFrame = lazy(() => import("./pages/QAGridFrame"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AffiliateRedirect = lazy(() => import("./pages/AffiliateRedirect"));
+const Legal = lazy(() => import("./pages/Legal"));
+const Termos = lazy(() => import("./pages/Termos"));
+const Privacidade = lazy(() => import("./pages/Privacidade"));
+const Cookies = lazy(() => import("./pages/Cookies"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
