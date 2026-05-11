@@ -545,7 +545,7 @@ const Index = () => {
                           <p className="text-xs text-muted-foreground">{desc.substring(0, 60)}...</p>
                         </div>
                       </div>
-                    ),
+                    )}
                   </div>
                 </motion.div>
               </div>
