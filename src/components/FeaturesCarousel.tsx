@@ -88,7 +88,7 @@ export default function FeaturesCarousel() {
           {allSlides.map((slide, i) => (
             <div
               key={`${slide.id}-${i}`}
-              className="shrink-0 w-[280px] md:w-[350px] aspect-video rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group"
+              className="shrink-0 w-[280px] md:w-[350px] aspect-[16/10] rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group"
               style={{
                 boxShadow: "0 0 40px -15px hsl(var(--primary) / 0.2)",
               }}
@@ -98,7 +98,7 @@ export default function FeaturesCarousel() {
                 <img
                   src={slide.src}
                   alt={slide.title}
-                  className="w-full h-full object-contain pointer-events-none group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover pointer-events-none group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                   draggable={false}
                 />
