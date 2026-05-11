@@ -1,11 +1,11 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { captureAffiliateFromUrl } from "@/lib/affiliates";
+import { captureAffiliateFromUrl, loadAffiliatesFromDb } from "@/lib/affiliates";
 import { installErrorLogger } from "@/lib/errorLogger";
 
-// Captura ?aff=slug na URL e persiste por 30 dias para tracking de afiliados
-captureAffiliateFromUrl();
+// Carrega links de afiliados do banco e captura ?aff=slug na URL
+loadAffiliatesFromDb().finally(() => captureAffiliateFromUrl());
 installErrorLogger();
 
 createRoot(document.getElementById("root")!).render(<App />);
