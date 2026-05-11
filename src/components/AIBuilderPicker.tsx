@@ -74,14 +74,31 @@ export const AIBuilderPicker = ({ open, onClose, prompt, siteName, niche }: AIBu
     setReadyToOpen(true);
   }, []);
 
-  const handleOpenLovable = useCallback(() => {
+  const handleOpenLovable = useCallback(async () => {
+    if (user && targetUrl) {
+      try {
+        const { error } = await supabase.from("user_sites").insert({
+          user_id: user.id,
+          site_name: siteName || "Meu Site Profissional",
+          niche: niche || "Geral",
+          url: targetUrl,
+        });
+        
+        if (error) {
+          console.error("Error saving site:", error);
+        }
+      } catch (err) {
+        console.error("Failed to save site to profile:", err);
+      }
+    }
+
     if (targetUrl) {
       window.open(targetUrl, "_blank", "noopener,noreferrer");
     }
     setReadyToOpen(false);
     hasInitializedRef.current = false;
     onClose();
-  }, [onClose, targetUrl]);
+  }, [onClose, targetUrl, user, siteName, niche]);
 
   const handleClose = useCallback(() => {
     setReadyToOpen(false);
