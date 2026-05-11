@@ -834,10 +834,10 @@ const Index = () => {
               <div>
                 <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Legal</h4>
                 <ul className="space-y-2.5 text-sm text-[#94a3b8]">
-                  <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
-                  <li><a href="#" className="hover:text-primary transition-colors">Privacidade</a></li>
-                  <li><a href="#" className="hover:text-primary transition-colors">Reembolso</a></li>
-                  <li><a href="#" className="hover:text-primary transition-colors">Cookies</a></li>
+                  <li><Link to="/termos" className="hover:text-primary transition-colors">Termos de Uso</Link></li>
+                  <li><Link to="/privacidade" className="hover:text-primary transition-colors">Privacidade</Link></li>
+                  <li><Link to="/legal" className="hover:text-primary transition-colors">Avisos Legais</Link></li>
+                  <li><Link to="/cookies" className="hover:text-primary transition-colors">Cookies</Link></li>
                 </ul>
               </div>
             </div>
