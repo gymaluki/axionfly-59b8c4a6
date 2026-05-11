@@ -96,7 +96,7 @@ export default function Testimonials() {
         {socialProof.map(({ icon: Icon, value, label, suffix }) => (
           <div
             key={label}
-            className="rounded-2xl bg-[#0D1221]/80 backdrop-blur-sm p-4 text-center group hover:border-primary/30 transition-all duration-300"
+            className="rounded-2xl bg-[#05050a]/80 backdrop-blur-sm p-4 text-center group hover:border-primary/30 transition-all duration-300"
             style={{ border: "1px solid rgba(59,130,246,0.12)" }}
           >
             <Icon className="w-4 h-4 text-primary mx-auto mb-2 group-hover:scale-110 transition-transform" />
@@ -120,7 +120,7 @@ export default function Testimonials() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           whileHover={{ y: -6 }}
-          className="lg:col-span-2 relative rounded-3xl bg-gradient-to-br from-primary/[0.12] via-[#0D1221] to-[#0D1221] p-8 flex flex-col overflow-hidden"
+          className="lg:col-span-2 relative rounded-3xl bg-gradient-to-br from-primary/[0.12] via-[#05050a] to-[#05050a] p-8 flex flex-col overflow-hidden"
           style={{ border: "1px solid rgba(59,130,246,0.3)" }}
         >
           {/* Big quote watermark - subtle */}
@@ -178,7 +178,7 @@ export default function Testimonials() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
               whileHover={{ y: -4 }}
-              className="rounded-3xl bg-[#0D1221] p-6 flex flex-col h-full transition-all duration-300 hover:border-primary/30"
+              className="rounded-3xl bg-[#05050a] p-6 flex flex-col h-full transition-all duration-300 hover:border-primary/30"
               style={{ border: "1px solid rgba(59,130,246,0.12)" }}
             >
               {/* Header */}

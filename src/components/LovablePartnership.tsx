@@ -98,7 +98,7 @@ export default function LovablePartnership() {
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="max-w-3xl mx-auto mb-16 grid grid-cols-3 gap-4 p-4 rounded-2xl border border-primary/10 bg-[#0D1221]/60 backdrop-blur-sm"
+        className="max-w-3xl mx-auto mb-16 grid grid-cols-3 gap-4 p-4 rounded-2xl border border-primary/10 bg-[#05050a]/60 backdrop-blur-sm"
       >
         {trustStats.map(({ icon: Icon, label, value }) => (
           <div key={label} className="flex flex-col items-center text-center gap-1">
@@ -121,7 +121,7 @@ export default function LovablePartnership() {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6 }}
-            className="group relative rounded-3xl bg-[#0D1221] p-7 flex flex-col overflow-hidden transition-all duration-300"
+            className="group relative rounded-3xl bg-[#05050a] p-7 flex flex-col overflow-hidden transition-all duration-300"
             style={{ border: "1px solid rgba(37,99,235,0.15)" }}
           >
             {/* Animated gradient ring on hover */}
