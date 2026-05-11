@@ -100,7 +100,7 @@ const sharedStyles = `
   @keyframes pfv-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-6px);} }
 
   /* ===== CARD 1 — Sites Builder ===== */
-  .pfv-sb-body { display: grid; grid-template-columns: 110px 1fr; gap: 10px; padding: 10px; height: calc(100% - 38px); }
+  .pfv-sb-body { display: grid; grid-template-columns: 95px 1fr; gap: 8px; padding: 8px; height: calc(100% - 34px); }
   .pfv-sb-niches {
     display: flex; flex-direction: column; gap: 5px;
     background: var(--surface-2);
