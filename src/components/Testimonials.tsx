@@ -157,9 +157,13 @@ export default function Testimonials() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full border-2 border-primary/40 bg-primary/15 flex items-center justify-center shrink-0">
-                  <span className="text-sm font-black text-primary">{featured.initials}</span>
-                </div>
+                <img
+                  src={featured.avatar}
+                  alt={featured.name}
+                  loading="lazy"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-primary/40 shrink-0"
+                />
+
                 <div>
                   <h4 className="font-black text-foreground text-[15px] leading-tight">
                     {featured.name}
@@ -191,9 +195,13 @@ export default function Testimonials() {
             >
               {/* Header */}
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-full border-2 border-primary/30 bg-primary/10 flex items-center justify-center shrink-0">
-                  <span className="text-[13px] font-black text-primary">{t.initials}</span>
-                </div>
+                <img
+                  src={t.avatar}
+                  alt={t.name}
+                  loading="lazy"
+                  className="w-11 h-11 rounded-full object-cover border-2 border-primary/30 shrink-0"
+                />
+
                 <div className="min-w-0">
                   <h4 className="font-black text-foreground text-[14px] leading-tight truncate">
                     {t.name}
