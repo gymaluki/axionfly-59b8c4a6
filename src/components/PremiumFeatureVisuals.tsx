@@ -15,7 +15,7 @@ const sharedStyles = `
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    aspect-ratio: 16/9;
+    aspect-ratio: 4/3;
     border-radius: 12px;
     border: 1px solid var(--border);
     background:
@@ -39,7 +39,7 @@ const sharedStyles = `
 
   /* Browser window */
   .pfv-browser {
-    position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px;
+    position: absolute; top: 18px; left: 18px; right: 18px; bottom: 56px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -100,7 +100,7 @@ const sharedStyles = `
   @keyframes pfv-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-6px);} }
 
   /* ===== CARD 1 — Sites Builder ===== */
-  .pfv-sb-body { display: grid; grid-template-columns: 95px 1fr; gap: 8px; padding: 8px; height: calc(100% - 34px); }
+  .pfv-sb-body { display: grid; grid-template-columns: 110px 1fr; gap: 10px; padding: 10px; height: calc(100% - 38px); }
   .pfv-sb-niches {
     display: flex; flex-direction: column; gap: 5px;
     background: var(--surface-2);
@@ -159,7 +159,7 @@ const sharedStyles = `
   }
 
   /* ===== CARD 2 — Plano Infinito ===== */
-  .pfv-pl-body { padding: 10px; height: calc(100% - 34px); display: flex; flex-direction: column; gap: 6px; }
+  .pfv-pl-body { padding: 12px; height: calc(100% - 38px); display: flex; flex-direction: column; gap: 8px; }
   .pfv-pl-card {
     flex: 1;
     background: linear-gradient(180deg, rgba(36,99,235,0.10), transparent 60%), var(--surface-2);
@@ -186,7 +186,7 @@ const sharedStyles = `
   .pfv-divider { height: 1px; background: var(--border); margin: 2px 0; }
 
   /* ===== CARD 3 — Contract ===== */
-  .pfv-ct-body { display: grid; grid-template-columns: 1fr 115px; gap: 8px; padding: 8px; height: calc(100% - 34px); }
+  .pfv-ct-body { display: grid; grid-template-columns: 1fr 130px; gap: 10px; padding: 10px; height: calc(100% - 38px); }
   .pfv-ct-doc {
     background: var(--surface-2);
     border: 1px solid var(--border);
