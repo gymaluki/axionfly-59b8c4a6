@@ -1,19 +1,21 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
-import Extension from "./pages/Extension";
-import DesignStylesGuide from "./pages/DesignStylesGuide";
-import FontsGuide from "./pages/FontsGuide";
-import PedidosDemo from "./pages/PedidosDemo";
-import QAGrid from "./pages/QAGrid";
-import QAGridFrame from "./pages/QAGridFrame";
-import NotFound from "./pages/NotFound";
-import AffiliateRedirect from "./pages/AffiliateRedirect";
+
+const Auth = lazy(() => import("./pages/Auth"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Extension = lazy(() => import("./pages/Extension"));
+const DesignStylesGuide = lazy(() => import("./pages/DesignStylesGuide"));
+const FontsGuide = lazy(() => import("./pages/FontsGuide"));
+const PedidosDemo = lazy(() => import("./pages/PedidosDemo"));
+const QAGrid = lazy(() => import("./pages/QAGrid"));
+const QAGridFrame = lazy(() => import("./pages/QAGridFrame"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AffiliateRedirect = lazy(() => import("./pages/AffiliateRedirect"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
