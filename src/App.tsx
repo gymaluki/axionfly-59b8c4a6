@@ -20,6 +20,7 @@ const Legal = lazy(() => import("./pages/Legal"));
 const Termos = lazy(() => import("./pages/Termos"));
 const Privacidade = lazy(() => import("./pages/Privacidade"));
 const Cookies = lazy(() => import("./pages/Cookies"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,11 +53,13 @@ const App = () => (
             <Route path="/e" element={<AffiliateRedirect slug="e" />} />
             <Route path="/o" element={<AffiliateRedirect slug="o" />} />
             <Route path="/l" element={<AffiliateRedirect slug="l" />} />
+            <Route path="/z" element={<AffiliateRedirect slug="z" />} />
             <Route path="/u/:slug" element={<AffiliateRedirect />} />
             <Route path="/legal" element={<Legal />} />
             <Route path="/termos" element={<Termos />} />
             <Route path="/privacidade" element={<Privacidade />} />
             <Route path="/cookies" element={<Cookies />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
