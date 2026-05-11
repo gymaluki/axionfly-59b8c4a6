@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 import { ParticleBackground } from "@/components/ui/particle-background";
 import axionflyLogo from "@/assets/axionfly-logo.png";
+import iconGeradorContrato from "@/assets/icon-gerador-contrato.png";
 
 import PricingCards from "@/components/PricingCards";
 import LovablePartnership from "@/components/LovablePartnership";
@@ -122,6 +123,7 @@ const features = [
   },
   {
     icon: FileText,
+    iconImage: iconGeradorContrato,
     title: "Gerador de Contrato",
     desc: "Gere contratos profissionais personalizados com nome do cliente, serviço e valores — prontos para enviar e fechar negócio na hora, com segurança jurídica.",
     tag: "AUTOMÁTICO",
@@ -358,7 +360,7 @@ const Index = () => {
           </div>
 
           <div className="space-y-32 md:space-y-48">
-            {features.map(({ icon: Icon, title, desc, tag, visual, bullets }, i) => (
+            {features.map(({ icon: Icon, iconImage, title, desc, tag, visual, bullets }: any, i) => (
               <div key={title} className={cn(
                 "flex flex-col gap-12 items-center",
                 i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
@@ -376,8 +378,12 @@ const Index = () => {
                   </div>
                   
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                      <Icon className="w-7 h-7 text-primary" />
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden">
+                      {iconImage ? (
+                        <img src={iconImage} alt={title} className="w-12 h-12 object-contain" loading="lazy" />
+                      ) : (
+                        <Icon className="w-7 h-7 text-primary" />
+                      )}
                     </div>
                     <h3 className="text-2xl md:text-3xl font-black text-foreground">{title}</h3>
                   </div>
