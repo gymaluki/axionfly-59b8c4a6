@@ -440,7 +440,6 @@ const Index = () => {
                       <ExtensionInfiniteVisual />
                     ) : visual === "contract" ? (
                       <ContractGeneratorVisual />
-                      </div>
                     ) : (
                       <div className="aspect-video rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
