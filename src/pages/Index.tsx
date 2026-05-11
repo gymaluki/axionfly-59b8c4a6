@@ -7,7 +7,7 @@ import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
-import { ParticleBackground } from "@/components/ui/particle-background";
+
 import axionflyLogo from "@/assets/axionfly-logo.png";
 
 
