@@ -32,24 +32,26 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/extensao" element={<Extension />} />
-          <Route path="/guia-design" element={<DesignStylesGuide />} />
-          <Route path="/guia-fontes" element={<FontsGuide />} />
-          <Route path="/pedidos-demo" element={<PedidosDemo />} />
-          <Route path="/qa-grid" element={<QAGrid />} />
-          <Route path="/qa-grid/frame" element={<QAGridFrame />} />
-          <Route path="/u" element={<AffiliateRedirect slug="u" />} />
-          <Route path="/d" element={<AffiliateRedirect slug="d" />} />
-          <Route path="/e" element={<AffiliateRedirect slug="e" />} />
-          <Route path="/o" element={<AffiliateRedirect slug="o" />} />
-          <Route path="/l" element={<AffiliateRedirect slug="l" />} />
-          <Route path="/u/:slug" element={<AffiliateRedirect />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/extensao" element={<Extension />} />
+            <Route path="/guia-design" element={<DesignStylesGuide />} />
+            <Route path="/guia-fontes" element={<FontsGuide />} />
+            <Route path="/pedidos-demo" element={<PedidosDemo />} />
+            <Route path="/qa-grid" element={<QAGrid />} />
+            <Route path="/qa-grid/frame" element={<QAGridFrame />} />
+            <Route path="/u" element={<AffiliateRedirect slug="u" />} />
+            <Route path="/d" element={<AffiliateRedirect slug="d" />} />
+            <Route path="/e" element={<AffiliateRedirect slug="e" />} />
+            <Route path="/o" element={<AffiliateRedirect slug="o" />} />
+            <Route path="/l" element={<AffiliateRedirect slug="l" />} />
+            <Route path="/u/:slug" element={<AffiliateRedirect />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
