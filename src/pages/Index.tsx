@@ -615,7 +615,7 @@ const Index = () => {
               <motion.div
                 whileHover={{ y: -3 }}
                 className="rounded-2xl bg-gradient-to-br from-primary/[0.12] to-transparent p-6"
-                style={{ border: "1px solid rgba(36,99,235,0.25)" }}
+                style={{ border: "1px solid rgba(37,99,235,0.25)" }}
               >
                 <div className="flex items-start gap-4">
                   <div className="w-11 h-11 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center shrink-0">
@@ -664,9 +664,9 @@ const Index = () => {
             className="relative max-w-6xl mx-auto overflow-hidden"
             style={{
               borderRadius: "32px",
-              border: "1px solid rgba(36,99,235,0.25)",
+              border: "1px solid rgba(37,99,235,0.25)",
               background:
-                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(36,99,235,0.18) 0%, transparent 60%), linear-gradient(180deg, #0D1221 0%, #080B14 100%)",
+                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.18) 0%, transparent 60%), linear-gradient(180deg, #0D1221 0%, #080B14 100%)",
             }}
           >
             {/* Animated orb */}
@@ -682,13 +682,13 @@ const Index = () => {
               className="absolute inset-0 opacity-[0.06] pointer-events-none"
               style={{
                 backgroundImage:
-                  "linear-gradient(rgba(36,99,235,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(36,99,235,0.5) 1px, transparent 1px)",
+                  "linear-gradient(rgba(37,99,235,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.5) 1px, transparent 1px)",
                 backgroundSize: "48px 48px",
                 maskImage: "radial-gradient(ellipse at center, #000 30%, transparent 80%)",
               }}
             />
 
-            <div className="relative z-10 px-6 py-16 md:px-16 md:py-24 text-center">
+            <div className="relative z-10 px-5 py-14 sm:px-8 sm:py-16 md:px-16 md:py-24 text-center">
               {/* Urgency pill */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -706,7 +706,7 @@ const Index = () => {
               </motion.div>
 
               {/* Title */}
-              <h2 className="text-3xl md:text-[56px] font-black text-foreground leading-[1.05] tracking-tight max-w-4xl mx-auto mb-5">
+              <h2 className="text-[28px] sm:text-4xl md:text-[56px] font-black text-foreground leading-[1.1] tracking-tight max-w-4xl mx-auto mb-5 break-words">
                 Comece agora e venda seu <br className="hidden md:block" />
                 <span className="gradient-text-animate">primeiro site ainda hoje</span>
               </h2>
@@ -721,7 +721,7 @@ const Index = () => {
                 <Button
                   variant="neon"
                   size="xl"
-                  className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(36,99,235,0.5)]"
+                  className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(37,99,235,0.5)]"
                   onClick={() => navigate("/auth")}
                 >
                   <Zap className="mr-2 w-5 h-5 fill-current" />
@@ -738,16 +738,16 @@ const Index = () => {
               </div>
 
               {/* Trust microcredentials */}
-              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 max-w-3xl mx-auto pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-x-6 gap-y-3 max-w-3xl mx-auto pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
                 {[
                   { icon: Lock, label: "Pagamento 100% seguro" },
                   { icon: Clock, label: "Setup em 5 minutos" },
                   { icon: ShieldCheck, label: "Suporte em português" },
                   { icon: Check, label: "Sem experiência necessária" },
                 ].map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2">
-                    <Icon className="w-3.5 h-3.5 text-primary stroke-[2.5px]" />
-                    <span className="text-[11px] md:text-xs font-bold text-muted-foreground">{label}</span>
+                  <div key={label} className="flex items-center justify-center sm:justify-start gap-2 min-w-0">
+                    <Icon className="w-3.5 h-3.5 text-primary stroke-[2.5px] shrink-0" />
+                    <span className="text-[11px] md:text-xs font-bold text-muted-foreground text-center sm:text-left">{label}</span>
                   </div>
                 ))}
               </div>
@@ -882,9 +882,9 @@ function FAQItem({ num, question, answer, defaultOpen = false }: { num?: string;
       }`}
       style={{
         border: isOpen
-          ? "1px solid rgba(36,99,235,0.4)"
-          : "1px solid rgba(36,99,235,0.12)",
-        boxShadow: isOpen ? "0 0 0 1px rgba(36,99,235,0.1), 0 8px 32px -12px rgba(36,99,235,0.25)" : "none",
+          ? "1px solid rgba(37,99,235,0.4)"
+          : "1px solid rgba(37,99,235,0.12)",
+        boxShadow: isOpen ? "0 0 0 1px rgba(37,99,235,0.1), 0 8px 32px -12px rgba(37,99,235,0.25)" : "none",
       }}
     >
       <button

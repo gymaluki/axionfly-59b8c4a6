@@ -122,14 +122,14 @@ export default function LovablePartnership() {
             transition={{ delay: idx * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6 }}
             className="group relative rounded-3xl bg-[#0D1221] p-7 flex flex-col overflow-hidden transition-all duration-300"
-            style={{ border: "1px solid rgba(36,99,235,0.15)" }}
+            style={{ border: "1px solid rgba(37,99,235,0.15)" }}
           >
             {/* Animated gradient ring on hover */}
             <div
               className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
               style={{
                 background:
-                  "conic-gradient(from 0deg, transparent 0%, rgba(36,99,235,0.6) 25%, transparent 50%, rgba(36,99,235,0.4) 75%, transparent 100%)",
+                  "conic-gradient(from 0deg, transparent 0%, rgba(37,99,235,0.6) 25%, transparent 50%, rgba(37,99,235,0.4) 75%, transparent 100%)",
                 animation: "spin 6s linear infinite",
                 padding: "1px",
                 WebkitMask:
