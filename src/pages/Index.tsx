@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, lazy, Suspense, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Star, Instagram, Phone, Youtube } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Star, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
 import { motion, useInView, useScroll as useFramerScroll, useTransform, type Easing, AnimatePresence } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
@@ -582,80 +582,161 @@ const Index = () => {
         <Testimonials />
 
         {/* ═══════════ FAQ ═══════════ */}
-        <section id="faq" className="container mx-auto px-4 py-20 md:py-32 relative">
-          <SectionPill>Perguntas Frequentes</SectionPill>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-[44px] font-black text-foreground mb-6">
-              Dúvidas <span className="gradient-text">Frequentes</span>
-            </h2>
-            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
-              Tudo o que você precisa saber para começar sua jornada com segurança.
-            </p>
-          </motion.div>
+        <section id="faq" className="container mx-auto px-4 py-24 md:py-32 relative">
+          {/* ambient glow */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.04] blur-[140px] rounded-full pointer-events-none" />
 
-          <div className="max-w-4xl mx-auto space-y-4">
-            {faqItems.map((item, i) => (
-              <FAQItem key={i} question={item.q} answer={item.a} defaultOpen={i === 0} />
-            ))}
+          <div className="grid lg:grid-cols-[400px_1fr] gap-12 lg:gap-16 max-w-6xl mx-auto relative z-10">
+            {/* LEFT — Sticky info */}
+            <div className="lg:sticky lg:top-32 lg:self-start space-y-6">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-primary backdrop-blur-sm">
+                <HelpCircle className="w-3 h-3" />
+                Perguntas Frequentes
+              </span>
+              <h2 className="text-3xl md:text-[40px] font-black text-foreground tracking-tight leading-[1.1]">
+                Tudo que você precisa saber <span className="gradient-text">antes de começar</span>
+              </h2>
+              <p className="text-[#94a3b8] text-base leading-relaxed">
+                Reunimos as 6 dúvidas mais comuns dos novos usuários. Ainda ficou com alguma pergunta? Fale com a gente.
+              </p>
+
+              {/* Help card */}
+              <motion.div
+                whileHover={{ y: -3 }}
+                className="rounded-2xl bg-gradient-to-br from-primary/[0.12] to-transparent p-6"
+                style={{ border: "1px solid rgba(59,130,246,0.25)" }}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center shrink-0">
+                    <MessageSquare className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-black text-foreground mb-1">Não encontrou sua resposta?</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-3">
+                      Nosso time responde em português, em poucos minutos.
+                    </p>
+                    <a
+                      href="https://wa.me/5500000000000"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-primary hover:gap-2.5 transition-all"
+                    >
+                      Falar no WhatsApp <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* RIGHT — Accordion */}
+            <div className="space-y-3">
+              {faqItems.slice(0, 6).map((item, i) => (
+                <FAQItem
+                  key={i}
+                  num={String(i + 1).padStart(2, "0")}
+                  question={item.q}
+                  answer={item.a}
+                  defaultOpen={i === 0}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
         {/* ═══════════ CTA FINAL ═══════════ */}
-        <section className="container mx-auto px-4 pt-12 pb-20 md:pt-16 md:pb-28 relative">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+        <section className="container mx-auto px-4 pt-8 pb-24 md:pt-12 md:pb-32 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative z-10 max-w-6xl mx-auto bg-[#0D1221] text-center overflow-hidden"
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="relative max-w-6xl mx-auto overflow-hidden"
             style={{
-              borderRadius: "24px",
-              border: "1px solid rgba(59,130,246,0.2)",
-              padding: "clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px)",
-              backgroundImage: "radial-gradient(circle at center, rgba(59,130,246,0.12) 0%, transparent 60%)",
+              borderRadius: "32px",
+              border: "1px solid rgba(59,130,246,0.25)",
+              background:
+                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.18) 0%, transparent 60%), linear-gradient(180deg, #0D1221 0%, #080B14 100%)",
             }}
           >
-            <h2 className="text-3xl md:text-[48px] font-black text-foreground leading-[1.1] tracking-tight mb-8">
-              Comece agora e venda seu <br className="hidden sm:block" />
-              <span className="gradient-text-animate">primeiro site hoje</span>
-            </h2>
-            
-            <div className="flex flex-col items-center space-y-8">
-              <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-black/40 border border-primary/20">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500" style={{ animation: "pulse 1.5s ease-in-out infinite" }} />
-                <span className="text-xs md:text-sm font-black text-primary uppercase tracking-[0.15em]">🔥 Últimas vagas com preço atual</span>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-2xl mx-auto">
-                <Button 
-                  variant="neon" 
-                  size="xl" 
-                  className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto"
+            {/* Animated orb */}
+            <motion.div
+              animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none"
+            />
+
+            {/* Grid lines decoration */}
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-[0.06] pointer-events-none"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(59,130,246,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.5) 1px, transparent 1px)",
+                backgroundSize: "48px 48px",
+                maskImage: "radial-gradient(ellipse at center, #000 30%, transparent 80%)",
+              }}
+            />
+
+            <div className="relative z-10 px-6 py-16 md:px-16 md:py-24 text-center">
+              {/* Urgency pill */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-black/40 backdrop-blur-sm border border-red-500/30 mb-8"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" style={{ animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                </span>
+                <span className="text-[11px] md:text-xs font-black uppercase tracking-[0.18em] text-red-400">
+                  Últimas vagas com 70% OFF
+                </span>
+              </motion.div>
+
+              {/* Title */}
+              <h2 className="text-3xl md:text-[56px] font-black text-foreground leading-[1.05] tracking-tight max-w-4xl mx-auto mb-5">
+                Comece agora e venda seu <br className="hidden md:block" />
+                <span className="gradient-text-animate">primeiro site ainda hoje</span>
+              </h2>
+
+              <p className="text-[#94a3b8] text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+                Junte-se aos +5.000 empreendedores faturando entre R$ 500 e R$ 3.000 por contrato.
+                Acesso imediato após confirmação.
+              </p>
+
+              {/* CTA buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                <Button
+                  variant="neon"
+                  size="xl"
+                  className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(59,130,246,0.5)]"
                   onClick={() => navigate("/auth")}
                 >
                   <Zap className="mr-2 w-5 h-5 fill-current" />
                   Assinar agora
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="xl" 
+                <Button
+                  variant="outline"
+                  size="xl"
                   className="rounded-full px-10 h-14 text-base font-black uppercase tracking-[0.15em] border-2 w-full sm:w-auto hover:bg-primary/10"
                   onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   Ver Planos <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </div>
-              
-              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 pt-6 w-full">
-                {['Sem experiência necessária', 'Setup em 5 minutos', 'Suporte em português'].map((item) => (
-                  <div key={item} className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-primary stroke-[3px]" />
-                    <span className="text-[11px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest">{item}</span>
+
+              {/* Trust microcredentials */}
+              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 max-w-3xl mx-auto pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                {[
+                  { icon: Lock, label: "Pagamento 100% seguro" },
+                  { icon: Clock, label: "Setup em 5 minutos" },
+                  { icon: ShieldCheck, label: "Suporte em português" },
+                  { icon: Check, label: "Sem experiência necessária" },
+                ].map(({ icon: Icon, label }) => (
+                  <div key={label} className="flex items-center gap-2">
+                    <Icon className="w-3.5 h-3.5 text-primary stroke-[2.5px]" />
+                    <span className="text-[11px] md:text-xs font-bold text-muted-foreground">{label}</span>
                   </div>
                 ))}
               </div>
@@ -664,58 +745,110 @@ const Index = () => {
         </section>
 
         {/* ═══════════ FOOTER ═══════════ */}
-        <footer className="bg-[#050709] relative z-10 pt-16 pb-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <div className="container mx-auto px-4">
-            {/* Topo: logo + nav + socials */}
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-10 pb-10">
-              {/* Logo + tagline */}
-              <div className="flex flex-col items-center md:items-start gap-3 max-w-xs text-center md:text-left">
-                <div className="flex items-center gap-3">
+        <footer className="bg-[#050709] relative z-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          {/* Newsletter / Final hook */}
+          <div className="container mx-auto px-4 py-12 md:py-16" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="text-center md:text-left">
+                <h3 className="text-xl md:text-2xl font-black text-foreground mb-1">
+                  Receba dicas de venda toda semana
+                </h3>
+                <p className="text-sm text-[#94a3b8]">
+                  Estratégias práticas para fechar mais contratos. Sem spam.
+                </p>
+              </div>
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                className="flex w-full md:w-auto items-center gap-2 bg-[#0D1221] rounded-full p-1.5 border border-primary/15"
+              >
+                <Mail className="w-4 h-4 text-muted-foreground ml-3 shrink-0" />
+                <input
+                  type="email"
+                  placeholder="seu@email.com"
+                  className="flex-1 md:w-64 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground/60 px-1"
+                />
+                <Button size="sm" variant="neon" className="rounded-full font-black uppercase tracking-wider text-[11px] h-10 px-5 shrink-0">
+                  Assinar
+                </Button>
+              </form>
+            </div>
+          </div>
+
+          {/* Main footer columns */}
+          <div className="container mx-auto px-4 py-12 md:py-16">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+              {/* Brand */}
+              <div className="col-span-2 md:col-span-1 space-y-4">
+                <div className="flex items-center gap-2.5">
                   <img src={axionflyLogo} alt="AxionFly" className="h-9 w-auto" />
                   <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
                 </div>
-                <p className="text-sm text-[#94a3b8] leading-relaxed">
-                  A plataforma completa para criar e vender sites com IA.
+                <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
+                  A plataforma completa para criar e vender sites com IA — do primeiro lead ao contrato fechado.
                 </p>
+                <div className="flex items-center gap-3 pt-2">
+                  <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                    <Instagram className="w-4 h-4" />
+                  </a>
+                  <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                    <Youtube className="w-4 h-4" />
+                  </a>
+                  <a href="#" aria-label="WhatsApp" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                    <Phone className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
 
-              {/* Nav */}
-              <nav className="flex flex-wrap justify-center items-center gap-x-8 gap-y-3 text-sm font-bold text-[#94a3b8]">
-                {[
-                  { label: "Início", href: "#inicio" },
-                  { label: "Etapas", href: "#etapas" },
-                  { label: "Planos", href: "#pricing" },
-                  { label: "Feedbacks", href: "#feedbacks" },
-                  { label: "FAQ", href: "#faq" },
-                ].map((l) => (
-                  <a key={l.href} href={l.href} className="hover:text-primary transition-colors">{l.label}</a>
-                ))}
-              </nav>
+              {/* Plataforma */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Plataforma</h4>
+                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                  <li><a href="#funcionalidades" className="hover:text-primary transition-colors">Funcionalidades</a></li>
+                  <li><a href="#etapas" className="hover:text-primary transition-colors">Como funciona</a></li>
+                  <li><a href="#pricing" className="hover:text-primary transition-colors">Planos</a></li>
+                  <li><a href="#parcerias" className="hover:text-primary transition-colors">Parcerias</a></li>
+                </ul>
+              </div>
 
-              {/* Socials */}
-              <div className="flex items-center justify-center gap-4">
-                <a href="#" aria-label="Instagram" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 transition-colors">
-                  <Instagram className="w-4 h-4" />
-                </a>
-                <a href="#" aria-label="YouTube" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 transition-colors">
-                  <Youtube className="w-4 h-4" />
-                </a>
-                <a href="#" aria-label="WhatsApp" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 transition-colors">
-                  <Phone className="w-4 h-4" />
-                </a>
+              {/* Empresa */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Empresa</h4>
+                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                  <li><a href="#feedbacks" className="hover:text-primary transition-colors">Depoimentos</a></li>
+                  <li><a href="#faq" className="hover:text-primary transition-colors">Perguntas</a></li>
+                  <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+                  <li><a href="#" className="hover:text-primary transition-colors">Contato</a></li>
+                </ul>
+              </div>
+
+              {/* Legal */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Legal</h4>
+                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                  <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
+                  <li><a href="#" className="hover:text-primary transition-colors">Privacidade</a></li>
+                  <li><a href="#" className="hover:text-primary transition-colors">Reembolso</a></li>
+                  <li><a href="#" className="hover:text-primary transition-colors">Cookies</a></li>
+                </ul>
               </div>
             </div>
 
-            {/* Linha inferior */}
-            <div className="pt-6 flex flex-col md:flex-row justify-between items-center gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-              <p className="text-[#64748b] text-xs">
+            {/* Trust badges */}
+            <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <Lock className="w-3.5 h-3.5 text-primary" /> SSL Seguro
+                </div>
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Pagamento Protegido
+                </div>
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <Clock className="w-3.5 h-3.5 text-primary" /> Suporte 24/7
+                </div>
+              </div>
+              <p className="text-xs text-[#64748b] text-center md:text-right">
                 © 2025 AxionFly. Todos os direitos reservados.
               </p>
-              <div className="flex items-center gap-6 text-xs text-[#64748b]">
-                <a href="#" className="hover:text-primary transition-colors">Privacidade</a>
-                <span className="opacity-30">·</span>
-                <a href="#" className="hover:text-primary transition-colors">Termos de Uso</a>
-              </div>
             </div>
           </div>
         </footer>
