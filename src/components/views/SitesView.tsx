@@ -638,7 +638,7 @@ const SitesView = () => {
 
   const progress = ((step + 1) / TOTAL_STEPS) * 100;
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     const template = nicheTemplates[niche];
     if (!template) return;
 
@@ -648,9 +648,6 @@ const SitesView = () => {
     const selectedObjective = siteObjectives.find(o => o.value === siteObjective);
     const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
     const pageLabels = selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean);
-
-    const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
-    const targetUrl = `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(generated)}`;
 
     // ESTRUTURA DE PROMPT DE ENGENHARIA DE PRECISÃO
     let generated = `Você é um especialista em UI/UX, copywriting de alta conversão e desenvolvimento web performático. 
@@ -700,12 +697,15 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
 
     // Salvar site no histórico do usuário
     if (user) {
+      const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
+      const targetUrl = `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(generated)}`;
+      
       await supabase.from("user_sites").insert({
         user_id: user.id,
         site_name: projectName.trim(),
         niche: template.label,
         url: targetUrl
-      });
+      } as any);
     }
 
     if (!hasInstalledExtension) {

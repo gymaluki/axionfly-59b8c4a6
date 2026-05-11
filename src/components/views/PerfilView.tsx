@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Loader2, User, Lock, History, Users2, Trash2, ExternalLink, Check, Calendar, CreditCard, Rocket, MapPin } from "lucide-react";
+import { Loader2, User, Lock, History, Users2, Trash2, ExternalLink, Check, Calendar, CreditCard, Rocket, MapPin, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
