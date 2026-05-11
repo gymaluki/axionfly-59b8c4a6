@@ -344,7 +344,7 @@ export function SitesBuilderVisual() {
         </div>
       </div>
 
-      <div className="pfv-floating pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+      <div className="pfv-floating pfv-float-anim" style={{ bottom: -8, right: 10 }}>
         <span className="lab">Sites gerados</span>
         <span className="val"><em>542</em> hoje</span>
       </div>
