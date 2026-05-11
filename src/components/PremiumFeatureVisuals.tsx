@@ -186,7 +186,7 @@ const sharedStyles = `
   .pfv-divider { height: 1px; background: var(--border); margin: 2px 0; }
 
   /* ===== CARD 3 — Contract ===== */
-  .pfv-ct-body { display: grid; grid-template-columns: 1fr 130px; gap: 10px; padding: 10px; height: calc(100% - 38px); }
+  .pfv-ct-body { display: grid; grid-template-columns: 1fr 115px; gap: 8px; padding: 8px; height: calc(100% - 34px); }
   .pfv-ct-doc {
     background: var(--surface-2);
     border: 1px solid var(--border);
