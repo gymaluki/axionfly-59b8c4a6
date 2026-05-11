@@ -30,7 +30,7 @@ async function report(payload: {
       user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
       user_id: user?.id ?? null,
       user_email: user?.email ?? null,
-      context: payload.context ?? null,
+      context: (payload.context as any) ?? null,
     }]);
   } catch {
     // silently ignore — never crash the app from the logger
