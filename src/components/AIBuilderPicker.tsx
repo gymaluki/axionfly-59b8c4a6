@@ -82,6 +82,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt, siteName, niche }: AIBu
           site_name: siteName || "Meu Site Profissional",
           niche: niche || "Geral",
           url: targetUrl,
+          prompt: normalizedPrompt,
         });
         
         if (error) {
@@ -98,7 +99,7 @@ export const AIBuilderPicker = ({ open, onClose, prompt, siteName, niche }: AIBu
     setReadyToOpen(false);
     hasInitializedRef.current = false;
     onClose();
-  }, [onClose, targetUrl, user, siteName, niche]);
+  }, [onClose, targetUrl, user, siteName, niche, normalizedPrompt]);
 
   const handleClose = useCallback(() => {
     setReadyToOpen(false);
