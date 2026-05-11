@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GeneratingOverlay } from "@/components/ui/generating-overlay";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
 
@@ -7,6 +10,8 @@ interface AIBuilderPickerProps {
   open: boolean;
   onClose: () => void;
   prompt: string;
+  siteName?: string;
+  niche?: string;
 }
 
 const copySync = (text: string): boolean => {
