@@ -649,6 +649,9 @@ const SitesView = () => {
     const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
     const pageLabels = selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean);
 
+    const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
+    const targetUrl = `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(generated)}`;
+
     // ESTRUTURA DE PROMPT DE ENGENHARIA DE PRECISÃO
     let generated = `Você é um especialista em UI/UX, copywriting de alta conversão e desenvolvimento web performático. 
 Crie uma Landing Page completa e profissional com as seguintes especificações técnicas e de negócio:
@@ -694,6 +697,16 @@ BASE DO TEMPLATE:
 ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.trim(), features.trim())}`;
 
     setGeneratedPrompt(generated);
+
+    // Salvar site no histórico do usuário
+    if (user) {
+      await supabase.from("user_sites").insert({
+        user_id: user.id,
+        site_name: projectName.trim(),
+        niche: template.label,
+        url: targetUrl
+      });
+    }
 
     if (!hasInstalledExtension) {
       setShowExtensionModal(true);
