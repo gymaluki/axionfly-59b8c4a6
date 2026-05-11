@@ -418,7 +418,7 @@ export function ExtensionInfiniteVisual() {
         </div>
       </div>
 
-      <div className="pfv-floating pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+      <div className="pfv-floating pfv-float-anim" style={{ bottom: -8, right: 10 }}>
         <span className="lab">Créditos</span>
         <span className="val"><em>Sem limite</em></span>
       </div>
