@@ -738,16 +738,16 @@ const Index = () => {
               </div>
 
               {/* Trust microcredentials */}
-              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 max-w-3xl mx-auto pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-x-6 gap-y-3 max-w-3xl mx-auto pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
                 {[
                   { icon: Lock, label: "Pagamento 100% seguro" },
                   { icon: Clock, label: "Setup em 5 minutos" },
                   { icon: ShieldCheck, label: "Suporte em português" },
                   { icon: Check, label: "Sem experiência necessária" },
                 ].map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-2">
-                    <Icon className="w-3.5 h-3.5 text-primary stroke-[2.5px]" />
-                    <span className="text-[11px] md:text-xs font-bold text-muted-foreground">{label}</span>
+                  <div key={label} className="flex items-center justify-center sm:justify-start gap-2 min-w-0">
+                    <Icon className="w-3.5 h-3.5 text-primary stroke-[2.5px] shrink-0" />
+                    <span className="text-[11px] md:text-xs font-bold text-muted-foreground text-center sm:text-left">{label}</span>
                   </div>
                 ))}
               </div>
