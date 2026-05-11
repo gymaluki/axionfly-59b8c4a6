@@ -8,7 +8,7 @@ import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 
-import axionflyLogo from "@/assets/axionfly-logo.png";
+import axionflyLogo from "@/assets/axionfly-logo.webp";
 
 
 import PricingCards from "@/components/PricingCards";

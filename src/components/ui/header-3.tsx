@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import axionflyLogo from '@/assets/axionfly-logo.png';
+import axionflyLogo from '@/assets/axionfly-logo.webp';
 import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { createPortal } from 'react-dom';
