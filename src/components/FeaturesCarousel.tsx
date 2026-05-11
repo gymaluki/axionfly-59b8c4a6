@@ -12,8 +12,8 @@ const slides = [
   { id: "suporte", src: slideSuporte, title: "Suporte Premium", desc: "Atendimento dedicado para você crescer com automações precisas." },
 ];
 
-const CARD_W_MD = 350;
-const GAP = 32;
+const CARD_W_MD = 340;
+const GAP = 24;
 const SPEED = 0.8; // px per frame
 
 export default function FeaturesCarousel() {
