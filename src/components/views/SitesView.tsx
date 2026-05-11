@@ -1,18 +1,21 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import {
+  Sparkles,
   ExternalLink,
+  RotateCcw,
+  Globe,
+  Plus,
   Trash2,
   Calendar,
-  History,
   Layout,
-  Plus,
+  History,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
-import { AIBuildersGrid } from "@/components/AIBuildersGrid";
-import { AIBuilderPicker } from "@/components/AIBuilderPicker";
+import AIBuildersGrid from "@/components/AIBuildersGrid";
+import AIBuilderPicker from "@/components/AIBuilderPicker";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,14 +26,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
