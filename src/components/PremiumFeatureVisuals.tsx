@@ -15,7 +15,7 @@ const sharedStyles = `
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
     border-radius: 12px;
     border: 1px solid var(--border);
     background:
@@ -39,7 +39,7 @@ const sharedStyles = `
 
   /* Browser window */
   .pfv-browser {
-    position: absolute; top: 18px; left: 18px; right: 18px; bottom: 56px;
+    position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -84,7 +84,7 @@ const sharedStyles = `
     background: linear-gradient(180deg, #0e1224, #0a0d1c);
     border: 1px solid var(--border-strong);
     border-radius: 10px;
-    padding: 8px 12px;
+    padding: 6px 10px;
     box-shadow: 0 14px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(36,99,235,0.08);
     z-index: 5;
   }
@@ -100,7 +100,7 @@ const sharedStyles = `
   @keyframes pfv-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-6px);} }
 
   /* ===== CARD 1 — Sites Builder ===== */
-  .pfv-sb-body { display: grid; grid-template-columns: 110px 1fr; gap: 10px; padding: 10px; height: calc(100% - 38px); }
+  .pfv-sb-body { display: grid; grid-template-columns: 95px 1fr; gap: 8px; padding: 8px; height: calc(100% - 34px); }
   .pfv-sb-niches {
     display: flex; flex-direction: column; gap: 5px;
     background: var(--surface-2);
@@ -159,7 +159,7 @@ const sharedStyles = `
   }
 
   /* ===== CARD 2 — Plano Infinito ===== */
-  .pfv-pl-body { padding: 12px; height: calc(100% - 38px); display: flex; flex-direction: column; gap: 8px; }
+  .pfv-pl-body { padding: 10px; height: calc(100% - 34px); display: flex; flex-direction: column; gap: 6px; }
   .pfv-pl-card {
     flex: 1;
     background: linear-gradient(180deg, rgba(36,99,235,0.10), transparent 60%), var(--surface-2);
@@ -186,7 +186,7 @@ const sharedStyles = `
   .pfv-divider { height: 1px; background: var(--border); margin: 2px 0; }
 
   /* ===== CARD 3 — Contract ===== */
-  .pfv-ct-body { display: grid; grid-template-columns: 1fr 130px; gap: 10px; padding: 10px; height: calc(100% - 38px); }
+  .pfv-ct-body { display: grid; grid-template-columns: 1fr 115px; gap: 8px; padding: 8px; height: calc(100% - 34px); }
   .pfv-ct-doc {
     background: var(--surface-2);
     border: 1px solid var(--border);
@@ -344,7 +344,7 @@ export function SitesBuilderVisual() {
         </div>
       </div>
 
-      <div className="pfv-floating pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+      <div className="pfv-floating pfv-float-anim" style={{ bottom: -8, right: 10 }}>
         <span className="lab">Sites gerados</span>
         <span className="val"><em>542</em> hoje</span>
       </div>
@@ -418,7 +418,7 @@ export function ExtensionInfiniteVisual() {
         </div>
       </div>
 
-      <div className="pfv-floating pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+      <div className="pfv-floating pfv-float-anim" style={{ bottom: -8, right: 10 }}>
         <span className="lab">Créditos</span>
         <span className="val"><em>Sem limite</em></span>
       </div>
@@ -503,7 +503,7 @@ export function ContractGeneratorVisual() {
         </div>
       </div>
 
-      <div className="pfv-floating green pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+      <div className="pfv-floating green pfv-float-anim" style={{ bottom: -8, right: 10 }}>
         <span className="lab">WhatsApp</span>
         <span className="val"><em>Enviado ✓</em></span>
       </div>
