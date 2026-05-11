@@ -1,608 +1,511 @@
-import { useEffect, useRef } from "react";
-
-/* Shared particle canvas — connected dots */
-function ParticleNet({ id }: { id: string }) {
-  const ref = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let raf = 0;
-    let w = 0;
-    let h = 0;
-    const dpr = window.devicePixelRatio || 1;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      w = rect.width;
-      h = rect.height;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-
-    const pts = Array.from({ length: 30 }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-    }));
-
-    const tick = () => {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of pts) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-      }
-      ctx.strokeStyle = "rgba(36,99,235,0.12)";
-      ctx.lineWidth = 1;
-      for (let i = 0; i < pts.length; i++) {
-        for (let j = i + 1; j < pts.length; j++) {
-          const dx = pts[i].x - pts[j].x;
-          const dy = pts[i].y - pts[j].y;
-          const d = Math.hypot(dx, dy);
-          if (d < 100) {
-            ctx.beginPath();
-            ctx.moveTo(pts[i].x, pts[i].y);
-            ctx.lineTo(pts[j].x, pts[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      ctx.fillStyle = "rgba(36,99,235,0.5)";
-      for (const p of pts) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.4, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-
-    const onResize = () => resize();
-    window.addEventListener("resize", onResize);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
-
-  return <canvas id={id} ref={ref} className="absolute inset-0 w-full h-full pointer-events-none" />;
-}
+import { useEffect, useState } from "react";
 
 const sharedStyles = `
-  .pfv-card {
+  .pfv {
+    --bg: #050508;
+    --surface: #0d0d1a;
+    --surface-2: #0a0a16;
+    --border: rgba(36,99,235,0.22);
+    --border-strong: rgba(36,99,235,0.45);
+    --primary: #2463EB;
+    --text: #ffffff;
+    --muted: #8b92a5;
+    --green: #1a9e6e;
     position: relative;
-    overflow: hidden;
-    border-radius: 1rem;
-    border: 1px solid #1a2a4a;
-    background: #050508;
-    aspect-ratio: 16/10;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(80% 60% at 50% 0%, rgba(36,99,235,0.10), transparent 70%),
+      var(--bg);
+    overflow: visible;
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
-  .pfv-grid {
+  .pfv * { box-sizing: border-box; }
+  .pfv-grid-bg {
     position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(36,99,235,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(36,99,235,0.06) 1px, transparent 1px);
+      linear-gradient(rgba(36,99,235,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(36,99,235,0.05) 1px, transparent 1px);
     background-size: 40px 40px;
+    border-radius: 12px;
     pointer-events: none;
-  }
-  .pfv-orb {
-    position: absolute; left: 50%; top: 50%;
-    width: 60%; height: 60%; transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(36,99,235,0.10), transparent 70%);
-    pointer-events: none;
-  }
-  .pfv-float-a { animation: pfv-float 5s ease-in-out infinite; }
-  .pfv-float-b { animation: pfv-float-b 4s ease-in-out infinite; }
-  .pfv-float-c { animation: pfv-float-b 5s ease-in-out infinite 0.6s; }
-  .pfv-float-d { animation: pfv-float-b 3.5s ease-in-out infinite 1.2s; }
-  @keyframes pfv-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-  @keyframes pfv-float-b {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-7px); }
-  }
-  @keyframes pfv-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-  @keyframes pfv-pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.85); }
+    mask-image: radial-gradient(80% 80% at 50% 50%, #000, transparent);
   }
 
-  /* ==== Card 1 (sites) ==== */
-  .pfv-sites-badge {
-    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 14px; border-radius: 999px;
-    border: 1px solid #2463EB; background: rgba(36,99,235,0.08);
-    font-size: 10px; font-weight: 800; letter-spacing: 0.15em; color: #2463EB;
+  /* Browser window */
+  .pfv-browser {
+    position: absolute; top: 18px; left: 18px; right: 18px; bottom: 56px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(36,99,235,0.06);
+  }
+  .pfv-chrome {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    background: #07070f;
+    border-bottom: 1px solid var(--border);
+  }
+  .pfv-dots { display: flex; gap: 5px; }
+  .pfv-dots i { width: 9px; height: 9px; border-radius: 999px; display: block; }
+  .pfv-dots i:nth-child(1) { background: #ef4444; }
+  .pfv-dots i:nth-child(2) { background: #facc15; }
+  .pfv-dots i:nth-child(3) { background: #22c55e; }
+  .pfv-url {
+    flex: 1; font-family: ui-monospace, Menlo, monospace;
+    font-size: 10px; color: #9bb5ff;
+    padding: 4px 10px;
+    background: #050508;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .pfv-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 9px; border-radius: 999px;
+    font-size: 9px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid var(--border-strong); color: var(--primary);
+    background: rgba(36,99,235,0.10);
+  }
+  .pfv-pill.green { color: #22d394; border-color: rgba(34,211,148,0.5); background: rgba(26,158,110,0.10); }
+  .pfv-pill .d { width: 6px; height: 6px; border-radius: 999px; background: currentColor; animation: pfv-pulse-dot 1.4s ease-in-out infinite; }
+  @keyframes pfv-pulse-dot { 0%,100% { opacity: 1; transform: scale(1);} 50% { opacity: .35; transform: scale(.8);} }
+  @keyframes pfv-blink { 0%,100% { opacity:1 } 50% { opacity:0 } }
+
+  /* Floating stat card outside browser */
+  .pfv-floating {
+    position: absolute;
+    background: linear-gradient(180deg, #0e1224, #0a0d1c);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 8px 12px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(36,99,235,0.08);
     z-index: 5;
   }
-  .pfv-sites-badge .dot {
-    width: 6px; height: 6px; border-radius: 999px; background: #2463EB;
-    animation: pfv-pulse-dot 1.4s ease-in-out infinite;
+  .pfv-floating .lab {
+    display: block; font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #9aa4bd; margin-bottom: 2px;
   }
-  .pfv-browser {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 78%; max-width: 560px;
-    border-radius: 10px; border: 1px solid #1a2a4a; background: #050508;
-    overflow: hidden; box-shadow: 0 20px 60px rgba(36,99,235,0.15);
+  .pfv-floating .val { font-size: 14px; font-weight: 800; color: #fff; }
+  .pfv-floating .val em { color: var(--primary); font-style: normal; }
+  .pfv-floating.green { border-color: rgba(34,211,148,0.45); }
+  .pfv-floating.green .val em { color: #22d394; }
+  .pfv-float-anim { animation: pfv-float 4.5s ease-in-out infinite; }
+  @keyframes pfv-float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-6px);} }
+
+  /* ===== CARD 1 — Sites Builder ===== */
+  .pfv-sb-body { display: grid; grid-template-columns: 110px 1fr; gap: 10px; padding: 10px; height: calc(100% - 38px); }
+  .pfv-sb-niches {
+    display: flex; flex-direction: column; gap: 5px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
   }
-  .pfv-topbar {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 12px; background: #050508; border-bottom: 1px solid #0f1d38;
+  .pfv-sb-niches .h { font-size: 8px; font-weight: 800; letter-spacing: 0.14em; color: #6f7895; text-transform: uppercase; margin-bottom: 4px; }
+  .pfv-sb-niche {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 10px; font-weight: 600; color: #b9c2d8;
+    padding: 5px 7px; border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(255,255,255,0.015);
   }
-  .pfv-dot { width: 8px; height: 8px; border-radius: 999px; background: #2463EB; }
-  .pfv-url {
-    flex: 1; margin-left: 6px; font-family: ui-monospace, Menlo, monospace;
-    font-size: 10px; color: #2463EB; padding: 4px 10px;
-    background: #07080e; border: 1px solid #0f1d38; border-radius: 6px;
+  .pfv-sb-niche.active {
+    color: #fff; background: rgba(36,99,235,0.14);
+    border-color: var(--border-strong);
   }
-  .pfv-url::after {
-    content: "▍"; color: #2463EB; margin-left: 2px;
-    animation: pfv-blink 1s step-end infinite;
+  .pfv-sb-niche .ck {
+    width: 14px; height: 14px; border-radius: 4px;
+    background: var(--primary); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800;
   }
-  .pfv-body { display: grid; grid-template-columns: 40px 1fr 130px; gap: 10px; padding: 12px; }
-  .pfv-side { display: flex; flex-direction: column; gap: 8px; }
-  .pfv-side-block {
-    width: 28px; height: 28px; border-radius: 6px;
-    background: #07080e; border: 1px solid #1a2a4a;
-  }
-  .pfv-side-block.active { border-color: #2463EB; background: rgba(36,99,235,0.12); }
-  .pfv-main { display: flex; flex-direction: column; gap: 10px; }
-  .pfv-hero {
+  .pfv-sb-preview {
     position: relative; overflow: hidden;
-    height: 70px; border-radius: 6px;
-    background: #060a14; border: 1px solid #0f1d38;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 800; letter-spacing: 0.2em; color: #2463EB;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    display: flex; flex-direction: column; gap: 7px;
   }
-  .pfv-hero::before {
+  .pfv-sk { background: #11162a; border-radius: 5px; position: relative; overflow: hidden; }
+  .pfv-sk::before {
     content: ""; position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(36,99,235,0.35), transparent);
-    transform: translateX(-100%);
-    animation: pfv-scan 3s ease-in-out infinite;
-  }
-  @keyframes pfv-scan {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-  .pfv-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .pfv-col {
-    height: 50px; border-radius: 6px;
-    background: #060a14; border: 1px solid #0f1d38;
-    padding: 8px; display: flex; flex-direction: column; gap: 5px; justify-content: center;
-  }
-  .pfv-bar { height: 4px; border-radius: 999px; background: #2463EB; transform-origin: left; transform: scaleX(0); }
-  .pfv-c1 .pfv-bar { animation: pfv-grow 2.4s ease-in-out infinite; }
-  .pfv-c2 .pfv-bar { animation: pfv-grow 2.4s ease-in-out infinite 0.2s; }
-  .pfv-c3 .pfv-bar { animation: pfv-grow 2.4s ease-in-out infinite 0.4s; }
-  .pfv-c1 .pfv-bar:nth-child(1) { opacity: 0.6; width: 80%; }
-  .pfv-c1 .pfv-bar:nth-child(2) { opacity: 0.4; width: 55%; }
-  .pfv-c2 .pfv-bar:nth-child(1) { opacity: 0.6; width: 70%; }
-  .pfv-c2 .pfv-bar:nth-child(2) { opacity: 0.3; width: 90%; }
-  .pfv-c3 .pfv-bar:nth-child(1) { opacity: 0.4; width: 60%; }
-  .pfv-c3 .pfv-bar:nth-child(2) { opacity: 0.3; width: 75%; }
-  @keyframes pfv-grow {
-    0%, 100% { transform: scaleX(0.2); }
-    50% { transform: scaleX(1); }
-  }
-  .pfv-right {
-    display: flex; flex-direction: column; gap: 8px;
-    background: #060a14; border: 1px solid #0f1d38; border-radius: 6px; padding: 8px;
-  }
-  .pfv-label { font-size: 8px; font-weight: 800; letter-spacing: 0.2em; color: rgba(36,99,235,0.7); }
-  .pfv-niche {
-    font-size: 9px; padding: 5px 8px; border-radius: 4px;
-    background: #050508; border: 1px solid #0f1d38; color: rgba(36,99,235,0.6);
-  }
-  .pfv-niche.active { border-color: #2463EB; color: #2463EB; background: rgba(36,99,235,0.08); }
-  .pfv-swatches { display: flex; gap: 6px; }
-  .pfv-sw { width: 14px; height: 14px; border-radius: 4px; }
-  .pfv-sw.s1 { background: #2463EB; }
-  .pfv-sw.s2 { background: rgba(36,99,235,0.5); }
-  .pfv-sw.s3 { background: rgba(36,99,235,0.25); }
-
-  .pfv-chip {
-    position: absolute; z-index: 4;
-    padding: 6px 10px; border-radius: 8px;
-    background: #050508; border: 1px solid #1a2a4a;
-    font-size: 9px; font-weight: 700; color: rgba(36,99,235,0.85);
-    letter-spacing: 0.06em;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-  }
-  .pfv-chip .lbl { display: block; font-size: 7px; font-weight: 800; color: rgba(36,99,235,0.5); letter-spacing: 0.18em; margin-bottom: 2px; }
-  .pfv-chip .val { color: #ffffff; font-weight: 800; }
-  .pfv-chip-tl { top: 18%; left: 3%; }
-  .pfv-chip-tr { top: 14%; right: 3%; }
-  .pfv-chip-bl { bottom: 14%; left: 4%; }
-  .pfv-chip-br { bottom: 12%; right: 3%; }
-
-  /* ==== Card 2 (extension) ==== */
-  .pfv-ext-stage {
-    position: absolute; inset: 0;
-    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
-    padding: 30px;
-  }
-  .pfv-ext-left { position: relative; height: 100%; display: flex; align-items: center; justify-content: center; }
-  .pfv-inf-circle {
-    position: relative;
-    width: 100px; height: 100px; border-radius: 999px;
-    border: 2px solid #2463EB; background: #07080e;
-    display: flex; align-items: center; justify-content: center;
-    color: #2463EB; font-size: 44px; font-weight: 800;
-    z-index: 3;
-    animation: pfv-glow 3s ease-in-out infinite;
-  }
-  @keyframes pfv-glow {
-    0%, 100% { box-shadow: 0 0 0 rgba(36,99,235,0.2); }
-    50% { box-shadow: 0 0 30px rgba(36,99,235,0.5); }
-  }
-  .pfv-ring {
-    position: absolute; left: 50%; top: 50%;
-    border-radius: 999px; border: 1px dashed rgba(36,99,235,0.18);
-    pointer-events: none;
-  }
-  .pfv-ring .rd {
-    position: absolute; width: 7px; height: 7px; border-radius: 999px;
-    background: #2463EB; box-shadow: 0 0 10px #2463EB;
-  }
-  .pfv-ring1 {
-    width: 110px; height: 110px; margin: -55px 0 0 -55px;
-    animation: pfv-spin 7s linear infinite;
-  }
-  .pfv-ring2 {
-    width: 160px; height: 160px; margin: -80px 0 0 -80px;
-    animation: pfv-spin-r 11s linear infinite;
-  }
-  @keyframes pfv-spin { to { transform: rotate(360deg); } }
-  @keyframes pfv-spin-r { to { transform: rotate(-360deg); } }
-  .pfv-ring .rd-t { top: -3.5px; left: 50%; margin-left: -3.5px; }
-  .pfv-ring .rd-b { bottom: -3.5px; left: 50%; margin-left: -3.5px; }
-
-  .pfv-pulse {
-    position: absolute; left: 50%; top: 50%;
-    width: 100px; height: 100px; margin: -50px 0 0 -50px;
-    border: 1px solid rgba(36,99,235,0.5); border-radius: 999px;
-    transform: scale(1); opacity: 0;
-    animation: pfv-pulse-ring 3s ease-out infinite;
-  }
-  .pfv-pulse.p2 { animation-delay: 1s; }
-  .pfv-pulse.p3 { animation-delay: 2s; }
-  @keyframes pfv-pulse-ring {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(2.2); opacity: 0; }
-  }
-
-  .pfv-ext-chips {
-    position: absolute; left: 50%; bottom: 12%; transform: translateX(-50%);
-    display: flex; gap: 6px; z-index: 4;
-  }
-  .pfv-ext-chips .pc {
-    padding: 4px 10px; border-radius: 999px; font-size: 9px; font-weight: 700;
-    background: #07080e; border: 1px solid #1a2a4a; color: rgba(36,99,235,0.7);
-  }
-  .pfv-ext-chips .pc.on { border-color: #2463EB; color: #2463EB; background: rgba(36,99,235,0.1); }
-
-  .pfv-stat {
-    position: relative; overflow: hidden;
-    background: #07080e; border: 1px solid #1a2a4a; border-radius: 8px;
-    padding: 10px 12px; margin-bottom: 8px;
-  }
-  .pfv-stat::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(36,99,235,0.08), transparent);
-    transform: translateX(-100%);
-    animation: pfv-shimmer 3.5s ease-in-out infinite;
-  }
-  @keyframes pfv-shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-  .pfv-stat .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .pfv-stat .lab { font-size: 8px; font-weight: 800; letter-spacing: 0.2em; color: rgba(36,99,235,0.7); }
-  .pfv-stat .bdg { font-size: 7px; font-weight: 800; letter-spacing: 0.15em; padding: 2px 6px; border-radius: 999px; border: 1px solid #2463EB; color: #2463EB; }
-  .pfv-stat .val { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 6px; }
-  .pfv-stat .val small { color: rgba(36,99,235,0.7); font-weight: 600; font-size: 9px; margin-left: 4px; }
-  .pfv-stat .pb { height: 3px; border-radius: 999px; background: rgba(36,99,235,0.15); overflow: hidden; position: relative; }
-  .pfv-stat .pb i { display: block; height: 100%; background: #2463EB; }
-  .pfv-stat .pb i.fill { width: 100%; animation: pfv-pulse-dot 2s ease-in-out infinite; }
-  .pfv-stat .pb i.grow { width: 0; animation: pfv-grow-w 3s ease-in-out infinite; }
-  @keyframes pfv-grow-w {
-    0%, 100% { width: 0; }
-    50% { width: 78%; }
-  }
-
-  /* ==== Card 3 (contract) ==== */
-  .pfv-doc {
-    position: absolute; top: 50%; left: 32px; transform: translateY(-50%);
-    width: 46%; max-width: 320px;
-    background: #07080e; border: 1px solid #1a2a4a; border-radius: 12px;
-    padding: 18px; z-index: 3;
-  }
-  .pfv-doc-head {
-    display: flex; justify-content: space-between; align-items: center;
-    padding-bottom: 12px; border-bottom: 1px solid #1a2a4a; margin-bottom: 14px;
-  }
-  .pfv-doc-head .t { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; color: #fff; }
-  .pfv-doc-head .b { font-size: 8px; font-weight: 800; letter-spacing: 0.15em; padding: 3px 8px; border-radius: 999px; border: 1px solid #2463EB; color: #2463EB; }
-  .pfv-field { margin-bottom: 12px; position: relative; overflow: hidden; }
-  .pfv-field .l { font-size: 8px; font-weight: 800; letter-spacing: 0.18em; color: rgba(36,99,235,0.6); margin-bottom: 4px; }
-  .pfv-field .v {
-    font-family: ui-monospace, Menlo, monospace;
-    font-size: 11px; color: #fff; height: 14px; overflow: hidden; white-space: nowrap;
-  }
-  .pfv-field .v span {
-    display: inline-block; overflow: hidden; vertical-align: bottom;
-    white-space: nowrap; width: 0;
-    animation: pfv-type 4s steps(30, end) infinite;
-  }
-  .pfv-f1 .v span { animation-delay: 0s; }
-  .pfv-f2 .v span { animation-delay: 0.8s; }
-  .pfv-f3 .v span { animation-delay: 1.4s; }
-  @keyframes pfv-type {
-    0% { width: 0; }
-    40%, 90% { width: 100%; }
-    100% { width: 0; }
-  }
-  .pfv-field::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
     background: linear-gradient(90deg, transparent, rgba(36,99,235,0.18), transparent);
     transform: translateX(-100%);
-    animation: pfv-scan 4s ease-in-out infinite;
+    animation: pfv-shimmer 2.2s ease-in-out infinite;
   }
-  .pfv-f2::after { animation-delay: 0.6s; }
-  .pfv-f3::after { animation-delay: 1.2s; }
-  .pfv-sig {
-    margin-top: 12px; padding-top: 12px; border-top: 1px solid #1a2a4a;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .pfv-sig .name {
-    font-family: 'Times New Roman', serif; font-style: italic; font-size: 18px; color: #fff;
-    opacity: 0; transform: translateX(-8px);
-    animation: pfv-sign 5s ease-in-out infinite 2.4s;
-  }
-  @keyframes pfv-sign {
-    0%, 30% { opacity: 0; transform: translateX(-8px); }
-    50%, 100% { opacity: 0.9; transform: translateX(0); }
-  }
-  .pfv-stamp {
-    width: 50px; height: 50px; border-radius: 999px;
-    border: 2px solid #2463EB; color: #2463EB;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 22px;
-    transform: scale(0.4) rotate(-30deg); opacity: 0;
-    animation: pfv-stamp 5s ease-in-out infinite 3s;
-  }
-  @keyframes pfv-stamp {
-    0%, 40% { transform: scale(0.4) rotate(-30deg); opacity: 0; }
-    60%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  @keyframes pfv-shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(120%)} }
+  .pfv-sb-preview .nav { display: flex; gap: 6px; align-items: center; }
+  .pfv-sb-preview .logo { width: 22px; height: 8px; border-radius: 3px; background: var(--primary); }
+  .pfv-sb-preview .nav .sk { flex: 1; height: 5px; }
+  .pfv-sb-preview .hero { height: 50px; background: linear-gradient(135deg, rgba(36,99,235,0.35), rgba(36,99,235,0.1)); border-radius: 6px; padding: 8px; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .pfv-sb-preview .hero .t { width: 70%; height: 7px; border-radius: 3px; background: rgba(255,255,255,0.85); }
+  .pfv-sb-preview .hero .s { width: 50%; height: 4px; border-radius: 3px; background: rgba(255,255,255,0.45); }
+  .pfv-sb-preview .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+  .pfv-sb-preview .grid .sk { height: 22px; }
+  .pfv-sb-preview .footer { height: 8px; }
+  .pfv-sb-stage { animation: pfv-cycle1 6s ease-in-out infinite; }
+  @keyframes pfv-cycle1 {
+    0%, 15% { opacity: 0.35; filter: blur(2px); }
+    35%, 85% { opacity: 1; filter: blur(0); }
+    100% { opacity: 0.35; filter: blur(2px); }
   }
 
-  .pfv-side-col {
-    position: absolute; top: 50%; right: 24px; transform: translateY(-50%);
-    width: 38%; max-width: 240px; z-index: 3;
-    display: flex; flex-direction: column; gap: 8px;
+  /* ===== CARD 2 — Plano Infinito ===== */
+  .pfv-pl-body { padding: 12px; height: calc(100% - 38px); display: flex; flex-direction: column; gap: 8px; }
+  .pfv-pl-card {
+    flex: 1;
+    background: linear-gradient(180deg, rgba(36,99,235,0.10), transparent 60%), var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex; flex-direction: column; gap: 9px;
   }
+  .pfv-pl-head { display: flex; align-items: center; justify-content: space-between; }
+  .pfv-pl-head .name { font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; }
+  .pfv-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .pfv-row .l { font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #8089a3; }
+  .pfv-row .v { font-size: 18px; font-weight: 800; color: #fff; }
+  .pfv-row .v em { color: var(--primary); font-style: normal; }
+  .pfv-row .v.sm { font-size: 14px; }
+  .pfv-badge-up { font-size: 9px; font-weight: 800; color: #22d394; padding: 2px 6px; border-radius: 999px; background: rgba(26,158,110,0.15); border: 1px solid rgba(34,211,148,0.4); margin-left: 6px; }
+  .pfv-progress { display: flex; flex-direction: column; gap: 5px; }
+  .pfv-progress .h { display: flex; justify-content: space-between; }
+  .pfv-progress .h .l { font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #8089a3; }
+  .pfv-progress .h .p { font-size: 10px; font-weight: 800; color: var(--primary); }
+  .pfv-progress .bar { height: 5px; border-radius: 999px; background: rgba(36,99,235,0.15); overflow: hidden; }
+  .pfv-progress .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), #6e9bff); width: 0; animation: pfv-fill 4s ease-in-out infinite; border-radius: 999px; }
+  @keyframes pfv-fill { 0% { width: 0; } 80%, 100% { width: 100%; } }
+  .pfv-divider { height: 1px; background: var(--border); margin: 2px 0; }
+
+  /* ===== CARD 3 — Contract ===== */
+  .pfv-ct-body { display: grid; grid-template-columns: 1fr 130px; gap: 10px; padding: 10px; height: calc(100% - 38px); }
+  .pfv-ct-doc {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex; flex-direction: column; gap: 8px;
+    overflow: hidden;
+  }
+  .pfv-ct-doc .h {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  }
+  .pfv-ct-doc .h .t { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; color: #fff; text-transform: uppercase; }
+  .pfv-field { display: flex; flex-direction: column; gap: 2px; }
+  .pfv-field .l { font-size: 8px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #6f7895; }
+  .pfv-field .v {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 10px; color: #fff;
+    min-height: 13px; white-space: nowrap; overflow: hidden;
+  }
+  .pfv-field .v::after { content: "▍"; color: var(--primary); margin-left: 1px; animation: pfv-blink 0.9s step-end infinite; }
+  .pfv-ct-body-text {
+    margin-top: 2px; padding-top: 6px; border-top: 1px dashed var(--border);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .pfv-ct-body-text .ln { height: 4px; border-radius: 3px; background: rgba(36,99,235,0.15); width: 0; animation: pfv-grow-w 5s ease-in-out infinite; }
+  .pfv-ct-body-text .ln:nth-child(1) { animation-delay: 1.2s; }
+  .pfv-ct-body-text .ln:nth-child(2) { animation-delay: 1.6s; max-width: 90%; }
+  .pfv-ct-body-text .ln:nth-child(3) { animation-delay: 2.0s; max-width: 60%; }
+  @keyframes pfv-grow-w { 0%, 10% { width: 0; } 60%, 100% { width: 100%; } }
+
+  .pfv-ct-side { display: flex; flex-direction: column; gap: 7px; }
   .pfv-step {
-    display: flex; align-items: center; gap: 10px;
-    background: #07080e; border: 1px solid #1a2a4a; border-radius: 8px;
-    padding: 8px 10px;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 8px;
   }
   .pfv-step .ico {
-    width: 22px; height: 22px; border-radius: 999px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 800;
+    width: 20px; height: 20px; border-radius: 999px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800;
+    border: 1px solid var(--border);
+    color: #6f7895;
   }
-  .pfv-step.done .ico { background: #2463EB; color: #fff; }
-  .pfv-step.active .ico { border: 1px solid #2463EB; color: #2463EB; }
-  .pfv-step.active .ico::after {
-    content: ""; width: 6px; height: 6px; border-radius: 999px; background: #2463EB;
-    animation: pfv-pulse-dot 1.4s ease-in-out infinite;
+  .pfv-step.done .ico { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .pfv-step.active .ico { color: var(--primary); border-color: var(--primary); position: relative; }
+  .pfv-step.active .ico::before {
+    content: ""; position: absolute; inset: 2px; border-radius: 999px;
+    border: 2px solid transparent; border-top-color: var(--primary);
+    animation: pfv-spin 0.9s linear infinite;
   }
-  .pfv-step .meta { display: flex; flex-direction: column; }
-  .pfv-step .et { font-size: 7px; font-weight: 800; letter-spacing: 0.2em; color: rgba(36,99,235,0.6); }
-  .pfv-step .tx { font-size: 10px; font-weight: 700; color: #fff; }
-  .pfv-prog {
-    background: #07080e; border: 1px solid #1a2a4a; border-radius: 8px; padding: 10px;
+  .pfv-step.send .ico { color: #22d394; border-color: rgba(34,211,148,0.5); }
+  .pfv-step.send .ico::after {
+    content: ""; position: absolute; width: 6px; height: 6px; border-radius: 999px; background: #22d394;
+    animation: pfv-pulse-dot 1.2s ease-in-out infinite;
   }
-  .pfv-prog .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .pfv-prog .l { font-size: 8px; font-weight: 800; letter-spacing: 0.2em; color: rgba(36,99,235,0.6); }
-  .pfv-prog .p { font-size: 10px; font-weight: 800; color: #2463EB; }
-  .pfv-prog .bar { height: 3px; background: rgba(36,99,235,0.15); border-radius: 999px; overflow: hidden; }
-  .pfv-prog .bar i { display: block; height: 100%; background: #2463EB; width: 0; animation: pfv-fill 5s ease-in-out infinite; }
-  @keyframes pfv-fill {
-    0% { width: 0; }
-    90%, 100% { width: 100%; }
+  .pfv-step.send .ico { position: relative; }
+  @keyframes pfv-spin { to { transform: rotate(360deg); } }
+  .pfv-step .meta { display: flex; flex-direction: column; min-width: 0; }
+  .pfv-step .et { font-size: 7px; font-weight: 800; letter-spacing: 0.16em; color: #6f7895; text-transform: uppercase; }
+  .pfv-step .tx { font-size: 9px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pfv-progbar {
+    margin-top: auto;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px;
   }
-  .pfv-send {
-    display: flex; align-items: center; gap: 8px;
-    background: #07080e; border: 1px solid #1a2a4a; border-radius: 8px;
-    padding: 8px 10px;
+  .pfv-progbar .h { display: flex; justify-content: space-between; margin-bottom: 5px; }
+  .pfv-progbar .l { font-size: 7px; font-weight: 800; letter-spacing: 0.16em; color: #6f7895; text-transform: uppercase; }
+  .pfv-progbar .p { font-size: 9px; font-weight: 800; color: #22d394; }
+  .pfv-progbar .bar { height: 4px; border-radius: 999px; background: rgba(34,211,148,0.15); overflow: hidden; }
+  .pfv-progbar .bar i { display: block; height: 100%; background: linear-gradient(90deg, #1a9e6e, #22d394); width: 0; animation: pfv-fill 5s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pfv *, .pfv *::before, .pfv *::after { animation: none !important; }
   }
-  .pfv-send .d { width: 6px; height: 6px; border-radius: 999px; background: #2463EB; animation: pfv-blink 1.2s step-end infinite; }
-  .pfv-send .tx { font-size: 10px; font-weight: 700; color: #fff; }
 `;
 
+/* Typing hook with loop */
+function useTyping(text: string, speed = 45, startDelay = 0, loopDelay = 3500) {
+  const [val, setVal] = useState("");
+  useEffect(() => {
+    let i = 0;
+    let mounted = true;
+    let timeout: ReturnType<typeof setTimeout>;
+    let interval: ReturnType<typeof setInterval>;
+
+    const run = () => {
+      if (!mounted) return;
+      setVal("");
+      i = 0;
+      interval = setInterval(() => {
+        if (!mounted) return;
+        i++;
+        setVal(text.slice(0, i));
+        if (i >= text.length) {
+          clearInterval(interval);
+          timeout = setTimeout(run, loopDelay);
+        }
+      }, speed);
+    };
+    timeout = setTimeout(run, startDelay);
+    return () => {
+      mounted = false;
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, [text, speed, startDelay, loopDelay]);
+  return val;
+}
+
+/* ============= CARD 1: Sites Builder ============= */
 export function SitesBuilderVisual() {
+  const niches = ["Barbearia", "Restaurante", "Salão", "Clínica", "Advocacia"];
   return (
-    <div className="pfv-card">
+    <div className="pfv">
       <style>{sharedStyles}</style>
-      <div className="pfv-grid" />
-      <div className="pfv-orb" />
-      <ParticleNet id="canvas-sites" />
+      <div className="pfv-grid-bg" />
 
-      <div className="pfv-sites-badge">
-        <span className="dot" /> IA GERANDO
-      </div>
-
-      <div className="pfv-chip pfv-chip-tr pfv-float-b">
-        <span className="lbl">SITES GERADOS</span>
-        <span className="val">542 hoje</span>
-      </div>
-      <div className="pfv-chip pfv-chip-tl pfv-float-c">
-        <span className="lbl">IA STATUS</span>
-        <span className="val">● ATIVA</span>
-      </div>
-      <div className="pfv-chip pfv-chip-br pfv-float-d">
-        <span className="lbl">NICHO ATIVO</span>
-        <span className="val">Barbearia ✓</span>
-      </div>
-
-      <div className="pfv-browser pfv-float-a">
-        <div className="pfv-topbar">
-          <span className="pfv-dot" style={{ opacity: 0.8 }} />
-          <span className="pfv-dot" style={{ opacity: 0.4 }} />
-          <span className="pfv-dot" style={{ opacity: 0.2 }} />
-          <span className="pfv-url">axionfly.site/criar</span>
+      <div className="pfv-browser">
+        <div className="pfv-chrome">
+          <div className="pfv-dots"><i /><i /><i /></div>
+          <div className="pfv-url">axionfly.site/criar</div>
+          <span className="pfv-pill"><span className="d" />IA Gerando</span>
         </div>
-        <div className="pfv-body">
-          <div className="pfv-side">
-            <div className="pfv-side-block active" />
-            <div className="pfv-side-block" />
-            <div className="pfv-side-block" />
-            <div className="pfv-side-block" />
+
+        <div className="pfv-sb-body">
+          <div className="pfv-sb-niches">
+            <div className="h">Nicho</div>
+            {niches.map((n, idx) => (
+              <div key={n} className={`pfv-sb-niche ${idx === 0 ? "active" : ""}`}>
+                <span>{n}</span>
+                {idx === 0 && <span className="ck">✓</span>}
+              </div>
+            ))}
           </div>
-          <div className="pfv-main">
-            <div className="pfv-hero">GERANDO SITE COM IA...</div>
-            <div className="pfv-cols">
-              <div className="pfv-col pfv-c1"><div className="pfv-bar" /><div className="pfv-bar" /></div>
-              <div className="pfv-col pfv-c2"><div className="pfv-bar" /><div className="pfv-bar" /></div>
-              <div className="pfv-col pfv-c3"><div className="pfv-bar" /><div className="pfv-bar" /></div>
+
+          <div className="pfv-sb-preview pfv-sb-stage">
+            <div className="nav">
+              <span className="logo" />
+              <span className="sk pfv-sk" />
+              <span className="sk pfv-sk" style={{ flex: "0 0 18px" }} />
+              <span className="sk pfv-sk" style={{ flex: "0 0 18px" }} />
             </div>
-          </div>
-          <div className="pfv-right">
-            <div className="pfv-label">NICHO</div>
-            <div className="pfv-niche active">Barbearia ✓</div>
-            <div className="pfv-niche">Restaurante</div>
-            <div className="pfv-niche">Academia</div>
-            <div className="pfv-label" style={{ marginTop: 4 }}>CORES</div>
-            <div className="pfv-swatches">
-              <span className="pfv-sw s1" />
-              <span className="pfv-sw s2" />
-              <span className="pfv-sw s3" />
+            <div className="hero">
+              <span className="t" />
+              <span className="s" />
             </div>
+            <div className="grid">
+              <span className="pfv-sk" />
+              <span className="pfv-sk" />
+              <span className="pfv-sk" />
+            </div>
+            <div className="footer pfv-sk" />
           </div>
         </div>
+      </div>
+
+      <div className="pfv-floating pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+        <span className="lab">Sites gerados</span>
+        <span className="val"><em>542</em> hoje</span>
       </div>
     </div>
   );
 }
 
+/* ============= CARD 2: Plano Infinito ============= */
 export function ExtensionInfiniteVisual() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let v = 0;
+    let mounted = true;
+    let raf: number;
+    const tick = () => {
+      if (!mounted) return;
+      v += 37;
+      if (v >= 999) {
+        setCount(999);
+        setTimeout(() => { v = 0; setCount(0); raf = requestAnimationFrame(tick); }, 1800);
+        return;
+      }
+      setCount(v);
+      raf = requestAnimationFrame(() => setTimeout(tick, 40));
+    };
+    raf = requestAnimationFrame(tick);
+    return () => { mounted = false; cancelAnimationFrame(raf); };
+  }, []);
+
+  const showInf = count >= 999;
+
   return (
-    <div className="pfv-card">
+    <div className="pfv">
       <style>{sharedStyles}</style>
-      <div className="pfv-grid" />
-      <div className="pfv-orb" />
-      <ParticleNet id="canvas-lovable" />
+      <div className="pfv-grid-bg" />
 
-      <div className="pfv-ext-stage">
-        <div className="pfv-ext-left">
-          <div className="pfv-pulse" />
-          <div className="pfv-pulse p2" />
-          <div className="pfv-pulse p3" />
-          <div className="pfv-ring pfv-ring1">
-            <span className="rd rd-t" />
-            <span className="rd rd-b" />
-          </div>
-          <div className="pfv-ring pfv-ring2">
-            <span className="rd rd-t" />
-            <span className="rd rd-b" />
-          </div>
-          <div className="pfv-inf-circle">∞</div>
-
-          <div className="pfv-ext-chips">
-            <span className="pc on">∞ Sem limite</span>
-            <span className="pc">Hyperbuild Pro</span>
-            <span className="pc">Escala total</span>
-          </div>
+      <div className="pfv-browser">
+        <div className="pfv-chrome">
+          <div className="pfv-dots"><i /><i /><i /></div>
+          <div className="pfv-url">axionfly.site/planos</div>
+          <span className="pfv-pill green"><span className="d" />Ativo</span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <div className="pfv-stat pfv-float-b">
-            <div className="row"><span className="lab">CRÉDITOS ATIVOS</span><span className="bdg">ILIMITADO</span></div>
-            <div className="val">∞ <small>disponível agora</small></div>
-            <div className="pb"><i className="fill" /></div>
-          </div>
-          <div className="pfv-stat pfv-float-c">
-            <div className="row"><span className="lab">SITES CRIADOS</span><span className="bdg">+8% ↑</span></div>
-            <div className="val">542 <small>este mês</small></div>
-            <div className="pb"><i className="grow" /></div>
-          </div>
-          <div className="pfv-stat pfv-float-d">
-            <div className="row"><span className="lab">PARCERIA</span><span className="bdg">ATIVO</span></div>
-            <div className="val">Hyperbuild Pro</div>
-            <div className="pb"><i className="fill" /></div>
+        <div className="pfv-pl-body">
+          <div className="pfv-pl-card">
+            <div className="pfv-pl-head">
+              <span className="name">Plano Infinito</span>
+              <span className="pfv-pill">Premium</span>
+            </div>
+
+            <div className="pfv-row">
+              <span className="l">Créditos</span>
+              <span className="v"><em>{showInf ? "∞ Ilimitado" : count.toLocaleString("pt-BR")}</em></span>
+            </div>
+
+            <div className="pfv-divider" />
+
+            <div className="pfv-row">
+              <span className="l">Sites este mês</span>
+              <span className="v sm">542<span className="pfv-badge-up">+8%</span></span>
+            </div>
+
+            <div className="pfv-progress">
+              <div className="h">
+                <span className="l">Parceria Hyperbuild Pro</span>
+                <span className="p">100%</span>
+              </div>
+              <div className="bar"><i /></div>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="pfv-floating pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+        <span className="lab">Créditos</span>
+        <span className="val"><em>Sem limite</em></span>
       </div>
     </div>
   );
 }
 
+/* ============= CARD 3: Contract Generator ============= */
 export function ContractGeneratorVisual() {
-  return (
-    <div className="pfv-card">
-      <style>{sharedStyles}</style>
-      <div className="pfv-grid" />
-      <div className="pfv-orb" />
-      <ParticleNet id="canvas-contrato" />
+  const cliente = useTyping("João Silva — Barbearia", 55, 0, 5500);
+  const servico = useTyping("Site Profissional + SEO", 50, 1200, 5500);
+  const valor = useTyping("R$ 1.200,00", 70, 2200, 5500);
 
-      <div className="pfv-doc pfv-float-a">
-        <div className="pfv-doc-head">
-          <span className="t">CONTRATO</span>
-          <span className="b">AUTOMÁTICO</span>
+  return (
+    <div className="pfv">
+      <style>{sharedStyles}</style>
+      <div className="pfv-grid-bg" />
+
+      <div className="pfv-browser">
+        <div className="pfv-chrome">
+          <div className="pfv-dots"><i /><i /><i /></div>
+          <div className="pfv-url">axionfly.site/contrato</div>
+          <span className="pfv-pill"><span className="d" />Gerando</span>
         </div>
-        <div className="pfv-field pfv-f1">
-          <div className="l">CLIENTE</div>
-          <div className="v"><span>João Silva — Barbearia</span></div>
-        </div>
-        <div className="pfv-field pfv-f2">
-          <div className="l">SERVIÇO</div>
-          <div className="v"><span>Site Profissional + SEO</span></div>
-        </div>
-        <div className="pfv-field pfv-f3">
-          <div className="l">VALOR</div>
-          <div className="v"><span>R$ 1.200,00</span></div>
-        </div>
-        <div className="pfv-sig">
-          <span className="name">João Silva</span>
-          <div className="pfv-stamp">✓</div>
+
+        <div className="pfv-ct-body">
+          <div className="pfv-ct-doc">
+            <div className="h">
+              <span className="t">Contrato</span>
+              <span className="pfv-pill">Auto</span>
+            </div>
+            <div className="pfv-field">
+              <span className="l">Cliente</span>
+              <span className="v">{cliente}</span>
+            </div>
+            <div className="pfv-field">
+              <span className="l">Serviço</span>
+              <span className="v">{servico}</span>
+            </div>
+            <div className="pfv-field">
+              <span className="l">Valor</span>
+              <span className="v">{valor}</span>
+            </div>
+            <div className="pfv-ct-body-text">
+              <span className="ln" />
+              <span className="ln" />
+              <span className="ln" />
+            </div>
+          </div>
+
+          <div className="pfv-ct-side">
+            <div className="pfv-step done">
+              <span className="ico">✓</span>
+              <span className="meta">
+                <span className="et">Etapa 1</span>
+                <span className="tx">Dados</span>
+              </span>
+            </div>
+            <div className="pfv-step active">
+              <span className="ico" />
+              <span className="meta">
+                <span className="et">Etapa 2</span>
+                <span className="tx">Gerando</span>
+              </span>
+            </div>
+            <div className="pfv-step send">
+              <span className="ico" />
+              <span className="meta">
+                <span className="et">Etapa 3</span>
+                <span className="tx">WhatsApp</span>
+              </span>
+            </div>
+
+            <div className="pfv-progbar">
+              <div className="h">
+                <span className="l">Progresso</span>
+                <span className="p">100%</span>
+              </div>
+              <div className="bar"><i /></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="pfv-side-col">
-        <div className="pfv-step done pfv-float-b">
-          <div className="ico">✓</div>
-          <div className="meta"><span className="et">ETAPA 1</span><span className="tx">Dados preenchidos</span></div>
-        </div>
-        <div className="pfv-step done pfv-float-c">
-          <div className="ico">✓</div>
-          <div className="meta"><span className="et">ETAPA 2</span><span className="tx">Contrato gerado</span></div>
-        </div>
-        <div className="pfv-step active pfv-float-d">
-          <div className="ico" />
-          <div className="meta"><span className="et">ETAPA 3</span><span className="tx">Enviando pelo WPP</span></div>
-        </div>
-        <div className="pfv-prog">
-          <div className="row"><span className="l">PROGRESSO</span><span className="p">100%</span></div>
-          <div className="bar"><i /></div>
-        </div>
-        <div className="pfv-send">
-          <span className="d" /><span className="tx">Enviando pelo WhatsApp</span>
-        </div>
+      <div className="pfv-floating green pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+        <span className="lab">WhatsApp</span>
+        <span className="val"><em>Enviado ✓</em></span>
       </div>
     </div>
   );
