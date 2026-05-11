@@ -601,7 +601,7 @@ const Index = () => {
 
           <div className="max-w-4xl mx-auto space-y-4">
             {faqItems.map((item, i) => (
-              <FAQItem key={i} question={item.q} answer={item.a} />
+              <FAQItem key={i} question={item.q} answer={item.a} defaultOpen={i === 0} />
             ))}
           </div>
         </section>
@@ -704,8 +704,8 @@ const Index = () => {
 };
 
 /* ── FAQ Item Component ── */
-function FAQItem({ question, answer }: { question: string, answer: string }) {
-  const [isOpen, setIsOpen] = useState(false);
+function FAQItem({ question, answer, defaultOpen = false }: { question: string, answer: string, defaultOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   
   return (
     <motion.div 

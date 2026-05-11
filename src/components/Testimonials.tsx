@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star, Quote, CheckCircle2 } from "lucide-react";
+import { Star, CheckCircle2 } from "lucide-react";
 
 const springTransition = { type: "spring" as const, stiffness: 80, damping: 20 };
 
@@ -64,39 +64,42 @@ export default function Testimonials() {
         </p>
       </motion.div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
         {testimonials.map((t, i) => (
           <motion.div
             key={t.name}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.8 }}
-            whileHover={{ y: -8 }}
-            className="rounded-3xl border border-border/50 bg-card/40 p-8 space-y-6 transition-all duration-500 hover:border-primary/40 backdrop-blur-sm relative group"
+            transition={{ delay: i * 0.1, duration: 0.6 }}
+            whileHover={{ y: -4 }}
+            className="rounded-3xl border bg-[#0D1221] p-8 transition-all duration-300 hover:border-primary/40 backdrop-blur-sm flex flex-col min-h-[280px] h-full"
+            style={{ borderColor: "rgba(59,130,246,0.15)" }}
           >
-            <div className="absolute top-8 right-8">
-              <Quote className="w-10 h-10 text-primary/10 group-hover:text-primary/20 transition-colors" />
-            </div>
-
+            {/* Header: avatar + nome */}
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full border-2 border-primary/30 bg-primary/10 flex items-center justify-center shrink-0">
-                <span className="text-xl font-black text-primary">{t.initials}</span>
+              <div className="w-14 h-14 rounded-full border-2 border-primary/30 bg-primary/10 flex items-center justify-center shrink-0">
+                <span className="text-base font-black text-primary">{t.initials}</span>
               </div>
               <div>
-                <h4 className="font-black text-foreground text-lg">{t.name}</h4>
-                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">{t.city}</p>
+                <h4 className="font-black text-foreground text-[15px] leading-tight">{t.name}</h4>
+                <p className="text-[13px] font-medium text-muted-foreground mt-0.5">{t.city}</p>
               </div>
             </div>
 
-            <div className="inline-flex items-center gap-2 rounded-xl bg-emerald-500/10 px-4 py-2 border border-emerald-500/20">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-              <span className="text-xs font-black text-emerald-500 uppercase tracking-widest">{t.result}</span>
+            {/* Badge resultado — espaço fixo de 16px do header */}
+            <div className="mt-4">
+              <span className="inline-flex items-center gap-2 rounded-lg bg-emerald-500/10 px-3 py-1.5 border border-emerald-500/20">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <span className="text-[11px] font-black text-emerald-500 uppercase tracking-wider">{t.result}</span>
+              </span>
             </div>
 
-            <p className="text-lg text-foreground/80 leading-relaxed font-medium">"{t.text}"</p>
+            {/* Depoimento */}
+            <p className="mt-5 text-[15px] text-foreground/80 leading-relaxed font-medium">"{t.text}"</p>
 
-            <div className="flex gap-1 pt-2">
+            {/* Estrelas — sempre no rodapé */}
+            <div className="flex gap-1 mt-auto pt-6">
               {Array.from({ length: t.stars }).map((_, s) => (
                 <Star key={s} className="w-4 h-4 fill-primary text-primary" />
               ))}
