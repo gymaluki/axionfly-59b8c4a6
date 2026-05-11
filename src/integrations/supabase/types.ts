@@ -308,33 +308,6 @@ export type Database = {
         }
         Relationships: []
       }
-      user_sites: {
-        Row: {
-          created_at: string
-          id: string
-          prompt: string
-          site_name: string | null
-          url: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          prompt: string
-          site_name?: string | null
-          url: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          prompt?: string
-          site_name?: string | null
-          url?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       videos: {
         Row: {
           created_at: string
