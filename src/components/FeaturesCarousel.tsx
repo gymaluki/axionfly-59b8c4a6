@@ -104,8 +104,7 @@ export default function FeaturesCarousel() {
                 />
               </div>
               
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Overlay removido para mostrar imagens em brilho natural */}
               
               {/* Content removed per user request */}
               
