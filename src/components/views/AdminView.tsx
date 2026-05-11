@@ -7,8 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History } from "lucide-react";
+import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History, Megaphone, Bug } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import AffiliatesAdminPanel from "@/components/admin/AffiliatesAdminPanel";
+import SystemErrorsPanel from "@/components/admin/SystemErrorsPanel";
+
+const OWNER_EMAIL = "andreyhenriquev4@gmail.com";
 
 interface Subscription {
   id: string;
@@ -84,6 +88,12 @@ const AdminView = () => {
   const [logs, setLogs] = useState<LicenseLog[]>([]);
   const [testingConnection, setTestingConnection] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setCurrentEmail(data.user?.email ?? null));
+  }, []);
+  const isOwner = currentEmail?.toLowerCase() === OWNER_EMAIL;
 
   const fetchData = async () => {
     setLoading(true);
@@ -292,12 +302,30 @@ const AdminView = () => {
 
       {/* Tabs */}
       <Tabs defaultValue="users" className="w-full">
-        <TabsList className="bg-muted">
+        <TabsList className="bg-muted flex-wrap h-auto">
           <TabsTrigger value="users">Usuários ({users.length})</TabsTrigger>
           <TabsTrigger value="pending">Pré-pagamentos ({pendingPayments.length})</TabsTrigger>
-          <TabsTrigger value="licenses">Licenças Hyperbuild ({licenses.length})</TabsTrigger>
-          <TabsTrigger value="logs">Logs de Auditoria</TabsTrigger>
+          <TabsTrigger value="affiliates" className="gap-1.5">
+            <Megaphone className="w-3.5 h-3.5" /> Afiliados
+          </TabsTrigger>
+          <TabsTrigger value="licenses">Licenças ({licenses.length})</TabsTrigger>
+          <TabsTrigger value="logs">Auditoria</TabsTrigger>
+          {isOwner && (
+            <TabsTrigger value="system" className="gap-1.5 text-destructive data-[state=active]:text-destructive">
+              <Bug className="w-3.5 h-3.5" /> Sistema
+            </TabsTrigger>
+          )}
         </TabsList>
+
+        <TabsContent value="affiliates" className="mt-4">
+          <AffiliatesAdminPanel />
+        </TabsContent>
+
+        {isOwner && (
+          <TabsContent value="system" className="mt-4">
+            <SystemErrorsPanel />
+          </TabsContent>
+        )}
 
         <TabsContent value="users" className="mt-4">
           <Card className="bg-card border-border">
