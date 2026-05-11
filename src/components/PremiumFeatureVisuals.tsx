@@ -84,7 +84,7 @@ const sharedStyles = `
     background: linear-gradient(180deg, #0e1224, #0a0d1c);
     border: 1px solid var(--border-strong);
     border-radius: 10px;
-    padding: 8px 12px;
+    padding: 6px 10px;
     box-shadow: 0 14px 40px rgba(0,0,0,0.55), 0 0 0 1px rgba(36,99,235,0.08);
     z-index: 5;
   }
