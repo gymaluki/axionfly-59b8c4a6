@@ -433,6 +433,109 @@ const Index = () => {
                       <div className="scale-90 lg:scale-100">
                         <DashboardMockup />
                       </div>
+                    ) : visual === "builder" ? (
+                      <div className="aspect-video rounded-2xl border border-[#1a3a6e] bg-[#0d1428] backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
+                        <style>{`
+                          @keyframes pulse-scale {
+                            0%, 100% { transform: scale(1); }
+                            50% { transform: scale(1.08); }
+                          }
+                          @keyframes typing-line {
+                            0% { width: 0%; opacity: 0; }
+                            10%, 80% { opacity: 1; }
+                            50% { width: var(--final-width); }
+                            100% { width: var(--final-width); opacity: 0; }
+                          }
+                        `}</style>
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                        
+                        {/* Typing Lines */}
+                        <div className="absolute inset-0 flex flex-col justify-center gap-4 px-12 opacity-40">
+                          <div className="h-1 bg-[#2563eb] rounded-full" style={{ '--final-width': '60%', animation: 'typing-line 2.8s ease-in-out infinite' } as any} />
+                          <div className="h-1 bg-[#3b82f6] rounded-full" style={{ '--final-width': '40%', animation: 'typing-line 2.8s ease-in-out infinite 0.4s' } as any} />
+                          <div className="h-1 bg-[#1d4ed8] rounded-full" style={{ '--final-width': '75%', animation: 'typing-line 2.8s ease-in-out infinite 0.8s' } as any} />
+                        </div>
+
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
+                          <Code2 className="w-[88px] h-[88px] text-[#2563eb] relative z-10" style={{ animation: 'pulse-scale 2.5s ease-in-out infinite' }} />
+                        </div>
+                      </div>
+                    ) : visual === "extension" ? (
+                      <div className="aspect-video rounded-2xl border border-[#1a3a6e] bg-[#0d1428] backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
+                        <style>{`
+                          @keyframes rotate-y {
+                            from { transform: rotateY(0deg); }
+                            to { transform: rotateY(360deg); }
+                          }
+                          @keyframes orbit-cw {
+                            from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+                            to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+                          }
+                          @keyframes orbit-ccw {
+                            from { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+                            to { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+                          }
+                          @keyframes pulse-opacity {
+                            0%, 100% { opacity: 0.3; }
+                            50% { opacity: 1; }
+                          }
+                        `}</style>
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                        
+                        {/* Orbiting Circles */}
+                        {[...Array(6)].map((_, idx) => (
+                          <div 
+                            key={idx}
+                            className="absolute w-2 h-2 rounded-full bg-[#2563eb]"
+                            style={{ 
+                              animation: `
+                                ${idx < 3 ? 'orbit-cw' : 'orbit-ccw'} 4s linear infinite,
+                                pulse-opacity 2s ease-in-out infinite ${idx * 0.3}s
+                              `
+                            }}
+                          />
+                        ))}
+
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
+                          <LucideInfinity className="w-[88px] h-[88px] text-[#2563eb] relative z-10" style={{ animation: 'rotate-y 3s linear infinite' }} />
+                        </div>
+                      </div>
+                    ) : visual === "contract" ? (
+                      <div className="aspect-video rounded-2xl border border-[#1a3a6e] bg-[#0d1428] backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
+                        <style>{`
+                          @keyframes write-line {
+                            0%, 10% { width: 0%; opacity: 0; }
+                            30%, 80% { width: 100%; opacity: 0.4; }
+                            90%, 100% { width: 100%; opacity: 0; }
+                          }
+                          @keyframes blink {
+                            0%, 100% { opacity: 1; }
+                            50% { opacity: 0; }
+                          }
+                        `}</style>
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                        
+                        <div className="flex flex-col gap-6 items-center">
+                          <div className="relative">
+                            <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full" />
+                            <FileText className="w-[88px] h-[88px] text-[#2563eb] relative z-10" />
+                          </div>
+
+                          {/* Contract Lines */}
+                          <div className="w-48 space-y-2">
+                            <div className="h-1.5 bg-[#2563eb] rounded-full" style={{ animation: 'write-line 5s ease-in-out infinite' } as any} />
+                            <div className="h-1.5 bg-[#2563eb] rounded-full" style={{ animation: 'write-line 5s ease-in-out infinite 0.5s' } as any} />
+                            <div className="h-1.5 bg-[#2563eb] rounded-full" style={{ animation: 'write-line 5s ease-in-out infinite 1s' } as any} />
+                            <div className="h-1.5 bg-[#2563eb] rounded-full" style={{ animation: 'write-line 5s ease-in-out infinite 1.5s' } as any} />
+                            <div className="pt-2 flex items-center gap-1">
+                              <div className="h-[2px] w-24 bg-[#3b82f6]" />
+                              <div className="w-[2px] h-4 bg-[#3b82f6]" style={{ animation: 'blink 1s step-end infinite' }} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     ) : (
                       <div className="aspect-video rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
