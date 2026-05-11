@@ -5,9 +5,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cakto-signature, x-signature',
 };
 
-// Webhook da Cakto
-// Configure a URL no painel da Cakto:
-// https://<PROJECT_REF>.functions.supabase.co/cakto-webhook?token=<CAKTO_WEBHOOK_TOKEN>
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -22,7 +19,6 @@ Deno.serve(async (req) => {
       throw new Error("Missing Supabase environment variables");
     }
 
-    // Validação obrigatória do token
     if (!CAKTO_WEBHOOK_TOKEN) {
       console.error("Cakto webhook: CAKTO_WEBHOOK_TOKEN não configurado");
       return new Response(JSON.stringify({ error: "Webhook token not configured" }), {
@@ -30,6 +26,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
     const url = new URL(req.url);
     const token = url.searchParams.get("token");
     if (token !== CAKTO_WEBHOOK_TOKEN) {
@@ -50,7 +47,6 @@ Deno.serve(async (req) => {
 
     console.log("Cakto webhook recebido:", JSON.stringify(body));
 
-    // Cakto envia campos variados; cobrimos os principais formatos
     const data = body?.data ?? body;
     const event: string = (body?.event || body?.type || data?.event || "").toString().toLowerCase();
 
@@ -85,7 +81,17 @@ Deno.serve(async (req) => {
       body?.plan ||
       "default";
 
-    // Detecta plano (mensal x lifetime/vitalício) pelo nome do produto
+    const amount: number = parseFloat(data?.amount || data?.total_amount || data?.price || body?.amount || "0");
+    const paymentMethod: string = (data?.payment_method || data?.method || body?.method || "").toString().toLowerCase();
+    
+    // Captura o afiliado — a Cakto pode enviar no campo affiliate_id ou via parâmetro custom
+    const affiliateCode: string | null = 
+      data?.affiliate_id || 
+      data?.affiliate?.id || 
+      data?.affiliate?.code || 
+      data?.affiliate?.slug ||
+      null;
+
     const productLower = productName.toString().toLowerCase();
     const isLifetime = /(vital|lifetime|único|unico|para sempre)/.test(productLower);
     const plan = isLifetime ? "lifetime" : "monthly";
@@ -98,7 +104,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Mapeamento de status
     const activeStatuses = [
       "approved", "paid", "completed", "complete",
       "purchase_approved", "purchase_complete", "order_paid",
@@ -119,17 +124,53 @@ Deno.serve(async (req) => {
       subscriptionStatus = "inactive";
     }
 
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+    // Mapeia o código de afiliado da Cakto para o nosso slug interno se necessário
+    // Se o código for Lghn3ieU ou LEGLH5Bd (códigos do Matheus na Cakto), salvamos como 'z'
+    let affiliateSlug: string | null = null;
+    if (affiliateCode) {
+      if (["Lghn3ieU", "LEGLH5Bd"].includes(affiliateCode)) {
+        affiliateSlug = "z";
+      } else if (["A73MAj5S", "KzuwSFCx"].includes(affiliateCode)) {
+        affiliateSlug = "u";
+      } else if (["ZsdtBDJP", "TSVMgq3q"].includes(affiliateCode)) {
+        affiliateSlug = "o";
+      } else {
+        affiliateSlug = affiliateCode.toLowerCase();
+      }
+    }
+
+    // Registra a venda na tabela platform_sales para o Dashboard
+    if (transactionId) {
+      const { error: saleError } = await supabase
+        .from("platform_sales")
+        .upsert(
+          {
+            transaction_id: String(transactionId),
+            email: email.toLowerCase(),
+            amount,
+            status: subscriptionStatus === "active" ? "paid" : status,
+            payment_method: paymentMethod || "unknown",
+            plan,
+            affiliate_slug: affiliateSlug,
+            payload: body,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "transaction_id" }
+        );
+      
+      if (saleError) console.error("Erro ao registrar venda:", saleError);
+    }
+
     if (!subscriptionStatus) {
-      console.log(`Cakto: status não acionável (status=${status}, event=${event}). Ignorando.`);
-      return new Response(JSON.stringify({ ok: true, ignored: true, status, event }), {
+      console.log(`Cakto: status não acionável (${status}). Venda registrada.`);
+      return new Response(JSON.stringify({ ok: true, registered: true }), {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-
-    // Localiza usuário pelo email
     const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
     if (userError) throw userError;
 
@@ -137,12 +178,9 @@ Deno.serve(async (req) => {
       (u) => u.email?.toLowerCase() === email.toLowerCase()
     );
 
-    // Se ainda não tem conta, salva como pending_payment para liberar no cadastro
     if (!user) {
-      console.log(`Cakto: usuário ainda não cadastrado (${email}). Salvando pending_payment.`);
-
       if (subscriptionStatus === "active") {
-        const { error: pendingError } = await supabase
+        await supabase
           .from("pending_payments")
           .upsert(
             {
@@ -151,20 +189,15 @@ Deno.serve(async (req) => {
               payment_provider: "cakto",
               transaction_id: String(transactionId || ""),
               plan,
+              affiliate_slug: affiliateSlug,
             },
             { onConflict: "email" }
           );
-        if (pendingError) console.error("Erro ao salvar pending_payment:", pendingError);
       }
-
-      return new Response(
-        JSON.stringify({ ok: true, message: "Pagamento salvo para liberar no cadastro" }),
-        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+      return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
     }
 
-    // Atualiza assinatura do usuário existente
-    const { error: subError } = await supabase
+    await supabase
       .from("subscriptions")
       .upsert(
         {
@@ -173,24 +206,14 @@ Deno.serve(async (req) => {
           payment_provider: "cakto",
           transaction_id: String(transactionId || ""),
           plan,
+          affiliate_slug: affiliateSlug,
         },
         { onConflict: "user_id" }
       );
 
-    if (subError) throw subError;
-
-    console.log(`Cakto: assinatura ${subscriptionStatus} para ${email} (plano=${plan})`);
-
-    return new Response(
-      JSON.stringify({ success: true, status: subscriptionStatus, plan }),
-      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ success: true }), { status: 200, headers: corsHeaders });
   } catch (error) {
-    console.error("Cakto webhook error:", error);
-    const msg = error instanceof Error ? error.message : "Unknown error";
-    return new Response(JSON.stringify({ error: msg }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    console.error("Cakto error:", error);
+    return new Response(JSON.stringify({ error: "Internal error" }), { status: 500, headers: corsHeaders });
   }
 });
