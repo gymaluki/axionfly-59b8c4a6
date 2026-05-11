@@ -60,7 +60,7 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
       <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#05050a]">
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center">
-            <img src={axionflyLogo} alt="AxionFly" className="h-6 w-auto" />
+            <img src={axionflyLogo} alt="AxionFly" width="120" height="24" decoding="async" className="h-6 w-auto" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
