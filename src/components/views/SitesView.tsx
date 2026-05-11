@@ -1685,6 +1685,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         open={pickerOpen}
         onClose={() => setPickerOpen(false)}
         prompt={generatedPrompt}
+        siteName={projectName}
+        niche={niche}
       />
 
       {/* Extension Install Check Modal */}
