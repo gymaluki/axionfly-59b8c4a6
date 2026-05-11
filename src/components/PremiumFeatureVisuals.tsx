@@ -503,7 +503,7 @@ export function ContractGeneratorVisual() {
         </div>
       </div>
 
-      <div className="pfv-floating green pfv-float-anim" style={{ bottom: 6, right: 14 }}>
+      <div className="pfv-floating green pfv-float-anim" style={{ bottom: -8, right: 10 }}>
         <span className="lab">WhatsApp</span>
         <span className="val"><em>Enviado ✓</em></span>
       </div>
