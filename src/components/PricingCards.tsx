@@ -27,7 +27,7 @@ import googleMapsLogo from "@/assets/google-maps-logo.webp";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { resolveCheckoutUrl } from "@/lib/affiliates";
+import { resolveCheckoutUrl, setSelectedPlan } from "@/lib/affiliates";
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -118,16 +118,20 @@ function PricingCard({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = async () => {
-    const checkoutUrl = resolveCheckoutUrl(plan);
+    // Salva o plano escolhido no localStorage
+    setSelectedPlan(plan);
+    
     const { data: { session } } = await supabase.auth.getSession();
 
     // Sempre redireciona para criar conta primeiro se não houver sessão ativa
     if (!session) {
       toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
-      const authUrl = `${window.location.origin}/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`;
-      window.location.href = authUrl;
+      navigate("/auth?isSignup=true");
       return;
     }
+    
+    // Se já tem sessão, resolve o link e vai direto
+    const checkoutUrl = resolveCheckoutUrl(plan);
     window.location.href = checkoutUrl;
   };
 
