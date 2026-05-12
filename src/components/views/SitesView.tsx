@@ -661,6 +661,7 @@ Crie uma Landing Page completa e profissional com as seguintes especificações 
 - **Diferencial:** ${differentiators.trim() || "N/A"}
 - **Tom de Voz:** ${selectedTone ? `${selectedTone.label} (${selectedTone.desc})` : "Profissional"}
 - **Objetivo:** ${selectedObjective?.desc || "Conversão"}
+- **Posicionamento de Preço:** ${pricePositioning || "Não informado"}
 
 ### 2. ESTRATÉGIA DE CONVERSÃO & COPYWRITING
 - **Headline (Hero):** Crie 3 variações de headlines de impacto baseadas no tom de voz.
@@ -668,26 +669,35 @@ Crie uma Landing Page completa e profissional com as seguintes especificações 
 - **CTAs:** O botão principal deve ser "${selectedCta?.label.replace(/^.\s/, "") || "Entre em contato"}".
 ${caktoRegistered ? `- **PRODUTO CAKTO:** O site deve promover o produto "${productNameCakto || projectName}" no valor de R$ ${productPrice}. O link de checkout oficial é "${caktoCheckoutUrl}". Integre este link em todos os botões de chamada para ação (CTAs) que levam à compra.` : ""}
 
-### 3. ESPECIFICAÇÕES VISUAIS (DESIGN SYSTEM)
+### 3. INFORMAÇÕES DE CONTATO E FUNCIONAMENTO
+- **Endereço:** ${address.trim() || "Não informado"}
+- **Telefone/WhatsApp:** ${phone.trim() || "Não informado"}
+- **Horário de Funcionamento:** ${businessHours.trim() || "Não informado"}
+- **Instagram:** ${instagram.trim() || "N/A"}
+- **TikTok:** ${tiktok.trim() || "N/A"}
+- **Facebook:** ${facebook.trim() || "N/A"}
+
+### 4. ESPECIFICAÇÕES VISUAIS (DESIGN SYSTEM)
 - **Cores:** Primária: ${primaryColor.trim() || "Padrão do nicho"}, Secundária: ${secondaryColor.trim() || "Padrão do nicho"}.
 - **Tipografia:** ${selectedFont ? `Títulos: ${selectedFont.label.split(" + ")[0]}, Corpo: ${selectedFont.label.split(" + ")[1]}` : "Fontes modernas e legíveis"}.
 - **Estilo:** ${selectedStyle?.prompt || "Design moderno e limpo"}.
 - **Acessibilidade:** Garanta contraste WCAG AA em todos os elementos.
 
-### 4. ESTRUTURA DE PÁGINAS & SEÇÕES
+### 5. ESTRUTURA DE PÁGINAS & SEÇÕES
 - **Seções Obrigatórias:** ${pageLabels.join(", ") || "Início, Sobre, Serviços, Contato"}.
 ${whatsappOrdering ? "- **SISTEMA DE PEDIDOS WHATSAPP:** Implementar cardápio interativo com carrinho flutuante e checkout que envia o pedido formatado para o WhatsApp." : ""}
 
-### 5. REQUISITOS TÉCNICOS & PERFORMANCE
+### 6. REQUISITOS TÉCNICOS & PERFORMANCE
 - **Mobile-First:** Layout responsivo otimizado para celulares (tap targets > 48px).
 - **Performance:** Imagens com lazy-load, fontes otimizadas, animações suaves com Framer Motion.
 - **Redes Sociais:** Incluir links no rodapé (${instagram ? `Instagram: ${instagram}, ` : ""}${tiktok ? `TikTok: ${tiktok}, ` : ""}${facebook ? `Facebook: ${facebook}` : ""}).
 
-### 6. VARREDURA FINAL (QUALITY ASSURANCE)
+### 7. VARREDURA FINAL (QUALITY ASSURANCE)
 Antes de finalizar, verifique:
 1. O contraste das cores atende ao padrão WCAG AA?
 2. O site é totalmente funcional no mobile?
 3. O formulário/CTA tem validação visual de sucesso?
+4. Todas as informações de contato fornecidas (endereço, telefone, redes sociais) estão visíveis no site?
 
 ---
 BASE DO TEMPLATE:
