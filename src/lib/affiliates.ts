@@ -156,13 +156,14 @@ export function resolveCheckoutUrl(plan: PlanKey): string {
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
     const hasAffiliateParam = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"].some(p => params.has(p));
+    const isFromRedirect = params.has("from_redirect");
     
     const isDirectHome = window.location.pathname === "/";
     const isExternalReferrer = document.referrer && !document.referrer.includes(window.location.host);
     const isNoReferrer = !document.referrer;
 
-    // Se é acesso direto (sem referrer ou referrer externo) na home e NÃO tem parâmetro na URL
-    if (isDirectHome && (isExternalReferrer || isNoReferrer) && !hasAffiliateParam) {
+    // Se é acesso direto (sem referrer ou referrer externo) na home e NÃO tem parâmetro na URL e NÃO vem de um redirect interno
+    if (isDirectHome && (isExternalReferrer || isNoReferrer) && !hasAffiliateParam && !isFromRedirect) {
       // Aqui é o único caso onde limpamos para garantir tráfego direto oficial
       localStorage.removeItem(STORAGE_KEY);
       if (plan === "monthly") return DEFAULT_MONTHLY;
