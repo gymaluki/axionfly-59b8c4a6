@@ -3,12 +3,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { useAccessControl } from "@/hooks/useAccessControl";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import DashboardSidebar from "@/components/DashboardSidebar";
-import DashboardHomeView from "@/components/projeto-live/DashboardHomeView";
-import CourseListView from "@/components/projeto-live/CourseListView";
-import ProgressView from "@/components/projeto-live/ProgressView";
-import LessonPlayerView from "@/components/projeto-live/LessonPlayerView";
+import ProspeccaoView from "@/components/views/ProspeccaoView";
+import SitesView from "@/components/views/SitesView";
+import VendasView from "@/components/views/VendasView";
+import MembrosView from "@/components/views/MembrosView";
 import AdminView from "@/components/views/AdminView";
+import ContratoScriptView from "@/components/views/ContratoScriptView";
 import PerfilView from "@/components/views/PerfilView";
+import ExtensaoLovableView from "@/components/views/ExtensaoLovableView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,7 +19,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import OnboardingTour from "@/components/OnboardingTour";
 
-type View = "dashboard" | "aulas" | "progresso" | "perfil" | "admin" | "lesson-player";
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
@@ -69,11 +71,13 @@ class DashboardViewErrorBoundary extends Component<
 }
 
 const viewTitles: Record<View, string> = {
-  dashboard: "Dashboard",
-  aulas: "Minhas Aulas",
-  progresso: "Meu Progresso",
+  sites: "Criador de Sites",
+  prospeccao: "Busca de Leads",
+  membros: "Área de Membros",
+  vendas: "Minhas Vendas",
+  contrato: "Contrato & Script",
   perfil: "Meu Perfil",
-  "lesson-player": "Assistir Aula",
+  "extensao-lovable": "Extensão Lovable",
   admin: "Painel Administrativo",
 };
 
@@ -83,10 +87,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const validViews: View[] = ["dashboard", "aulas", "progresso", "perfil", "admin", "lesson-player"];
+  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "extensao-lovable", "admin"];
   const paramView = searchParams.get("view") as View | null;
   const [activeView, setActiveView] = useState<View>(
-    paramView && validViews.includes(paramView) ? paramView : "dashboard"
+    paramView && validViews.includes(paramView) ? paramView : "sites"
   );
   const [userName, setUserName] = useState<string>("");
 
@@ -160,13 +164,13 @@ const Dashboard = () => {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-[#FAFAFA] relative text-[#1A1A1A]">
-        {/* Subtle Background Pattern */}
+      <div className="flex min-h-screen w-full bg-[#05050a] relative text-white">
+        {/* Grid Background */}
         <div
           aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.015]"
+          className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
           style={{
-            backgroundImage: `linear-gradient(rgba(27,58,92,1) 1px, transparent 1px), linear-gradient(90deg, rgba(27,58,92,1) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(rgba(59,130,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,1) 1px, transparent 1px)`,
             backgroundSize: "40px 40px",
           }}
         />
@@ -184,7 +188,7 @@ const Dashboard = () => {
         />
 
         <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
-          <header className="h-16 flex items-center gap-4 border-b border-[#F0F0F0] px-6 bg-white/80 backdrop-blur-md sticky top-0 z-20">
+          <header className="h-16 flex items-center gap-4 border-b border-white/5 px-6 bg-[#05050a]/80 backdrop-blur-md sticky top-0 z-20">
             <SidebarTrigger className="text-muted-foreground hover:text-white transition-colors" />
             <div className="h-6 w-px bg-white/10" />
             <h1 className="text-lg font-black text-foreground tracking-tight uppercase tracking-[0.1em]">{viewTitles[activeView]}</h1>
@@ -200,11 +204,13 @@ const Dashboard = () => {
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {activeView === "dashboard" && <DashboardHomeView userName={userName} />}
-                  {activeView === "aulas" && <CourseListView />}
-                  {activeView === "progresso" && <ProgressView />}
-                  {activeView === "lesson-player" && <LessonPlayerView />}
+                  {activeView === "prospeccao" && <ProspeccaoView />}
+                  {activeView === "sites" && <SitesView />}
+                  {activeView === "vendas" && <VendasView />}
+                  {activeView === "membros" && <MembrosView isAdmin={isAdmin} />}
+                  {activeView === "contrato" && <ContratoScriptView />}
                   {activeView === "perfil" && <PerfilView />}
+                  {activeView === "extensao-lovable" && <ExtensaoLovableView />}
                   {activeView === "admin" && isAdmin && <AdminView />}
                 </motion.div>
               </AnimatePresence>
