@@ -184,25 +184,53 @@ const ProspeccaoView = () => {
   };
 
   const handleSearch = () => {
-    if (!activeFilter) { toast.error("Selecione um nicho antes de buscar"); return; }
+    if (!activeFilter) { 
+      toast.error("Selecione um nicho antes de buscar"); 
+      return; 
+    }
     
     if (searchMode === "manual") {
       setLoading(true);
+      setSearched(true);
       setManualRedirectUrl(null);
+      
       const location = buildLocation();
       const query = `${activeFilter} em ${location}`.trim();
       const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
       
-      setTimeout(() => {
-        setLoading(false);
-        const win = window.open(mapsUrl, "_blank", "noopener,noreferrer");
-        if (win) {
-          toast.success("Redirecionando para o Google Maps...");
-        } else {
-          setManualRedirectUrl(mapsUrl);
-          toast.error("Popup bloqueado pelo navegador");
+      // Salva no histórico antes de redirecionar
+      const saveToHistory = async () => {
+        try {
+          const { data: { user } } = await supabase.auth.getUser();
+          if (user) {
+            await supabase.from("search_history").insert({
+              user_id: user.id, 
+              query, 
+              nicho: activeFilter, 
+              location, 
+              results_count: 0,
+              search_mode: "manual"
+            });
+          }
+        } catch (err) {
+          console.error("Erro ao salvar histórico manual:", err);
         }
-      }, 6000);
+      };
+      
+      saveToHistory();
+
+      // Redirecionamento imediato para melhor UX
+      const win = window.open(mapsUrl, "_blank", "noopener,noreferrer");
+      
+      if (win) {
+        toast.success("Abrindo Google Maps...");
+        setTimeout(() => setLoading(false), 1000);
+      } else {
+        // Fallback se o popup for bloqueado
+        setManualRedirectUrl(mapsUrl);
+        setLoading(false);
+        toast.error("O navegador bloqueou a abertura automática do Google Maps.");
+      }
       return;
     }
     
