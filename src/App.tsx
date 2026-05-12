@@ -55,6 +55,7 @@ const App = () => (
             <Route path="/l" element={<AffiliateRedirect slug="l" />} />
             <Route path="/s" element={<AffiliateRedirect slug="s" />} />
             <Route path="/n" element={<AffiliateRedirect slug="n" />} />
+            <Route path="/jv" element={<AffiliateRedirect slug="jv" />} />
             <Route path="/u/:slug" element={<AffiliateRedirect />} />
             <Route path="/:slug" element={<AffiliateRedirect />} />
             <Route path="/legal" element={<Legal />} />
