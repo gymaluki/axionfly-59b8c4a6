@@ -159,7 +159,12 @@ export function resolveCheckoutUrl(plan: PlanKey): string {
     
     // Se não tem parâmetro na URL e não estamos em uma rota de redirecionamento, limpamos o afiliado.
     // Isso garante que o tráfego direto não caia em comissão antiga.
-    if (!hasAffiliateParam && window.location.pathname === "/") {
+    // MODIFICAÇÃO: Não limpamos o localStorage se o referenciador for o próprio site (para evitar limpar durante navegação)
+    // ou se viemos de uma rota de redirecionamento (/n, /jv, etc).
+    const isDirectAccess = !hasAffiliateParam && window.location.pathname === "/";
+    const isComingFromRedirect = document.referrer && document.referrer.includes(window.location.host);
+
+    if (isDirectAccess && !isComingFromRedirect) {
       localStorage.removeItem(STORAGE_KEY);
       if (plan === "monthly") return DEFAULT_MONTHLY;
       if (plan === "quarterly") return DEFAULT_QUARTERLY;

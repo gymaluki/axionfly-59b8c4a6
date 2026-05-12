@@ -25,8 +25,9 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
         // ignore
       }
     }
-    // Redireciona para a home sem parâmetros, o afiliado já está salvo no localStorage
-    navigate("/", { replace: true });
+    // Redireciona para a home com um parâmetro interno para sinalizar que viemos de um redirecionamento de afiliado
+    // Isso evita que a lógica de limpeza na home remova o afiliado recém-salvo.
+    navigate("/?from_redirect=1", { replace: true });
   }, [slug, navigate]);
 
   return null;
