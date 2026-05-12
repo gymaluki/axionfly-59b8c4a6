@@ -17,6 +17,7 @@ const LovablePartnership = lazy(() => import("@/components/LovablePartnership"))
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
+import { resolveCheckoutUrl } from "@/lib/affiliates";
 
 // Lazy load heavy visual components
 const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
@@ -744,7 +745,10 @@ const Index = () => {
                   variant="neon"
                   size="xl"
                   className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(37,99,235,0.5)]"
-                  onClick={() => navigate("/auth")}
+                  onClick={() => {
+                    const checkoutUrl = resolveCheckoutUrl("lifetime");
+                    navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
+                  }}
                 >
                   <Zap className="mr-2 w-5 h-5 fill-current" />
                   Assinar agora
