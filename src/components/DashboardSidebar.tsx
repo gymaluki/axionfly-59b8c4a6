@@ -56,15 +56,15 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
     <Sidebar collapsible="icon" className="bg-white border-r border-[#F0F0F0]">
       <SidebarHeader className="border-b border-[#F0F0F0] px-4 py-4 bg-white">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center">
-            <img src={axionflyLogo} alt="AxionFly" width="120" height="24" decoding="async" className="h-6 w-auto" />
+          <div className="w-8 h-8 rounded-lg bg-[#1B3A5C] flex items-center justify-center text-white shrink-0">
+            <PlayCircle className="w-5 h-5" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-lg font-black text-white tracking-tighter leading-none">
-                AxionFly
+              <span className="text-sm font-bold text-[#1A1A1A] tracking-tight leading-none">
+                Projeto Live
               </span>
-              <span className="text-[11px] text-muted-foreground font-bold uppercase tracking-[0.1em] mt-1">DASHBOARD</span>
+              <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-1">Plataforma</span>
             </div>
           )}
         </div>
