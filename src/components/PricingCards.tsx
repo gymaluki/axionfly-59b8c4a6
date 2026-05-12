@@ -123,6 +123,7 @@ function PricingCard({
 
     if (!session) {
       toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
+      // Forcing the redirect to preserve the affiliate-linked checkout URL
       navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
       return;
     }
