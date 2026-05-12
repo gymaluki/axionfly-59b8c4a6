@@ -150,21 +150,21 @@ export function resolveCheckoutUrl(plan: PlanKey): string {
   // Verificamos se há um afiliado ativo no localStorage.
   const aff = getActiveAffiliate();
   
-  // Se estivermos na home limpa e não houver um afiliado ATIVO no localStorage,
-  // usamos os links padrão. Se houver um persistido, ele será usado.
-  // Para forçar o link padrão quando entra sem parâmetros, limpamos o localStorage se não houver param na URL.
+  // MODIFICAÇÃO: Se não há parâmetro de afiliado na URL mas já temos um salvo no localStorage,
+  // continuamos usando ele. Só limpamos se o usuário vier de um link externo (sem ser do próprio domínio)
+  // e for tráfego direto para a home sem parâmetros.
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
     const hasAffiliateParam = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"].some(p => params.has(p));
+    const isFromRedirect = params.has("from_redirect");
     
-    // Se não tem parâmetro na URL e não estamos em uma rota de redirecionamento, limpamos o afiliado.
-    // Isso garante que o tráfego direto não caia em comissão antiga.
-    // MODIFICAÇÃO: Não limpamos o localStorage se o referenciador for o próprio site (para evitar limpar durante navegação)
-    // ou se viemos de uma rota de redirecionamento (/n, /jv, etc).
-    const isDirectAccess = !hasAffiliateParam && window.location.pathname === "/";
-    const isComingFromRedirect = document.referrer && document.referrer.includes(window.location.host);
+    const isDirectHome = window.location.pathname === "/";
+    const isExternalReferrer = document.referrer && !document.referrer.includes(window.location.host);
+    const isNoReferrer = !document.referrer;
 
-    if (isDirectAccess && !isComingFromRedirect) {
+    // Se é acesso direto (sem referrer ou referrer externo) na home e NÃO tem parâmetro na URL e NÃO vem de um redirect interno
+    if (isDirectHome && (isExternalReferrer || isNoReferrer) && !hasAffiliateParam && !isFromRedirect) {
+      // Aqui é o único caso onde limpamos para garantir tráfego direto oficial
       localStorage.removeItem(STORAGE_KEY);
       if (plan === "monthly") return DEFAULT_MONTHLY;
       if (plan === "quarterly") return DEFAULT_QUARTERLY;
