@@ -35,12 +35,9 @@ interface DashboardSidebarProps {
 }
 
 const navItems: { id: View; label: string; icon: React.ElementType }[] = [
-  { id: "sites", label: "Criador de Sites", icon: Code2 },
-  { id: "prospeccao", label: "Busca de Leads", icon: MapPin },
-  { id: "membros", label: "Área de Membros", icon: PlayCircle },
-  { id: "vendas", label: "Minhas Vendas", icon: ShoppingBag },
-  { id: "contrato", label: "Contrato & Script", icon: FileText },
-  { id: "extensao-lovable", label: "Extensão Lovable", icon: Sparkles },
+  { id: "dashboard", label: "Início", icon: User },
+  { id: "aulas", label: "Minhas Aulas", icon: PlayCircle },
+  { id: "progresso", label: "Meu Progresso", icon: FileText },
   { id: "perfil", label: "Meu Perfil", icon: UserCircle },
 ];
 
