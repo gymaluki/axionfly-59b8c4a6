@@ -53,8 +53,8 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
   const initials = displayName.slice(0, 2).toUpperCase();
 
   return (
-    <Sidebar collapsible="icon" className="bg-[#05050a] border-r border-white/5">
-      <SidebarHeader className="border-b border-white/5 px-4 py-4 bg-[#05050a]">
+    <Sidebar collapsible="icon" className="bg-white border-r border-[#F0F0F0]">
+      <SidebarHeader className="border-b border-[#F0F0F0] px-4 py-4 bg-white">
         <div className="flex items-center gap-3">
           <div className="flex items-center justify-center">
             <img src={axionflyLogo} alt="AxionFly" width="120" height="24" decoding="async" className="h-6 w-auto" />
