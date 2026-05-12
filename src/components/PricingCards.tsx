@@ -121,10 +121,9 @@ function PricingCard({
     const checkoutUrl = resolveCheckoutUrl(plan);
     const { data: { session } } = await supabase.auth.getSession();
 
+    // Sempre redireciona para criar conta primeiro se não houver sessão ativa
     if (!session) {
       toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
-      // Forcing the redirect to preserve the affiliate-linked checkout URL
-      // Usamos path absoluto para evitar problemas com URLs relativas
       const authUrl = `${window.location.origin}/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`;
       window.location.href = authUrl;
       return;
