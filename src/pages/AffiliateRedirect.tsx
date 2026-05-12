@@ -27,7 +27,9 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
     }
     // Redireciona para a home com um parâmetro interno para sinalizar que viemos de um redirecionamento de afiliado
     // Isso evita que a lógica de limpeza na home remova o afiliado recém-salvo.
-    navigate("/?from_redirect=1", { replace: true });
+    // Redireciona para a página de criação de conta com o redirecionamento de pagamento configurado
+    const targetUrl = resolveCheckoutUrl("lifetime" as any); // Usamos um plano base para montar a URL
+    navigate(`/auth?from_redirect=1&redirect_payment=${encodeURIComponent(targetUrl)}`, { replace: true });
   }, [slug, navigate]);
 
   return null;
