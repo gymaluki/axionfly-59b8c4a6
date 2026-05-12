@@ -1,0 +1,1 @@
+INSERT INTO public.subscriptions (user_id, status, plan, payment_provider, transaction_id) VALUES ('414860b7-81ed-4c10-85df-854f69138525', 'active', 'lifetime', 'manual', 'manual-silen-grant') ON CONFLICT (user_id) DO UPDATE SET status='active', plan='lifetime', updated_at=now();
