@@ -8,9 +8,11 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ArrowLeft, Loader2, Mail } from "lucide-react";
 import { motion } from "framer-motion";
+import { getSelectedPlan, getActiveAffiliate, resolveCheckoutUrl, clearAffiliateData } from "@/lib/affiliates";
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const location = useLocation();
+  const [isLogin, setIsLogin] = useState(!new URLSearchParams(location.search).get("isSignup"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,6 +48,33 @@ const Auth = () => {
     return redirect;
   }, [location.search]);
 
+  const handleFinalRedirect = (session: any) => {
+    const selectedPlan = getSelectedPlan();
+    const activeAffiliate = getActiveAffiliate();
+    
+    // Se temos um plano selecionado, priorizamos o redirecionamento baseado nele
+    if (selectedPlan) {
+      const checkoutUrl = resolveCheckoutUrl(selectedPlan, activeAffiliate?.slug);
+      toast.success("Conta pronta! Redirecionando para o pagamento...");
+      
+      // Limpa os dados de afiliado e plano após o redirecionamento
+      setTimeout(() => {
+        clearAffiliateData();
+      }, 1000);
+      
+      window.location.href = checkoutUrl;
+      return;
+    }
+
+    // Fallback para o redirecionamento via query param
+    if (paymentRedirect) {
+      toast.success("Redirecionando para o pagamento...");
+      window.location.href = paymentRedirect;
+    } else {
+      navigate(redirectTo, { replace: true });
+    }
+  };
+
   const claimPendingAccess = async () => {
     try {
       const { error } = await supabase.rpc("claim_pending_access" as never);
@@ -65,13 +94,7 @@ const Auth = () => {
       
       await claimPendingAccess();
 
-      if (paymentRedirect) {
-        toast.success("Conta pronta! Redirecionando para o pagamento...");
-        // Forçar redirecionamento absoluto para Cakto
-        window.location.href = paymentRedirect;
-      } else {
-        navigate(redirectTo, { replace: true });
-      }
+      handleFinalRedirect(session);
     };
 
     const checkSession = async () => {
@@ -105,11 +128,7 @@ const Auth = () => {
 
       toast.success("Login realizado com sucesso!");
       
-      if (paymentRedirect) {
-        window.location.href = paymentRedirect;
-      } else {
-        navigate(redirectTo, { replace: true });
-      }
+      handleFinalRedirect({ user: true });
       return;
     }
 
@@ -150,11 +169,7 @@ const Auth = () => {
     }
 
     // Explicitly handle redirection after a successful sign-in
-    if (paymentRedirect) {
-      window.location.href = paymentRedirect;
-    } else {
-      navigate(redirectTo, { replace: true });
-    }
+    handleFinalRedirect({ user: true });
     setLoading(false);
   };
 
