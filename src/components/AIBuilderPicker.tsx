@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
-const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
+const LOVABLE_BASE_URL = "https://lovable.dev";
 
 interface AIBuilderPickerProps {
   open: boolean;
