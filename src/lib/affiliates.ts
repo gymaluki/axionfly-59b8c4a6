@@ -76,7 +76,8 @@ const DEFAULT_MONTHLY = "https://pay.cakto.com.br/6u886t8_849513";
 const DEFAULT_QUARTERLY = "https://pay.cakto.com.br/uqn993t";
 const DEFAULT_LIFETIME = "https://pay.cakto.com.br/wcv2cko_849541";
 
-const STORAGE_KEY = "axionfly_affiliate";
+export const STORAGE_KEY = "affiliate_ref";
+export const PLAN_STORAGE_KEY = "selected_plan";
 const TTL_DAYS = 30;
 
 interface StoredAffiliate {
@@ -146,36 +147,32 @@ export function getActiveAffiliate(): Affiliate | null {
  * Se houver afiliado ativo, devolve o link Cakto dele (com ?affiliate=...).
  * Caso contrário, devolve o link padrão.
  */
-export function resolveCheckoutUrl(plan: PlanKey): string {
-  // Verificamos se há um afiliado ativo no localStorage.
-  const aff = getActiveAffiliate();
+export function resolveCheckoutUrl(plan: PlanKey, affiliateSlug?: string | null): string {
+  // Se passou slug explicitamente, usa ele. Senão, tenta pegar do localStorage.
+  const aff = affiliateSlug 
+    ? (Object.values(AFFILIATES).find(a => a.slug === affiliateSlug) || AFFILIATES[affiliateSlug])
+    : getActiveAffiliate();
   
-  // MODIFICAÇÃO: Se não há parâmetro de afiliado na URL mas já temos um salvo no localStorage,
-  // continuamos usando ele. Só limpamos se o usuário vier de um link externo (sem ser do próprio domínio)
-  // e for tráfego direto para a home sem parâmetros.
-  if (typeof window !== "undefined") {
-    const params = new URLSearchParams(window.location.search);
-    const hasAffiliateParam = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"].some(p => params.has(p));
-    const isFromRedirect = params.has("from_redirect");
-    
-    const isDirectHome = window.location.pathname === "/";
-    const isExternalReferrer = document.referrer && !document.referrer.includes(window.location.host);
-    const isNoReferrer = !document.referrer;
-
-    // Se é acesso direto (sem referrer ou referrer externo) na home e NÃO tem parâmetro na URL e NÃO vem de um redirect interno
-    if (isDirectHome && (isExternalReferrer || isNoReferrer) && !hasAffiliateParam && !isFromRedirect) {
-      // Aqui é o único caso onde limpamos para garantir tráfego direto oficial
-      localStorage.removeItem(STORAGE_KEY);
-      if (plan === "monthly") return DEFAULT_MONTHLY;
-      if (plan === "quarterly") return DEFAULT_QUARTERLY;
-      return DEFAULT_LIFETIME;
-    }
-  }
-
   let baseUrl = "";
   if (plan === "monthly") baseUrl = aff ? aff.monthlyUrl : DEFAULT_MONTHLY;
   else if (plan === "quarterly") baseUrl = aff ? aff.quarterlyUrl : DEFAULT_QUARTERLY;
   else baseUrl = aff ? aff.lifetimeUrl : DEFAULT_LIFETIME;
 
   return baseUrl;
+}
+
+export function setSelectedPlan(plan: PlanKey): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(PLAN_STORAGE_KEY, plan);
+}
+
+export function getSelectedPlan(): PlanKey | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(PLAN_STORAGE_KEY) as PlanKey | null;
+}
+
+export function clearAffiliateData(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(PLAN_STORAGE_KEY);
 }
