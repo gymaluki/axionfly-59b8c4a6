@@ -86,30 +86,38 @@ interface StoredAffiliate {
 }
 
 /**
- * Lê ?aff= da URL atual e, se for um slug válido, salva em localStorage por 30 dias.
- * Chame uma vez quando a landing page carrega.
+ * Lê ?aff= da URL ou o pathname e, se for um slug válido, salva em localStorage por 30 dias.
  */
 export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
+    const pathname = window.location.pathname.replace(/^\/|\/$/g, ""); // remove slashes
     
-    // Lista de parâmetros que podem conter o slug (para suporte a links diretos como ?d=... ou ?n=...)
-    const possibleParams = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"];
-    let finalSlug = "";
+    // 1. Tenta pegar do pathname (ex: /n)
+    let finalSlug = pathname.split("/")[0]; // Pega apenas a primeira parte do path
+    
+    // Lista de slugs conhecidos para evitar capturar caminhos do sistema
+    const knownSlugs = Object.values(AFFILIATES).map(a => a.slug);
+    const knownKeys = Object.keys(AFFILIATES);
+    const allKnown = [...new Set([...knownSlugs, ...knownKeys])];
 
-    for (const p of possibleParams) {
-      const val = params.get(p);
-      if (val !== null) {
-        // Se o parâmetro existe mas está vazio (ex: ?d), o slug é o nome do parâmetro
-        finalSlug = val.trim().toLowerCase() || p;
-        break;
+    if (!allKnown.includes(finalSlug)) {
+      // 2. Se não for um slug conhecido no path, tenta nos query params
+      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"];
+      finalSlug = "";
+
+      for (const p of possibleParams) {
+        const val = params.get(p);
+        if (val !== null) {
+          finalSlug = val.trim().toLowerCase() || p;
+          break;
+        }
       }
     }
 
     if (!finalSlug) return;
     
-    // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
     const affiliate = Object.values(AFFILIATES).find(a => a.slug === finalSlug) || AFFILIATES[finalSlug];
     
     if (!affiliate) return;
@@ -120,7 +128,7 @@ export function captureAffiliateFromUrl(): void {
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch {
-    // ignora — localStorage indisponível
+    // ignore
   }
 }
 
