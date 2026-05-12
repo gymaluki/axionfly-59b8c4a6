@@ -70,10 +70,10 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="bg-[#05050a]">
+      <SidebarContent className="bg-white">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[11px] font-bold uppercase tracking-[0.1em] text-[#6b7280] mb-2 px-4">
-            FERRAMENTAS
+          <SidebarGroupLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-4 px-4">
+            MENU PRINCIPAL
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="px-2 space-y-1">
@@ -84,14 +84,14 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                     isActive={active === id}
                     tooltip={label}
                     className={cn(
-                      "transition-all duration-200 h-10 px-3 rounded-lg",
+                      "transition-all duration-200 h-10 px-3 rounded-xl",
                       active === id 
-                        ? "bg-[#1a2035] text-[#3B82F6] border-l-2 border-[#3B82F6] rounded-l-none" 
-                        : "text-[#6b7280] hover:bg-white/5 hover:text-white border-l-2 border-transparent"
+                        ? "bg-[#1B3A5C] text-white hover:bg-[#1B3A5C] hover:text-white" 
+                        : "text-muted-foreground hover:bg-[#F0F0F0] hover:text-[#1A1A1A]"
                     )}
                   >
-                    <Icon className={cn("w-4 h-4 shrink-0", active === id ? "text-primary" : "text-inherit")} />
-                    <span className="font-bold text-[11px] uppercase tracking-[0.1em]">{label}</span>
+                    <Icon className={cn("w-4 h-4 shrink-0", active === id ? "text-white" : "text-inherit")} />
+                    <span className="font-semibold text-sm">{label}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
