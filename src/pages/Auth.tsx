@@ -47,20 +47,40 @@ const Auth = () => {
     return redirect;
   }, [location.search]);
 
-  const handleFinalRedirect = (session: any) => {
+  const handleFinalRedirect = async (session: any) => {
     const selectedPlan = getSelectedPlan();
     const activeAffiliate = getActiveAffiliate();
-    
-    // Se temos um plano selecionado, priorizamos o redirecionamento baseado nele
-    if (selectedPlan) {
+
+    // Se já tem assinatura ativa, vai direto pro dashboard (NUNCA pro checkout)
+    let hasActiveAccess = false;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: sub } = await supabase
+          .from("subscriptions")
+          .select("status, expires_at")
+          .eq("user_id", user.id)
+          .eq("status", "active")
+          .maybeSingle();
+        if (sub && (!sub.expires_at || new Date(sub.expires_at) > new Date())) {
+          hasActiveAccess = true;
+        }
+      }
+    } catch (e) {
+      console.error("Erro ao verificar assinatura:", e);
+    }
+
+    if (hasActiveAccess) {
+      clearAffiliateData();
+      navigate(redirectTo, { replace: true });
+      return;
+    }
+
+    // Só redireciona para checkout em fluxo de cadastro novo (não login)
+    if (selectedPlan && !isLogin) {
       const checkoutUrl = resolveCheckoutUrl(selectedPlan, activeAffiliate?.slug);
       toast.success("Conta pronta! Redirecionando para o pagamento...");
-      
-      // Limpa os dados de afiliado e plano após o redirecionamento
-      setTimeout(() => {
-        clearAffiliateData();
-      }, 1000);
-      
+      setTimeout(() => clearAffiliateData(), 1000);
       window.location.href = checkoutUrl;
       return;
     }
