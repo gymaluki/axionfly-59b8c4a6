@@ -87,7 +87,8 @@ export function captureAffiliateFromUrl(): void {
       else if (params.has("e")) finalSlug = "e";
       else if (params.has("o")) finalSlug = "o";
       else if (params.has("u")) finalSlug = "u";
-      else if (params.has("s")) finalSlug = "s";
+        else if (params.has("s")) finalSlug = "s";
+        else if (params.has("n")) finalSlug = "n";
     }
     
     // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
