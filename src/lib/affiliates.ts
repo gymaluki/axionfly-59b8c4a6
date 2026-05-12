@@ -78,7 +78,7 @@ export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
-    const slug = (params.get("aff") || params.get("ref") || params.get("d") || params.get("e") || params.get("o") || params.get("u") || "").toLowerCase().trim();
+    const slug = (params.get("aff") || params.get("ref") || params.get("d") || params.get("e") || params.get("o") || params.get("u") || params.get("s") || "").toLowerCase().trim();
     
     // Se usar ?d=... e não tiver valor, assume que é o slug correspondente
     let finalSlug = slug;
