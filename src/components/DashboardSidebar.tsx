@@ -109,19 +109,18 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                 <TooltipTrigger asChild>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <SidebarMenuButton size="lg" className="w-full h-12 rounded-xl hover:bg-white/5 transition-colors">
+                      <SidebarMenuButton size="lg" className="w-full h-12 rounded-xl hover:bg-[#F0F0F0] transition-colors">
                         <div className="relative">
-                          <Avatar className="w-8 h-8 shrink-0 ring-2 ring-white/5">
-                            <AvatarFallback className="bg-[#3B82F6] text-white text-xs font-bold">
+                          <Avatar className="w-8 h-8 shrink-0 border border-[#F0F0F0]">
+                            <AvatarFallback className="bg-[#1B3A5C] text-white text-xs font-bold">
                               {initials}
                             </AvatarFallback>
                           </Avatar>
-                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#0d0d14] rounded-full animate-pulse" />
                         </div>
                         {!collapsed && (
                           <div className="flex-1 text-left min-w-0 ml-3">
-                            <p className="text-sm font-bold text-foreground truncate leading-none mb-1">{displayName}</p>
-                            <p className="text-[11px] text-[#475569] font-bold uppercase tracking-[0.1em]">Membro Premium</p>
+                            <p className="text-sm font-bold text-[#1A1A1A] truncate leading-none mb-1">{displayName}</p>
+                            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Aluno</p>
                           </div>
                         )}
                         {!collapsed && <ChevronUp className="w-4 h-4 text-[#475569] shrink-0" />}
