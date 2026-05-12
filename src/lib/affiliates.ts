@@ -147,20 +147,27 @@ export function getActiveAffiliate(): Affiliate | null {
  * Caso contrário, devolve o link padrão.
  */
 export function resolveCheckoutUrl(plan: PlanKey): string {
-  // Verificamos se estamos no domínio raiz sem parâmetros de afiliado na URL
-  // Se for o caso, limpamos qualquer afiliado persistido para garantir que o link seja o padrão.
+  // Verificamos se há um afiliado ativo no localStorage.
+  const aff = getActiveAffiliate();
+  
+  // Se estivermos na home limpa e não houver um afiliado ATIVO no localStorage,
+  // usamos os links padrão. Se houver um persistido, ele será usado.
+  // Para forçar o link padrão quando entra sem parâmetros, limpamos o localStorage se não houver param na URL.
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
     const hasAffiliateParam = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"].some(p => params.has(p));
     
-    // Se o usuário entrou no domínio puro (sem parâmetros) e não é um subcaminho de afiliado,
-    // podemos considerar limpar o cookie para não "herdar" um afiliado antigo.
-    // Mas por padrão, o localStorage persiste por 30 dias.
+    // Se não tem parâmetro na URL e não estamos em uma rota de redirecionamento, limpamos o afiliado.
+    // Isso garante que o tráfego direto não caia em comissão antiga.
+    if (!hasAffiliateParam && window.location.pathname === "/") {
+      localStorage.removeItem(STORAGE_KEY);
+      if (plan === "monthly") return DEFAULT_MONTHLY;
+      if (plan === "quarterly") return DEFAULT_QUARTERLY;
+      return DEFAULT_LIFETIME;
+    }
   }
 
-  const aff = getActiveAffiliate();
   let baseUrl = "";
-  
   if (plan === "monthly") baseUrl = aff ? aff.monthlyUrl : DEFAULT_MONTHLY;
   else if (plan === "quarterly") baseUrl = aff ? aff.quarterlyUrl : DEFAULT_QUARTERLY;
   else baseUrl = aff ? aff.lifetimeUrl : DEFAULT_LIFETIME;
