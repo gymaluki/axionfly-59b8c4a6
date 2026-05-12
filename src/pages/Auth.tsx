@@ -98,6 +98,12 @@ const Auth = () => {
       }
 
       toast.success("Login realizado com sucesso!");
+      
+      if (paymentRedirect) {
+        window.location.href = paymentRedirect;
+      } else {
+        navigate(redirectTo, { replace: true });
+      }
       return;
     }
 
@@ -128,13 +134,21 @@ const Auth = () => {
     toast.success("Conta criada com sucesso! Redirecionando...");
     // Auto-login after signup
     const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+    
     if (signInErr) {
       console.error("Auto-login error:", signInErr);
+      // If auto-login fails, try one more time or redirect to login
       setIsLogin(true);
       setLoading(false);
       return;
     }
-    // Session change will trigger the useEffect redirect
+
+    // Explicitly handle redirection after a successful sign-in
+    if (paymentRedirect) {
+      window.location.href = paymentRedirect;
+    } else {
+      navigate(redirectTo, { replace: true });
+    }
     setLoading(false);
   };
 
