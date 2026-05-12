@@ -149,6 +149,21 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
+    // Se estiver em fluxo de reset de senha
+    const isResetPassword = new URLSearchParams(location.search).get("reset_password");
+    if (isResetPassword) {
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) {
+        toast.error(error.message);
+        setLoading(false);
+        return;
+      }
+      toast.success("Senha alterada com sucesso! Fazendo login...");
+      navigate("/dashboard");
+      setLoading(false);
+      return;
+    }
+
     if (isLogin) {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
