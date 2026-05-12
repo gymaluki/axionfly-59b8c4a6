@@ -705,18 +705,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
 
     setGeneratedPrompt(generated);
 
-    // Salvar site no histórico do usuário
-    if (user) {
-      const LOVABLE_BASE_URL = "https://lovable.dev/invite/4QDCZAZ";
-      const targetUrl = `${LOVABLE_BASE_URL}?prompt=${encodeURIComponent(generated)}`;
-      
-      await supabase.from("user_sites").insert({
-        user_id: user.id,
-        site_name: projectName.trim(),
-        niche: template.label,
-        url: targetUrl
-      } as any);
-    }
+    // O site será salvo no histórico do usuário dentro do AIBuilderPicker 
+    // quando ele clicar para abrir o Lovable, evitando redundância e bloqueios de UI.
 
     if (!hasInstalledExtension) {
       setShowExtensionModal(true);
