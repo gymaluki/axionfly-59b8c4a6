@@ -126,12 +126,15 @@ const Auth = () => {
     }
 
     toast.success("Conta criada com sucesso! Redirecionando...");
+    // Auto-login after signup
     const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
     if (signInErr) {
+      console.error("Auto-login error:", signInErr);
       setIsLogin(true);
       setLoading(false);
       return;
     }
+    // Session change will trigger the useEffect redirect
     setLoading(false);
   };
 
