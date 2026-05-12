@@ -21,14 +21,18 @@ const Auth = () => {
   const paymentRedirect = useMemo(() => {
     const val = new URLSearchParams(location.search).get("redirect_payment");
     if (!val) return null;
+    
+    // Se for um link da Cakto, retornamos ele exatamente como está
+    if (val.includes("pay.cakto.com.br")) return val;
+    
     // Same-origin paths
     if (val.startsWith("/") && !val.startsWith("//")) return val;
+    
     try {
       const u = new URL(val, window.location.origin);
       if (u.origin === window.location.origin) return u.pathname + u.search + u.hash;
-      // Allow Cakto checkout URLs (afiliado-aware)
-      if (u.hostname === "pay.cakto.com.br") return u.toString();
     } catch { /* ignore */ }
+    
     return null;
   }, [location.search]);
 
@@ -63,9 +67,8 @@ const Auth = () => {
         if (paymentRedirect) {
           // User logged in and has a payment to complete
           toast.success("Conta pronta! Redirecionando para o pagamento...");
-          setTimeout(() => {
-            window.location.href = paymentRedirect;
-          }, 1500);
+          // Redirecionamento imediato sem atraso para evitar quebras
+          window.location.replace(paymentRedirect);
         } else {
           navigate(redirectTo, { replace: true });
         }
@@ -74,12 +77,12 @@ const Auth = () => {
 
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      await handleRedirect(session);
+      if (session) await handleRedirect(session);
     };
     checkSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      void handleRedirect(session);
+      if (session) void handleRedirect(session);
     });
 
     return () => subscription.unsubscribe();
