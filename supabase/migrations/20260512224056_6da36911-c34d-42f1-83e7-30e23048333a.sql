@@ -1,0 +1,2 @@
+INSERT INTO public.sales (user_id, client_name, amount, description, status, sale_date)
+VALUES ('36d0753f-36e9-418f-9160-d35a7c81d597', 'Cliente Adicional', 350, 'Serviço Extra', 'pago', CURRENT_DATE);
