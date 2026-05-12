@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable";
+type View = "dashboard" | "aulas" | "progresso" | "perfil" | "admin" | "lesson-player";
 
 interface DashboardSidebarProps {
   active: View;
