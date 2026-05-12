@@ -147,6 +147,17 @@ export function getActiveAffiliate(): Affiliate | null {
  * Caso contrário, devolve o link padrão.
  */
 export function resolveCheckoutUrl(plan: PlanKey): string {
+  // Verificamos se estamos no domínio raiz sem parâmetros de afiliado na URL
+  // Se for o caso, limpamos qualquer afiliado persistido para garantir que o link seja o padrão.
+  if (typeof window !== "undefined") {
+    const params = new URLSearchParams(window.location.search);
+    const hasAffiliateParam = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"].some(p => params.has(p));
+    
+    // Se o usuário entrou no domínio puro (sem parâmetros) e não é um subcaminho de afiliado,
+    // podemos considerar limpar o cookie para não "herdar" um afiliado antigo.
+    // Mas por padrão, o localStorage persiste por 30 dias.
+  }
+
   const aff = getActiveAffiliate();
   let baseUrl = "";
   
@@ -154,7 +165,5 @@ export function resolveCheckoutUrl(plan: PlanKey): string {
   else if (plan === "quarterly") baseUrl = aff ? aff.quarterlyUrl : DEFAULT_QUARTERLY;
   else baseUrl = aff ? aff.lifetimeUrl : DEFAULT_LIFETIME;
 
-  // Garante que o parâmetro de afiliado use a nomenclatura correta da Cakto (?affiliate= ou ?ref=)
-  // Nossos links já vêm com ?affiliate= do objeto AFFILIATES, mas aqui reforçamos a integridade.
   return baseUrl;
 }

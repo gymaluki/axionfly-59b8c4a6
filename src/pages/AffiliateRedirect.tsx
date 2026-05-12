@@ -25,6 +25,7 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
         // ignore
       }
     }
+    // Redireciona para a home sem parâmetros, o afiliado já está salvo no localStorage
     navigate("/", { replace: true });
   }, [slug, navigate]);
 
