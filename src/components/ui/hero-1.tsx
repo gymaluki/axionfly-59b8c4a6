@@ -164,7 +164,7 @@ export function HeroSection() {
               transition={{ duration: 0.7, delay: 0.45 }}
               className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 mb-10"
             >
-              <Button variant="neon" size="xl" className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-widest w-full sm:w-auto" onClick={() => navigate("/auth")}>
+              <Button variant="neon" size="xl" className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-widest w-full sm:w-auto" onClick={() => navigate("/auth?isSignup=true")}>
                 <Zap className="size-5 mr-2 fill-current" />
                 Assinar agora
               </Button>

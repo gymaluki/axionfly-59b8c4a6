@@ -77,7 +77,8 @@ const Auth = () => {
     }
 
     // Só redireciona para checkout em fluxo de cadastro novo (não login)
-    if (selectedPlan && !isLogin) {
+    // E apenas se o usuário NÃO tiver acesso ativo (segurança extra)
+    if (selectedPlan && !isLogin && !hasActiveAccess) {
       const checkoutUrl = resolveCheckoutUrl(selectedPlan, activeAffiliate?.slug);
       toast.success("Conta pronta! Redirecionando para o pagamento...");
       setTimeout(() => clearAffiliateData(), 1000);
@@ -215,6 +216,8 @@ const Auth = () => {
     }
 
     // Explicitly handle redirection after a successful sign-in
+    // If it's signup, handleFinalRedirect will decide between checkout and dashboard
+    // If it's login, it will go to dashboard
     handleFinalRedirect({ user: true });
     setLoading(false);
   };
