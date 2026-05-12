@@ -27,7 +27,7 @@ import googleMapsLogo from "@/assets/google-maps-logo.webp";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { resolveCheckoutUrl, setSelectedPlan } from "@/lib/affiliates";
+import { resolveCheckoutUrl, setSelectedPlan, clearAffiliateData } from "@/lib/affiliates";
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -132,6 +132,12 @@ function PricingCard({
     
     // Se já tem sessão, resolve o link e vai direto
     const checkoutUrl = resolveCheckoutUrl(plan);
+    
+    // Limpa os dados após o redirecionamento
+    setTimeout(() => {
+      clearAffiliateData();
+    }, 1000);
+    
     window.location.href = checkoutUrl;
   };
 
