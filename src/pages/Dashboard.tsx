@@ -160,13 +160,13 @@ const Dashboard = () => {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-[#05050a] relative text-white">
-        {/* Grid Background */}
+      <div className="flex min-h-screen w-full bg-[#FAFAFA] relative text-[#1A1A1A]">
+        {/* Subtle Background Pattern */}
         <div
           aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
+          className="fixed inset-0 pointer-events-none z-0 opacity-[0.015]"
           style={{
-            backgroundImage: `linear-gradient(rgba(59,130,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,1) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(rgba(27,58,92,1) 1px, transparent 1px), linear-gradient(90deg, rgba(27,58,92,1) 1px, transparent 1px)`,
             backgroundSize: "40px 40px",
           }}
         />
