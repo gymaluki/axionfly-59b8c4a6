@@ -75,30 +75,36 @@ export const AIBuilderPicker = ({ open, onClose, prompt, siteName, niche }: AIBu
   }, []);
 
   const handleOpenLovable = useCallback(async () => {
-    if (user && targetUrl) {
+    if (!targetUrl) return;
+
+    // Abrir a janela IMEDIATAMENTE para evitar bloqueio de popup pelo navegador
+    // Browsers block window.open if it's called after an async await
+    const newWindow = window.open(targetUrl, "_blank", "noopener,noreferrer");
+
+    if (user) {
       try {
-        const { error } = await supabase.from("user_sites").insert({
+        // Salva no banco em background, sem esperar (evita atrasar o feedback visual)
+        supabase.from("user_sites").insert({
           user_id: user.id,
           site_name: siteName || "Meu Site Profissional",
           niche: niche || "Geral",
           url: targetUrl,
           prompt: normalizedPrompt,
+        }).then(({ error }) => {
+          if (error) console.error("Error saving site:", error);
         });
-        
-        if (error) {
-          console.error("Error saving site:", error);
-        }
       } catch (err) {
         console.error("Failed to save site to profile:", err);
       }
     }
 
-    if (targetUrl) {
-      window.open(targetUrl, "_blank", "noopener,noreferrer");
-    }
     setReadyToOpen(false);
     hasInitializedRef.current = false;
     onClose();
+
+    if (!newWindow) {
+      toast.error("O bloqueador de popups impediu a abertura do site. Por favor, autorize popups para este site.");
+    }
   }, [onClose, targetUrl, user, siteName, niche, normalizedPrompt]);
 
   const handleClose = useCallback(() => {
