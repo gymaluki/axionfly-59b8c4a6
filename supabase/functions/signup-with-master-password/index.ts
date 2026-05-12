@@ -90,9 +90,15 @@ Deno.serve(async (req) => {
     });
 
     if (createErr || !created.user) {
+      // Se o erro for que o usuário já existe, retornamos uma mensagem amigável
+      const status = createErr?.message?.includes("already") ? 409 : 400;
       return new Response(
-        JSON.stringify({ error: createErr?.message ?? "Falha ao criar conta." }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        JSON.stringify({ 
+          error: createErr?.message?.includes("already") 
+            ? "Este email já está cadastrado. Tente fazer login." 
+            : (createErr?.message ?? "Falha ao criar conta.") 
+        }),
+        { status, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
@@ -124,10 +130,10 @@ Deno.serve(async (req) => {
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
-  } catch (err) {
+  } catch (err: any) {
     console.error("Erro inesperado:", err);
     return new Response(
-      JSON.stringify({ error: "Erro inesperado ao processar cadastro." }),
+      JSON.stringify({ error: err?.message ?? "Erro inesperado ao processar cadastro." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   }
