@@ -19,7 +19,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { supabase } from "@/integrations/supabase/client";
 import OnboardingTour from "@/components/OnboardingTour";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable";
+type View = "dashboard" | "aulas" | "progresso" | "perfil" | "admin" | "lesson-player";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
