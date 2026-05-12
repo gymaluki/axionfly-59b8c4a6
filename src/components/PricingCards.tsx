@@ -124,7 +124,9 @@ function PricingCard({
     if (!session) {
       toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
       // Forcing the redirect to preserve the affiliate-linked checkout URL
-      navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
+      // Usamos path absoluto para evitar problemas com URLs relativas
+      const authUrl = `${window.location.origin}/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`;
+      window.location.href = authUrl;
       return;
     }
     window.location.href = checkoutUrl;
