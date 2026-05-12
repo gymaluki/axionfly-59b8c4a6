@@ -61,28 +61,31 @@ const Auth = () => {
   // Redirect if already logged in
   useEffect(() => {
     const handleRedirect = async (session: any) => {
-      if (session) {
-        await claimPendingAccess();
+      if (!session) return;
+      
+      await claimPendingAccess();
 
-        if (paymentRedirect) {
-          // User logged in and has a payment to complete
-          toast.success("Conta pronta! Redirecionando para o pagamento...");
-          // Redirecionamento imediato sem atraso para evitar quebras
-          window.location.replace(paymentRedirect);
-        } else {
-          navigate(redirectTo, { replace: true });
-        }
+      if (paymentRedirect) {
+        toast.success("Conta pronta! Redirecionando para o pagamento...");
+        // Forçar redirecionamento absoluto para Cakto
+        window.location.href = paymentRedirect;
+      } else {
+        navigate(redirectTo, { replace: true });
       }
     };
 
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) await handleRedirect(session);
+      if (session) {
+        await handleRedirect(session);
+      }
     };
     checkSession();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) void handleRedirect(session);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session) {
+        await handleRedirect(session);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -148,8 +151,7 @@ const Auth = () => {
 
     // Explicitly handle redirection after a successful sign-in
     if (paymentRedirect) {
-      // Use location.replace for a cleaner, faster redirect that doesn't mess up history
-      window.location.replace(paymentRedirect);
+      window.location.href = paymentRedirect;
     } else {
       navigate(redirectTo, { replace: true });
     }
