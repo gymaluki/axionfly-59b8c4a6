@@ -121,24 +121,9 @@ function PricingCard({
     // Salva o plano escolhido no localStorage
     setSelectedPlan(plan);
     
-    const { data: { session } } = await supabase.auth.getSession();
-
-    // Sempre redireciona para criar conta primeiro se não houver sessão ativa
-    if (!session) {
-      toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
-      navigate("/auth?isSignup=true");
-      return;
-    }
-    
-    // Se já tem sessão, resolve o link e vai direto
-    const checkoutUrl = resolveCheckoutUrl(plan);
-    
-    // Limpa os dados após o redirecionamento
-    setTimeout(() => {
-      clearAffiliateData();
-    }, 1000);
-    
-    window.location.href = checkoutUrl;
+    // Sempre redireciona para criar conta primeiro
+    toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
+    navigate("/auth?isSignup=true");
   };
 
   const visibleFeatures = isExpanded ? features : features.slice(0, 5);

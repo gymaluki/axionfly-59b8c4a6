@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AFFILIATES, resolveCheckoutUrl } from "@/lib/affiliates";
 
-const STORAGE_KEY = "axionfly_affiliate";
+const STORAGE_KEY = "affiliate_ref";
 const TTL_DAYS = 30;
 
 export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }) {
@@ -25,8 +25,6 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
         // ignore
       }
     }
-    // Redireciona para a home com um parâmetro interno para sinalizar que viemos de um redirecionamento de afiliado
-    // Isso evita que a lógica de limpeza na home remova o afiliado recém-salvo.
     // Redireciona para a home para que o usuário escolha o plano
     navigate("/", { replace: true });
   }, [slug, navigate]);

@@ -10,6 +10,7 @@ import { useEffect } from "react";
 
 const AffiliateTracker = () => {
   useEffect(() => {
+    // Não limpa mais nada aqui, apenas captura se houver na URL
     captureAffiliateFromUrl();
   }, []);
   return null;
