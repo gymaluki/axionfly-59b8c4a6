@@ -232,12 +232,30 @@ const howItWorks = [
 ];
 
 const faqItems = [
-  { q: "Preciso saber programar para criar sites?", a: "Não. A AxionFly foi feita exatamente para quem nunca programou na vida. Você escolhe o nicho do cliente, personaliza cores e fontes — a IA monta o site completo em menos de 10 minutos. O único conhecimento que você precisa é saber usar um celular ou um computador." },
-  { q: "Quais tipos de negócio posso atender?", a: "Mais de 20 nichos prontos: barbearia, restaurante, salão, clínica, advocacia, loja, sorveteria e muito mais. Qualquer negócio local que ainda não tem presença online é um cliente em potencial — e o Brasil tem milhões deles." },
-  { q: "Como faço para encontrar clientes?", a: "A plataforma tem Prospecção Automática Brasil integrada. Você seleciona a cidade e o nicho, e o sistema busca automaticamente negócios sem site, entregando nome, telefone e endereço prontos para você entrar em contato. É Google Maps transformado em lista de clientes." },
-  { q: "Quanto posso cobrar por cada site criado?", a: "O mercado pratica entre R$ 500 e R$ 3.000 por site para negócios locais. Com a AxionFly você entrega o mesmo resultado que uma agência cobra caro, em 10 minutos. A margem é quase toda sua — sem custo de desenvolvimento, sem freelancer, sem dor de cabeça." },
-  { q: "O site gerado tem qualidade profissional ou parece feito por IA?", a: "Design responsivo, 6 estilos exclusivos e totalmente personalizável. O resultado final é indistinguível de um site feito por uma agência. Seu cliente não vai saber — e nem precisa saber. O que importa é que vai funcionar e converter." },
-  { q: "O que é a Extensão Lovable e por que ela faz diferença?", a: "É a parceria exclusiva da AxionFly com o Hyperbuild Pro que elimina o limite de créditos e tokens. Na prática: você cria sites ilimitados sem pagar a mais por isso. Enquanto outras ferramentas cobram por uso, aqui você escala sem teto — ideal pra quem quer transformar isso em renda recorrente de verdade." },
+  { 
+    q: "Preciso saber programar, fazer design ou entender de tecnologia?", 
+    a: "Absolutamente não. A AxionFly foi construída para quem nunca abriu uma linha de código na vida. Você seleciona o nicho do cliente, ajusta cores e estilo — a IA cuida de todo o resto. Em menos de 10 minutos o site está pronto, com design profissional, responsivo e pronto para ser entregue. Se você sabe usar o WhatsApp, você sabe usar a AxionFly." 
+  },
+  { 
+    q: "Os sites gerados têm qualidade real — ou é aquele visual genérico de IA?", 
+    a: "Essa é a diferença da AxionFly. São 6 estilos exclusivos de design, com tipografia, cores e estrutura visual pensadas por profissionais — não templates genéricos. O site gerado é indistinguível de um projeto feito por uma agência. Nenhum cliente vai olhar para o resultado e achar que veio de uma IA. O que eles vão ver é um site profissional, rápido e pronto para converter." 
+  },
+  { 
+    q: "Quanto vou conseguir cobrar de cada cliente? Vale a pena financeiramente?", 
+    a: "O mercado de sites para negócios locais pratica entre R$ 500 e R$ 3.000 por projeto. Com a AxionFly você entrega em 10 minutos o que uma agência demora dias. Sua margem de lucro é quase total — sem freelancer, sem ferramenta extra, sem dor de cabeça. Um único contrato fechado já paga o investimento na plataforma. Dois contratos e você já está no lucro puro." 
+  },
+  { 
+    q: "Como vou encontrar clientes? Não tenho carteira de contatos nem experiência em vendas.", 
+    a: "Você não precisa de carteira de clientes nem de habilidade de vendedor. A AxionFly tem uma ferramenta de Prospecção Automática integrada: você seleciona a cidade e o nicho — barbearia, restaurante, clínica, salão — e o sistema busca negócios que ainda não têm site, te entregando nome, telefone e endereço prontos para o contato. Com o script de vendas incluso, você sabe exatamente o que falar no WhatsApp. A lista de clientes já está montada. Você só precisa enviar a mensagem." 
+  },
+  { 
+    q: "E se o cliente quiser algo diferente do que a IA gerou?", 
+    a: "O site gerado pela IA é só o começo — você tem controle total sobre cada detalhe, a qualquer momento. Antes de entregar ou depois de já ter entregue, não importa: fotos, textos, nome do negócio, cores, seções inteiras — tudo pode ser alterado livremente, quantas vezes quiser. Não existe nada travado ou definitivo. Isso significa que se o cliente ligar amanhã pedindo para trocar a foto da fachada, mudar o nome de uma seção ou atualizar o telefone de contato, você resolve em minutos — sem depender de ninguém e sem custo extra. Esse nível de autonomia é o que transforma a AxionFly em um serviço recorrente, não uma venda única." 
+  },
+  { 
+    q: "O que é a Extensão Lovable e por que faz diferença pra mim?", 
+    a: "A maioria das ferramentas de criação de sites com IA tem um limite de créditos ou tokens — quando acaba, você para de criar ou paga mais. A Extensão Lovable Infinito elimina esse teto. É uma parceria exclusiva da AxionFly com o Hyperbuild Pro que te permite criar sites sem limite de créditos, sem interrupções, sem custo extra. Você escala seu negócio sem travar. Quanto mais sites criar, mais dinheiro entra — sem que a plataforma consuma sua margem." 
+  },
 ];
 
 const CountdownTimer = () => {
