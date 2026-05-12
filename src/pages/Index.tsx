@@ -232,14 +232,12 @@ const howItWorks = [
 ];
 
 const faqItems = [
-  { q: "Preciso saber programar para criar sites?", a: "Não! A AxionFly usa inteligência artificial para gerar sites completos. Você só preenche o nome do comércio, escolhe o nicho, as cores e o estilo de design — a IA faz todo o trabalho técnico. Zero código, zero complicação." },
-  { q: "Quais tipos de comércio posso atender?", a: "São mais de 20 nichos prontos focados em comércios locais: barbearias, pizzarias, hamburguerias, restaurantes, padarias, sorveterias, açaiterias, mercados, lojas de roupas, lanchonetes, marmitarias, salões de beleza, cafeterias, docerias, açougues, hortifrutis e muito mais." },
-  { q: "Como funciona a busca de leads?", a: "Selecione o estado (todos os 27 estados do Brasil estão disponíveis), escolha a cidade e o tipo de comércio. O sistema busca automaticamente e entrega nome, telefone e endereço — tudo pronto para você prospectar." },
-  { q: "Quanto posso cobrar por cada site criado?", a: "Nossos usuários cobram entre <span class='text-primary'>R$ 500 e R$ 3.000</span> por site. Como a IA cria o site em minutos, seu custo de produção é praticamente zero — a margem de lucro é altíssima." },
-  { q: "Posso personalizar os sites gerados?", a: "Sim! Você escolhe o nicho, define cores, seleciona entre 7 combinações de fontes e 6 estilos de design diferentes. Cada site sai único e profissional." },
-  { q: "O que está incluso no plano vitalício?", a: "Acesso ilimitado ao criador de sites com IA (20+ nichos de comércio), busca de leads em todos os estados do Brasil, dashboard de vendas e todas as atualizações futuras. Pague uma vez, use para sempre." },
-  { q: "Posso cancelar minha assinatura mensal?", a: "Sim, a qualquer momento. Sem multa, sem burocracia. Mas a maioria dos usuários escolhe o vitalício porque se paga no primeiro site vendido." },
-  { q: "Funciona em qualquer cidade do Brasil?", a: "Sim! A busca de leads cobre todos os 27 estados e todas as cidades do Brasil. Basta selecionar o estado e a cidade para encontrar comércios sem site na sua região." },
+  { q: "Preciso saber programar para criar sites?", a: "Não. A AxionFly foi feita exatamente para quem nunca programou na vida. Você escolhe o nicho do cliente, personaliza cores e fontes — a IA monta o site completo em menos de 10 minutos. O único conhecimento que você precisa é saber usar um celular." },
+  { q: "Quais tipos de negócio posso atender?", a: "Mais de 20 nichos prontos: barbearia, restaurante, salão, clínica, advocacia, loja, sorveteria e muito mais. Qualquer negócio local que ainda não tem presença online é um cliente em potencial — e o Brasil tem milhões deles." },
+  { q: "Como faço para encontrar clientes?", a: "A plataforma tem Prospecção Automática Brasil integrada. Você seleciona a cidade e o nicho, e o sistema busca automaticamente negócios sem site, entregando nome, telefone e endereço prontos para você entrar em contato. É Google Maps transformado em lista de clientes." },
+  { q: "Quanto posso cobrar por cada site criado?", a: "O mercado pratica entre R$ 500 e R$ 3.000 por site para negócios locais. Com a AxionFly você entrega o mesmo resultado que uma agência cobra caro, em 10 minutos. A margem é quase toda sua — sem custo de desenvolvimento, sem freelancer, sem dor de cabeça." },
+  { q: "O site gerado tem qualidade profissional ou parece feito por IA?", a: "Design responsivo, 6 estilos exclusivos e totalmente personalizável. O resultado final é indistinguível de um site feito por uma agência. Seu cliente não vai saber — e nem precisa saber. O que importa é que vai funcionar e converter." },
+  { q: "O que é a Extensão Lovable e por que ela faz diferença?", a: "É a parceria exclusiva da AxionFly com o Hyperbuild Pro que elimina o limite de créditos e tokens. Na prática: você cria sites ilimitados sem pagar a mais por isso. Enquanto outras ferramentas cobram por uso, aqui você escala sem teto — ideal pra quem quer transformar isso em renda recorrente de verdade." },
 ];
 
 const CountdownTimer = () => {
