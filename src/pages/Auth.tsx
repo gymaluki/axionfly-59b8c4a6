@@ -111,8 +111,11 @@ const Auth = () => {
     const handleRedirect = async (session: any) => {
       if (!session) return;
       
-      await claimPendingAccess();
+      // Se estivermos em um fluxo de reset de senha, não redirecionamos automaticamente ainda
+      const isResetPassword = new URLSearchParams(location.search).get("reset_password");
+      if (isResetPassword) return;
 
+      await claimPendingAccess();
       handleFinalRedirect(session);
     };
 
@@ -131,7 +134,16 @@ const Auth = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate, redirectTo, paymentRedirect]);
+  }, [navigate, redirectTo, paymentRedirect, location.search]);
+
+  // Handle password reset logic
+  useEffect(() => {
+    const isResetPassword = new URLSearchParams(location.search).get("reset_password");
+    if (isResetPassword) {
+      setIsLogin(false); // Mostra o formulário de "cadastro" que servirá para nova senha
+      toast.info("Defina sua nova senha abaixo.");
+    }
+  }, [location.search]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
