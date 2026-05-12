@@ -148,7 +148,8 @@ const Auth = () => {
 
     // Explicitly handle redirection after a successful sign-in
     if (paymentRedirect) {
-      window.location.href = paymentRedirect;
+      // Use location.replace for a cleaner, faster redirect that doesn't mess up history
+      window.location.replace(paymentRedirect);
     } else {
       navigate(redirectTo, { replace: true });
     }
