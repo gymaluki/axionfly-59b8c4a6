@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { AFFILIATES } from "@/lib/affiliates";
+import { AFFILIATES, resolveCheckoutUrl } from "@/lib/affiliates";
 
 const STORAGE_KEY = "axionfly_affiliate";
 const TTL_DAYS = 30;
