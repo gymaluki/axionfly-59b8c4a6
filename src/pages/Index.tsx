@@ -232,7 +232,7 @@ const howItWorks = [
 ];
 
 const faqItems = [
-  { q: "Preciso saber programar para criar sites?", a: "Não. A AxionFly foi feita exatamente para quem nunca programou na vida. Você escolhe o nicho do cliente, personaliza cores e fontes — a IA monta o site completo em menos de 10 minutos. O único conhecimento que você precisa é saber usar um celular." },
+  { q: "Preciso saber programar para criar sites?", a: "Não. A AxionFly foi feita exatamente para quem nunca programou na vida. Você escolhe o nicho do cliente, personaliza cores e fontes — a IA monta o site completo em menos de 10 minutos. O único conhecimento que você precisa é saber usar um celular ou um computador." },
   { q: "Quais tipos de negócio posso atender?", a: "Mais de 20 nichos prontos: barbearia, restaurante, salão, clínica, advocacia, loja, sorveteria e muito mais. Qualquer negócio local que ainda não tem presença online é um cliente em potencial — e o Brasil tem milhões deles." },
   { q: "Como faço para encontrar clientes?", a: "A plataforma tem Prospecção Automática Brasil integrada. Você seleciona a cidade e o nicho, e o sistema busca automaticamente negócios sem site, entregando nome, telefone e endereço prontos para você entrar em contato. É Google Maps transformado em lista de clientes." },
   { q: "Quanto posso cobrar por cada site criado?", a: "O mercado pratica entre R$ 500 e R$ 3.000 por site para negócios locais. Com a AxionFly você entrega o mesmo resultado que uma agência cobra caro, em 10 minutos. A margem é quase toda sua — sem custo de desenvolvimento, sem freelancer, sem dor de cabeça." },
