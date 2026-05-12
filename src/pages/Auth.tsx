@@ -18,7 +18,6 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const paymentRedirect = useMemo(() => {
     const val = new URLSearchParams(location.search).get("redirect_payment");
