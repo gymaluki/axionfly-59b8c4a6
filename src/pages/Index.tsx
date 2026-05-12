@@ -297,8 +297,14 @@ const CountdownTimer = () => {
   );
 };
 
+import { captureAffiliateFromUrl } from "@/lib/affiliates";
+
 const Index = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    captureAffiliateFromUrl();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#05050a] overflow-x-hidden relative max-w-[100vw]">
