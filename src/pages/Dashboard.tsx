@@ -85,10 +85,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "extensao-lovable", "admin"];
+  const validViews: View[] = ["dashboard", "aulas", "progresso", "perfil", "admin", "lesson-player"];
   const paramView = searchParams.get("view") as View | null;
   const [activeView, setActiveView] = useState<View>(
-    paramView && validViews.includes(paramView) ? paramView : "sites"
+    paramView && validViews.includes(paramView) ? paramView : "dashboard"
   );
   const [userName, setUserName] = useState<string>("");
 
