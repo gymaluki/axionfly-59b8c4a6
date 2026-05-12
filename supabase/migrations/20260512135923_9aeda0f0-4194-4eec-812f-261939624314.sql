@@ -1,0 +1,1 @@
+UPDATE public.affiliates SET slug = 'm' WHERE name = 'Matheus' AND slug = 'z';
