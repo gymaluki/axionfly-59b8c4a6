@@ -115,7 +115,7 @@ export function Header({ className }: { className?: string }) {
 				{/* Right side buttons */}
 				<div className="hidden items-center gap-4 md:flex">
 					<Button variant="ghost" className="font-bold uppercase tracking-widest text-xs" onClick={() => navigate('/auth')}>Entrar</Button>
-					<Button variant="neon" className="shimmer-button font-bold uppercase tracking-widest text-xs px-6" onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}>Ver Planos</Button>
+					<Button variant="neon" className="shimmer-button font-bold uppercase tracking-widest text-xs px-6" onClick={() => navigate('/auth?isSignup=true')}>Criar Conta</Button>
 				</div>
 				<Button
 					size="icon"
