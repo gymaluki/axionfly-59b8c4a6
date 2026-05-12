@@ -200,13 +200,11 @@ const Dashboard = () => {
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {activeView === "prospeccao" && <ProspeccaoView />}
-                  {activeView === "sites" && <SitesView />}
-                  {activeView === "vendas" && <VendasView />}
-                  {activeView === "membros" && <MembrosView isAdmin={isAdmin} />}
-                  {activeView === "contrato" && <ContratoScriptView />}
+                  {activeView === "dashboard" && <DashboardHomeView userName={userName} />}
+                  {activeView === "aulas" && <CourseListView />}
+                  {activeView === "progresso" && <ProgressView />}
+                  {activeView === "lesson-player" && <LessonPlayerView />}
                   {activeView === "perfil" && <PerfilView />}
-                  {activeView === "extensao-lovable" && <ExtensaoLovableView />}
                   {activeView === "admin" && isAdmin && <AdminView />}
                 </motion.div>
               </AnimatePresence>
