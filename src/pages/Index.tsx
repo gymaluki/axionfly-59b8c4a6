@@ -17,6 +17,7 @@ const LovablePartnership = lazy(() => import("@/components/LovablePartnership"))
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
+import { resolveCheckoutUrl } from "@/lib/affiliates";
 
 // Lazy load heavy visual components
 const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
