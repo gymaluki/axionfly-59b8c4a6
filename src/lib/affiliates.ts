@@ -48,12 +48,12 @@ export const AFFILIATES: Record<string, Affiliate> = {
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=RSTFakbs",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
   },
-  matheus: {
-    slug: "s",
-    name: "Matheus",
+  matheus_n: {
+    slug: "n",
+    name: "Matheus N",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=Lghn3ieU",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=Lghn3ieU",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=LEGLH5Bd_",
+    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=LEGLH5Bd",
   },
 };
 
