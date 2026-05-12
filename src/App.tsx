@@ -5,6 +5,15 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
+import { captureAffiliateFromUrl } from "@/lib/affiliates";
+import { useEffect } from "react";
+
+const AffiliateTracker = () => {
+  useEffect(() => {
+    captureAffiliateFromUrl();
+  }, []);
+  return null;
+};
 
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -37,6 +46,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <AffiliateTracker />
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<Index />} />

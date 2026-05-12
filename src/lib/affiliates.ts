@@ -76,7 +76,8 @@ const DEFAULT_MONTHLY = "https://pay.cakto.com.br/6u886t8_849513";
 const DEFAULT_QUARTERLY = "https://pay.cakto.com.br/uqn993t";
 const DEFAULT_LIFETIME = "https://pay.cakto.com.br/wcv2cko_849541";
 
-const STORAGE_KEY = "axionfly_affiliate";
+export const STORAGE_KEY = "affiliate_ref";
+export const PLAN_STORAGE_KEY = "selected_plan";
 const TTL_DAYS = 30;
 
 interface StoredAffiliate {
@@ -85,30 +86,38 @@ interface StoredAffiliate {
 }
 
 /**
- * Lê ?aff= da URL atual e, se for um slug válido, salva em localStorage por 30 dias.
- * Chame uma vez quando a landing page carrega.
+ * Lê ?aff= da URL ou o pathname e, se for um slug válido, salva em localStorage por 30 dias.
  */
 export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
+    const pathname = window.location.pathname.replace(/^\/|\/$/g, ""); // remove slashes
     
-    // Lista de parâmetros que podem conter o slug (para suporte a links diretos como ?d=... ou ?n=...)
-    const possibleParams = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"];
-    let finalSlug = "";
+    // 1. Tenta pegar do pathname (ex: /n)
+    let finalSlug = pathname.split("/")[0]; // Pega apenas a primeira parte do path
+    
+    // Lista de slugs conhecidos para evitar capturar caminhos do sistema
+    const knownSlugs = Object.values(AFFILIATES).map(a => a.slug);
+    const knownKeys = Object.keys(AFFILIATES);
+    const allKnown = [...new Set([...knownSlugs, ...knownKeys])];
 
-    for (const p of possibleParams) {
-      const val = params.get(p);
-      if (val !== null) {
-        // Se o parâmetro existe mas está vazio (ex: ?d), o slug é o nome do parâmetro
-        finalSlug = val.trim().toLowerCase() || p;
-        break;
+    if (!allKnown.includes(finalSlug)) {
+      // 2. Se não for um slug conhecido no path, tenta nos query params
+      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"];
+      finalSlug = "";
+
+      for (const p of possibleParams) {
+        const val = params.get(p);
+        if (val !== null) {
+          finalSlug = val.trim().toLowerCase() || p;
+          break;
+        }
       }
     }
 
     if (!finalSlug) return;
     
-    // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
     const affiliate = Object.values(AFFILIATES).find(a => a.slug === finalSlug) || AFFILIATES[finalSlug];
     
     if (!affiliate) return;
@@ -119,7 +128,7 @@ export function captureAffiliateFromUrl(): void {
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch {
-    // ignora — localStorage indisponível
+    // ignore
   }
 }
 
@@ -146,36 +155,32 @@ export function getActiveAffiliate(): Affiliate | null {
  * Se houver afiliado ativo, devolve o link Cakto dele (com ?affiliate=...).
  * Caso contrário, devolve o link padrão.
  */
-export function resolveCheckoutUrl(plan: PlanKey): string {
-  // Verificamos se há um afiliado ativo no localStorage.
-  const aff = getActiveAffiliate();
+export function resolveCheckoutUrl(plan: PlanKey, affiliateSlug?: string | null): string {
+  // Se passou slug explicitamente, usa ele. Senão, tenta pegar do localStorage.
+  const aff = affiliateSlug 
+    ? (Object.values(AFFILIATES).find(a => a.slug === affiliateSlug) || AFFILIATES[affiliateSlug])
+    : getActiveAffiliate();
   
-  // MODIFICAÇÃO: Se não há parâmetro de afiliado na URL mas já temos um salvo no localStorage,
-  // continuamos usando ele. Só limpamos se o usuário vier de um link externo (sem ser do próprio domínio)
-  // e for tráfego direto para a home sem parâmetros.
-  if (typeof window !== "undefined") {
-    const params = new URLSearchParams(window.location.search);
-    const hasAffiliateParam = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"].some(p => params.has(p));
-    const isFromRedirect = params.has("from_redirect");
-    
-    const isDirectHome = window.location.pathname === "/";
-    const isExternalReferrer = document.referrer && !document.referrer.includes(window.location.host);
-    const isNoReferrer = !document.referrer;
-
-    // Se é acesso direto (sem referrer ou referrer externo) na home e NÃO tem parâmetro na URL e NÃO vem de um redirect interno
-    if (isDirectHome && (isExternalReferrer || isNoReferrer) && !hasAffiliateParam && !isFromRedirect) {
-      // Aqui é o único caso onde limpamos para garantir tráfego direto oficial
-      localStorage.removeItem(STORAGE_KEY);
-      if (plan === "monthly") return DEFAULT_MONTHLY;
-      if (plan === "quarterly") return DEFAULT_QUARTERLY;
-      return DEFAULT_LIFETIME;
-    }
-  }
-
   let baseUrl = "";
   if (plan === "monthly") baseUrl = aff ? aff.monthlyUrl : DEFAULT_MONTHLY;
   else if (plan === "quarterly") baseUrl = aff ? aff.quarterlyUrl : DEFAULT_QUARTERLY;
   else baseUrl = aff ? aff.lifetimeUrl : DEFAULT_LIFETIME;
 
   return baseUrl;
+}
+
+export function setSelectedPlan(plan: PlanKey): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(PLAN_STORAGE_KEY, plan);
+}
+
+export function getSelectedPlan(): PlanKey | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(PLAN_STORAGE_KEY) as PlanKey | null;
+}
+
+export function clearAffiliateData(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(PLAN_STORAGE_KEY);
 }
