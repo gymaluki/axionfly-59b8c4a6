@@ -111,8 +111,11 @@ const Auth = () => {
     const handleRedirect = async (session: any) => {
       if (!session) return;
       
-      await claimPendingAccess();
+      // Se estivermos em um fluxo de reset de senha, não redirecionamos automaticamente ainda
+      const isResetPassword = new URLSearchParams(location.search).get("reset_password");
+      if (isResetPassword) return;
 
+      await claimPendingAccess();
       handleFinalRedirect(session);
     };
 
@@ -131,11 +134,35 @@ const Auth = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate, redirectTo, paymentRedirect]);
+  }, [navigate, redirectTo, paymentRedirect, location.search]);
+
+  // Handle password reset logic
+  useEffect(() => {
+    const isResetPassword = new URLSearchParams(location.search).get("reset_password");
+    if (isResetPassword) {
+      setIsLogin(false); // Mostra o formulário de "cadastro" que servirá para nova senha
+      toast.info("Defina sua nova senha abaixo.");
+    }
+  }, [location.search]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    // Se estiver em fluxo de reset de senha
+    const isResetPassword = new URLSearchParams(location.search).get("reset_password");
+    if (isResetPassword) {
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) {
+        toast.error(error.message);
+        setLoading(false);
+        return;
+      }
+      toast.success("Senha alterada com sucesso! Fazendo login...");
+      navigate("/dashboard");
+      setLoading(false);
+      return;
+    }
 
     if (isLogin) {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -304,7 +331,28 @@ const Auth = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Senha</Label>
+                {isLogin && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!email) {
+                        toast.error("Digite seu email primeiro para recuperar a senha.");
+                        return;
+                      }
+                      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                        redirectTo: `${window.location.origin}/auth?reset_password=true`,
+                      });
+                      if (error) toast.error(error.message);
+                      else toast.success("Email de recuperação enviado!");
+                    }}
+                    className="text-xs text-primary hover:underline font-medium"
+                  >
+                    Esqueceu a senha?
+                  </button>
+                )}
+              </div>
               <Input
                 id="password"
                 type="password"
