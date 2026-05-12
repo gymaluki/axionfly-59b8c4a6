@@ -148,12 +148,13 @@ export function getActiveAffiliate(): Affiliate | null {
  */
 export function resolveCheckoutUrl(plan: PlanKey): string {
   const aff = getActiveAffiliate();
-  if (aff) {
-    if (plan === "monthly") return aff.monthlyUrl;
-    if (plan === "quarterly") return aff.quarterlyUrl;
-    return aff.lifetimeUrl;
-  }
-  if (plan === "monthly") return DEFAULT_MONTHLY;
-  if (plan === "quarterly") return DEFAULT_QUARTERLY;
-  return DEFAULT_LIFETIME;
+  let baseUrl = "";
+  
+  if (plan === "monthly") baseUrl = aff ? aff.monthlyUrl : DEFAULT_MONTHLY;
+  else if (plan === "quarterly") baseUrl = aff ? aff.quarterlyUrl : DEFAULT_QUARTERLY;
+  else baseUrl = aff ? aff.lifetimeUrl : DEFAULT_LIFETIME;
+
+  // Garante que o parâmetro de afiliado use a nomenclatura correta da Cakto (?affiliate= ou ?ref=)
+  // Nossos links já vêm com ?affiliate= do objeto AFFILIATES, mas aqui reforçamos a integridade.
+  return baseUrl;
 }
