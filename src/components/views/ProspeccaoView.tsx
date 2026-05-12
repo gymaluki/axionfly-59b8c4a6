@@ -635,9 +635,9 @@ const ProspeccaoView = () => {
                   }}
                 >
                   {loading ? (
-                    <><Loader2 size={14} className="animate-spin" /> Buscando...</>
+                    <><Loader2 size={14} className="animate-spin" /> {searchMode === "manual" ? "Abrindo..." : "Buscando..."}</>
                   ) : searchMode === "manual" ? (
-                    <><MapPin size={14} /> Abrir no Google</>
+                    <><MapPin size={14} /> Abrir no Google Maps</>
                   ) : (
                     <><Search size={14} /> Buscar Leads</>
                   )}
