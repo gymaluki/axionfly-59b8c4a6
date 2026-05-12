@@ -125,8 +125,13 @@ const Auth = () => {
       return;
     }
 
-    toast.success("Conta criada! Confirme seu email para entrar.");
-    setIsLogin(true);
+    toast.success("Conta criada com sucesso! Redirecionando...");
+    const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+    if (signInErr) {
+      setIsLogin(true);
+      setLoading(false);
+      return;
+    }
     setLoading(false);
   };
 
