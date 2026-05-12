@@ -48,12 +48,12 @@ export const AFFILIATES: Record<string, Affiliate> = {
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=RSTFakbs",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
   },
-  matheus: {
-    slug: "s",
-    name: "Matheus",
+  matheus_n: {
+    slug: "n",
+    name: "Matheus N",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=Lghn3ieU",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=Lghn3ieU",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=LEGLH5Bd_",
+    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=LEGLH5Bd",
   },
 };
 
@@ -78,7 +78,7 @@ export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
-    const slug = (params.get("aff") || params.get("ref") || params.get("d") || params.get("e") || params.get("o") || params.get("u") || params.get("s") || "").toLowerCase().trim();
+    const slug = (params.get("aff") || params.get("ref") || params.get("d") || params.get("e") || params.get("o") || params.get("u") || params.get("s") || params.get("n") || "").toLowerCase().trim();
     
     // Se usar ?d=... e não tiver valor, assume que é o slug correspondente
     let finalSlug = slug;
@@ -87,7 +87,8 @@ export function captureAffiliateFromUrl(): void {
       else if (params.has("e")) finalSlug = "e";
       else if (params.has("o")) finalSlug = "o";
       else if (params.has("u")) finalSlug = "u";
-      else if (params.has("s")) finalSlug = "s";
+        else if (params.has("s")) finalSlug = "s";
+        else if (params.has("n")) finalSlug = "n";
     }
     
     // Procura o afiliado pelo slug ou pelo ID da chave (para suportar legados)
