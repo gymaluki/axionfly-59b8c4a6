@@ -988,7 +988,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 <ColorPalettePicker
                   label="Cor Principal"
                   value={primaryColor}
