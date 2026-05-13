@@ -113,7 +113,54 @@ Deno.serve(async (req) => {
     }
 
     const NINETY_DAYS_MS = 90 * 24 * 60 * 60 * 1000;
+    // Captura o afiliado — a Cakto pode enviar no campo affiliate_id ou via parâmetro custom
+    const affiliateCode: string | null = 
+      data?.affiliate_id || 
+      data?.affiliate?.id || 
+      data?.affiliate?.code || 
+      data?.affiliate?.slug ||
+      null;
+
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+    // Mapeia o código de afiliado da Cakto para o nosso slug interno se necessário
+    let affiliateSlug: string | null = null;
+    if (affiliateCode) {
+      if (["Lghn3ieU", "LEGLH5Bd"].includes(affiliateCode)) {
+        affiliateSlug = "z";
+      } else if (["A73MAj5S", "KzuwSFCx"].includes(affiliateCode)) {
+        affiliateSlug = "u";
+      } else if (["ZsdtBDJP", "TSVMgq3q"].includes(affiliateCode)) {
+        affiliateSlug = "o";
+      } else if (["jbK39AUb", "QmFRRS9a"].includes(affiliateCode)) {
+        affiliateSlug = "y";
+      } else {
+        affiliateSlug = affiliateCode.toLowerCase();
+      }
+    }
+
+    // Registra a venda na tabela platform_sales para o Dashboard
+    if (transactionId) {
+      const { error: saleError } = await supabase
+        .from("platform_sales")
+        .upsert(
+          {
+            transaction_id: String(transactionId),
+            email: email.toLowerCase(),
+            amount: parseFloat(data?.amount || data?.total_amount || data?.price || body?.amount || "0"),
+            status: subscriptionStatus === "active" ? "paid" : status,
+            payment_method: (data?.payment_method || data?.method || body?.method || "").toString().toLowerCase() || "unknown",
+            plan: "quarterly",
+            affiliate_slug: affiliateSlug,
+            payload: body,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "transaction_id" }
+        );
+      
+      if (saleError) console.error("Erro ao registrar venda trimestral:", saleError);
+    }
+
 
     // Localiza usuário pelo email
     const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
@@ -137,8 +184,9 @@ Deno.serve(async (req) => {
               status: "active",
               payment_provider: "cakto",
               transaction_id: String(transactionId || ""),
-              plan: "quarterly",
-              expires_at: expiresAt,
+               plan: "quarterly",
+               affiliate_slug: affiliateSlug,
+               expires_at: expiresAt,
             },
             { onConflict: "email" }
           );
@@ -172,9 +220,10 @@ Deno.serve(async (req) => {
           user_id: user.id,
           status: subscriptionStatus,
           payment_provider: "cakto",
-          transaction_id: String(transactionId || ""),
-          plan: "quarterly",
-          expires_at: newExpiresAt,
+           transaction_id: String(transactionId || ""),
+           plan: "quarterly",
+           affiliate_slug: affiliateSlug,
+           expires_at: newExpiresAt,
         },
         { onConflict: "user_id" }
       );
