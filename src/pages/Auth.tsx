@@ -186,7 +186,12 @@ const Auth = () => {
     );
 
     if (fnError || (fnData && fnData.error)) {
-      toast.error(fnData?.error ?? fnError?.message ?? "Erro ao criar conta.");
+      const rawMsg = (fnData?.error ?? fnError?.message ?? "").toString();
+      console.error("Signup error:", { fnError, fnData });
+      const friendly = /authoriz|autoriza|unauthor|forbidden|403|401/i.test(rawMsg)
+        ? "Falha de autorização ao criar a conta. Tente novamente em alguns segundos ou entre com o Google logo abaixo."
+        : rawMsg || "Não foi possível criar sua conta agora. Tente novamente ou entre com o Google.";
+      toast.error(friendly);
       setLoading(false);
       return;
     }
@@ -195,7 +200,8 @@ const Auth = () => {
       // Já está confirmado — faz login direto
       const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
       if (signInErr) {
-        toast.error(signInErr.message);
+        console.error("Master auto-login error:", signInErr);
+        toast.error("Conta criada, mas o login automático falhou. Tente entrar com o Google.");
         setLoading(false);
         return;
       }
@@ -206,10 +212,10 @@ const Auth = () => {
     toast.success("Conta criada com sucesso! Redirecionando...");
     // Auto-login after signup
     const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
-    
+
     if (signInErr) {
       console.error("Auto-login error:", signInErr);
-      // If auto-login fails, try one more time or redirect to login
+      toast.error("Conta criada, mas o login automático falhou. Faça login manualmente ou use o Google.");
       setIsLogin(true);
       setLoading(false);
       return;

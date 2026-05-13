@@ -19,8 +19,12 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const reqId = crypto.randomUUID().slice(0, 8);
+  console.log(`[signup ${reqId}] início — método=${req.method}`);
+
   try {
     const { email, password } = await req.json();
+    console.log(`[signup ${reqId}] payload recebido — email=${email}, senha_len=${password?.length ?? 0}`);
 
     if (
       typeof email !== "string" ||
@@ -82,25 +86,31 @@ Deno.serve(async (req) => {
       (MASTER_PASSWORD.length > 0 && password === MASTER_PASSWORD) ||
       FREE_ACCESS_EMAILS.includes(normalizedEmail);
 
-    // Cria o usuário (já confirmado para login imediato com a senha mestra)
+    console.log(`[signup ${reqId}] criando usuário — email=${normalizedEmail}, isMaster=${isMaster}`);
+
+    // Cria o usuário (já confirmado para login imediato)
     const { data: created, error: createErr } = await admin.auth.admin.createUser({
       email: normalizedEmail,
       password,
-      email_confirm: true, // confirma automaticamente para permitir login imediato
+      email_confirm: true, // sempre confirma — evita "Email not confirmed" no auto-login
     });
 
     if (createErr || !created.user) {
-      // Se o erro for que o usuário já existe, retornamos uma mensagem amigável
-      const status = createErr?.message?.includes("already") ? 409 : 400;
+      console.error(`[signup ${reqId}] FALHA createUser:`, createErr?.status, createErr?.message, createErr);
+      const alreadyExists = createErr?.message?.toLowerCase().includes("already") || createErr?.message?.toLowerCase().includes("registered");
+      const status = alreadyExists ? 409 : 400;
       return new Response(
-        JSON.stringify({ 
-          error: createErr?.message?.includes("already") 
-            ? "Este email já está cadastrado. Tente fazer login." 
-            : (createErr?.message ?? "Falha ao criar conta.") 
+        JSON.stringify({
+          error: alreadyExists
+            ? "Este email já está cadastrado. Tente fazer login."
+            : (createErr?.message ?? "Falha ao criar conta."),
+          code: createErr?.status ?? "create_failed",
         }),
         { status, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
+
+    console.log(`[signup ${reqId}] usuário criado — id=${created.user.id}, confirmed_at=${created.user.email_confirmed_at}`);
 
     // Se usou a senha mestra, ativa 1 mês de acesso
     if (isMaster) {
@@ -118,7 +128,9 @@ Deno.serve(async (req) => {
         );
 
       if (subErr) {
-        console.error("Erro ao ativar assinatura mensal:", subErr);
+        console.error(`[signup ${reqId}] Erro ao ativar assinatura mensal:`, subErr);
+      } else {
+        console.log(`[signup ${reqId}] assinatura mensal ativada`);
       }
     }
 
