@@ -134,6 +134,8 @@ Deno.serve(async (req) => {
         affiliateSlug = "u";
       } else if (["ZsdtBDJP", "TSVMgq3q"].includes(affiliateCode)) {
         affiliateSlug = "o";
+      } else if (["jbK39AUb", "QmFRRS9a"].includes(affiliateCode)) {
+        affiliateSlug = "y";
       } else {
         affiliateSlug = affiliateCode.toLowerCase();
       }
