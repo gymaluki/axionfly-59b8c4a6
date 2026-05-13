@@ -987,25 +987,17 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Cor Principal</label>
-                  <Input
-                    placeholder="Ex: dourado, azul escuro"
-                    value={primaryColor}
-                    onChange={(e) => setPrimaryColor(e.target.value)}
-                    className="bg-secondary/50 border-border"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Cor Secundária</label>
-                  <Input
-                    placeholder="Ex: cinza, verde-água"
-                    value={secondaryColor}
-                    onChange={(e) => setSecondaryColor(e.target.value)}
-                    className="bg-secondary/50 border-border"
-                  />
-                </div>
+              <div className="space-y-4">
+                <ColorPalettePicker
+                  label="Cor Principal"
+                  value={primaryColor}
+                  onChange={setPrimaryColor}
+                />
+                <ColorPalettePicker
+                  label="Cor Secundária"
+                  value={secondaryColor}
+                  onChange={setSecondaryColor}
+                />
               </div>
 
               <div className="space-y-2">
