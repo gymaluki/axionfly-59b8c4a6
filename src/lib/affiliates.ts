@@ -69,6 +69,13 @@ export const AFFILIATES: Record<string, Affiliate> = {
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=ivzz5ooZ",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=Y36tx3VC",
   },
+  yan: {
+    slug: "y",
+    name: "Yan",
+    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=QmFRRS9a",
+    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=QmFRRS9a",
+    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=jbK39AUb",
+  },
 };
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
@@ -104,7 +111,7 @@ export function captureAffiliateFromUrl(): void {
 
     if (!allKnown.includes(finalSlug)) {
       // 2. Se não for um slug conhecido no path, tenta nos query params
-      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv"];
+      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "s", "n", "jv", "y"];
       finalSlug = "";
 
       for (const p of possibleParams) {
