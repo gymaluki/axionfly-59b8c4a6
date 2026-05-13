@@ -19,8 +19,12 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const reqId = crypto.randomUUID().slice(0, 8);
+  console.log(`[signup ${reqId}] início — método=${req.method}`);
+
   try {
     const { email, password } = await req.json();
+    console.log(`[signup ${reqId}] payload recebido — email=${email}, senha_len=${password?.length ?? 0}`);
 
     if (
       typeof email !== "string" ||
