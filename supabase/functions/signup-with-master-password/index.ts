@@ -86,7 +86,7 @@ Deno.serve(async (req) => {
     const { data: created, error: createErr } = await admin.auth.admin.createUser({
       email: normalizedEmail,
       password,
-      email_confirm: isMaster, // master = sem necessidade de verificação
+      email_confirm: true, // confirma automaticamente para permitir login imediato
     });
 
     if (createErr || !created.user) {
