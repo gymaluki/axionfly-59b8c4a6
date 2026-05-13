@@ -317,6 +317,13 @@ const Auth = () => {
             <div className="relative flex justify-center text-xs">
               <span className="bg-card px-3 text-muted-foreground">ou continue com email</span>
             </div>
+
+            {/* Mensagem de ajuda */}
+            <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 text-center">
+              <p className="text-xs text-primary font-medium">
+                Se der erro ao entrar, tente usar o botão "Continuar com Google" acima.
+              </p>
+            </div>
           </div>
 
           {/* Email/Password Form */}
