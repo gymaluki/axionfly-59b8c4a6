@@ -78,17 +78,30 @@ const openExternalLink = (url: string) => {
   if (w) w.opener = null;
 };
 
-const ProspeccaoView = () => {
+interface ProspeccaoViewProps {
+  lockedNicho?: string; // label exato do nicho (ex.: "Pizzarias"); quando fornecido, esconde a grade de nichos
+}
+
+const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [cidades, setCidades] = useState<string[]>([]);
   const [loadingCidades, setLoadingCidades] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("");
+  const [activeFilter, setActiveFilter] = useState(lockedNicho || "");
   const [searchMode, setSearchMode] = useState<"automatic" | "manual">("automatic");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [manualRedirectUrl, setManualRedirectUrl] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
+
+  // Mantém o filtro travado em sincronia caso o pai mude o nicho
+  useEffect(() => {
+    if (lockedNicho && lockedNicho !== activeFilter) {
+      setActiveFilter(lockedNicho);
+      setResults([]);
+      setSearched(false);
+    }
+  }, [lockedNicho]); // eslint-disable-line
 
   useEffect(() => {
     const load = async () => {
@@ -407,7 +420,8 @@ const ProspeccaoView = () => {
         </div>
       </div>
 
-      {/* GRID DE NICHOS */}
+      {/* GRID DE NICHOS — escondido quando o nicho vem travado do quiz */}
+      {!lockedNicho && (
       <div className="px-6 py-6">
         <div
           className="grid gap-2"
@@ -471,6 +485,7 @@ const ProspeccaoView = () => {
           })}
         </div>
       </div>
+      )}
 
       {/* SEÇÃO DE RESULTADOS (acordeão) */}
       <AnimatePresence initial={false}>
@@ -510,15 +525,17 @@ const ProspeccaoView = () => {
                   </span>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={handleClearNicho}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 hover:border-white/20 transition-all group"
-                style={{ fontSize: 12, color: "#6B7280", background: "transparent" }}
-              >
-                <RotateCcw size={12} className="group-hover:text-white transition-colors" />
-                <span className="group-hover:text-white transition-colors">Reiniciar pesquisa</span>
-              </button>
+              {!lockedNicho && (
+                <button
+                  type="button"
+                  onClick={handleClearNicho}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 hover:border-white/20 transition-all group"
+                  style={{ fontSize: 12, color: "#6B7280", background: "transparent" }}
+                >
+                  <RotateCcw size={12} className="group-hover:text-white transition-colors" />
+                  <span className="group-hover:text-white transition-colors">Reiniciar pesquisa</span>
+                </button>
+              )}
             </div>
 
             {/* MODOS DE BUSCA */}

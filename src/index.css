@@ -397,10 +397,11 @@ div[style*="Edit with Lovable"],
 }
 .quiz-shell .niche-card {
   position: relative;
-  height: 52px;
-  padding: 0 14px;
+  min-height: 64px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   text-align: left;
   gap: 10px;
   border-radius: 10px;
