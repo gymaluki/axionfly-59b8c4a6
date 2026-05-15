@@ -133,7 +133,8 @@ const DesignStylesGuide = () => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
+  </>
   );
 };
 

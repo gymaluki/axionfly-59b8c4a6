@@ -19,7 +19,8 @@ const PedidosDemo = () => {
           whatsappNumber="5511999999999"
         />
       </div>
-    </>
+    </div>
+  </>
   );
 };
 

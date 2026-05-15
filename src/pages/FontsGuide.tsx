@@ -167,7 +167,8 @@ const FontsGuide = () => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
+  </>
   );
 };
 
