@@ -662,8 +662,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           </div>
         );
 
-      // ---------- ETAPA 3 — VISUAL ----------
-      case 2:
+      // ---------- ETAPA 4 — VISUAL ----------
+      case 3:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
