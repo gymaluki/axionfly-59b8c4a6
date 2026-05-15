@@ -70,7 +70,16 @@ const DesignStylesGuide = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <Helmet>
+        <title>Guia de Estilos de Design — AxionFly</title>
+        <meta name="description" content="Conheça os estilos de design de conversão, catálogo e local-first da AxionFly para criar sites que convertem." />
+        <meta property="og:title" content="Guia de Estilos de Design — AxionFly" />
+        <meta property="og:description" content="Conheça os estilos de design de conversão, catálogo e local-first da AxionFly." />
+        <meta property="og:url" content="https://axionfly.lovable.app/guia-design" />
+        <link rel="canonical" href="https://axionfly.lovable.app/guia-design" />
+      </Helmet>
+      <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <button
           onClick={() => navigate(-1)}
@@ -124,7 +133,7 @@ const DesignStylesGuide = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
