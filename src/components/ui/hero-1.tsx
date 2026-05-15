@@ -262,7 +262,7 @@ export function HeroSection() {
               <span className="text-xl font-black tracking-tighter text-foreground">Lovable</span>
             </div>
             <div className="flex items-center gap-2">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" width="24" height="24" loading="lazy" decoding="async" className="w-6 h-6" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" className="w-6 h-6" />
               <span className="text-xl font-bold tracking-tight text-foreground/80">Google Maps</span>
             </div>
             <div className="flex items-center gap-2">
