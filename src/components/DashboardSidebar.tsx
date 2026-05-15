@@ -1,4 +1,4 @@
-import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle, Sparkles, ExternalLink, Zap } from "lucide-react";
+import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle, Sparkles, ExternalLink, Zap, LayoutDashboard, Rocket } from "lucide-react";
 import axionflyLogo from "@/assets/axionfly-logo.webp";
 import { cn } from "@/lib/utils";
 import {
@@ -35,11 +35,11 @@ interface DashboardSidebarProps {
 }
 
 const navItems: { id: View; label: string; icon: React.ElementType }[] = [
-  { id: "sites", label: "Criador de Sites", icon: Code2 },
-  { id: "membros", label: "Área de Membros", icon: PlayCircle },
-  { id: "vendas", label: "Minhas Vendas", icon: ShoppingBag },
+  { id: "vendas", label: "Dashboard", icon: LayoutDashboard },
+  { id: "sites", label: "Estúdio de Sites & Leads", icon: Rocket },
   { id: "contrato", label: "Contrato & Script", icon: FileText },
   { id: "extensao-lovable", label: "Extensão Lovable", icon: Sparkles },
+  { id: "membros", label: "Área de Membros", icon: PlayCircle },
   { id: "perfil", label: "Meu Perfil", icon: UserCircle },
 ];
 

@@ -22,17 +22,10 @@ const steps: Step[] = [
   },
   {
     icon: Globe,
-    title: "Criador de Sites com IA",
+    title: "Estúdio de Sites & Leads",
     description:
-      "Responda algumas perguntas sobre o negócio do cliente e a IA gera um prompt otimizado. Depois é só escolher entre 20 plataformas (Lovable, Bolt, v0...) que abrem automaticamente com o prompt copiado.",
-    highlight: "Crie sites profissionais em minutos",
-  },
-  {
-    icon: Search,
-    title: "Busca de Leads",
-    description:
-      "Encontre potenciais clientes por nicho e localização. A ferramenta usa IA para buscar empresas sem site ou com site ruim — perfeitas para você abordar.",
-    highlight: "Prospecte sem esforço",
+      "Tudo num só lugar: encontre clientes potenciais por nicho e localização e, no mesmo fluxo, gere um site profissional com IA. Responda algumas perguntas e a ferramenta cria o prompt otimizado para abrir nas 20+ plataformas suportadas (Lovable, Bolt, v0...).",
+    highlight: "Prospecte e crie sites em minutos",
   },
   {
     icon: Users,
@@ -43,7 +36,7 @@ const steps: Step[] = [
   },
   {
     icon: DollarSign,
-    title: "Minhas Vendas",
+    title: "Dashboard",
     description:
       "Cadastre cada cliente fechado, acompanhe seu faturamento, status de pagamento e veja seu progresso mensal em tempo real.",
     highlight: "Controle financeiro completo",

@@ -179,7 +179,7 @@ const VendasView = () => {
     >
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Minhas Vendas</h2>
+          <h2 className="text-2xl font-bold text-foreground">Dashboard</h2>
           <p className="text-muted-foreground text-sm mt-1">Registre e acompanhe todas as suas vendas</p>
         </div>
         <Button variant="neon" onClick={() => { resetForm(); setShowForm(true); }}>

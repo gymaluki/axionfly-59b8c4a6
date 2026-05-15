@@ -71,10 +71,10 @@ class DashboardViewErrorBoundary extends Component<
 }
 
 const viewTitles: Record<View, string> = {
-  sites: "Criador de Sites",
+  sites: "Estúdio de Sites & Leads",
   prospeccao: "Busca de Leads",
   membros: "Área de Membros",
-  vendas: "Minhas Vendas",
+  vendas: "Dashboard",
   contrato: "Contrato & Script",
   perfil: "Meu Perfil",
   "extensao-lovable": "Extensão Lovable",
