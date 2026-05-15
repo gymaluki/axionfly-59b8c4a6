@@ -30,7 +30,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: "es2020",
     cssCodeSplit: true,
-    cssMinify: "lightningcss" as any,
+    cssMinify: true,
     minify: "esbuild",
     sourcemap: false,
     reportCompressedSize: false,
