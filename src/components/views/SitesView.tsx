@@ -585,7 +585,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
               Use a busca para achar negócios reais do seu nicho. Quando terminar, clique em <span style={{ color: "var(--q-accent-bright)", fontWeight: 600 }}>Avançar</span> para criar o site.
             </p>
             <div className="leads-wrapper quiz-prospeccao-wrap">
-              <ProspeccaoView />
+              <ProspeccaoView lockedNicho={quizNichoToProspeccaoLabel[niche]} />
             </div>
             <style>{`
               .quiz-prospeccao-wrap .prospeccao-root { min-height: 0 !important; margin: 0 !important; }
