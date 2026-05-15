@@ -597,9 +597,15 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/5 bg-[#0a0a14] p-2 md:p-4 -mx-2">
+            <div className="rounded-2xl border border-white/5 bg-[#0a0a14] p-2 md:p-4 -mx-2 quiz-prospeccao-wrap">
               <ProspeccaoView />
             </div>
+            <style>{`
+              .quiz-prospeccao-wrap .prospeccao-root { min-height: 0 !important; margin: 0 !important; }
+              .quiz-prospeccao-wrap .pp-scroll { max-height: none !important; overflow: visible !important; }
+              .quiz-prospeccao-wrap ::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
+              .quiz-prospeccao-wrap * { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+            `}</style>
           </div>
         );
 
