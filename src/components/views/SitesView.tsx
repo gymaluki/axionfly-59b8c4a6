@@ -388,10 +388,11 @@ const simpleCtaOptions = [
   { value: "agendar",    label: "Agendar Horário" },
 ];
 
-const TOTAL_STEPS = 5; // 0:Nicho 1:Negócio 2:Visual 3:Contato 4:Revisão
+const TOTAL_STEPS = 6; // 0:Nicho 1:Leads 2:Negócio 3:Visual 4:Contato 5:Revisão
 
 const stepMeta = [
   { icon: Store,    label: "Nicho" },
+  { icon: Search,   label: "Leads" },
   { icon: Type,     label: "Negócio" },
   { icon: Palette,  label: "Visual" },
   { icon: MapPin,   label: "Contato" },
