@@ -36,157 +36,157 @@ interface NicheTemplate {
 
 const nicheTemplates: Record<string, NicheTemplate> = {
   barbearia: {
-    label: "🪒 Barbearia",
+    label: " Barbearia",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma barbearia chamada "${name}". Visual premium e sofisticado com fundo escuro (tons de cinza escuro/quase preto), acentos em ${primary || "dourado (gold gradient)"}. Cor secundária: ${secondary || "cinza escuro"}. Use a fonte Playfair Display para títulos e Raleway para corpo de texto. Seções: Hero fullscreen com imagem de barbearia premium e título "Estilo & Tradição" com gradiente ${primary || "dourado"}, botão "Agende seu Horário". Seção "Nossos Serviços" com 3 cards (Corte Masculino R$60, Barba R$45, Tratamento Capilar R$80 — cada um com imagem, descrição e preço). Seção "Sobre Nós" com texto sobre tradição e excelência, com estatísticas (15+ anos de experiência, 10.000+ clientes atendidos, 5 barbeiros especialistas, nota 4.9 de avaliação). Seção "Contato" com informações (endereço, telefone, horário de funcionamento e formulário). Footer simples. Animações suaves com framer-motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   pizzaria: {
-    label: "🍕 Pizzaria",
+    label: " Pizzaria",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma pizzaria chamada "${name}". Visual quente e acolhedor com fundo escuro (tons de preto e cinza escuro), acentos em ${primary || "vermelho queimado"} e ${secondary || "laranja"}. Use fontes display bold para títulos e uma fonte corpo clean. Seções: Hero com imagem de pizza artesanal saindo do forno, seção "Cardápio" com cards de pizzas (Margherita, Pepperoni, Quatro Queijos, Calabresa — com preço e descrição), seção "Sobre Nós" contando a história da pizzaria com estatísticas (anos de tradição, pizzas por mês, avaliações 5 estrelas), seção "Contato" com endereço, telefone, horário de funcionamento e formulário de pedido/reserva. Footer simples. Animações suaves com framer-motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   "fine-dining": {
-    label: "🍷 Restaurante Fine Dining",
+    label: " Restaurante Fine Dining",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site de restaurante fine dining chamado "${name}" com tema escuro (fundo #1a1410), acentos ${primary || "dourados"}, cor secundária ${secondary || "bordô"}, tipografia Cormorant Garamond + Raleway. Seções: hero fullscreen com imagem do restaurante, cardápio com pratos alternados (filé, pasta, sobremesa) com fotos e preços, sobre com foto do chef e estatísticas (anos, clientes, avaliação), contato com reservas/endereço/horário, navbar fixa com blur e botão de reserva, footer elegante. Divisores dourados em gradiente entre seções. Animações suaves com framer-motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   "restaurante-bairro": {
-    label: "🍲 Restaurante de Bairro",
+    label: " Restaurante de Bairro",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site de restaurante de bairro acolhedor chamado '${name}'. Tons ${primary || "terrosos (terracotta, amarelo quente, creme)"}, cor secundária ${secondary || "amarelo quente"}, tipografia Merriweather + Open Sans. Hero com fachada do restaurante, badge 'desde 1998', botões de cardápio e WhatsApp. Cardápio com cards de feijoada/picanha/moqueca com fotos, estrelas, tags e preços. Seção sobre com foto do interior rústico, história da fundadora e ícones (tradição, família, caseiro, amor). Contato com telefone, WhatsApp, endereço e horário. Footer simples. Estilo casual, emojis, linguagem calorosa.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   clinica: {
-    label: "🦷 Clínica Odontológica",
+    label: " Clínica Odontológica",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para clínica odontológica chamado '${name}'. Use ${primary || "azul claro"} como cor primária, ${secondary || "verde-água"} como accent, fundo branco/cinza claro, tipografia Plus Jakarta Sans. Faça um hero split com texto à esquerda e foto do consultório à direita, com badges de biossegurança, CRO e horários flexíveis. Seção de serviços com cards contendo foto e ícone para clareamento dental, ortodontia invisível e implantes dentários, mais um grid de serviços extras (limpeza, odontopediatria, scanner 3D). Seção sobre a dentista com foto profissional, CRO, formação USP/UNICAMP, e estatísticas (pacientes, avaliação). Seção de depoimentos de pacientes com estrelas e iniciais. Seção de contato com botões de WhatsApp, telefone e Instagram, mais endereço e horário. Navbar fixa com logo e botão de agendar. Footer com CRO. Design profissional, limpo e que transmita confiança.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   petshop: {
-    label: "🐾 Pet Shop",
+    label: " Pet Shop",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site de pet shop chamado "${name}" com estética vibrante, acolhedora e playful. Paleta de cores quentes baseada em ${primary || "coral (#E8734A)"} como cor primária e ${secondary || "âmbar dourado (#E8A644)"} como secundária, com acentos em rosa, azul, verde, amarelo e lavanda sobre fundo creme claro. Tipografia Fredoka (display/headings — arredondada e divertida) + Nunito (body — limpa e legível). Bordas bem arredondadas. Animações com Framer Motion. Estrutura: Navbar fixa com blur, logo com ícone de cachorro, carrinho com badge. Hero full-height com grid 2 colunas (texto + imagem com badges flutuantes). Seção Serviços com 6 cards. Seção Produtos com 4 cards. Seção Depoimentos com 3 cards. CTA com gradiente e patinhas flutuantes. Footer escuro com 4 colunas. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   sobrancelhas: {
-    label: "✨ Design de Sobrancelhas",
+    label: " Design de Sobrancelhas",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site one-page para um estúdio de design de sobrancelhas chamado "${name}". Visual elegante e feminino com tons de ${primary || "creme e dourado"} e ${secondary || "rosé"}. Use Playfair Display para títulos e Raleway para corpo de texto. Seções: Navbar fixa com logo, links (Serviços, Sobre, Contato) e botão "Agendar". Hero com imagem de fundo de um salão de beleza luxuoso, título "Design de Sobrancelhas", subtítulo e botão CTA. Serviços com 3 cards: Microblading (R$350), Design Personalizado (R$80) e Micropigmentação (R$450). Sobre com texto sobre 8+ anos de experiência, estatísticas. Contato com cards de WhatsApp, Instagram, Endereço e Horário. Footer elegante. Design responsivo com animações suaves.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   mecanica: {
-    label: "🔧 Mecânica Automotiva",
+    label: " Mecânica Automotiva",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para uma mecânica automotiva chamada "${name}". Tema escuro industrial com acentos em ${primary || "âmbar/laranja"}, cor secundária ${secondary || "cinza escuro"}. Tipografia Oswald para títulos e Inter para corpo. Animações suaves com Framer Motion. Inclui: navbar fixa, hero fullscreen com imagem de oficina, seção de 6 serviços, seção Sobre Nós com estatísticas, formulário de contato e rodapé. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   hamburgueria: {
-    label: "🍔 Hamburgueria",
+    label: " Hamburgueria",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site one-page premium para uma hamburgueria chamada "${name}", com visual impactante, moderno e apetitoso, estilo editorial urbano com clima noturno. Paleta com fundo escuro, tons ${primary || "âmbar e laranja queimado"}, ${secondary || "cobre e neutros elegantes"}. Tipografia marcante. Seções: Header fixo, Hero com título grande e CTAs, Cardápio com 6 cards elegantes, Seção Sobre, Estatísticas, CTA forte, Contato e Footer. Animações suaves. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   acaiteria: {
-    label: "🫐 Açaiteria",
+    label: " Açaiteria",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma açaiteria chamada "${name}". Estética tropical e vibrante com paleta baseada em ${primary || "roxo profundo do açaí"}, ${secondary || "verde amazônico"} e dourado como acento. Tipografia Playfair Display para títulos e DM Sans para corpo. Seções: Hero, Cardápio com 3 cards de produtos, Sobre nós com estatísticas, Contato. Footer elegante. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   lavarapido: {
-    label: "🚗 Lava-Rápido",
+    label: " Lava-Rápido",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para um lava-rápido premium chamado "${name}". Tema escuro e sofisticado com acentos em ${primary || "azul neon e ciano"}, cor secundária ${secondary || "cinza escuro metálico"}. Seções: Navbar fixa, Hero fullscreen, Seção Serviços com 6 cards, Seção Planos & Preços com 3 cards, Seção Contato, Footer. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   assistencia: {
-    label: "🔧 Assistência Técnica",
+    label: " Assistência Técnica",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site de uma página para uma assistência técnica de celulares e computadores chamada "${name}". Tema escuro com acentos em ${primary || "azul elétrico"} e ${secondary || "verde-azulado"}. Seções: Header fixo, Hero com imagem de bancada, Seção Serviços com 8 cards, Seção Sobre Nós com estatísticas, Seção Contato com formulário. Footer minimalista. Animações com Framer Motion, glassmorphism. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   academia: {
-    label: "🏋️ Academia",
+    label: " Academia",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma academia chamada "${name}". Tema escuro e energético com acentos em ${primary || "vermelho e laranja"}, cor secundária ${secondary || "cinza escuro"}. Seções: Navbar fixa, Hero fullscreen, Seção Modalidades com cards, Seção Planos com 3 opções, Seção Sobre, Contato e Footer. Animações com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   advogado: {
-    label: "⚖️ Escritório de Advocacia",
+    label: " Escritório de Advocacia",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para um escritório de advocacia chamado "${name}". Visual sóbrio e profissional com fundo escuro, acentos em ${primary || "dourado"} e ${secondary || "azul marinho"}. Seções: Navbar fixa, Hero, Áreas de Atuação com cards, Seção Sobre com estatísticas, Depoimentos, Contato e Footer elegante. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   imobiliaria: {
-    label: "🏠 Imobiliária",
+    label: " Imobiliária",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma imobiliária chamada "${name}". Visual moderno e sofisticado com fundo claro, acentos em ${primary || "azul escuro"} e ${secondary || "dourado"}. Seções: Navbar fixa, Hero com busca de imóveis, Seção Destaques com 4 cards de imóveis, Seção Serviços, Seção Sobre com estatísticas, Contato e Footer. Animações suaves. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   salaobeleza: {
-    label: "💇 Salão de Beleza",
+    label: " Salão de Beleza",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para um salão de beleza chamado "${name}". Visual elegante e feminino com tons de ${primary || "rosa e dourado"}, cor secundária ${secondary || "nude e creme"}. Seções: Navbar fixa, Hero, Seção Serviços com cards, Seção Sobre, Depoimentos, Contato e Footer elegante. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   contabilidade: {
-    label: "📊 Contabilidade",
+    label: " Contabilidade",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para um escritório de contabilidade chamado "${name}". Visual profissional e confiável com fundo escuro, acentos em ${primary || "verde escuro"} e ${secondary || "azul"}. Seções: Navbar fixa, Hero, Seção Serviços com cards, Seção Sobre com estatísticas, Depoimentos, Contato e Footer. Animações suaves. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   estetica: {
-    label: "✨ Estética / Depilação",
+    label: " Estética / Depilação",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para um estúdio de depilação e estética chamado "${name}". Paleta de tons de creme (#f7f3ed fundo), ${primary || "dourado (hsl 38° 45% 60%)"} como acento, ${secondary || "charcoal escuro"} para texto. Fontes Playfair Display (headings) + Raleway (body). Glass cards com backdrop-blur. Seções: Navbar fixa, Hero fullscreen, Seção Serviços com cards, Seção Preços com 3 planos, Depoimentos, Contato e Footer elegante. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   marmitaria: {
-    label: "🍱 Marmitaria",
+    label: " Marmitaria",
     buildPrompt: (name, primary, secondary, features) =>
-      `Crie um site landing page para uma marmitaria chamada "${name}". Visual acolhedor e caseiro com fundo claro, tons de ${primary || "verde natural e terracota"}, cor secundária ${secondary || "amarelo quente"}. Seções: Navbar com logo, Hero com tag "🍽️ Comida de verdade, feita com amor", Seção Cardápio com cards de marmitas, Seção Sobre com diferenciais, Seção Contato com formulário e Footer simples. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+      `Crie um site landing page para uma marmitaria chamada "${name}". Visual acolhedor e caseiro com fundo claro, tons de ${primary || "verde natural e terracota"}, cor secundária ${secondary || "amarelo quente"}. Seções: Navbar com logo, Hero com tag " Comida de verdade, feita com amor", Seção Cardápio com cards de marmitas, Seção Sobre com diferenciais, Seção Contato com formulário e Footer simples. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   idiomas: {
-    label: "🌍 Escola de Idiomas",
+    label: " Escola de Idiomas",
     buildPrompt: (name, primary, secondary, features) =>
-      `Crie um site landing page para uma escola de idiomas chamada "${name}". Visual moderno e educacional com fundo claro, acentos em ${primary || "azul vibrante"} e ${secondary || "verde-esmeralda"}. Seções: Navbar, Hero com badge "✨ Matrículas abertas 2026", Seção Cursos com cards de Inglês e Espanhol, Seção Sobre com 6 diferenciais, Seção Depoimentos, Seção Preços com 3 planos e Footer. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+      `Crie um site landing page para uma escola de idiomas chamada "${name}". Visual moderno e educacional com fundo claro, acentos em ${primary || "azul vibrante"} e ${secondary || "verde-esmeralda"}. Seções: Navbar, Hero com badge " Matrículas abertas 2026", Seção Cursos com cards de Inglês e Espanhol, Seção Sobre com 6 diferenciais, Seção Depoimentos, Seção Preços com 3 planos e Footer. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   fotografo: {
-    label: "📸 Fotógrafo",
+    label: " Fotógrafo",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site portfolio para um fotógrafo chamado "${name}". Visual minimalista e artístico com fundo escuro, acentos em ${primary || "branco e cinza claro"}, cor secundária ${secondary || "cinza escuro"}. Seções: Navbar minimalista com iniciais, Hero fullscreen com título "Fotografia Autoral" e botão "Ver Portfolio", Galeria com grid de 6 categorias (Paisagens, Urbano, Casamentos, Arquitetura, Fashion, Documental), Seção Sobre com estatísticas (projetos, anos, prêmios), Seção Contato com formulário e links de redes sociais, Footer elegante. Tipografia fina e espaçosa. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   "marketing-digital": {
-    label: "📈 Marketing Digital",
+    label: " Marketing Digital",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma agência de marketing digital chamada "${name}". Visual moderno e profissional com fundo escuro, acentos em ${primary || "azul elétrico"} e ${secondary || "roxo vibrante"}. Seções: Navbar fixa com botão "Fale Conosco", Hero com badge "Transforme seu negócio digital" e título "Marketing Digital que Converte", Seção Serviços com 6 cards (SEO, Tráfego Pago, Branding, Social Media, Email Marketing, Analytics), Estatísticas (350+ clientes, 12M+ leads, 98% satisfação, 5x ROI), Seção Depoimentos com 3 clientes, CTA "Pronto para escalar?" com botão de consultoria gratuita, Footer com links sociais. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   "artes-marciais": {
-    label: "🥊 Academia de Artes Marciais",
+    label: " Academia de Artes Marciais",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma academia de artes marciais chamada "${name}". Tema escuro e agressivo com acentos em ${primary || "vermelho sangue"} e ${secondary || "cinza escuro"}. Tipografia Oswald condensada para títulos uppercase. Seções: Navbar fixa com botão "AULA GRÁTIS", Hero fullscreen com título "FORJE SEU ESPÍRITO DE LUTA", Seção Modalidades com 4 cards (Boxe, Muay Thai, Jiu-Jitsu, MMA), Estatísticas (500+ alunos, 15+ anos, 8 professores, 30+ campeões), Seção Planos com 3 opções (Básico, Premium, Black), CTA com botão pulsante, Footer minimalista. Animações intensas com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   papelaria: {
-    label: "🌸 Papelaria / Artesanato",
+    label: " Papelaria / Artesanato",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site landing page para uma papelaria artesanal chamada "${name}". Visual delicado e feminino com fundo claro (creme/off-white), acentos em ${primary || "rosa suave"} e ${secondary || "verde-menta"}. Tipografia elegante e leve. Seções: Navbar com logo e links (Início, Produtos, Categorias, Sobre, Contato), Hero com título "A beleza está nos detalhes" e botões "Ver Coleção" e "Nossa História", Seção Produtos com 6 cards de itens com preços e tags (Novo, Popular, Oferta), Seção Categorias com 6 cards, Seção Sobre com história e diferenciais (Sustentável, Entrega Rápida, Qualidade), Newsletter, Footer com 3 colunas. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   manicure: {
-    label: "💅 Manicure",
+    label: " Manicure",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site one-page para um estúdio de manicure chamado "${name}". Visual delicado e moderno com fundo claro (off-white), acentos em ${primary || "rosa suave"} e ${secondary || "dourado rosé"}. Tipografia elegante. Seções: Navbar fixa, Hero com título sobre cuidado das unhas, Serviços (esmaltação em gel, alongamento, spa dos pés, nail art) com preços, Galeria com fotos de unhas, Sobre, Contato com agendamento. Footer simples. Animações suaves.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   dentista: {
-    label: "🦷 Dentista",
+    label: " Dentista",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para consultório odontológico chamado "${name}". Visual limpo e profissional com fundo branco/cinza claro, acentos em ${primary || "azul sereno"} e ${secondary || "verde-água"}. Tipografia Plus Jakarta Sans. Seções: Hero split com badge de CRO, Serviços (clareamento, ortodontia invisível, implantes, limpeza) com cards, Sobre com formação, Depoimentos, Contato com WhatsApp e botão de agendamento. Design que transmite confiança.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   restaurante: {
-    label: "🍽️ Restaurante",
+    label: " Restaurante",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para um restaurante chamado "${name}". Visual acolhedor e apetitoso com fundo escuro, tons ${primary || "terrosos"} e ${secondary || "dourado"}. Tipografia clássica + sans moderna. Seções: Hero com fachada, Cardápio com pratos principais, Sobre com história, Reservas, Contato com endereço, telefone e horário. Footer elegante. Animações suaves.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   padaria: {
-    label: "🥐 Padaria",
+    label: " Padaria",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para uma padaria artesanal chamada "${name}". Visual quente e caseiro com fundo creme, acentos em ${primary || "marrom dourado"} e ${secondary || "amarelo trigo"}. Tipografia clássica. Seções: Hero com pães saindo do forno, Produtos (pães, bolos, doces, salgados) com fotos e preços, Sobre com tradição, Encomendas, Contato com endereço e horário. Footer simples.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   farmacia: {
-    label: "💊 Farmácia",
+    label: " Farmácia",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para uma farmácia chamada "${name}". Visual clean e confiável com fundo branco, acentos em ${primary || "verde saúde"} e ${secondary || "azul"}. Tipografia limpa. Seções: Hero com proposta de atendimento humanizado, Serviços (entrega, manipulação, vacinas, aferição), Sobre, Contato com WhatsApp, endereço e horário. Footer simples e profissional.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   otica: {
-    label: "👓 Ótica",
+    label: " Ótica",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para uma ótica chamada "${name}". Visual moderno e sofisticado com fundo claro, acentos em ${primary || "azul profundo"} e ${secondary || "dourado"}. Tipografia elegante. Seções: Hero com modelos de óculos, Coleções (solar, grau, infantil, esportivo) com cards, Serviços (exame de vista, ajuste, garantia), Sobre, Contato com endereço e horário. Footer elegante.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
   floricultura: {
-    label: "🌷 Floricultura",
+    label: " Floricultura",
     buildPrompt: (name, primary, secondary, features) =>
       `Crie um site para uma floricultura chamada "${name}". Visual delicado e colorido com fundo claro, acentos em ${primary || "rosa floral"} e ${secondary || "verde folha"}. Tipografia romântica + sans. Seções: Hero com buquês, Produtos (buquês, arranjos, plantas, cestas) com fotos e preços, Entregas, Sobre, Contato com WhatsApp e endereço. Footer com redes sociais.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
@@ -205,54 +205,54 @@ const fontOptions = [
 const designStyles = [
   {
     value: "conversao",
-    label: "🎯 Design de Conversão",
+    label: " Design de Conversão",
     desc: "Página única focada em uma ação (CTA). Ideal para infoprodutos, serviços e promoções.",
     prompt: "Estilo landing page de conversão: foco total em um único CTA principal, estrutura vertical sem menus complexos, com depoimentos, benefícios claros, prova social e preços destacados. Eliminar distrações para maximizar conversão.",
   },
   {
     value: "catalogo",
-    label: "🛍️ Catálogo / E-commerce Clean",
+    label: " Catálogo / E-commerce Clean",
     desc: "Visualização de produtos com fotos de alta qualidade e navegação intuitiva.",
     prompt: "Estilo catálogo/e-commerce limpo: priorizar visualização dos produtos com fotos grandes e fundos neutros, navegação intuitiva com filtros e categorias bem visíveis, grid de produtos organizado.",
   },
   {
     value: "local-first",
-    label: "📍 Local-First (Geolocalização)",
+    label: " Local-First (Geolocalização)",
     desc: "Informações práticas em destaque: mapa, 'Como chegar', horário e telefone.",
     prompt: "Estilo local-first: colocar informações práticas em primeiro plano (mapa de localização, botão 'Como Chegar', horário de funcionamento, telefone clicável). Design extremamente rápido e mobile-first.",
   },
   {
     value: "institucional",
-    label: "🏢 Institucional Moderno",
+    label: " Institucional Moderno",
     desc: "Transmite autoridade e profissionalismo com seção 'Quem Somos' e cores sólidas.",
     prompt: "Estilo institucional moderno: passar autoridade e profissionalismo com estrutura organizada, fotos da equipe, seção 'Quem Somos' detalhada, cores sólidas, fontes serifadas para transmitir confiança e tradição.",
   },
   {
     value: "lifestyle",
-    label: "🌿 Visual / Estético (Lifestyle)",
+    label: " Visual / Estético (Lifestyle)",
     desc: "Foca em vender experiência e estilo de vida com fotos ambientadas.",
     prompt: "Estilo visual/lifestyle: foco em vender uma experiência e estilo de vida, menos texto e mais imagens ambientadas e vídeos em tela cheia. Design elegante com margens amplas e tipografia refinada.",
   },
   {
     value: "cardapio-digital",
-    label: "📋 Cardápio Digital / Reservas",
+    label: " Cardápio Digital / Reservas",
     desc: "Grids organizados, fotos dos pratos, preços destacados e integração com agendamento.",
     prompt: "Estilo cardápio digital: facilitar escolhas rápidas com grids organizados, fotos dos pratos/serviços, preços bem destacados, integração direta com sistema de pagamento ou agendamento online.",
   },
 ];
 
 const siteObjectives = [
-  { value: "leads", label: "📩 Gerar Leads", desc: "Captar contatos e potenciais clientes" },
-  { value: "vendas", label: "🛒 Vender Produtos/Serviços", desc: "Levar o visitante a comprar" },
-  { value: "portfolio", label: "🎨 Portfólio", desc: "Mostrar trabalhos e projetos realizados" },
-  { value: "institucional", label: "🏢 Institucional", desc: "Apresentar a empresa e gerar confiança" },
+  { value: "leads", label: " Gerar Leads", desc: "Captar contatos e potenciais clientes" },
+  { value: "vendas", label: " Vender Produtos/Serviços", desc: "Levar o visitante a comprar" },
+  { value: "portfolio", label: " Portfólio", desc: "Mostrar trabalhos e projetos realizados" },
+  { value: "institucional", label: " Institucional", desc: "Apresentar a empresa e gerar confiança" },
 ];
 
 const toneOptions = [
-  { value: "formal", label: "👔 Formal", desc: "Sério, profissional e corporativo" },
-  { value: "amigavel", label: "😊 Amigável", desc: "Próximo, caloroso e acessível" },
-  { value: "criativo", label: "🎨 Criativo", desc: "Ousado, divertido e inovador" },
-  { value: "autoritario", label: "🏆 Autoritário", desc: "Especialista, confiante e direto" },
+  { value: "formal", label: " Formal", desc: "Sério, profissional e corporativo" },
+  { value: "amigavel", label: " Amigável", desc: "Próximo, caloroso e acessível" },
+  { value: "criativo", label: " Criativo", desc: "Ousado, divertido e inovador" },
+  { value: "autoritario", label: " Autoritário", desc: "Especialista, confiante e direto" },
 ];
 
 const pageOptions = [
@@ -267,11 +267,11 @@ const pageOptions = [
 ];
 
 const ctaOptions = [
-  { value: "whatsapp", label: "📱 Enviar WhatsApp", desc: "Redireciona para conversa no WhatsApp" },
-  { value: "checkout", label: "💳 Ir para Checkout", desc: "Leva direto para a página de pagamento" },
-  { value: "formulario", label: "📝 Preencher Formulário", desc: "Abre um formulário de contato/orçamento" },
-  { value: "agendar", label: "📅 Agendar Horário", desc: "Leva para agendamento online" },
-  { value: "ligar", label: "📞 Ligar Agora", desc: "Inicia uma ligação telefônica" },
+  { value: "whatsapp", label: " Enviar WhatsApp", desc: "Redireciona para conversa no WhatsApp" },
+  { value: "checkout", label: " Ir para Checkout", desc: "Leva direto para a página de pagamento" },
+  { value: "formulario", label: " Preencher Formulário", desc: "Abre um formulário de contato/orçamento" },
+  { value: "agendar", label: " Agendar Horário", desc: "Leva para agendamento online" },
+  { value: "ligar", label: " Ligar Agora", desc: "Inicia uma ligação telefônica" },
 ];
 
 const sloganSuggestions: Record<string, string[]> = {
