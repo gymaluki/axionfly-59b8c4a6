@@ -189,25 +189,26 @@ div[style*="Edit with Lovable"],
    Escopado em .quiz-shell para não afetar o resto do app
    ============================================================ */
 .quiz-shell {
-  --q-bg-base: #080910;
-  --q-bg-surface: #0E1017;
-  --q-bg-elevated: #13161F;
-  --q-bg-card: #161922;
-  --q-bg-card-hover: #1C2030;
+  --q-bg-base: #0a0b0f;
+  --q-bg-surface: #12141a;
+  --q-bg-elevated: #0f1117;
+  --q-bg-card: #1a1d27;
+  --q-bg-card-hover: #1e2035;
 
-  --q-border-subtle: rgba(255,255,255,0.06);
-  --q-border-default: rgba(255,255,255,0.10);
-  --q-border-strong: rgba(255,255,255,0.16);
+  --q-border-subtle: #1e2130;
+  --q-border-default: #2a2d3a;
+  --q-border-strong: #4a5568;
 
-  --q-accent: #6366F1;
-  --q-accent-glow: rgba(99,102,241,0.15);
-  --q-accent-bright: #818CF8;
-  --q-success: #10B981;
-  --q-success-glow: rgba(16,185,129,0.15);
+  --q-accent: #6c63ff;
+  --q-accent-hover: #5a52e8;
+  --q-accent-glow: rgba(108,99,255,0.18);
+  --q-accent-bright: #8b84ff;
+  --q-success: #22c55e;
+  --q-success-glow: rgba(34,197,94,0.18);
 
-  --q-text-primary: #F1F5F9;
-  --q-text-secondary: #94A3B8;
-  --q-text-muted: #475569;
+  --q-text-primary: #ffffff;
+  --q-text-secondary: #94a3b8;
+  --q-text-muted: #4a5568;
 
   --q-shadow-card: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
   --q-shadow-elevated: 0 8px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
