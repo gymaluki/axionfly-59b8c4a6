@@ -586,8 +586,25 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           </div>
         );
 
-      // ---------- ETAPA 2 — NEGÓCIO ----------
+      // ---------- ETAPA 2 — BUSCA DE LEADS ----------
       case 1:
+        return (
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Encontre seus clientes</h3>
+              <p className="text-sm text-[#94a3b8]">
+                Use a busca para achar negócios reais do seu nicho. Quando terminar, clique em <span className="text-primary font-semibold">Avançar</span> para criar o site.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/5 bg-[#0a0a14] p-2 md:p-4 -mx-2">
+              <ProspeccaoView />
+            </div>
+          </div>
+        );
+
+      // ---------- ETAPA 3 — NEGÓCIO ----------
+      case 2:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
