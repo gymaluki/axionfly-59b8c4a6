@@ -309,6 +309,7 @@ const Index = () => {
   }, []);
 
   return (
+    <>
       <Helmet>
         <title>AxionFly — Criador de Sites com IA e Prospecção</title>
         <meta name="description" content="Crie sites com IA, prospecte leads e venda mais com a AxionFly. A plataforma completa para impulsionar seu negócio online." />
@@ -902,6 +903,7 @@ const Index = () => {
       </div>
     </div>
   </div>
+    </>
   );
 };
 
