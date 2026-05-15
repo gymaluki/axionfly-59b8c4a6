@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Play, Upload, Trash2, Plus, X, Loader2, Sparkles } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
@@ -328,6 +329,10 @@ const MembrosView = ({ isAdmin = false }: MembrosViewProps) => {
       {/* Video Player Dialog */}
       <Dialog open={!!selectedVideo} onOpenChange={() => { setSelectedVideo(null); setSignedVideoUrl(null); }}>
         <DialogContent className="sm:max-w-3xl p-0 overflow-hidden">
+          <VisuallyHidden.Root>
+            <DialogTitle>{selectedVideo?.title || "Reprodutor de vídeo"}</DialogTitle>
+            <DialogDescription>{selectedVideo?.description || "Aula em reprodução"}</DialogDescription>
+          </VisuallyHidden.Root>
           {selectedVideo && (
             <>
               <div className="aspect-video bg-black flex items-center justify-center">
