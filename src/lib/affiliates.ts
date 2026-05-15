@@ -56,7 +56,7 @@ export const AFFILIATES: Record<string, Affiliate> = {
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=Y36tx3VC",
   },
   yan: {
-    slug: "y",
+    slug: "kx",
     name: "Yan",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=QmFRRS9a",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=QmFRRS9a",
@@ -97,7 +97,7 @@ export function captureAffiliateFromUrl(): void {
 
     if (!allKnown.includes(finalSlug)) {
       // 2. Se não for um slug conhecido no path, tenta nos query params
-      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "y", "zk"];
+      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "kx", "zk"];
       finalSlug = "";
 
       for (const p of possibleParams) {
