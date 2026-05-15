@@ -1,0 +1,19 @@
+# AxionFly
+
+> Plataforma para criar sites com IA, prospectar leads e vender mais. Tudo em um só lugar com integração direta ao WhatsApp.
+
+AxionFly é uma plataforma completa que combina criação de sites com inteligência artificial, prospecção automatizada de clientes e ferramentas de apoio comercial. Ideal para empresários, comerciantes e prestadores de serviços que querem presença digital profissional sem complicação.
+
+## Páginas
+
+- [Home](/): Conheça a AxionFly — crie sites com IA, prospecte leads e venda mais.
+- [Guia de Estilos de Design](/guia-design): Escolha entre designs de conversão, catálogo e local-first para seu site.
+- [Guia de Combinações de Fontes](/guia-fontes): Descubra as melhores combinações de fontes para sites elegantes.
+- [Demo de Pedidos](/pedidos-demo): Veja como funciona o sistema de pedidos por WhatsApp para restaurantes e comércios.
+
+## Legal
+
+- [Avisos Legais](/legal): Informações sobre marca, conteúdo e limites de uso.
+- [Termos de Uso](/termos): Regras para uso da plataforma, contratação de planos e experiência segura.
+- [Política de Privacidade](/privacidade): Quais dados coletamos, por que coletamos e como protegemos.
+- [Política de Cookies](/cookies): Como usamos cookies para melhorar a plataforma.
