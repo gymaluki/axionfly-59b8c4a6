@@ -97,7 +97,7 @@ export function captureAffiliateFromUrl(): void {
 
     if (!allKnown.includes(finalSlug)) {
       // 2. Se não for um slug conhecido no path, tenta nos query params
-      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "y", "zk"];
+      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "kx", "zk"];
       finalSlug = "";
 
       for (const p of possibleParams) {
