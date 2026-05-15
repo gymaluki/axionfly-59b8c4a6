@@ -3,7 +3,16 @@ import LegalLayout from "@/components/LegalLayout";
 
 export default function Cookies() {
   return (
-    <LegalLayout
+    <>
+      <Helmet>
+        <title>Política de Cookies — AxionFly</title>
+        <meta name="description" content="Veja de forma objetiva como usamos cookies para manter a plataforma funcionando melhor, com mais segurança e personalização." />
+        <meta property="og:title" content="Política de Cookies — AxionFly" />
+        <meta property="og:description" content="Veja como usamos cookies para manter a plataforma funcionando melhor, com mais segurança e personalização." />
+        <meta property="og:url" content="https://axionfly.lovable.app/cookies" />
+        <link rel="canonical" href="https://axionfly.lovable.app/cookies" />
+      </Helmet>
+      <LegalLayout
       eyebrow="Cookies"
       title="Política de Cookies"
       description="Veja de forma objetiva como usamos cookies para manter a plataforma funcionando melhor, com mais segurança e personalização."
@@ -101,5 +110,6 @@ export default function Cookies() {
         },
       ]}
     />
+    </>
   );
 }

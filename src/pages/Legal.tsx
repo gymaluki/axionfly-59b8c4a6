@@ -3,7 +3,16 @@ import LegalLayout from "@/components/LegalLayout";
 
 export default function Legal() {
   return (
-    <LegalLayout
+    <>
+      <Helmet>
+        <title>Avisos Legais — AxionFly</title>
+        <meta name="description" content="Informações rápidas sobre marca, conteúdo e limites de uso da AxionFly, de forma clara e objetiva." />
+        <meta property="og:title" content="Avisos Legais — AxionFly" />
+        <meta property="og:description" content="Informações rápidas sobre marca, conteúdo e limites de uso da AxionFly." />
+        <meta property="og:url" content="https://axionfly.lovable.app/legal" />
+        <link rel="canonical" href="https://axionfly.lovable.app/legal" />
+      </Helmet>
+      <LegalLayout
       eyebrow="Informações Legais"
       title="Avisos Legais"
       description="Informações rápidas sobre marca, conteúdo e limites de uso da AxionFly, de forma clara e objetiva."
@@ -78,5 +87,6 @@ export default function Legal() {
         },
       ]}
     />
+    </>
   );
 }

@@ -3,7 +3,16 @@ import LegalLayout from "@/components/LegalLayout";
 
 export default function Privacidade() {
   return (
-    <LegalLayout
+    <>
+      <Helmet>
+        <title>Política de Privacidade — AxionFly</title>
+        <meta name="description" content="Entenda de forma simples quais dados a AxionFly usa, por que usa e como protegemos essas informações." />
+        <meta property="og:title" content="Política de Privacidade — AxionFly" />
+        <meta property="og:description" content="Entenda quais dados a AxionFly usa, por que usa e como protegemos essas informações." />
+        <meta property="og:url" content="https://axionfly.lovable.app/privacidade" />
+        <link rel="canonical" href="https://axionfly.lovable.app/privacidade" />
+      </Helmet>
+      <LegalLayout
       eyebrow="Privacidade"
       title="Política de Privacidade"
       description="Entenda de forma simples quais dados a AxionFly usa, por que usa e como protegemos essas informações."
@@ -121,5 +130,6 @@ export default function Privacidade() {
         },
       ]}
     />
+    </>
   );
 }
