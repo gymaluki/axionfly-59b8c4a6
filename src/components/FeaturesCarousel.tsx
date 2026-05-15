@@ -87,12 +87,15 @@ export default function FeaturesCarousel() {
           onDragEnd={handleDragEnd}
         >
           {allSlides.map((slide, i) => (
-            <div
+            <TiltCard
               key={`${slide.id}-${i}`}
-              className="shrink-0 w-[240px] sm:w-[280px] md:w-[340px] aspect-[3/5] rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 transition-all duration-500 relative select-none group bg-[#05050a]"
-              style={{
-                boxShadow: "0 0 40px -15px hsl(var(--primary) / 0.25)",
-              }}
+              tiltLimit={10}
+              scale={1.04}
+              perspective={1200}
+              effect="evade"
+              spotlight
+              className="shrink-0 w-[240px] sm:w-[280px] md:w-[340px] aspect-[3/5] rounded-3xl overflow-hidden border border-border/40 hover:border-primary/40 relative select-none group bg-[#05050a]"
+              style={{ boxShadow: "0 0 40px -15px hsl(var(--primary) / 0.25)" }}
             >
               <img
                 src={slide.src}
@@ -102,7 +105,7 @@ export default function FeaturesCarousel() {
                 draggable={false}
               />
               <div className="absolute -inset-1 border-2 border-primary/0 group-hover:border-primary/40 rounded-[2rem] transition-all duration-500" />
-            </div>
+            </TiltCard>
           ))}
         </motion.div>
       </div>
