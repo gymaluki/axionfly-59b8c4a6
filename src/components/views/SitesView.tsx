@@ -480,8 +480,8 @@ const SitesView = () => {
 
   const validationMessage = useMemo(() => {
     if (step === 0 && niche.length === 0) return "Selecione o tipo de negócio";
-    if (step === 1 && projectName.trim().length === 0) return "Preencha o nome do projeto";
-    if (step === 2 && (!primaryColor || !secondaryColor)) return "Escolha as duas cores";
+    if (step === 2 && projectName.trim().length === 0) return "Preencha o nome do projeto";
+    if (step === 3 && (!primaryColor || !secondaryColor)) return "Escolha as duas cores";
     return "";
   }, [step, niche, projectName, primaryColor, secondaryColor]);
 
