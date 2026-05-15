@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, lazy, Suspense, useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Star, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
@@ -308,7 +309,16 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#05050a] overflow-x-hidden relative max-w-[100vw]">
+    <>
+      <Helmet>
+        <title>AxionFly — Criador de Sites com IA e Prospecção</title>
+        <meta name="description" content="Crie sites com IA, prospecte leads e venda mais com a AxionFly. A plataforma completa para impulsionar seu negócio online." />
+        <meta property="og:title" content="AxionFly — Criador de Sites com IA e Prospecção" />
+        <meta property="og:description" content="Crie sites com IA, prospecte leads e venda mais com a AxionFly." />
+        <meta property="og:url" content="https://axionfly.lovable.app/" />
+        <link rel="canonical" href="https://axionfly.lovable.app/" />
+      </Helmet>
+      <div className="min-h-screen bg-[#05050a] overflow-x-hidden relative max-w-[100vw]">
       {/* Grid Background */}
       <div
         aria-hidden="true"
@@ -892,6 +902,7 @@ const Index = () => {
       </div>
     </div>
   </div>
+  </>
   );
 };
 

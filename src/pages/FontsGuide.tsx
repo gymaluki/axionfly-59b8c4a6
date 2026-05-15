@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, type Easing } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 
@@ -91,7 +92,16 @@ const FontsGuide = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <Helmet>
+        <title>Guia de Combinações de Fontes — AxionFly</title>
+        <meta name="description" content="Descubra as melhores combinações de fontes para criar sites elegantes e profissionais com a AxionFly." />
+        <meta property="og:title" content="Guia de Combinações de Fontes — AxionFly" />
+        <meta property="og:description" content="Descubra as melhores combinações de fontes para sites elegantes e profissionais." />
+        <meta property="og:url" content="https://axionfly.lovable.app/guia-fontes" />
+        <link rel="canonical" href="https://axionfly.lovable.app/guia-fontes" />
+      </Helmet>
+      <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-5xl">
         <button
           onClick={() => navigate(-1)}
@@ -158,6 +168,7 @@ const FontsGuide = () => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

@@ -1,8 +1,18 @@
+import { Helmet } from "react-helmet-async";
 import LegalLayout from "@/components/LegalLayout";
 
 export default function Termos() {
   return (
-    <LegalLayout
+    <>
+      <Helmet>
+        <title>Termos de Uso — AxionFly</title>
+        <meta name="description" content="Regras simples para uso da AxionFly, contratação de planos e manutenção de uma experiência segura para todos." />
+        <meta property="og:title" content="Termos de Uso — AxionFly" />
+        <meta property="og:description" content="Regras simples para uso da AxionFly, contratação de planos e manutenção de uma experiência segura." />
+        <meta property="og:url" content="https://axionfly.lovable.app/termos" />
+        <link rel="canonical" href="https://axionfly.lovable.app/termos" />
+      </Helmet>
+      <LegalLayout
       eyebrow="Termos"
       title="Termos de Uso"
       description="Regras simples para uso da AxionFly, contratação de planos e manutenção de uma experiência segura para todos."
@@ -114,5 +124,6 @@ export default function Termos() {
         },
       ]}
     />
+    </>
   );
 }
