@@ -390,6 +390,42 @@ const simpleCtaOptions = [
 
 const TOTAL_STEPS = 6; // 0:Nicho 1:Leads 2:Negócio 3:Visual 4:Contato 5:Revisão
 
+// Mapeia o nicho do quiz para o label exato usado na ProspeccaoView (lockedNicho).
+// Quando o quiz tem um nicho que não existe na prospecção, fica indefinido e o usuário escolhe lá.
+const quizNichoToProspeccaoLabel: Record<string, string | undefined> = {
+  pizzaria: "Pizzarias",
+  hamburgueria: "Hamburguerias",
+  restaurante: "Restaurantes",
+  "restaurante-bairro": "Restaurantes",
+  "fine-dining": "Restaurantes",
+  padaria: "Padarias",
+  marmitaria: "Restaurantes",
+  acaiteria: "Restaurantes",
+  barbearia: "Barbearias",
+  manicure: "Manicures",
+  salaobeleza: "Salões de Beleza",
+  estetica: "Estética",
+  sobrancelhas: "Estética",
+  dentista: "Dentistas",
+  clinica: "Clínicas",
+  farmacia: "Farmácias",
+  otica: "Óticas",
+  academia: "Academias",
+  "artes-marciais": "Academias",
+  petshop: "Pet Shops",
+  mecanica: "Mecânicas",
+  lavarapido: "Lava Jato",
+  assistencia: "Mecânicas",
+  imobiliaria: "Imobiliárias",
+  advogado: "Advogados",
+  contabilidade: "Contadores",
+  idiomas: "Escolas de Idiomas",
+  fotografo: "Fotógrafos",
+  floricultura: "Floricultura",
+  papelaria: undefined,
+  "marketing-digital": undefined,
+};
+
 const stepMeta = [
   { icon: Store,    label: "Nicho" },
   { icon: Search,   label: "Leads" },
