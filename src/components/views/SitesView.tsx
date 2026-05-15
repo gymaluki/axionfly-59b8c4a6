@@ -558,29 +558,19 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
       // ---------- ETAPA 1 — NICHO ----------
       case 0:
         return (
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Qual é o seu negócio?</h3>
-              <p className="text-sm text-[#94a3b8]">Escolha o nicho que melhor representa o que você faz.</p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div>
+            <h2>Qual é o seu negócio?</h2>
+            <p className="subtitle">Escolha o nicho que melhor representa o que você faz.</p>
+            <div className="niche-grid">
               {nicheEntries.map(([key, t]) => (
-                <motion.button
+                <button
                   key={key}
                   type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={() => setNiche(key)}
-                  className={cn(
-                    "text-left p-4 rounded-2xl border transition-all duration-300 text-sm font-medium",
-                    niche === key
-                      ? "border-primary bg-primary/10 text-primary shadow-[0_0_20px_rgba(37,99,235,0.2)]"
-                      : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white",
-                  )}
+                  className={cn("niche-card", niche === key && "selected")}
                 >
                   {t.label}
-                </motion.button>
+                </button>
               ))}
             </div>
           </div>
@@ -589,15 +579,12 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
       // ---------- ETAPA 2 — BUSCA DE LEADS ----------
       case 1:
         return (
-          <div className="space-y-4">
-            <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Encontre seus clientes</h3>
-              <p className="text-sm text-[#94a3b8]">
-                Use a busca para achar negócios reais do seu nicho. Quando terminar, clique em <span className="text-primary font-semibold">Avançar</span> para criar o site.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/5 bg-[#0a0a14] p-2 md:p-4 -mx-2 quiz-prospeccao-wrap">
+          <div>
+            <h2>Encontre seus clientes</h2>
+            <p className="subtitle">
+              Use a busca para achar negócios reais do seu nicho. Quando terminar, clique em <span style={{ color: "var(--q-accent-bright)", fontWeight: 600 }}>Avançar</span> para criar o site.
+            </p>
+            <div className="leads-wrapper quiz-prospeccao-wrap">
               <ProspeccaoView />
             </div>
             <style>{`
@@ -612,58 +599,50 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
       // ---------- ETAPA 3 — NEGÓCIO ----------
       case 2:
         return (
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Sobre o seu negócio</h3>
-              <p className="text-sm text-[#94a3b8]">Como o seu negócio se chama e qual é a frase que o representa?</p>
+          <div>
+            <h2>Sobre o seu negócio</h2>
+            <p className="subtitle">Como o seu negócio se chama e qual é a frase que o representa?</p>
+
+            <div className="field-group">
+              <label className="field-label">Nome do Projeto *</label>
+              <input
+                className="field-input"
+                placeholder="Ex: Forno & Massa"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                autoFocus
+              />
             </div>
 
-            <div className="space-y-5">
-              <div className="space-y-2">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Nome do Projeto *</label>
-                <Input
-                  placeholder="Ex: Forno & Massa"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                  className="bg-[#0d0d14] border-white/10 h-12 text-base focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-                  autoFocus
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  Slogan / Tagline
-                </label>
-                <Input
-                  placeholder="Ex: Sabor que conquista"
-                  value={slogan}
-                  onChange={(e) => setSlogan(e.target.value)}
-                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-                />
-                {niche && sloganSuggestions[niche] && (
-                  <div className="space-y-2 pt-2">
-                    <p className="text-xs text-[#475569] font-medium">💡 Sugestões com base no seu nicho:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {sloganSuggestions[niche].map((s) => (
-                        <button
-                          key={s}
-                          type="button"
-                          onClick={() => setSlogan(s)}
-                          className={cn(
-                            "text-xs px-4 py-2 rounded-xl border transition-all duration-200",
-                            slogan === s
-                              ? "border-primary bg-primary/10 text-primary font-bold"
-                              : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white",
-                          )}
-                        >
-                          {s}
-                        </button>
-                      ))}
-                    </div>
+            <div className="field-group">
+              <label className="field-label">
+                <MessageSquare /> Slogan / Tagline
+              </label>
+              <input
+                className="field-input"
+                placeholder="Ex: Sabor que conquista"
+                value={slogan}
+                onChange={(e) => setSlogan(e.target.value)}
+              />
+              {niche && sloganSuggestions[niche] && (
+                <div style={{ marginTop: 10 }}>
+                  <p style={{ fontSize: 11, color: "var(--q-text-muted)", marginBottom: 8, fontWeight: 500 }}>
+                    Sugestões com base no seu nicho:
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                    {sloganSuggestions[niche].map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSlogan(s)}
+                        className={cn("sugg-chip", slogan === s && "selected")}
+                      >
+                        {s}
+                      </button>
+                    ))}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -671,21 +650,19 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
       // ---------- ETAPA 4 — VISUAL ----------
       case 3:
         return (
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Personalização visual</h3>
-              <p className="text-sm text-[#94a3b8]">Escolha as cores e os recursos extras do seu site.</p>
-            </div>
+          <div>
+            <h2>Personalização visual</h2>
+            <p className="subtitle">Escolha as cores e os recursos extras do seu site.</p>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Cor Principal *</label>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+              <div className="field-group" style={{ marginBottom: 0 }}>
+                <label className="field-label">Cor Principal *</label>
                 <Select value={primaryColor} onValueChange={setPrimaryColor}>
-                  <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12">
+                  <SelectTrigger className="q-select-trigger">
                     <SelectValue placeholder="Selecione a cor principal">
                       {primaryColor && (
-                        <span className="flex items-center gap-2">
-                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: primaryColor }} />
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          <span style={{ width: 18, height: 18, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.15)", background: primaryColor }} />
                           {namedColors.find((c) => c.hex === primaryColor)?.name || primaryColor}
                         </span>
                       )}
@@ -694,8 +671,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
                   <SelectContent>
                     {namedColors.map((c) => (
                       <SelectItem key={c.hex} value={c.hex}>
-                        <span className="flex items-center gap-2">
-                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: c.hex }} />
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          <span style={{ width: 16, height: 16, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.15)", background: c.hex }} />
                           {c.name}
                         </span>
                       </SelectItem>
@@ -704,14 +681,14 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
                 </Select>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Cor Secundária *</label>
+              <div className="field-group" style={{ marginBottom: 0 }}>
+                <label className="field-label">Cor Secundária *</label>
                 <Select value={secondaryColor} onValueChange={setSecondaryColor}>
-                  <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12">
+                  <SelectTrigger className="q-select-trigger">
                     <SelectValue placeholder="Selecione a cor secundária">
                       {secondaryColor && (
-                        <span className="flex items-center gap-2">
-                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: secondaryColor }} />
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          <span style={{ width: 18, height: 18, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.15)", background: secondaryColor }} />
                           {namedColors.find((c) => c.hex === secondaryColor)?.name || secondaryColor}
                         </span>
                       )}
@@ -720,8 +697,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
                   <SelectContent>
                     {namedColors.map((c) => (
                       <SelectItem key={c.hex} value={c.hex}>
-                        <span className="flex items-center gap-2">
-                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: c.hex }} />
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                          <span style={{ width: 16, height: 16, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.15)", background: c.hex }} />
                           {c.name}
                         </span>
                       </SelectItem>
@@ -731,9 +708,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
               </div>
             </div>
 
-            <div className="space-y-3">
-              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Funcionalidades Extras</label>
-              <div className="flex flex-wrap gap-2">
+            <div className="field-group">
+              <label className="field-label">Funcionalidades Extras</label>
+              <div className="chips-grid">
                 {featureOptions.map((f) => {
                   const active = selectedFeatures.includes(f);
                   return (
@@ -741,14 +718,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
                       key={f}
                       type="button"
                       onClick={() => toggleFeature(f)}
-                      className={cn(
-                        "text-sm px-4 py-2 rounded-full border transition-all duration-200",
-                        active
-                          ? "border-primary bg-primary/10 text-primary font-semibold shadow-[0_0_12px_rgba(59,130,246,0.25)]"
-                          : "border-white/10 bg-[#0d0d14] text-[#94a3b8] hover:border-white/30 hover:text-white",
-                      )}
+                      className={cn("chip", active && "selected")}
                     >
-                      {active && <Check className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />}
                       {f}
                     </button>
                   );
@@ -761,80 +732,62 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
       // ---------- ETAPA 5 — CONTATO ----------
       case 4:
         return (
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Informações de contato</h3>
-              <p className="text-sm text-[#94a3b8]">Onde os seus clientes podem encontrar você.</p>
+          <div>
+            <h2>Informações de contato</h2>
+            <p className="subtitle">Onde os seus clientes podem encontrar você.</p>
+
+            <div className="field-group">
+              <label className="field-label"><MapPin /> Endereço</label>
+              <input
+                className="field-input"
+                placeholder="Ex: Rua das Flores, 123 — Centro, São Paulo"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                autoFocus
+              />
             </div>
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-primary" /> Endereço
-                </label>
-                <Input
-                  placeholder="Ex: Rua das Flores, 123 — Centro, São Paulo"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-                  autoFocus
-                />
-              </div>
+            <div className="field-group">
+              <label className="field-label"><Phone /> Telefone / WhatsApp</label>
+              <input
+                className="field-input"
+                placeholder="(11) 99999-9999"
+                value={phone}
+                onChange={(e) => {
+                  const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+                  let masked = digits;
+                  if (digits.length > 6) masked = `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`;
+                  else if (digits.length > 2) masked = `(${digits.slice(0,2)}) ${digits.slice(2)}`;
+                  else if (digits.length > 0) masked = `(${digits}`;
+                  setPhone(masked);
+                }}
+              />
+            </div>
 
-              <div className="space-y-2">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-primary" /> Telefone / WhatsApp
-                </label>
-                <Input
-                  placeholder="(11) 99999-9999"
-                  value={phone}
-                  onChange={(e) => {
-                    // Máscara simples BR
-                    const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
-                    let masked = digits;
-                    if (digits.length > 6) masked = `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`;
-                    else if (digits.length > 2) masked = `(${digits.slice(0,2)}) ${digits.slice(2)}`;
-                    else if (digits.length > 0) masked = `(${digits}`;
-                    setPhone(masked);
-                  }}
-                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-                />
-              </div>
+            <div className="field-group">
+              <label className="field-label"><Clock /> Horário de Funcionamento</label>
+              <input
+                className="field-input"
+                placeholder="Seg–Sex 11h às 23h, Sáb e Dom 11h às 00h"
+                value={businessHours}
+                onChange={(e) => setBusinessHours(e.target.value)}
+              />
+            </div>
 
-              <div className="space-y-2">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary" /> Horário de Funcionamento
-                </label>
-                <Input
-                  placeholder="Seg–Sex 11h às 23h, Sáb e Dom 11h às 00h"
-                  value={businessHours}
-                  onChange={(e) => setBusinessHours(e.target.value)}
-                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-                />
-              </div>
-
-              <div className="space-y-3">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
-                  <MousePointerClick className="w-4 h-4 text-primary" /> Botão Principal (CTA)
-                </label>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {simpleCtaOptions.map((c) => (
-                    <button
-                      key={c.value}
-                      type="button"
-                      onClick={() => setCtaPrincipal(c.value)}
-                      className={cn(
-                        "text-left p-4 rounded-xl border transition-all duration-200 text-sm font-medium",
-                        ctaPrincipal === c.value
-                          ? "border-primary bg-primary/10 text-primary shadow-[0_0_15px_rgba(59,130,246,0.2)]"
-                          : "border-white/10 bg-[#0d0d14] text-[#94a3b8] hover:border-white/30 hover:text-white",
-                      )}
-                    >
-                      {ctaPrincipal === c.value && <Check className="w-4 h-4 inline mr-2 -mt-0.5" />}
-                      {c.label}
-                    </button>
-                  ))}
-                </div>
+            <div className="field-group">
+              <label className="field-label"><MousePointerClick /> Botão Principal (CTA)</label>
+              <div className="cta-grid">
+                {simpleCtaOptions.map((c) => (
+                  <button
+                    key={c.value}
+                    type="button"
+                    onClick={() => setCtaPrincipal(c.value)}
+                    className={cn("cta-option", ctaPrincipal === c.value && "selected")}
+                  >
+                    {ctaPrincipal === c.value && <Check style={{ width: 16, height: 16 }} />}
+                    {c.label}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -843,50 +796,42 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
       // ---------- ETAPA 6 — REVISÃO ----------
       case 5:
         return (
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Revisão final</h3>
-              <p className="text-sm text-[#94a3b8]">Confira tudo antes de gerar o seu site com a IA.</p>
-            </div>
+          <div>
+            <h2>Revisão final</h2>
+            <p className="subtitle">Confira tudo antes de gerar o seu site com a IA.</p>
 
-            <div className="space-y-3">
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <ReviewItem label="Nicho" value={nicheTemplates[niche]?.label || "—"} />
               <ReviewItem label="Nome" value={projectName || "—"} />
               <ReviewItem label="Slogan" value={slogan || "Não informado"} />
 
-              <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-secondary/30 border border-border">
-                <span className="text-sm text-muted-foreground">Cores</span>
-                <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-2 text-xs text-foreground">
-                    <span className="w-5 h-5 rounded-full border border-white/20" style={{ background: primaryColor }} />
+              <div className="review-row">
+                <span className="label">Cores</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13 }}>
+                    <span style={{ width: 18, height: 18, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.15)", background: primaryColor }} />
                     {namedColors.find((c) => c.hex === primaryColor)?.name || "—"}
                   </span>
-                  <span className="flex items-center gap-2 text-xs text-foreground">
-                    <span className="w-5 h-5 rounded-full border border-white/20" style={{ background: secondaryColor }} />
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13 }}>
+                    <span style={{ width: 18, height: 18, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.15)", background: secondaryColor }} />
                     {namedColors.find((c) => c.hex === secondaryColor)?.name || "—"}
                   </span>
                 </div>
               </div>
 
-              <ReviewItem
-                label="Funcionalidades"
-                value={selectedFeatures.length > 0 ? selectedFeatures.join(", ") : "Nenhuma"}
-              />
+              <ReviewItem label="Funcionalidades" value={selectedFeatures.length > 0 ? selectedFeatures.join(", ") : "Nenhuma"} />
               <ReviewItem label="Endereço" value={address || "Não informado"} />
               <ReviewItem label="Telefone" value={phone || "Não informado"} />
               <ReviewItem label="Horário" value={businessHours || "Não informado"} />
-              <ReviewItem
-                label="CTA Principal"
-                value={simpleCtaOptions.find((c) => c.value === ctaPrincipal)?.label || "Não definido"}
-              />
+              <ReviewItem label="CTA Principal" value={simpleCtaOptions.find((c) => c.value === ctaPrincipal)?.label || "Não definido"} />
             </div>
 
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="hero" size="lg" onClick={handleGenerate} className="w-full">
-                <Sparkles className="w-4 h-4" />
-                Gerar Site com IA
-              </Button>
-            </motion.div>
+            <hr className="divider" />
+
+            <button type="button" onClick={handleGenerate} className="btn-primary" style={{ width: "100%", justifyContent: "center", padding: "16px 28px", fontSize: 16 }}>
+              <Sparkles style={{ width: 18, height: 18 }} />
+              Gerar Site com IA
+            </button>
           </div>
         );
 
@@ -903,76 +848,54 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="max-w-3xl mx-auto space-y-6"
+      className="quiz-shell max-w-3xl mx-auto"
     >
       {/* Header */}
-      <div>
-        <h2 className="text-2xl font-bold text-white">
-          Criador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Sites</span>
+      <div style={{ paddingTop: 12 }}>
+        <h2 className="page-title">
+          Criador de <span>Sites</span>
         </h2>
-        <p className="text-[#6b7280] text-sm mt-1 font-medium">
+        <p className="page-subtitle">
           Encontre clientes reais e gere seu site profissional com IA em poucos passos
         </p>
       </div>
 
       {/* Step indicators */}
-      <div className="relative max-w-2xl mx-auto px-4 py-8">
-        <div className="flex justify-between relative z-10">
-          {stepMeta.map((s, i) => {
-            const Icon = s.icon;
-            const isActive = i === step;
-            const isDone = i < step;
-            return (
+      <div className="progress-container">
+        {stepMeta.map((s, i) => {
+          const isActive = i === step;
+          const isDone = i < step;
+          return (
+            <>
               <button
-                key={i}
+                key={`step-${i}`}
                 type="button"
                 onClick={() => { if (i <= step) setStep(i); }}
-                className={cn("flex flex-col items-center group transition-all duration-300", i > step && "opacity-40 cursor-not-allowed")}
+                className="step-wrap"
                 disabled={i > step}
               >
-                <motion.div
-                  initial={false}
-                  animate={{
-                    backgroundColor: isDone ? "#10b981" : isActive ? "#3B82F6" : "transparent",
-                    borderColor: isDone ? "#10b981" : isActive ? "#3B82F6" : "rgba(255,255,255,0.15)",
-                  }}
-                  className={cn(
-                    "w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 relative z-10",
-                    isActive && "shadow-[0_0_20px_rgba(59,130,246,0.4)]",
-                    isDone && "shadow-[0_0_20px_rgba(16,185,129,0.3)]",
-                  )}
-                >
-                  {isDone ? <Check className="w-5 h-5 text-white" /> : <Icon className={cn("w-5 h-5 transition-colors", isActive ? "text-white" : "text-[#475569]")} />}
-                </motion.div>
-                <span className={cn("text-[10px] font-black uppercase tracking-widest mt-3 transition-colors", isActive ? "text-[#3B82F6]" : "text-[#6b7280]")}>
-                  {s.label}
-                </span>
+                <div className={cn("step-circle", isDone && "completed", isActive && "active")}>
+                  {isDone ? <Check style={{ width: 16, height: 16 }} /> : i + 1}
+                </div>
+                <span className="step-label">{s.label}</span>
               </button>
-            );
-          })}
-        </div>
-
-        {/* Progress Line */}
-        <div className="absolute top-[50px] left-[10%] right-[10%] h-[2px] bg-white/10 -z-0">
-          <motion.div
-            initial={{ width: "0%" }}
-            animate={{ width: `${(step / (TOTAL_STEPS - 1)) * 100}%` }}
-            className="h-full bg-gradient-to-r from-green-500 to-[#3B82F6] shadow-[0_0_10px_rgba(59,130,246,0.5)]"
-            transition={{ duration: 0.5 }}
-          />
-        </div>
+              {i < stepMeta.length - 1 && (
+                <div key={`conn-${i}`} className={cn("step-connector", i < step && "completed")} />
+              )}
+            </>
+          );
+        })}
       </div>
 
       {/* Step content */}
-      <div className="bg-[#0f0f1f] border border-[#1e2a4a]/50 rounded-3xl p-6 md:p-8 min-h-[400px] shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="quiz-card">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
           >
             {renderStep()}
           </motion.div>
@@ -981,35 +904,37 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
 
       {/* Navigation */}
       {step < TOTAL_STEPS - 1 ? (
-        <div className="flex justify-between">
-          <Button variant="ghost" onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0} className="gap-2">
-            <ArrowLeft className="w-4 h-4" /> Voltar
-          </Button>
-          <div className="flex flex-col items-end gap-1">
+        <div className="quiz-footer">
+          <button type="button" className="btn-ghost" onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0}>
+            <ArrowLeft style={{ width: 16, height: 16 }} /> Voltar
+          </button>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
             {!canAdvance && validationMessage && (
-              <span className="text-xs text-destructive">{validationMessage}</span>
+              <span style={{ fontSize: 12, color: "#f87171" }}>{validationMessage}</span>
             )}
-            <Button
+            <button
+              type="button"
               onClick={() => setStep(Math.min(TOTAL_STEPS - 1, step + 1))}
               disabled={!canAdvance}
-              className="gap-2 bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white rounded-full font-bold px-8 transition-all"
+              className="btn-primary"
             >
-              Avançar <ArrowRight className="w-4 h-4" />
-            </Button>
+              Avançar <ArrowRight style={{ width: 16, height: 16 }} />
+            </button>
           </div>
         </div>
       ) : (
-        <div className="flex justify-between">
-          <Button variant="ghost" onClick={() => setStep(TOTAL_STEPS - 2)} className="gap-2">
-            <ArrowLeft className="w-4 h-4" /> Voltar
-          </Button>
-          <Button
-            variant="outline"
+        <div className="quiz-footer">
+          <button type="button" className="btn-ghost" onClick={() => setStep(TOTAL_STEPS - 2)}>
+            <ArrowLeft style={{ width: 16, height: 16 }} /> Voltar
+          </button>
+          <button
+            type="button"
             onClick={() => setResetConfirmOpen(true)}
-            className="gap-2 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive rounded-full font-bold"
+            className="btn-ghost"
+            style={{ color: "#f87171" }}
           >
-            <RotateCcw className="w-4 h-4" /> Reiniciar processo
-          </Button>
+            <RotateCcw style={{ width: 16, height: 16 }} /> Reiniciar processo
+          </button>
         </div>
       )}
 
