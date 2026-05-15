@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History, Megaphone, Bug, Cloud, TrendingUp, DollarSign } from "lucide-react";
+import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History, Megaphone, Bug, Cloud, TrendingUp, DollarSign, Sparkles, Code2, Zap } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import AffiliatesAdminPanel from "@/components/admin/AffiliatesAdminPanel";
 import SystemErrorsPanel from "@/components/admin/SystemErrorsPanel";
@@ -401,20 +401,42 @@ const AdminView = () => {
 
                   <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20 border border-border">
                     <div>
-                      <p className="text-sm font-bold">Edge Functions (IA & Webhooks)</p>
-                      <p className="text-xs text-muted-foreground">Execuções de Automação e Busca de Leads</p>
+                      <p className="text-sm font-bold">Webhooks de Pagamento</p>
+                      <p className="text-xs text-muted-foreground">Cakto & PerfectPay (Processamento de Vendas)</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-black text-foreground">~US$ 1,85</p>
+                      <p className="text-sm font-black text-foreground">~US$ 1,20</p>
                       <p className="text-[10px] text-muted-foreground tracking-tighter uppercase">Estimado/Mês</p>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
+                    <p className="text-sm font-bold mb-2 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-primary" /> Agentes de IA Integrados
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <div className="flex items-center gap-2 text-[11px] bg-background/50 p-1.5 rounded border border-border">
+                        <Code2 className="w-3 h-3 text-blue-400" />
+                        <span>Criador de Sites (Lovable)</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] bg-background/50 p-1.5 rounded border border-border">
+                        <Search className="w-3 h-3 text-orange-400" />
+                        <span>Prospecção (Firecrawl API)</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] bg-background/50 p-1.5 rounded border border-border">
+                        <ShieldCheck className="w-3 h-3 text-green-400" />
+                        <span>Gestor de Acesso (Auto-Admin)</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] bg-background/50 p-1.5 rounded border border-border">
+                        <Zap className="w-3 h-3 text-yellow-400" />
+                        <span>Extensão Infinito (Hyperbuild)</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200 leading-relaxed">
-                  <strong>Nota Técnica:</strong> O Lovable Cloud consome do seu saldo de <strong>US$ 25,00 mensais</strong>. 
-                  Com o volume atual de <strong>{activeCount} clientes</strong> e <strong>{users.length} usuários totais</strong>, 
-                  seu gasto real reportado é de <strong>US$ 0,00 extra</strong> na fatura.
+                  <strong>Nota sobre Webhooks:</strong> Pix gerados pela Cakto <strong>NÃO</strong> consomem seu saldo Cloud se não forem pagos (o webhook só é disparado no pagamento ou alteração de status). Pix abandonados são custo zero para você.
                 </div>
               </CardContent>
             </Card>
