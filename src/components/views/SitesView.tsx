@@ -400,7 +400,7 @@ const quizNichoToProspeccaoLabel: Record<string, string | undefined> = {
   "fine-dining": "Restaurantes",
   padaria: "Padarias",
   marmitaria: "Restaurantes",
-  acaiteria: "Restaurantes",
+  acaiteria: "Açaiteria",
   barbearia: "Barbearias",
   manicure: "Manicures",
   salaobeleza: "Salões de Beleza",
@@ -424,8 +424,6 @@ const quizNichoToProspeccaoLabel: Record<string, string | undefined> = {
   floricultura: "Floricultura",
   papelaria: undefined,
   "marketing-digital": undefined,
-  hamburgueria: "Hamburguerias",
-  acaiteria: "Açaiteria",
 };
 
 const stepMeta = [
