@@ -1,6 +1,67 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, Component, ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// Recarrega a página quando um chunk dinâmico falha (deploy novo derruba os antigos)
+const isChunkLoadError = (err: any) => {
+  const msg = String(err?.message || err || "");
+  return (
+    /Loading chunk [\d]+ failed/i.test(msg) ||
+    /Failed to fetch dynamically imported module/i.test(msg) ||
+    /Importing a module script failed/i.test(msg) ||
+    /ChunkLoadError/i.test(msg)
+  );
+};
+
+if (typeof window !== "undefined") {
+  const tryReload = () => {
+    const key = "__chunk_reload_at";
+    const last = Number(sessionStorage.getItem(key) || 0);
+    if (Date.now() - last > 10_000) {
+      sessionStorage.setItem(key, String(Date.now()));
+      window.location.reload();
+    }
+  };
+  window.addEventListener("error", (e) => {
+    if (isChunkLoadError(e.error || e.message)) tryReload();
+  });
+  window.addEventListener("unhandledrejection", (e) => {
+    if (isChunkLoadError(e.reason)) tryReload();
+  });
+}
+
+class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false };
+  static getDerivedStateFromError(error: any) {
+    if (isChunkLoadError(error)) {
+      window.location.reload();
+      return { hasError: true };
+    }
+    return { hasError: true };
+  }
+  componentDidCatch(error: any) {
+    if (isChunkLoadError(error)) window.location.reload();
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#05050a", color: "#fff", fontFamily: "system-ui", padding: 24, textAlign: "center" }}>
+          <div>
+            <p style={{ fontSize: 18, marginBottom: 12 }}>Tivemos um problema ao carregar a página.</p>
+            <button onClick={() => window.location.reload()} style={{ padding: "10px 20px", borderRadius: 8, background: "#1e3a8a", color: "#fff", border: "none", cursor: "pointer" }}>
+              Recarregar
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+const RouteFallback = () => (
+  <div style={{ minHeight: "100vh", background: "#05050a" }} />
+);
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
