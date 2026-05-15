@@ -420,7 +420,8 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
         </div>
       </div>
 
-      {/* GRID DE NICHOS */}
+      {/* GRID DE NICHOS — escondido quando o nicho vem travado do quiz */}
+      {!lockedNicho && (
       <div className="px-6 py-6">
         <div
           className="grid gap-2"
@@ -484,6 +485,7 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
           })}
         </div>
       </div>
+      )}
 
       {/* SEÇÃO DE RESULTADOS (acordeão) */}
       <AnimatePresence initial={false}>
