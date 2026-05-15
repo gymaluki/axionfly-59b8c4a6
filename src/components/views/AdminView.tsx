@@ -436,7 +436,16 @@ const AdminView = () => {
                 </div>
 
                 <div className="mt-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200 leading-relaxed">
-                  <strong>Nota sobre Webhooks:</strong> Pix gerados pela Cakto <strong>NÃO</strong> consomem seu saldo Cloud se não forem pagos (o webhook só é disparado no pagamento ou alteração de status). Pix abandonados são custo zero para você.
+                  <strong>Sugestões de Otimização:</strong>
+                  <ul className="list-disc pl-4 mt-2 space-y-1">
+                    <li><strong>Instância P-1:</strong> Você já está na menor instância, garantindo custo fixo zero no bônus.</li>
+                    <li><strong>Cache de Queries:</strong> As listas de usuários e vendas agora são cacheadas localmente para evitar re-fetch constante.</li>
+                    <li><strong>Webhooks Otimizados:</strong> O sistema ignora eventos irrelevantes (como Pix pendente) para não processar funções desnecessárias.</li>
+                  </ul>
+                </div>
+
+                <div className="mt-4 p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-xs text-orange-200 leading-relaxed">
+                  <strong>Nota sobre Webhooks:</strong> Pix gerados pela Cakto <strong>NÃO</strong> consomem seu saldo Cloud se não forem pagos. O processamento ocorre apenas na aprovação.
                 </div>
               </CardContent>
             </Card>
