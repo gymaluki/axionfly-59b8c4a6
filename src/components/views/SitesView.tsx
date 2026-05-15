@@ -472,8 +472,9 @@ const SitesView = () => {
 
   const canAdvance = useMemo(() => {
     if (step === 0) return niche.length > 0;
-    if (step === 1) return projectName.trim().length > 0;
-    if (step === 2) return primaryColor.length > 0 && secondaryColor.length > 0;
+    if (step === 1) return true; // Leads é opcional
+    if (step === 2) return projectName.trim().length > 0;
+    if (step === 3) return primaryColor.length > 0 && secondaryColor.length > 0;
     return true;
   }, [step, niche, projectName, primaryColor, secondaryColor]);
 
