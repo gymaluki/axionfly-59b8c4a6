@@ -175,7 +175,42 @@ const nicheTemplates: Record<string, NicheTemplate> = {
   papelaria: {
     label: "🌸 Papelaria / Artesanato",
     buildPrompt: (name, primary, secondary, features) =>
-      `Crie um site landing page para uma papelaria artesanal chamada "${name}". Visual delicado e feminino com fundo claro (creme/off-white), acentos em ${primary || "rosa suave"} e ${secondary || "verde-menta"}. Tipografia elegante e leve. Seções: Navbar com logo e links (Início, Produtos, Categorias, Sobre, Contato), Hero com título "A beleza está nos detalhes" e botões "Ver Coleção" e "Nossa História", Seção Produtos com 6 cards de itens (Cadernos Artesanais, Kit Washi Tapes, Canetas Premium, Envelopes & Lacres, Material de Arte, Stickers & Planner) com preços e tags (Novo, Popular, Oferta), Seção Categorias com 6 cards, Seção Sobre com história e diferenciais (Sustentável, Entrega Rápida, Qualidade), Newsletter, Footer com 3 colunas. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+      `Crie um site landing page para uma papelaria artesanal chamada "${name}". Visual delicado e feminino com fundo claro (creme/off-white), acentos em ${primary || "rosa suave"} e ${secondary || "verde-menta"}. Tipografia elegante e leve. Seções: Navbar com logo e links (Início, Produtos, Categorias, Sobre, Contato), Hero com título "A beleza está nos detalhes" e botões "Ver Coleção" e "Nossa História", Seção Produtos com 6 cards de itens com preços e tags (Novo, Popular, Oferta), Seção Categorias com 6 cards, Seção Sobre com história e diferenciais (Sustentável, Entrega Rápida, Qualidade), Newsletter, Footer com 3 colunas. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  manicure: {
+    label: "💅 Manicure",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site one-page para um estúdio de manicure chamado "${name}". Visual delicado e moderno com fundo claro (off-white), acentos em ${primary || "rosa suave"} e ${secondary || "dourado rosé"}. Tipografia elegante. Seções: Navbar fixa, Hero com título sobre cuidado das unhas, Serviços (esmaltação em gel, alongamento, spa dos pés, nail art) com preços, Galeria com fotos de unhas, Sobre, Contato com agendamento. Footer simples. Animações suaves.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  dentista: {
+    label: "🦷 Dentista",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para consultório odontológico chamado "${name}". Visual limpo e profissional com fundo branco/cinza claro, acentos em ${primary || "azul sereno"} e ${secondary || "verde-água"}. Tipografia Plus Jakarta Sans. Seções: Hero split com badge de CRO, Serviços (clareamento, ortodontia invisível, implantes, limpeza) com cards, Sobre com formação, Depoimentos, Contato com WhatsApp e botão de agendamento. Design que transmite confiança.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  restaurante: {
+    label: "🍽️ Restaurante",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para um restaurante chamado "${name}". Visual acolhedor e apetitoso com fundo escuro, tons ${primary || "terrosos"} e ${secondary || "dourado"}. Tipografia clássica + sans moderna. Seções: Hero com fachada, Cardápio com pratos principais, Sobre com história, Reservas, Contato com endereço, telefone e horário. Footer elegante. Animações suaves.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  padaria: {
+    label: "🥐 Padaria",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma padaria artesanal chamada "${name}". Visual quente e caseiro com fundo creme, acentos em ${primary || "marrom dourado"} e ${secondary || "amarelo trigo"}. Tipografia clássica. Seções: Hero com pães saindo do forno, Produtos (pães, bolos, doces, salgados) com fotos e preços, Sobre com tradição, Encomendas, Contato com endereço e horário. Footer simples.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  farmacia: {
+    label: "💊 Farmácia",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma farmácia chamada "${name}". Visual clean e confiável com fundo branco, acentos em ${primary || "verde saúde"} e ${secondary || "azul"}. Tipografia limpa. Seções: Hero com proposta de atendimento humanizado, Serviços (entrega, manipulação, vacinas, aferição), Sobre, Contato com WhatsApp, endereço e horário. Footer simples e profissional.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  otica: {
+    label: "👓 Ótica",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma ótica chamada "${name}". Visual moderno e sofisticado com fundo claro, acentos em ${primary || "azul profundo"} e ${secondary || "dourado"}. Tipografia elegante. Seções: Hero com modelos de óculos, Coleções (solar, grau, infantil, esportivo) com cards, Serviços (exame de vista, ajuste, garantia), Sobre, Contato com endereço e horário. Footer elegante.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  floricultura: {
+    label: "🌷 Floricultura",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma floricultura chamada "${name}". Visual delicado e colorido com fundo claro, acentos em ${primary || "rosa floral"} e ${secondary || "verde folha"}. Tipografia romântica + sans. Seções: Hero com buquês, Produtos (buquês, arranjos, plantas, cestas) com fotos e preços, Entregas, Sobre, Contato com WhatsApp e endereço. Footer com redes sociais.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
 };
 
