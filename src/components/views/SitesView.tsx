@@ -905,7 +905,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           Criador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Sites</span>
         </h2>
         <p className="text-[#6b7280] text-sm mt-1 font-medium">
-          Responda 4 etapas rápidas e gere seu site profissional com IA
+          Encontre clientes reais e gere seu site profissional com IA em poucos passos
         </p>
       </div>
 
