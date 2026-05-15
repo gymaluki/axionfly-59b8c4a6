@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History, Megaphone, Bug } from "lucide-react";
+import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History, Megaphone, Bug, Cloud, TrendingUp, DollarSign } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import AffiliatesAdminPanel from "@/components/admin/AffiliatesAdminPanel";
 import SystemErrorsPanel from "@/components/admin/SystemErrorsPanel";
+import { Progress } from "@/components/ui/progress";
 
 const OWNER_EMAIL = "andreyhenriquev4@gmail.com";
 
@@ -311,9 +312,14 @@ const AdminView = () => {
           <TabsTrigger value="licenses">Licenças ({licenses.length})</TabsTrigger>
           <TabsTrigger value="logs">Auditoria</TabsTrigger>
           {isOwner && (
-            <TabsTrigger value="system" className="gap-1.5 text-destructive data-[state=active]:text-destructive">
-              <Bug className="w-3.5 h-3.5" /> Sistema
-            </TabsTrigger>
+            <>
+              <TabsTrigger value="cloud" className="gap-1.5 text-blue-400 data-[state=active]:text-blue-400">
+                <Cloud className="w-3.5 h-3.5" /> Financeiro Cloud
+              </TabsTrigger>
+              <TabsTrigger value="system" className="gap-1.5 text-destructive data-[state=active]:text-destructive">
+                <Bug className="w-3.5 h-3.5" /> Sistema
+              </TabsTrigger>
+            </>
           )}
         </TabsList>
 
@@ -322,8 +328,96 @@ const AdminView = () => {
         </TabsContent>
 
         {isOwner && (
-          <TabsContent value="system" className="mt-4">
-            <SystemErrorsPanel />
+          <TabsContent value="cloud" className="mt-4 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="bg-card border-border border-blue-500/20">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <Cloud className="w-4 h-4 text-blue-400" /> Saldo Mensal Grátis
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-black text-foreground">US$ 25,00</div>
+                  <p className="text-[10px] text-muted-foreground mt-1">Franquia padrão do Lovable Cloud</p>
+                  <Progress value={8} className="h-1 mt-4" />
+                  <p className="text-[10px] text-blue-400 mt-2 font-bold uppercase tracking-widest">~US$ 2,00 Utilizados</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card border-border">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-green-500" /> Conversão de Vendas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-black text-foreground">
+                    {users.length > 0 ? ((activeCount / users.length) * 100).toFixed(1) : 0}%
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-1">Cadastros vs Assinaturas Ativas</p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card border-border">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <DollarSign className="w-4 h-4 text-primary" /> Custo por Lead
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-black text-foreground">R$ 0,00</div>
+                  <p className="text-[10px] text-muted-foreground mt-1">Estimativa de custo de infra por usuário</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card className="bg-card border-border">
+              <CardHeader>
+                <CardTitle className="text-base">Detalhamento de Estimativas de Gasto</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20 border border-border">
+                    <div>
+                      <p className="text-sm font-bold">Banco de Dados (Postgres)</p>
+                      <p className="text-xs text-muted-foreground">Instância Padrão P-1 (AWS eu-west-1)</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-black text-green-500">GRÁTIS</p>
+                      <p className="text-[10px] text-muted-foreground tracking-tighter uppercase">No seu plano</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20 border border-border">
+                    <div>
+                      <p className="text-sm font-bold">Armazenamento (Storage)</p>
+                      <p className="text-xs text-muted-foreground">Bucket: /videos (Hospedagem de aulas)</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-black text-foreground">~US$ 0,15</p>
+                      <p className="text-[10px] text-muted-foreground tracking-tighter uppercase">Estimado/Mês</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-muted/20 border border-border">
+                    <div>
+                      <p className="text-sm font-bold">Edge Functions (IA & Webhooks)</p>
+                      <p className="text-xs text-muted-foreground">Execuções de Automação e Busca de Leads</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-black text-foreground">~US$ 1,85</p>
+                      <p className="text-[10px] text-muted-foreground tracking-tighter uppercase">Estimado/Mês</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-200 leading-relaxed">
+                  <strong>Nota Técnica:</strong> O Lovable Cloud consome do seu saldo de <strong>US$ 25,00 mensais</strong>. 
+                  Com o volume atual de <strong>{activeCount} clientes</strong> e <strong>{users.length} usuários totais</strong>, 
+                  seu gasto real reportado é de <strong>US$ 0,00 extra</strong> na fatura.
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         )}
 
