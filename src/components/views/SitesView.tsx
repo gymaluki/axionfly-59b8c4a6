@@ -175,7 +175,42 @@ const nicheTemplates: Record<string, NicheTemplate> = {
   papelaria: {
     label: "🌸 Papelaria / Artesanato",
     buildPrompt: (name, primary, secondary, features) =>
-      `Crie um site landing page para uma papelaria artesanal chamada "${name}". Visual delicado e feminino com fundo claro (creme/off-white), acentos em ${primary || "rosa suave"} e ${secondary || "verde-menta"}. Tipografia elegante e leve. Seções: Navbar com logo e links (Início, Produtos, Categorias, Sobre, Contato), Hero com título "A beleza está nos detalhes" e botões "Ver Coleção" e "Nossa História", Seção Produtos com 6 cards de itens (Cadernos Artesanais, Kit Washi Tapes, Canetas Premium, Envelopes & Lacres, Material de Arte, Stickers & Planner) com preços e tags (Novo, Popular, Oferta), Seção Categorias com 6 cards, Seção Sobre com história e diferenciais (Sustentável, Entrega Rápida, Qualidade), Newsletter, Footer com 3 colunas. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+      `Crie um site landing page para uma papelaria artesanal chamada "${name}". Visual delicado e feminino com fundo claro (creme/off-white), acentos em ${primary || "rosa suave"} e ${secondary || "verde-menta"}. Tipografia elegante e leve. Seções: Navbar com logo e links (Início, Produtos, Categorias, Sobre, Contato), Hero com título "A beleza está nos detalhes" e botões "Ver Coleção" e "Nossa História", Seção Produtos com 6 cards de itens com preços e tags (Novo, Popular, Oferta), Seção Categorias com 6 cards, Seção Sobre com história e diferenciais (Sustentável, Entrega Rápida, Qualidade), Newsletter, Footer com 3 colunas. Animações suaves com Framer Motion. Design responsivo.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  manicure: {
+    label: "💅 Manicure",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site one-page para um estúdio de manicure chamado "${name}". Visual delicado e moderno com fundo claro (off-white), acentos em ${primary || "rosa suave"} e ${secondary || "dourado rosé"}. Tipografia elegante. Seções: Navbar fixa, Hero com título sobre cuidado das unhas, Serviços (esmaltação em gel, alongamento, spa dos pés, nail art) com preços, Galeria com fotos de unhas, Sobre, Contato com agendamento. Footer simples. Animações suaves.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  dentista: {
+    label: "🦷 Dentista",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para consultório odontológico chamado "${name}". Visual limpo e profissional com fundo branco/cinza claro, acentos em ${primary || "azul sereno"} e ${secondary || "verde-água"}. Tipografia Plus Jakarta Sans. Seções: Hero split com badge de CRO, Serviços (clareamento, ortodontia invisível, implantes, limpeza) com cards, Sobre com formação, Depoimentos, Contato com WhatsApp e botão de agendamento. Design que transmite confiança.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  restaurante: {
+    label: "🍽️ Restaurante",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para um restaurante chamado "${name}". Visual acolhedor e apetitoso com fundo escuro, tons ${primary || "terrosos"} e ${secondary || "dourado"}. Tipografia clássica + sans moderna. Seções: Hero com fachada, Cardápio com pratos principais, Sobre com história, Reservas, Contato com endereço, telefone e horário. Footer elegante. Animações suaves.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  padaria: {
+    label: "🥐 Padaria",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma padaria artesanal chamada "${name}". Visual quente e caseiro com fundo creme, acentos em ${primary || "marrom dourado"} e ${secondary || "amarelo trigo"}. Tipografia clássica. Seções: Hero com pães saindo do forno, Produtos (pães, bolos, doces, salgados) com fotos e preços, Sobre com tradição, Encomendas, Contato com endereço e horário. Footer simples.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  farmacia: {
+    label: "💊 Farmácia",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma farmácia chamada "${name}". Visual clean e confiável com fundo branco, acentos em ${primary || "verde saúde"} e ${secondary || "azul"}. Tipografia limpa. Seções: Hero com proposta de atendimento humanizado, Serviços (entrega, manipulação, vacinas, aferição), Sobre, Contato com WhatsApp, endereço e horário. Footer simples e profissional.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  otica: {
+    label: "👓 Ótica",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma ótica chamada "${name}". Visual moderno e sofisticado com fundo claro, acentos em ${primary || "azul profundo"} e ${secondary || "dourado"}. Tipografia elegante. Seções: Hero com modelos de óculos, Coleções (solar, grau, infantil, esportivo) com cards, Serviços (exame de vista, ajuste, garantia), Sobre, Contato com endereço e horário. Footer elegante.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
+  },
+  floricultura: {
+    label: "🌷 Floricultura",
+    buildPrompt: (name, primary, secondary, features) =>
+      `Crie um site para uma floricultura chamada "${name}". Visual delicado e colorido com fundo claro, acentos em ${primary || "rosa floral"} e ${secondary || "verde folha"}. Tipografia romântica + sans. Seções: Hero com buquês, Produtos (buquês, arranjos, plantas, cestas) com fotos e preços, Entregas, Sobre, Contato com WhatsApp e endereço. Footer com redes sociais.${features ? ` Funcionalidades extras: ${features}.` : ""}`,
   },
 };
 
@@ -288,1010 +323,512 @@ const sloganSuggestions: Record<string, string[]> = {
   papelaria: ["A beleza está nos detalhes", "Criatividade em cada página", "Papelaria que inspira", "Sua história merece ser escrita com estilo"],
 };
 
-const TOTAL_STEPS = 6;
+// ============================================================
+// LÓGICA INTERNA — não é exibida ao usuário
+// Mapeia o nicho para presets de design, tom, páginas, fontes, etc.
+// ============================================================
+const nicheInternalConfig: Record<string, {
+  designStyle: string;
+  siteGoal: string;
+  voiceTone: string;
+  pages: string[];
+  fontPair: string;
+  defaultPrimary: string;
+  defaultSecondary: string;
+}> = {
+  pizzaria:           { designStyle: "cardapio-digital", siteGoal: "gerar-pedidos", voiceTone: "amigavel",    pages: ["inicio","cardapio","localizacao","contato"], fontPair: "Playfair Display + Raleway",     defaultPrimary: "#E31837", defaultSecondary: "#FF6B35" },
+  hamburgueria:       { designStyle: "cardapio-digital", siteGoal: "gerar-pedidos", voiceTone: "criativo",    pages: ["inicio","cardapio","contato"],                fontPair: "Oswald + Roboto",                 defaultPrimary: "#F97316", defaultSecondary: "#1A1A1A" },
+  restaurante:        { designStyle: "cardapio-digital", siteGoal: "gerar-pedidos", voiceTone: "amigavel",    pages: ["inicio","cardapio","sobre","contato"],         fontPair: "Cormorant Garamond + Lato",        defaultPrimary: "#8B2E2E", defaultSecondary: "#D4AF37" },
+  padaria:            { designStyle: "local-first",      siteGoal: "gerar-pedidos", voiceTone: "amigavel",    pages: ["inicio","produtos","sobre","contato"],         fontPair: "Playfair Display + Open Sans",     defaultPrimary: "#A0522D", defaultSecondary: "#E8B84A" },
+  marmitaria:         { designStyle: "cardapio-digital", siteGoal: "gerar-pedidos", voiceTone: "amigavel",    pages: ["inicio","cardapio","contato"],                 fontPair: "Poppins + DM Sans",                defaultPrimary: "#16A34A", defaultSecondary: "#FACC15" },
+  acaiteria:          { designStyle: "cardapio-digital", siteGoal: "gerar-pedidos", voiceTone: "criativo",    pages: ["inicio","cardapio","contato"],                 fontPair: "Playfair Display + DM Sans",       defaultPrimary: "#6B21A8", defaultSecondary: "#16A34A" },
+  "fine-dining":      { designStyle: "lifestyle",        siteGoal: "institucional", voiceTone: "formal",      pages: ["inicio","cardapio","sobre","contato"],         fontPair: "Cormorant Garamond + Raleway",     defaultPrimary: "#D4AF37", defaultSecondary: "#1A1410" },
+  "restaurante-bairro":{designStyle: "local-first",      siteGoal: "gerar-pedidos", voiceTone: "amigavel",    pages: ["inicio","cardapio","sobre","contato"],         fontPair: "Merriweather + Open Sans",         defaultPrimary: "#C2410C", defaultSecondary: "#FACC15" },
+  barbearia:          { designStyle: "local-first",      siteGoal: "gerar-leads",   voiceTone: "autoritario", pages: ["inicio","servicos","galeria","contato"],       fontPair: "Oswald + Roboto",                  defaultPrimary: "#D4AF37", defaultSecondary: "#1A1A2E" },
+  manicure:           { designStyle: "lifestyle",        siteGoal: "gerar-leads",   voiceTone: "amigavel",    pages: ["inicio","servicos","galeria","contato"],       fontPair: "Playfair Display + Raleway",       defaultPrimary: "#F472B6", defaultSecondary: "#D4AF37" },
+  salaobeleza:        { designStyle: "lifestyle",        siteGoal: "gerar-leads",   voiceTone: "amigavel",    pages: ["inicio","servicos","sobre","contato"],         fontPair: "Cormorant Garamond + Lato",        defaultPrimary: "#F472B6", defaultSecondary: "#D4AF37" },
+  estetica:           { designStyle: "lifestyle",        siteGoal: "gerar-leads",   voiceTone: "amigavel",    pages: ["inicio","servicos","sobre","contato"],         fontPair: "Cormorant Garamond + Lato",        defaultPrimary: "#F472B6", defaultSecondary: "#D4AF37" },
+  sobrancelhas:       { designStyle: "lifestyle",        siteGoal: "gerar-leads",   voiceTone: "amigavel",    pages: ["inicio","servicos","contato"],                 fontPair: "Playfair Display + Raleway",       defaultPrimary: "#D4AF37", defaultSecondary: "#F472B6" },
+  dentista:           { designStyle: "institucional",    siteGoal: "gerar-leads",   voiceTone: "formal",      pages: ["inicio","servicos","sobre","contato"],         fontPair: "Plus Jakarta Sans + Inter",        defaultPrimary: "#0EA5E9", defaultSecondary: "#10B981" },
+  clinica:            { designStyle: "institucional",    siteGoal: "gerar-leads",   voiceTone: "formal",      pages: ["inicio","servicos","sobre","contato"],         fontPair: "Plus Jakarta Sans + Inter",        defaultPrimary: "#0EA5E9", defaultSecondary: "#10B981" },
+  farmacia:           { designStyle: "institucional",    siteGoal: "institucional", voiceTone: "formal",      pages: ["inicio","servicos","contato"],                 fontPair: "Inter + Space Grotesk",            defaultPrimary: "#16A34A", defaultSecondary: "#0EA5E9" },
+  otica:              { designStyle: "catalogo",         siteGoal: "gerar-leads",   voiceTone: "formal",      pages: ["inicio","produtos","servicos","contato"],      fontPair: "Cormorant Garamond + Lato",        defaultPrimary: "#1E3A8A", defaultSecondary: "#D4AF37" },
+  academia:           { designStyle: "conversao",        siteGoal: "gerar-leads",   voiceTone: "autoritario", pages: ["inicio","planos","sobre","contato"],           fontPair: "Oswald + Roboto",                  defaultPrimary: "#DC2626", defaultSecondary: "#F97316" },
+  "artes-marciais":   { designStyle: "conversao",        siteGoal: "gerar-leads",   voiceTone: "autoritario", pages: ["inicio","modalidades","planos","contato"],     fontPair: "Oswald + Roboto",                  defaultPrimary: "#DC2626", defaultSecondary: "#1A1A1A" },
+  petshop:            { designStyle: "lifestyle",        siteGoal: "gerar-pedidos", voiceTone: "amigavel",    pages: ["inicio","servicos","produtos","contato"],      fontPair: "Fredoka + Nunito",                 defaultPrimary: "#E8734A", defaultSecondary: "#E8A644" },
+  mecanica:           { designStyle: "local-first",      siteGoal: "gerar-leads",   voiceTone: "autoritario", pages: ["inicio","servicos","sobre","contato"],         fontPair: "Oswald + Inter",                   defaultPrimary: "#F97316", defaultSecondary: "#1A1A1A" },
+  lavarapido:         { designStyle: "local-first",      siteGoal: "gerar-leads",   voiceTone: "criativo",    pages: ["inicio","servicos","planos","contato"],        fontPair: "Inter + Space Grotesk",            defaultPrimary: "#0EA5E9", defaultSecondary: "#1A1A1A" },
+  assistencia:        { designStyle: "local-first",      siteGoal: "gerar-leads",   voiceTone: "autoritario", pages: ["inicio","servicos","sobre","contato"],         fontPair: "Inter + Space Grotesk",            defaultPrimary: "#0EA5E9", defaultSecondary: "#10B981" },
+  imobiliaria:        { designStyle: "catalogo",         siteGoal: "gerar-leads",   voiceTone: "formal",      pages: ["inicio","imoveis","servicos","contato"],       fontPair: "Cormorant Garamond + Lato",        defaultPrimary: "#1E3A8A", defaultSecondary: "#D4AF37" },
+  advogado:           { designStyle: "institucional",    siteGoal: "gerar-leads",   voiceTone: "formal",      pages: ["inicio","areas","sobre","contato"],            fontPair: "Cormorant Garamond + Raleway",     defaultPrimary: "#D4AF37", defaultSecondary: "#1E3A8A" },
+  contabilidade:      { designStyle: "institucional",    siteGoal: "gerar-leads",   voiceTone: "formal",      pages: ["inicio","servicos","sobre","contato"],         fontPair: "Inter + Space Grotesk",            defaultPrimary: "#16A34A", defaultSecondary: "#1E3A8A" },
+  idiomas:            { designStyle: "conversao",        siteGoal: "gerar-leads",   voiceTone: "amigavel",    pages: ["inicio","cursos","planos","contato"],          fontPair: "Poppins + DM Sans",                defaultPrimary: "#0EA5E9", defaultSecondary: "#10B981" },
+  fotografo:          { designStyle: "lifestyle",        siteGoal: "portfolio",     voiceTone: "criativo",    pages: ["inicio","portfolio","sobre","contato"],        fontPair: "Playfair Display + Raleway",       defaultPrimary: "#F8FAFC", defaultSecondary: "#1A1A1A" },
+  floricultura:       { designStyle: "catalogo",         siteGoal: "gerar-pedidos", voiceTone: "amigavel",    pages: ["inicio","produtos","contato"],                 fontPair: "Cormorant Garamond + Lato",        defaultPrimary: "#F472B6", defaultSecondary: "#16A34A" },
+  papelaria:          { designStyle: "catalogo",         siteGoal: "gerar-pedidos", voiceTone: "criativo",    pages: ["inicio","produtos","sobre","contato"],         fontPair: "Cormorant Garamond + Lato",        defaultPrimary: "#F472B6", defaultSecondary: "#10B981" },
+  "marketing-digital":{ designStyle: "conversao",        siteGoal: "gerar-leads",   voiceTone: "autoritario", pages: ["inicio","servicos","cases","contato"],         fontPair: "Inter + Space Grotesk",            defaultPrimary: "#2563EB", defaultSecondary: "#7C3AED" },
+};
+
+// ============================================================
+// Cores nomeadas para o dropdown
+// ============================================================
+const namedColors: { name: string; hex: string }[] = [
+  { name: "Vermelho Pepperoni", hex: "#E31837" },
+  { name: "Azul Oceano",        hex: "#0EA5E9" },
+  { name: "Verde Folha",        hex: "#16A34A" },
+  { name: "Roxo Profundo",      hex: "#6B21A8" },
+  { name: "Laranja Queimado",   hex: "#EA580C" },
+  { name: "Preto Elegante",     hex: "#0F172A" },
+  { name: "Branco Gelo",        hex: "#F8FAFC" },
+  { name: "Dourado Premium",    hex: "#D4AF37" },
+  { name: "Rosa Quartzo",       hex: "#F472B6" },
+  { name: "Azul Marinho",       hex: "#1E3A8A" },
+  { name: "Verde Esmeralda",    hex: "#10B981" },
+  { name: "Cinza Grafite",      hex: "#374151" },
+];
+
+// ============================================================
+// Funcionalidades extras (chips)
+// ============================================================
+const featureOptions = [
+  "Cardápio Digital",
+  "Galeria de Fotos",
+  "Agendamento Online",
+  "Mapa / Localização",
+  "Formulário de Contato",
+  "Depoimentos",
+  "WhatsApp Flutuante",
+  "FAQ",
+  "Promoções / Banners",
+];
+
+// CTAs simplificados conforme o briefing
+const simpleCtaOptions = [
+  { value: "whatsapp",   label: "Enviar WhatsApp" },
+  { value: "ligar",      label: "Ligar Agora" },
+  { value: "formulario", label: "Preencher Formulário" },
+  { value: "agendar",    label: "Agendar Horário" },
+];
+
+const TOTAL_STEPS = 5; // 0:Nicho 1:Negócio 2:Visual 3:Contato 4:Revisão
 
 const stepMeta = [
-  { icon: Store, label: "Negócio" },
-  { icon: Palette, label: "Design" },
-  { icon: Type, label: "Visual" },
-  { icon: MapPin, label: "Contato" },
-  { icon: CreditCard, label: "Vendas" },
-  { icon: Eye, label: "Revisão" },
+  { icon: Store,    label: "Nicho" },
+  { icon: Type,     label: "Negócio" },
+  { icon: Palette,  label: "Visual" },
+  { icon: MapPin,   label: "Contato" },
+  { icon: Eye,      label: "Revisão" },
 ];
 
 const SitesView = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+
   const [step, setStep] = useState(0);
-  const [projectName, setProjectName] = useState("");
   const [niche, setNiche] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [slogan, setSlogan] = useState("");
   const [primaryColor, setPrimaryColor] = useState("");
   const [secondaryColor, setSecondaryColor] = useState("");
-  const [features, setFeatures] = useState("");
-  const [font, setFont] = useState("");
-  const [designStyle, setDesignStyle] = useState("");
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [businessHours, setBusinessHours] = useState("");
+  const [ctaPrincipal, setCtaPrincipal] = useState("");
+
   const [pickerOpen, setPickerOpen] = useState(false);
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false);
   const [generatedPrompt, setGeneratedPrompt] = useState("");
-  const [slogan, setSlogan] = useState("");
-  const [siteObjective, setSiteObjective] = useState("");
-  const [tone, setTone] = useState("");
-  const [selectedPages, setSelectedPages] = useState<string[]>(["inicio"]);
-  const [ctaPrincipal, setCtaPrincipal] = useState("");
-  const [businessHours, setBusinessHours] = useState("");
-  const [whatsappOrdering, setWhatsappOrdering] = useState(false);
 
-  const [instagram, setInstagram] = useState("");
-  const [tiktok, setTiktok] = useState("");
-  const [facebook, setFacebook] = useState("");
-  const [targetAudience, setTargetAudience] = useState("");
-  const [differentiators, setDifferentiators] = useState("");
-  const [pricePositioning, setPricePositioning] = useState("");
-  const [socialProof, setSocialProof] = useState("");
-  const [productNameCakto, setProductNameCakto] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [isRegisteringCakto, setIsRegisteringCakto] = useState(false);
-  const [caktoRegistered, setCaktoRegistered] = useState(false);
-  const [caktoCheckoutUrl, setCaktoCheckoutUrl] = useState("");
-  const [caktoProductImageUrl, setCaktoProductImageUrl] = useState("");
-  const [hasCaktoConfig, setHasCaktoConfig] = useState(false);
-
+  // ---- persistência local ----
   useEffect(() => {
     if (!user) return;
-    
-    const loadState = async () => {
-      const savedState = localStorage.getItem(`sites-view-state-${user.id}`);
-      if (savedState) {
-        try {
-          const state = JSON.parse(savedState);
-          setStep(state.step || 0);
-          setProjectName(state.projectName || "");
-          setNiche(state.niche || "");
-          setAddress(state.address || "");
-          setPhone(state.phone || "");
-          setPrimaryColor(state.primaryColor || "");
-          setSecondaryColor(state.secondaryColor || "");
-          setFeatures(state.features || "");
-          setFont(state.font || "");
-          setDesignStyle(state.designStyle || "");
-          setSlogan(state.slogan || "");
-          setSiteObjective(state.siteObjective || "");
-          setTone(state.tone || "");
-          setSelectedPages(state.selectedPages || ["inicio"]);
-          setCtaPrincipal(state.ctaPrincipal || "");
-          setBusinessHours(state.businessHours || "");
-          setWhatsappOrdering(state.whatsappOrdering || false);
-          setInstagram(state.instagram || "");
-          setTiktok(state.tiktok || "");
-          setFacebook(state.facebook || "");
-          setTargetAudience(state.targetAudience || "");
-          setDifferentiators(state.differentiators || "");
-          setPricePositioning(state.pricePositioning || "");
-          setSocialProof(state.socialProof || "");
-          setProductNameCakto(state.productNameCakto || "");
-          setProductPrice(state.productPrice || "");
-        } catch (e) {
-          console.error("Error loading sites view state", e);
-        }
-      }
-
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("cakto_client_id, cakto_client_secret, cakto_product_image_url")
-        .eq("user_id", user.id)
-        .maybeSingle();
-        
-      setHasCaktoConfig(!!(profile?.cakto_client_id && profile?.cakto_client_secret));
-      if (profile?.cakto_product_image_url) {
-        setCaktoProductImageUrl(profile.cakto_product_image_url);
-      }
-    };
-    loadState();
+    const saved = localStorage.getItem(`sites-quiz-state-${user.id}`);
+    if (saved) {
+      try {
+        const s = JSON.parse(saved);
+        setStep(s.step || 0);
+        setNiche(s.niche || "");
+        setProjectName(s.projectName || "");
+        setSlogan(s.slogan || "");
+        setPrimaryColor(s.primaryColor || "");
+        setSecondaryColor(s.secondaryColor || "");
+        setSelectedFeatures(s.selectedFeatures || []);
+        setAddress(s.address || "");
+        setPhone(s.phone || "");
+        setBusinessHours(s.businessHours || "");
+        setCtaPrincipal(s.ctaPrincipal || "");
+      } catch {}
+    }
   }, [user]);
 
   useEffect(() => {
     if (!user) return;
-    
-    const state = {
-      step, projectName, niche, address, phone, primaryColor, secondaryColor,
-      features, font, designStyle, slogan, siteObjective, tone, selectedPages,
-      ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
-      targetAudience, differentiators, pricePositioning, socialProof,
-      productNameCakto, productPrice, caktoRegistered, caktoCheckoutUrl
-    };
-    localStorage.setItem(`sites-view-state-${user.id}`, JSON.stringify(state));
-  }, [
-    user, step, projectName, niche, address, phone, primaryColor, secondaryColor,
-    features, font, designStyle, slogan, siteObjective, tone, selectedPages,
-    ctaPrincipal, businessHours, whatsappOrdering, instagram, tiktok, facebook,
-    targetAudience, differentiators, pricePositioning, socialProof,
-    productNameCakto, productPrice, caktoRegistered, caktoCheckoutUrl
-  ]);
+    localStorage.setItem(
+      `sites-quiz-state-${user.id}`,
+      JSON.stringify({
+        step, niche, projectName, slogan, primaryColor, secondaryColor,
+        selectedFeatures, address, phone, businessHours, ctaPrincipal,
+      }),
+    );
+  }, [user, step, niche, projectName, slogan, primaryColor, secondaryColor, selectedFeatures, address, phone, businessHours, ctaPrincipal]);
 
-  const handleRegisterCakto = async () => {
-    if (!productPrice) {
-      toast.error("Informe o valor do produto");
-      return;
-    }
-    
-    if (!hasCaktoConfig) {
-      toast.error("Configure suas credenciais Cakto no Perfil antes de cadastrar.");
-      navigate("/perfil"); // Opcional: redirecionar
-      return;
-    }
-
-    setIsRegisteringCakto(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("create-cakto-product", {
-        body: {
-          name: productNameCakto || projectName,
-          price: productPrice,
-          description: `Venda de ${productNameCakto || projectName} via AxionFly`,
-          image_url: caktoProductImageUrl || null
-        }
-      });
-
-      if (error) throw error;
-
-      if (data?.success) {
-        setCaktoCheckoutUrl(data.checkout_url);
-        setCaktoRegistered(true);
-        toast.success("Produto cadastrado na Cakto com sucesso!");
-      } else {
-        throw new Error(data?.error || "Falha ao criar produto");
-      }
-    } catch (error: any) {
-      console.error("Cakto registration error:", error);
-      toast.error(error.message || "Erro ao cadastrar na Cakto");
-    } finally {
-      setIsRegisteringCakto(false);
-    }
-  };
-
-
-
-  // Niche mapping for intelligent presets
-  const nichePresets: Record<string, any> = {
-    pizzaria: {
-      primaryColor: "Vermelho Pepperoni (#E31837)",
-      secondaryColor: "Laranja Queimado",
-      font: "playfair-raleway",
-      designStyle: "conversao",
-      selectedPages: ["inicio", "servicos", "depoimentos", "precos"],
-      tone: "amigavel",
-      targetAudience: "Famílias e jovens casais que buscam sabor artesanal e rapidez",
-      differentiators: "Massa de longa fermentação, entrega em 30 min, ingredientes importados",
-      pricePositioning: "medio",
-      cta: "whatsapp"
-    },
-    barbearia: {
-      primaryColor: "Dourado Premium (#D4AF37)",
-      secondaryColor: "Preto Fosco",
-      font: "playfair-raleway",
-      designStyle: "institucional",
-      selectedPages: ["inicio", "sobre", "servicos", "depoimentos"],
-      tone: "autoritario",
-      targetAudience: "Homens modernos que valorizam estilo, tradição e cuidado pessoal",
-      differentiators: "Barba com toalha quente, cerveja artesanal cortesia, especialistas em fade",
-      pricePositioning: "premium",
-      cta: "agendar"
-    },
-    clinica: {
-      primaryColor: "Azul Sereno (#0EA5E9)",
-      secondaryColor: "Verde Água",
-      font: "inter-space",
-      designStyle: "institucional",
-      selectedPages: ["inicio", "sobre", "servicos", "faq"],
-      tone: "formal",
-      targetAudience: "Pessoas que buscam saúde e confiança em tratamentos modernos",
-      differentiators: "Tecnologia de ponta, atendimento humanizado, parcelamento facilitado",
-      pricePositioning: "medio",
-      cta: "agendar"
-    },
-    hamburgueria: {
-      primaryColor: "Laranja Incandescente (#F97316)",
-      secondaryColor: "Carvão",
-      font: "oswald-roboto",
-      designStyle: "conversao",
-      selectedPages: ["inicio", "servicos", "depoimentos", "contato"],
-      tone: "criativo",
-      targetAudience: "Público jovem e amantes de junk food gourmet",
-      differentiators: "Blend de carnes frescas, molho secreto, batatas rústicas artesanais",
-      pricePositioning: "medio",
-      cta: "whatsapp"
-    },
-    petshop: {
-      primaryColor: "Coral Vibrante (#E8734A)",
-      secondaryColor: "Âmbar Dourado",
-      font: "fredoka-nunito",
-      designStyle: "lifestyle",
-      selectedPages: ["inicio", "sobre", "servicos", "galeria"],
-      tone: "amigavel",
-      targetAudience: "Tutores de pets que buscam carinho e cuidado premium para seus animais",
-      differentiators: "Táxi-pet incluso, banho e tosa com cromoterapia, câmeras ao vivo",
-      pricePositioning: "medio",
-      cta: "whatsapp"
-    },
-    estetica: {
-      primaryColor: "Rosa Quartzo (#F472B6)",
-      secondaryColor: "Dourado Suave",
-      font: "cormorant-lato",
-      designStyle: "lifestyle",
-      selectedPages: ["inicio", "sobre", "servicos", "depoimentos"],
-      tone: "amigavel",
-      targetAudience: "Mulheres que buscam autoestima, relaxamento e tratamentos de alta performance",
-      differentiators: "Métodos exclusivos, ambiente climatizado, avaliação gratuita",
-      pricePositioning: "premium",
-      cta: "agendar"
-    },
-    fotografo: {
-      primaryColor: "Branco Minimalista",
-      secondaryColor: "Cinza Profundo",
-      font: "playfair-raleway",
-      designStyle: "lifestyle",
-      selectedPages: ["inicio", "sobre", "galeria", "contato"],
-      tone: "criativo",
-      targetAudience: "Noivos, gestantes e marcas que buscam eternizar momentos com arte",
-      differentiators: "Equipamento 4K, entrega em 48h, olhar artístico e autêntico",
-      pricePositioning: "premium",
-      cta: "formulario"
-    },
-    "marketing-digital": {
-      primaryColor: "Azul Elétrico (#2563EB)",
-      secondaryColor: "Roxo Vibrante",
-      font: "inter-space",
-      designStyle: "conversao",
-      selectedPages: ["inicio", "servicos", "depoimentos", "precos"],
-      tone: "autoritario",
-      targetAudience: "Empresas que precisam escalar vendas e dominar o mercado digital",
-      differentiators: "Foco total em ROI, especialistas certificados, suporte 24h",
-      pricePositioning: "medio",
-      cta: "whatsapp"
-    }
-  };
-
-  // Carregar dados salvos ao iniciar
+  // ---- aplica cores padrão do nicho ao selecionar (sem mostrar lógica interna) ----
   useEffect(() => {
-    if (!user) return;
-    const saved = localStorage.getItem(`pending_site_creation-${user.id}`);
-    if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        setProjectName(data.projectName || "");
-        setNiche(data.niche || "");
-        setAddress(data.address || "");
-        setPhone(data.phone || "");
-        setPrimaryColor(data.primaryColor || "");
-        setSecondaryColor(data.secondaryColor || "");
-        setFeatures(data.features || "");
-        setFont(data.font || "");
-        setDesignStyle(data.designStyle || "");
-        setSlogan(data.slogan || "");
-        setSiteObjective(data.siteObjective || "");
-        setTone(data.tone || "");
-        setSelectedPages(data.selectedPages || ["inicio"]);
-        setCtaPrincipal(data.ctaPrincipal || "");
-        setBusinessHours(data.businessHours || "");
-        setWhatsappOrdering(data.whatsappOrdering || false);
-        setInstagram(data.instagram || "");
-        setTiktok(data.tiktok || "");
-        setFacebook(data.facebook || "");
-        setTargetAudience(data.targetAudience || "");
-        setDifferentiators(data.differentiators || "");
-        setPricePositioning(data.pricePositioning || "");
-        setProductNameCakto(data.productNameCakto || data.projectName || "");
-        setProductPrice(data.productPrice || "");
-        setCaktoRegistered(data.caktoRegistered || false);
-        setCaktoCheckoutUrl(data.caktoCheckoutUrl || "");
-        setStep(data.step || 0);
-      } catch (e) {
-        console.error("Erro ao carregar dados salvos:", e);
-      }
-    }
-  }, []);
+    if (!niche) return;
+    const cfg = nicheInternalConfig[niche];
+    if (!cfg) return;
+    if (!primaryColor) setPrimaryColor(cfg.defaultPrimary);
+    if (!secondaryColor) setSecondaryColor(cfg.defaultSecondary);
+  }, [niche]); // eslint-disable-line
 
-  // Apply niche presets automatically
-  useEffect(() => {
-    // Only apply presets if we are in the first step and the niche was just selected/changed
-    // and the project name has at least one character (prevents firing on mount if niche is already set)
-    if (step === 0 && niche && nichePresets[niche]) {
-      setProductNameCakto(projectName);
-      const preset = nichePresets[niche];
-      setPrimaryColor(preset.primaryColor);
-      setSecondaryColor(preset.secondaryColor);
-      setFont(preset.font);
-      setDesignStyle(preset.designStyle);
-      setSelectedPages(preset.selectedPages);
-      setTone(preset.tone);
-      setTargetAudience(preset.targetAudience);
-      setDifferentiators(preset.differentiators);
-      setPricePositioning(preset.pricePositioning);
-      setCtaPrincipal(preset.cta);
-      
-      if (foodNiches.includes(niche)) {
-        setWhatsappOrdering(true);
-      }
-      
-      toast.info(`Configurações de "${nicheTemplates[niche].label}" aplicadas automaticamente!`, {
-        description: "Você pode editar qualquer campo se desejar.",
-        duration: 4000
-      });
-    }
-  }, [niche]);
-
+  // ---- extensão (modal) ----
   const [hasInstalledExtension, setHasInstalledExtension] = useState(false);
   const [showExtensionModal, setShowExtensionModal] = useState(false);
-
   useEffect(() => {
     if (user) {
       setHasInstalledExtension(localStorage.getItem(`has_installed_hyperbuild-${user.id}`) === "true");
     }
   }, [user]);
 
-  const foodNiches = ["pizzaria", "fine-dining", "restaurante-bairro", "hamburgueria", "acaiteria", "marmitaria"];
-
   const canAdvance = useMemo(() => {
-    if (step === 0) return projectName.trim().length > 0 && niche.length > 0;
-    return true; // other steps are optional
-  }, [step, projectName, niche]);
+    if (step === 0) return niche.length > 0;
+    if (step === 1) return projectName.trim().length > 0;
+    if (step === 2) return primaryColor.length > 0 && secondaryColor.length > 0;
+    return true;
+  }, [step, niche, projectName, primaryColor, secondaryColor]);
 
-  const progress = ((step + 1) / TOTAL_STEPS) * 100;
+  const validationMessage = useMemo(() => {
+    if (step === 0 && niche.length === 0) return "Selecione o tipo de negócio";
+    if (step === 1 && projectName.trim().length === 0) return "Preencha o nome do projeto";
+    if (step === 2 && (!primaryColor || !secondaryColor)) return "Escolha as duas cores";
+    return "";
+  }, [step, niche, projectName, primaryColor, secondaryColor]);
 
-  const handleGenerate = async () => {
+  const toggleFeature = (f: string) => {
+    setSelectedFeatures((prev) =>
+      prev.includes(f) ? prev.filter((x) => x !== f) : [...prev, f],
+    );
+  };
+
+  const handleGenerate = () => {
     const template = nicheTemplates[niche];
     if (!template) return;
+    const cfg = nicheInternalConfig[niche];
 
-    const selectedFont = fontOptions.find((f) => f.value === font);
-    const selectedStyle = designStyles.find((s) => s.value === designStyle);
-    const selectedTone = toneOptions.find(t => t.value === tone);
-    const selectedObjective = siteObjectives.find(o => o.value === siteObjective);
-    const selectedCta = ctaOptions.find(c => c.value === ctaPrincipal);
-    const pageLabels = selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean);
+    const featuresStr = selectedFeatures.join(", ");
+    const cta = simpleCtaOptions.find((c) => c.value === ctaPrincipal)?.label || "Entrar em contato";
 
-    // ESTRUTURA DE PROMPT DE ENGENHARIA DE PRECISÃO
-    let generated = `Você é um especialista em UI/UX, copywriting de alta conversão e desenvolvimento web performático. 
-Crie uma Landing Page completa e profissional com as seguintes especificações técnicas e de negócio:
+    const prompt = `Você é um especialista em UI/UX e copywriting de alta conversão. Crie uma landing page profissional, responsiva e otimizada com as seguintes especificações:
 
-### 1. CONTEXTO DO NEGÓCIO
+### 1. NEGÓCIO
 - **Nome:** ${projectName.trim()}
 - **Nicho:** ${template.label}
-- **Slogan:** ${slogan.trim() || "N/A"}
-- **Público-Alvo:** ${targetAudience.trim() || "Geral"}
-- **Diferencial:** ${differentiators.trim() || "N/A"}
-- **Tom de Voz:** ${selectedTone ? `${selectedTone.label} (${selectedTone.desc})` : "Profissional"}
-- **Objetivo:** ${selectedObjective?.desc || "Conversão"}
-- **Posicionamento de Preço:** ${pricePositioning || "Não informado"}
+- **Slogan:** ${slogan.trim() || "(gere um slogan curto e impactante baseado no nicho)"}
 
-### 2. ESTRATÉGIA DE CONVERSÃO & COPYWRITING
-- **Headline (Hero):** Crie 3 variações de headlines de impacto baseadas no tom de voz.
-- **Prova Social:** ${socialProof.trim() ? `Use estes dados/depoimentos: ${socialProof.trim()}` : "Inclua seções de depoimentos com placeholders realistas e estatísticas de sucesso (ex: 1000+ clientes)."}
-- **CTAs:** O botão principal deve ser "${selectedCta?.label.replace(/^.\s/, "") || "Entre em contato"}".
-${caktoRegistered ? `- **PRODUTO CAKTO:** O site deve promover o produto "${productNameCakto || projectName}" no valor de R$ ${productPrice}. O link de checkout oficial é "${caktoCheckoutUrl}". Integre este link em todos os botões de chamada para ação (CTAs) que levam à compra.` : ""}
+### 2. ESTRATÉGIA (interna)
+- **Estilo de design:** ${cfg?.designStyle || "moderno"}
+- **Objetivo do site:** ${cfg?.siteGoal || "conversão"}
+- **Tom de voz:** ${cfg?.voiceTone || "profissional"}
+- **Páginas/seções:** ${cfg?.pages.join(", ") || "início, sobre, serviços, contato"}
+- **Tipografia recomendada:** ${cfg?.fontPair || "Inter + Space Grotesk"}
 
-### 3. INFORMAÇÕES DE CONTATO E FUNCIONAMENTO
+### 3. VISUAL
+- **Cor principal:** ${primaryColor}
+- **Cor secundária:** ${secondaryColor}
+- **Funcionalidades extras:** ${featuresStr || "nenhuma"}
+
+### 4. CONTATO
 - **Endereço:** ${address.trim() || "Não informado"}
 - **Telefone/WhatsApp:** ${phone.trim() || "Não informado"}
-- **Horário de Funcionamento:** ${businessHours.trim() || "Não informado"}
-- **Instagram:** ${instagram.trim() || "N/A"}
-- **TikTok:** ${tiktok.trim() || "N/A"}
-- **Facebook:** ${facebook.trim() || "N/A"}
+- **Horário:** ${businessHours.trim() || "Não informado"}
+- **CTA Principal:** ${cta}
 
-### 4. ESPECIFICAÇÕES VISUAIS (DESIGN SYSTEM)
-- **Cores:** Primária: ${primaryColor.trim() || "Padrão do nicho"}, Secundária: ${secondaryColor.trim() || "Padrão do nicho"}.
-- **Tipografia:** ${selectedFont ? `Títulos: ${selectedFont.label.split(" + ")[0]}, Corpo: ${selectedFont.label.split(" + ")[1]}` : "Fontes modernas e legíveis"}.
-- **Estilo:** ${selectedStyle?.prompt || "Design moderno e limpo"}.
-- **Acessibilidade:** Garanta contraste WCAG AA em todos os elementos.
-
-### 5. ESTRUTURA DE PÁGINAS & SEÇÕES
-- **Seções Obrigatórias:** ${pageLabels.join(", ") || "Início, Sobre, Serviços, Contato"}.
-${whatsappOrdering ? "- **SISTEMA DE PEDIDOS WHATSAPP:** Implementar cardápio interativo com carrinho flutuante e checkout que envia o pedido formatado para o WhatsApp." : ""}
-
-### 6. REQUISITOS TÉCNICOS & PERFORMANCE
-- **Mobile-First:** Layout responsivo otimizado para celulares (tap targets > 48px).
-- **Performance:** Imagens com lazy-load, fontes otimizadas, animações suaves com Framer Motion.
-- **Redes Sociais:** Incluir links no rodapé (${instagram ? `Instagram: ${instagram}, ` : ""}${tiktok ? `TikTok: ${tiktok}, ` : ""}${facebook ? `Facebook: ${facebook}` : ""}).
-
-### 7. VARREDURA FINAL (QUALITY ASSURANCE)
-Antes de finalizar, verifique:
-1. O contraste das cores atende ao padrão WCAG AA?
-2. O site é totalmente funcional no mobile?
-3. O formulário/CTA tem validação visual de sucesso?
-4. Todas as informações de contato fornecidas (endereço, telefone, redes sociais) estão visíveis no site?
+### 5. REQUISITOS
+- Mobile-first, contraste WCAG AA, animações suaves com Framer Motion.
+- Implemente os recursos extras escolhidos como seções dedicadas quando aplicável.
+- O botão principal de toda página deve executar a ação "${cta}".
 
 ---
 BASE DO TEMPLATE:
-${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.trim(), features.trim())}`;
+${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, featuresStr)}`;
 
-    setGeneratedPrompt(generated);
+    setGeneratedPrompt(prompt);
 
-    // O site será salvo no histórico do usuário dentro do AIBuilderPicker 
-    // quando ele clicar para abrir o Lovable, evitando redundância e bloqueios de UI.
-
-    if (!hasInstalledExtension) {
-      setShowExtensionModal(true);
-    } else {
-      setPickerOpen(true);
-    }
+    if (!hasInstalledExtension) setShowExtensionModal(true);
+    else setPickerOpen(true);
   };
 
   const handleConfirmExtension = () => {
-    if (user) {
-      localStorage.setItem(`has_installed_hyperbuild-${user.id}`, "true");
-    }
+    if (user) localStorage.setItem(`has_installed_hyperbuild-${user.id}`, "true");
     setHasInstalledExtension(true);
     setShowExtensionModal(false);
     setPickerOpen(true);
   };
 
-  const handleGoToExtension = () => {
-    // Salva o estado atual do formulário para não perder os dados
-    const formData = {
-      projectName,
-      niche,
-      address,
-      phone,
-      primaryColor,
-      secondaryColor,
-      features,
-      font,
-      designStyle,
-      slogan,
-      siteObjective,
-      tone,
-      selectedPages,
-      ctaPrincipal,
-      businessHours,
-      whatsappOrdering,
-      instagram,
-      tiktok,
-      facebook,
-      targetAudience,
-      differentiators,
-      pricePositioning,
-      socialProof,
-      productNameCakto,
-      productPrice,
-      caktoRegistered,
-      caktoCheckoutUrl,
-      step
-    };
-    if (user) {
-      localStorage.setItem(`pending_site_creation-${user.id}`, JSON.stringify(formData));
-    }
-    
-    // Redireciona para a seção de extensão dentro do dashboard
-    navigate("/dashboard?view=extensao-lovable");
-  };
+  const handleGoToExtension = () => navigate("/dashboard?view=extensao-lovable");
 
   const nicheEntries = Object.entries(nicheTemplates);
 
+  // ============================================================
+  // RENDER DAS ETAPAS
+  // ============================================================
   const renderStep = () => {
     switch (step) {
+      // ---------- ETAPA 1 — NICHO ----------
       case 0:
         return (
-          <div className="space-y-8">
+          <div className="space-y-6">
             <div className="space-y-1">
-              <h3 className="text-2xl font-black text-foreground tracking-tight">Sobre o seu negócio</h3>
-              <p className="text-sm text-[#94a3b8]">
-                Comece escolhendo o nome e o tipo do seu projeto
-              </p>
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Qual é o seu negócio?</h3>
+              <p className="text-sm text-[#94a3b8]">Escolha o nicho que melhor representa o que você faz.</p>
             </div>
 
-            <div className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Nome do Projeto *</label>
-                  <Input
-                    placeholder="Ex: Royal Barber, Forno & Massa"
-                    value={projectName}
-                    onChange={(e) => setProjectName(e.target.value)}
-                    className="bg-[#0d0d14] border-white/10 h-12 text-base focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-                    autoFocus
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
-                    <MessageSquare className="w-4 h-4 text-primary" />
-                    Slogan / Tagline
-                  </label>
-                  <Input
-                    placeholder="Ex: Estilo & Tradição"
-                    value={slogan}
-                    onChange={(e) => setSlogan(e.target.value)}
-                    className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <p className="text-xs text-[#475569] font-medium">💡 Sugestões de slogan baseadas no seu nicho:</p>
-                {niche && sloganSuggestions[niche] && (
-                  <div className="flex flex-wrap gap-2">
-                    {sloganSuggestions[niche].map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => setSlogan(s)}
-                        className={cn(
-                          "text-xs px-4 py-2 rounded-xl border transition-all duration-200",
-                          slogan === s
-                            ? "border-primary bg-primary/10 text-primary font-bold shadow-[0_0_15px_rgba(37,99,235,0.2)]"
-                            : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white"
-                        )}
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-4">
-                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Tipo de Negócio *</label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {nicheEntries.map(([key, t]) => (
-                    <motion.button
-                      key={key}
-                      type="button"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setNiche(key)}
-                      className={cn(
-                        "text-left p-4 rounded-2xl border transition-all duration-300 text-sm font-medium",
-                        niche === key
-                          ? "border-primary bg-primary/10 text-primary shadow-[0_0_20px_rgba(37,99,235,0.2)]"
-                          : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white"
-                      )}
-                    >
-                      {t.label}
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {nicheEntries.map(([key, t]) => (
+                <motion.button
+                  key={key}
+                  type="button"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setNiche(key)}
+                  className={cn(
+                    "text-left p-4 rounded-2xl border transition-all duration-300 text-sm font-medium",
+                    niche === key
+                      ? "border-primary bg-primary/10 text-primary shadow-[0_0_20px_rgba(37,99,235,0.2)]"
+                      : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white",
+                  )}
+                >
+                  {t.label}
+                </motion.button>
+              ))}
             </div>
           </div>
         );
 
+      // ---------- ETAPA 2 — NEGÓCIO ----------
       case 1:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h3 className="text-xl font-bold text-foreground">Estilo de Design</h3>
-              <p className="text-sm text-muted-foreground">
-                Escolha o estilo visual que combina com o seu negócio
-              </p>
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Sobre o seu negócio</h3>
+              <p className="text-sm text-[#94a3b8]">Como o seu negócio se chama e qual é a frase que o representa?</p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-3">
-              {designStyles.map((s) => (
-                <button
-                  key={s.value}
-                  type="button"
-                  onClick={() => setDesignStyle(s.value)}
-                  className={cn(
-                    "text-left p-4 rounded-xl border transition-all duration-200",
-                    designStyle === s.value
-                      ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                      : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
-                  )}
-                >
-                  <p className="text-sm font-semibold text-foreground">{s.label}</p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{s.desc}</p>
-                </button>
-              ))}
-            </div>
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Nome do Projeto *</label>
+                <Input
+                  placeholder="Ex: Forno & Massa"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  className="bg-[#0d0d14] border-white/10 h-12 text-base focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+                  autoFocus
+                />
+              </div>
 
-            {/* Objetivo do Site */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                <Target className="w-4 h-4 text-primary" />
-                Objetivo do Site
-              </label>
-              <div className="grid sm:grid-cols-2 gap-2">
-                {siteObjectives.map((o) => (
-                  <button
-                    key={o.value}
-                    type="button"
-                    onClick={() => setSiteObjective(siteObjective === o.value ? "" : o.value)}
-                    className={cn(
-                      "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
-                      siteObjective === o.value
-                        ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                        : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
-                    )}
-                  >
-                    <span className="font-medium text-foreground">{o.label}</span>
-                    <p className="text-xs text-muted-foreground mt-0.5">{o.desc}</p>
-                  </button>
-                ))}
+              <div className="space-y-2">
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  Slogan / Tagline
+                </label>
+                <Input
+                  placeholder="Ex: Sabor que conquista"
+                  value={slogan}
+                  onChange={(e) => setSlogan(e.target.value)}
+                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
+                />
+                {niche && sloganSuggestions[niche] && (
+                  <div className="space-y-2 pt-2">
+                    <p className="text-xs text-[#475569] font-medium">💡 Sugestões com base no seu nicho:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {sloganSuggestions[niche].map((s) => (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => setSlogan(s)}
+                          className={cn(
+                            "text-xs px-4 py-2 rounded-xl border transition-all duration-200",
+                            slogan === s
+                              ? "border-primary bg-primary/10 text-primary font-bold"
+                              : "border-white/5 bg-[#0d0d14] text-[#94a3b8] hover:border-white/20 hover:text-white",
+                          )}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-
-            {/* Tom de Voz */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-primary" />
-                Tom de Voz
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {toneOptions.map((t) => (
-                  <button
-                    key={t.value}
-                    type="button"
-                    onClick={() => setTone(tone === t.value ? "" : t.value)}
-                    className={cn(
-                      "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
-                      tone === t.value
-                        ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                        : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
-                    )}
-                  >
-                    <span className="font-medium text-foreground">{t.label}</span>
-                    <p className="text-xs text-muted-foreground mt-0.5">{t.desc}</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => navigate("/guia-design")}
-              className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
-            >
-              Ver guia completo de estilos <ExternalLink className="w-3 h-3" />
-            </button>
           </div>
         );
 
+      // ---------- ETAPA 3 — VISUAL ----------
       case 2:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h3 className="text-xl font-bold text-foreground">Personalização Visual</h3>
-              <p className="text-sm text-muted-foreground">
-                Defina cores, fontes e funcionalidades extras
-              </p>
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Personalização visual</h3>
+              <p className="text-sm text-[#94a3b8]">Escolha as cores e os recursos extras do seu site.</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <label className="text-sm font-medium text-foreground">Fonte das Letras</label>
-                  <button
-                    type="button"
-                    onClick={() => navigate("/guia-fontes")}
-                    className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
-                  >
-                    Ver exemplos <ExternalLink className="w-3 h-3" />
-                  </button>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {fontOptions.map((f) => (
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Cor Principal *</label>
+                <Select value={primaryColor} onValueChange={setPrimaryColor}>
+                  <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12">
+                    <SelectValue placeholder="Selecione a cor principal">
+                      {primaryColor && (
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: primaryColor }} />
+                          {namedColors.find((c) => c.hex === primaryColor)?.name || primaryColor}
+                        </span>
+                      )}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {namedColors.map((c) => (
+                      <SelectItem key={c.hex} value={c.hex}>
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: c.hex }} />
+                          {c.name}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Cor Secundária *</label>
+                <Select value={secondaryColor} onValueChange={setSecondaryColor}>
+                  <SelectTrigger className="bg-[#0d0d14] border-white/10 h-12">
+                    <SelectValue placeholder="Selecione a cor secundária">
+                      {secondaryColor && (
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: secondaryColor }} />
+                          {namedColors.find((c) => c.hex === secondaryColor)?.name || secondaryColor}
+                        </span>
+                      )}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {namedColors.map((c) => (
+                      <SelectItem key={c.hex} value={c.hex}>
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 rounded-full border border-white/20" style={{ background: c.hex }} />
+                          {c.name}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider">Funcionalidades Extras</label>
+              <div className="flex flex-wrap gap-2">
+                {featureOptions.map((f) => {
+                  const active = selectedFeatures.includes(f);
+                  return (
                     <button
-                      key={f.value}
+                      key={f}
                       type="button"
-                      onClick={() => setFont(font === f.value ? "" : f.value)}
+                      onClick={() => toggleFeature(f)}
                       className={cn(
-                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
-                        font === f.value
-                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                        "text-sm px-4 py-2 rounded-full border transition-all duration-200",
+                        active
+                          ? "border-primary bg-primary/10 text-primary font-semibold shadow-[0_0_12px_rgba(59,130,246,0.25)]"
+                          : "border-white/10 bg-[#0d0d14] text-[#94a3b8] hover:border-white/30 hover:text-white",
                       )}
                     >
-                      <span className="font-medium text-foreground">{f.label}</span>
-                      <span className="text-xs text-muted-foreground ml-2">— {f.desc}</span>
+                      {active && <Check className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />}
+                      {f}
                     </button>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <ColorPalettePicker
-                  label="Cor Principal"
-                  value={primaryColor}
-                  onChange={setPrimaryColor}
-                />
-                <ColorPalettePicker
-                  label="Cor Secundária"
-                  value={secondaryColor}
-                  onChange={setSecondaryColor}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">Funcionalidades Extras</label>
-                <Input
-                  placeholder="Ex: Agendamento, Cardápio, Blog, Galeria de Fotos"
-                  value={features}
-                  onChange={(e) => setFeatures(e.target.value)}
-                  className="bg-secondary/50 border-border"
-                />
-              </div>
-
-              {/* WhatsApp Ordering Card - only for food niches */}
-              {foodNiches.includes(niche) && (
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">🚀 Automação</label>
-                  <button
-                    type="button"
-                    onClick={() => setWhatsappOrdering(!whatsappOrdering)}
-                    className={cn(
-                      "w-full text-left p-5 rounded-xl border-2 transition-all duration-300 relative overflow-hidden group",
-                      whatsappOrdering
-                        ? "border-green-500 bg-green-500/10 ring-2 ring-green-500/20 shadow-lg shadow-green-500/10"
-                        : "border-border bg-card hover:border-green-500/50 hover:bg-green-500/5"
-                    )}
-                  >
-                    {/* Background glow when active */}
-                    {whatsappOrdering && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-green-500/10 pointer-events-none" />
-                    )}
-                    
-                    <div className="relative flex items-start gap-4">
-                      {/* Icon */}
-                      <div className={cn(
-                        "w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300",
-                        whatsappOrdering 
-                          ? "bg-green-500/20 shadow-md shadow-green-500/20" 
-                          : "bg-secondary/50 group-hover:bg-green-500/10"
-                      )}>
-                        <MessageSquare className={cn(
-                          "w-6 h-6 transition-colors",
-                          whatsappOrdering ? "text-green-400" : "text-muted-foreground group-hover:text-green-400"
-                        )} />
-                      </div>
-                      
-                      {/* Content */}
-                      <div className="flex-1 space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-sm font-bold text-foreground">
-                            Pedidos via WhatsApp
-                          </h4>
-                          {/* Toggle indicator */}
-                          <div className={cn(
-                            "w-11 h-6 rounded-full transition-all duration-300 flex items-center px-0.5",
-                            whatsappOrdering ? "bg-green-500" : "bg-muted"
-                          )}>
-                            <div className={cn(
-                              "w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-300",
-                              whatsappOrdering ? "translate-x-5" : "translate-x-0"
-                            )} />
-                          </div>
-                        </div>
-                        <p className="text-xs text-muted-foreground leading-relaxed">
-                          Seus clientes escolhem os itens direto no site e o pedido vai formatado pro WhatsApp — sem app, sem comissão.
-                        </p>
-                        
-                        {/* Feature pills */}
-                        <div className="flex flex-wrap gap-1.5 pt-1">
-                          {["Cardápio interativo", "Carrinho inline", "Checkout 2 etapas", "Envio automático"].map((feat) => (
-                            <span 
-                              key={feat}
-                              className={cn(
-                                "text-[10px] font-medium px-2 py-0.5 rounded-full transition-colors",
-                                whatsappOrdering 
-                                  ? "bg-green-500/15 text-green-300 border border-green-500/20" 
-                                  : "bg-secondary/50 text-muted-foreground border border-border"
-                              )}
-                            >
-                              {feat}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         );
 
+      // ---------- ETAPA 4 — CONTATO ----------
       case 3:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h3 className="text-xl font-bold text-foreground">Informações de Contato</h3>
-              <p className="text-sm text-muted-foreground">
-                Adicione endereço e telefone para aparecer no site
-              </p>
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Informações de contato</h3>
+              <p className="text-sm text-[#94a3b8]">Onde os seus clientes podem encontrar você.</p>
             </div>
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-primary" />
-                  Endereço
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-primary" /> Endereço
                 </label>
                 <Input
-                  placeholder="Ex: Rua das Flores, 123 - Centro, São Paulo"
+                  placeholder="Ex: Rua das Flores, 123 — Centro, São Paulo"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  className="bg-secondary/50 border-border h-12"
+                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
                   autoFocus
                 />
               </div>
+
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-primary" />
-                  Telefone / WhatsApp
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-primary" /> Telefone / WhatsApp
                 </label>
                 <Input
-                  placeholder="Ex: (11) 99999-9999"
+                  placeholder="(11) 99999-9999"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="bg-secondary/50 border-border h-12"
-                />
-              </div>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Instagram className="w-4 h-4 text-primary" />
-                    Instagram
-                  </label>
-                  <Input
-                    placeholder="Link ou @user"
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                    className="bg-secondary/50 border-border"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Youtube className="w-4 h-4 text-primary" />
-                    TikTok
-                  </label>
-                  <Input
-                    placeholder="@usuario"
-                    value={tiktok}
-                    onChange={(e) => setTiktok(e.target.value)}
-                    className="bg-secondary/50 border-border"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <FacebookIcon className="w-4 h-4 text-primary" />
-                    Facebook
-                  </label>
-                  <Input
-                    placeholder="Link da página"
-                    value={facebook}
-                    onChange={(e) => setFacebook(e.target.value)}
-                    className="bg-secondary/50 border-border"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <Star className="w-4 h-4 text-primary" />
-                  Prova Social / Conquistas
-                </label>
-                <Input
-                  placeholder="Ex: 500+ clientes atendidos, Nota 4.9 no Google, 15 anos de tradição"
-                  value={socialProof}
-                  onChange={(e) => setSocialProof(e.target.value)}
-                  className="bg-secondary/50 border-border"
+                  onChange={(e) => {
+                    // Máscara simples BR
+                    const digits = e.target.value.replace(/\D/g, "").slice(0, 11);
+                    let masked = digits;
+                    if (digits.length > 6) masked = `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`;
+                    else if (digits.length > 2) masked = `(${digits.slice(0,2)}) ${digits.slice(2)}`;
+                    else if (digits.length > 0) masked = `(${digits}`;
+                    setPhone(masked);
+                  }}
+                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <Users className="w-4 h-4 text-primary" />
-                  Público-Alvo
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-primary" /> Horário de Funcionamento
                 </label>
                 <Input
-                  placeholder="Ex: Jovens de 18-25 anos que gostam de esportes"
-                  value={targetAudience}
-                  onChange={(e) => setTargetAudience(e.target.value)}
-                  className="bg-secondary/50 border-border"
-                />
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Star className="w-4 h-4 text-primary" />
-                    Diferencial Competitivo
-                  </label>
-                  <Input
-                    placeholder="Ex: Entrega mais rápida da região"
-                    value={differentiators}
-                    onChange={(e) => setDifferentiators(e.target.value)}
-                    className="bg-secondary/50 border-border"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-primary" />
-                    Posicionamento de Preço
-                  </label>
-                  <Select value={pricePositioning} onValueChange={setPricePositioning}>
-                    <SelectTrigger className="bg-secondary/50 border-border">
-                      <SelectValue placeholder="Selecione..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="popular">Popular / Acessível</SelectItem>
-                      <SelectItem value="medio">Médio / Custo-Benefício</SelectItem>
-                      <SelectItem value="premium">Premium / Alta Gastronomia</SelectItem>
-                      <SelectItem value="luxo">Luxo / Exclusivo</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary" />
-                  Horário de Funcionamento
-                </label>
-                <Input
-                  placeholder="Ex: Seg-Sex 9h às 18h, Sáb 9h às 13h"
+                  placeholder="Seg–Sex 11h às 23h, Sáb e Dom 11h às 00h"
                   value={businessHours}
                   onChange={(e) => setBusinessHours(e.target.value)}
-                  className="bg-secondary/50 border-border h-12"
+                  className="bg-[#0d0d14] border-white/10 h-12 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all"
                 />
               </div>
 
-              {/* Páginas Desejadas */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-primary" />
-                  Páginas / Seções do Site
+              <div className="space-y-3">
+                <label className="text-[13px] font-bold text-[#cbd5e1] uppercase tracking-wider flex items-center gap-2">
+                  <MousePointerClick className="w-4 h-4 text-primary" /> Botão Principal (CTA)
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {pageOptions.map((p) => {
-                    const isSelected = selectedPages.includes(p.value);
-                    return (
-                      <button
-                        key={p.value}
-                        type="button"
-                        onClick={() =>
-                          setSelectedPages(
-                            isSelected
-                              ? selectedPages.filter((v) => v !== p.value)
-                              : [...selectedPages, p.value]
-                          )
-                        }
-                        className={cn(
-                          "p-2.5 rounded-xl border transition-all duration-200 text-sm text-center",
-                          isSelected
-                            ? "border-primary bg-primary/10 ring-1 ring-primary/30 text-foreground font-medium"
-                            : "border-border bg-secondary/30 hover:border-primary/40 text-muted-foreground"
-                        )}
-                      >
-                        {isSelected && <Check className="w-3 h-3 inline mr-1" />}
-                        {p.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* CTA Principal */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <MousePointerClick className="w-4 h-4 text-primary" />
-                  Botão Principal (CTA)
-                </label>
-                <div className="grid sm:grid-cols-2 gap-2">
-                  {ctaOptions.map((c) => (
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {simpleCtaOptions.map((c) => (
                     <button
                       key={c.value}
                       type="button"
-                      onClick={() => setCtaPrincipal(ctaPrincipal === c.value ? "" : c.value)}
+                      onClick={() => setCtaPrincipal(c.value)}
                       className={cn(
-                        "text-left p-3 rounded-xl border transition-all duration-200 text-sm",
+                        "text-left p-4 rounded-xl border transition-all duration-200 text-sm font-medium",
                         ctaPrincipal === c.value
-                          ? "border-primary bg-primary/10 ring-1 ring-primary/30"
-                          : "border-border bg-secondary/30 hover:border-primary/40 hover:bg-primary/5"
+                          ? "border-primary bg-primary/10 text-primary shadow-[0_0_15px_rgba(59,130,246,0.2)]"
+                          : "border-white/10 bg-[#0d0d14] text-[#94a3b8] hover:border-white/30 hover:text-white",
                       )}
                     >
-                      <span className="font-medium text-foreground">{c.label}</span>
-                      <p className="text-xs text-muted-foreground mt-0.5">{c.desc}</p>
+                      {ctaPrincipal === c.value && <Check className="w-4 h-4 inline mr-2 -mt-0.5" />}
+                      {c.label}
                     </button>
                   ))}
                 </div>
@@ -1300,190 +837,51 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
           </div>
         );
 
+      // ---------- ETAPA 5 — REVISÃO ----------
       case 4:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
-              <h3 className="text-xl font-bold text-foreground">Configurar Vendas (Cakto)</h3>
-              <p className="text-sm text-muted-foreground">
-                Cadastre seu produto na Cakto para receber pagamentos
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <div className="bg-secondary/20 border border-primary/20 rounded-2xl p-6 space-y-4">
-                <div className="flex items-center gap-4 mb-2">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Wallet className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-foreground">Integração Cakto</h4>
-                    <p className="text-xs text-muted-foreground">Checkout de alta conversão</p>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Nome do Produto</label>
-                    <Input
-                      placeholder="Ex: Consultoria Premium"
-                      value={productNameCakto || projectName}
-                      onChange={(e) => setProductNameCakto(e.target.value)}
-                      className="bg-secondary/50 border-border"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Valor do Produto (R$)</label>
-                    <Input
-                      type="number"
-                      placeholder="97,00"
-                      value={productPrice}
-                      onChange={(e) => setProductPrice(e.target.value)}
-                      className="bg-secondary/50 border-border"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">URL da Imagem do Produto (Opcional)</label>
-                    <Input
-                      placeholder="https://exemplo.com/imagem.jpg"
-                      value={caktoProductImageUrl}
-                      onChange={(e) => setCaktoProductImageUrl(e.target.value)}
-                      className="bg-secondary/50 border-border"
-                    />
-                    <p className="text-[10px] text-muted-foreground italic">Se configurado no Perfil, será carregado automaticamente.</p>
-                  </div>
-
-                   <Button
-                    onClick={handleRegisterCakto}
-                    disabled={isRegisteringCakto || caktoRegistered}
-                    className={cn(
-                      "w-full h-12 font-bold transition-all duration-300",
-                      caktoRegistered ? "bg-green-500 hover:bg-green-600" : "bg-primary hover:bg-primary/90"
-                    )}
-                  >
-                    {isRegisteringCakto ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Cadastrando...
-                      </div>
-                    ) : caktoRegistered ? (
-                      <div className="flex items-center gap-2">
-                        <Check className="w-5 h-5" />
-                        Produto Cadastrado
-                      </div>
-                    ) : (
-                      "Cadastrar na Cakto"
-                    )}
-                   </Button>
-                  
-                  {caktoRegistered && caktoCheckoutUrl && (
-                    <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-xl flex items-center justify-between">
-                      <div className="flex flex-col">
-                        <span className="text-[10px] text-green-400 font-bold uppercase">Link de Checkout</span>
-                        <span className="text-xs text-foreground truncate max-w-[200px]">{caktoCheckoutUrl}</span>
-                      </div>
-                      <Button 
-                        size="sm" 
-                        variant="ghost" 
-                        className="h-8 w-8 p-0 hover:bg-green-500/20"
-                        onClick={() => {
-                          navigator.clipboard.writeText(caktoCheckoutUrl);
-                          toast.success("Link copiado!");
-                        }}
-                      >
-                        <ExternalLink className="w-4 h-4 text-green-400" />
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 flex gap-3 items-start">
-                <Sparkles className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                <p className="text-xs text-blue-200/70 leading-relaxed">
-                  Ao clicar em cadastrar, nós criamos automaticamente o produto na sua conta Cakto usando o nome e valor informados. O link de checkout será inserido nos botões do seu site.
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-
-      case 5:
-        return (
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <h3 className="text-xl font-bold text-foreground">Revisão Final</h3>
-              <p className="text-sm text-muted-foreground">
-                Confira as informações antes de gerar seu site
-              </p>
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Revisão final</h3>
+              <p className="text-sm text-[#94a3b8]">Confira tudo antes de gerar o seu site com a IA.</p>
             </div>
 
             <div className="space-y-3">
-              <ReviewItem label="Nome" value={projectName} />
+              <ReviewItem label="Nicho" value={nicheTemplates[niche]?.label || "—"} />
+              <ReviewItem label="Nome" value={projectName || "—"} />
               <ReviewItem label="Slogan" value={slogan || "Não informado"} />
-              <ReviewItem label="Tipo" value={nicheTemplates[niche]?.label || "—"} />
+
+              <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-secondary/30 border border-border">
+                <span className="text-sm text-muted-foreground">Cores</span>
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-2 text-xs text-foreground">
+                    <span className="w-5 h-5 rounded-full border border-white/20" style={{ background: primaryColor }} />
+                    {namedColors.find((c) => c.hex === primaryColor)?.name || "—"}
+                  </span>
+                  <span className="flex items-center gap-2 text-xs text-foreground">
+                    <span className="w-5 h-5 rounded-full border border-white/20" style={{ background: secondaryColor }} />
+                    {namedColors.find((c) => c.hex === secondaryColor)?.name || "—"}
+                  </span>
+                </div>
+              </div>
+
               <ReviewItem
-                label="Objetivo"
-                value={siteObjectives.find((o) => o.value === siteObjective)?.label || "Não definido"}
-              />
-              <ReviewItem
-                label="Tom de Voz"
-                value={toneOptions.find((t) => t.value === tone)?.label || "Padrão"}
-              />
-              <ReviewItem
-                label="Estilo"
-                value={designStyles.find((s) => s.value === designStyle)?.label || "Padrão do nicho"}
-              />
-              <ReviewItem
-                label="Fonte"
-                value={fontOptions.find((f) => f.value === font)?.label || "Padrão do nicho"}
-              />
-              <ReviewItem label="Cor Principal" value={primaryColor || "Padrão do nicho"} />
-              <ReviewItem label="Cor Secundária" value={secondaryColor || "Padrão do nicho"} />
-              <ReviewItem
-                label="Páginas"
-                value={selectedPages.length > 0
-                  ? selectedPages.map(p => pageOptions.find(o => o.value === p)?.label).filter(Boolean).join(", ")
-                  : "Padrão do nicho"}
-              />
-              <ReviewItem
-                label="CTA Principal"
-                value={ctaOptions.find((c) => c.value === ctaPrincipal)?.label || "Padrão do nicho"}
+                label="Funcionalidades"
+                value={selectedFeatures.length > 0 ? selectedFeatures.join(", ") : "Nenhuma"}
               />
               <ReviewItem label="Endereço" value={address || "Não informado"} />
               <ReviewItem label="Telefone" value={phone || "Não informado"} />
               <ReviewItem label="Horário" value={businessHours || "Não informado"} />
-              <ReviewItem label="Extras" value={features || "Nenhum"} />
-              <ReviewItem label="Público-Alvo" value={targetAudience || "Não informado"} />
-              <ReviewItem label="Diferenciais" value={differentiators || "Não informado"} />
-              <ReviewItem label="Posicionamento" value={pricePositioning ? pricePositioning.charAt(0).toUpperCase() + pricePositioning.slice(1) : "Padrão"} />
-              <ReviewItem 
-                label="Vendas Cakto" 
-                value={caktoRegistered ? `Produto: ${productNameCakto || projectName} (R$ ${productPrice})` : "Não configurado"} 
+              <ReviewItem
+                label="CTA Principal"
+                value={simpleCtaOptions.find((c) => c.value === ctaPrincipal)?.label || "Não definido"}
               />
-              {caktoRegistered && caktoCheckoutUrl && (
-                <ReviewItem label="Link Checkout" value={caktoCheckoutUrl} />
-              )}
-              {(instagram || tiktok || facebook) && (
-                <ReviewItem label="Social" value={[instagram, tiktok, facebook].filter(Boolean).length + " redes conectadas"} />
-              )}
-              {foodNiches.includes(niche) && (
-                <ReviewItem label="Pedidos WhatsApp" value={whatsappOrdering ? "✅ Ativado" : "Desativado"} />
-              )}
             </div>
 
-
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                variant="hero"
-                size="lg"
-                onClick={handleGenerate}
-                className="w-full"
-              >
+              <Button variant="hero" size="lg" onClick={handleGenerate} className="w-full">
                 <Sparkles className="w-4 h-4" />
-                Criar Meu Site com IA
+                Gerar Site com IA
               </Button>
             </motion.div>
           </div>
@@ -1494,6 +892,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
     }
   };
 
+  // ============================================================
+  // LAYOUT GERAL
+  // ============================================================
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -1503,9 +904,11 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
     >
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-white">Criador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Sites</span></h2>
+        <h2 className="text-2xl font-bold text-white">
+          Criador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Sites</span>
+        </h2>
         <p className="text-[#6b7280] text-sm mt-1 font-medium">
-          Responda passo a passo e crie seu site profissional com IA
+          Responda 4 etapas rápidas e gere seu site profissional com IA
         </p>
       </div>
 
@@ -1520,14 +923,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
               <button
                 key={i}
                 type="button"
-                onClick={() => {
-                  if (i <= step || canAdvance) setStep(i);
-                }}
-                className={cn(
-                  "flex flex-col items-center group transition-all duration-300",
-                  i > step && !canAdvance && "opacity-40 cursor-not-allowed"
-                )}
-                disabled={i > step && !canAdvance}
+                onClick={() => { if (i <= step) setStep(i); }}
+                className={cn("flex flex-col items-center group transition-all duration-300", i > step && "opacity-40 cursor-not-allowed")}
+                disabled={i > step}
               >
                 <motion.div
                   initial={false}
@@ -1538,19 +936,12 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                   className={cn(
                     "w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 relative z-10",
                     isActive && "shadow-[0_0_20px_rgba(59,130,246,0.4)]",
-                    isDone && "shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                    isDone && "shadow-[0_0_20px_rgba(16,185,129,0.3)]",
                   )}
                 >
-                  {isDone ? (
-                    <Check className="w-5 h-5 text-white" />
-                  ) : (
-                    <Icon className={cn("w-5 h-5 transition-colors", isActive ? "text-white" : "text-[#475569]")} />
-                  )}
+                  {isDone ? <Check className="w-5 h-5 text-white" /> : <Icon className={cn("w-5 h-5 transition-colors", isActive ? "text-white" : "text-[#475569]")} />}
                 </motion.div>
-                <span className={cn(
-                  "text-[10px] font-black uppercase tracking-widest mt-3 transition-colors",
-                  isActive ? "text-[#3B82F6]" : "text-[#6b7280]"
-                )}>
+                <span className={cn("text-[10px] font-black uppercase tracking-widest mt-3 transition-colors", isActive ? "text-[#3B82F6]" : "text-[#6b7280]")}>
                   {s.label}
                 </span>
               </button>
@@ -1559,7 +950,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         </div>
 
         {/* Progress Line */}
-        <div className="absolute top-[50px] left-[15%] right-[15%] h-[2px] bg-white/10 -z-0">
+        <div className="absolute top-[50px] left-[10%] right-[10%] h-[2px] bg-white/10 -z-0">
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: `${(step / (TOTAL_STEPS - 1)) * 100}%` }}
@@ -1586,84 +977,59 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
       </div>
 
       {/* Navigation */}
-      {step < 5 && (
+      {step < TOTAL_STEPS - 1 ? (
         <div className="flex justify-between">
-          <Button
-            variant="ghost"
-            onClick={() => setStep(Math.max(0, step - 1))}
-            disabled={step === 0}
-            className="gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Voltar
+          <Button variant="ghost" onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0} className="gap-2">
+            <ArrowLeft className="w-4 h-4" /> Voltar
           </Button>
           <div className="flex flex-col items-end gap-1">
-            {step === 0 && !canAdvance && (projectName.trim().length === 0 || niche.length === 0) && (
-              <span className="text-xs text-destructive">
-                {projectName.trim().length === 0 ? "Preencha o nome do projeto" : "Selecione o tipo de negócio"}
-              </span>
+            {!canAdvance && validationMessage && (
+              <span className="text-xs text-destructive">{validationMessage}</span>
             )}
             <Button
               onClick={() => setStep(Math.min(TOTAL_STEPS - 1, step + 1))}
               disabled={!canAdvance}
               className="gap-2 bg-[#3B82F6] hover:bg-[#3B82F6]/90 text-white rounded-full font-bold px-8 transition-all"
             >
-              Avançar
-              <ArrowRight className="w-4 h-4" />
+              Avançar <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </div>
-      )}
-
-      {step === 5 && (
+      ) : (
         <div className="flex justify-between">
-          <Button
-            variant="ghost"
-            onClick={() => setStep(4)}
-            className="gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Voltar
+          <Button variant="ghost" onClick={() => setStep(TOTAL_STEPS - 2)} className="gap-2">
+            <ArrowLeft className="w-4 h-4" /> Voltar
           </Button>
           <Button
             variant="outline"
             onClick={() => setResetConfirmOpen(true)}
             className="gap-2 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive rounded-full font-bold"
           >
-            <RotateCcw className="w-4 h-4" />
-            Reiniciar processo
+            <RotateCcw className="w-4 h-4" /> Reiniciar processo
           </Button>
         </div>
       )}
 
+      {/* Reset Confirm */}
       <AlertDialog open={resetConfirmOpen} onOpenChange={setResetConfirmOpen}>
         <AlertDialogContent className="bg-[#0D0D12] border border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Reiniciar processo?</AlertDialogTitle>
             <AlertDialogDescription className="text-white/60">
-              Todas as respostas e configurações deste site serão apagadas. Essa ação não pode ser desfeita.
+              Todas as respostas serão apagadas. Essa ação não pode ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-transparent border-white/10 text-white hover:bg-white/5 hover:text-white">
-              Cancelar
-            </AlertDialogCancel>
+            <AlertDialogCancel className="bg-transparent border-white/10 text-white hover:bg-white/5 hover:text-white">Cancelar</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
-                if (user) {
-                  localStorage.removeItem(`sites-view-state-${user.id}`);
-                  localStorage.removeItem(`pending_site_creation-${user.id}`);
-                }
+                if (user) localStorage.removeItem(`sites-quiz-state-${user.id}`);
                 setStep(0);
-                setProjectName(""); setNiche(""); setAddress(""); setPhone("");
-                setPrimaryColor(""); setSecondaryColor(""); setFeatures("");
-                setFont(""); setDesignStyle(""); setSlogan(""); setSiteObjective("");
-                setTone(""); setSelectedPages(["inicio"]); setCtaPrincipal("");
-                setBusinessHours(""); setWhatsappOrdering(false);
-                setInstagram(""); setTiktok(""); setFacebook("");
-                setTargetAudience(""); setDifferentiators(""); setPricePositioning("");
-                setSocialProof(""); setProductNameCakto(""); setProductPrice("");
-                setGeneratedPrompt(""); setCaktoRegistered(false); setCaktoCheckoutUrl("");
+                setNiche(""); setProjectName(""); setSlogan("");
+                setPrimaryColor(""); setSecondaryColor("");
+                setSelectedFeatures([]);
+                setAddress(""); setPhone(""); setBusinessHours("");
+                setCtaPrincipal(""); setGeneratedPrompt("");
                 toast.success("Processo reiniciado!");
               }}
               className="bg-destructive hover:bg-destructive/90 text-white"
@@ -1682,7 +1048,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
         niche={niche}
       />
 
-      {/* Extension Install Check Modal */}
+      {/* Modal extensão */}
       <AnimatePresence>
         {showExtensionModal && (
           <motion.div
@@ -1701,30 +1067,18 @@ ${template.buildPrompt(projectName.trim(), primaryColor.trim(), secondaryColor.t
                 <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 border border-primary/20 shadow-[0_0_15px_rgba(59,130,246,0.15)] overflow-hidden">
                   <img src="/placeholder.svg" alt="Lovable" className="w-14 h-14 object-contain" />
                 </div>
-                <h2 className="text-2xl font-bold text-foreground">
-                  Lovable Infinito
-                </h2>
+                <h2 className="text-2xl font-bold text-foreground">Lovable Infinito</h2>
                 <p className="text-muted-foreground text-sm">
                   Para criar sites ilimitados e sem travas, você já instalou a nossa extensão e gerou seu token?
                 </p>
               </div>
 
               <div className="space-y-3">
-                <Button 
-                  className="w-full h-12 font-bold gap-2" 
-                  variant="neon"
-                  onClick={handleConfirmExtension}
-                >
-                  <Check className="w-5 h-5" />
-                  Sim, já instalei e configurei
+                <Button className="w-full h-12 font-bold gap-2" variant="neon" onClick={handleConfirmExtension}>
+                  <Check className="w-5 h-5" /> Sim, já instalei e configurei
                 </Button>
-                <Button 
-                  className="w-full h-12 font-bold gap-2" 
-                  variant="outline"
-                  onClick={handleGoToExtension}
-                >
-                  <ExternalLink className="w-5 h-5" />
-                  Não, quero instalar agora
+                <Button className="w-full h-12 font-bold gap-2" variant="outline" onClick={handleGoToExtension}>
+                  <ExternalLink className="w-5 h-5" /> Não, quero instalar agora
                 </Button>
               </div>
             </motion.div>
