@@ -78,17 +78,30 @@ const openExternalLink = (url: string) => {
   if (w) w.opener = null;
 };
 
-const ProspeccaoView = () => {
+interface ProspeccaoViewProps {
+  lockedNicho?: string; // label exato do nicho (ex.: "Pizzarias"); quando fornecido, esconde a grade de nichos
+}
+
+const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
   const [cidades, setCidades] = useState<string[]>([]);
   const [loadingCidades, setLoadingCidades] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("");
+  const [activeFilter, setActiveFilter] = useState(lockedNicho || "");
   const [searchMode, setSearchMode] = useState<"automatic" | "manual">("automatic");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [manualRedirectUrl, setManualRedirectUrl] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
+
+  // Mantém o filtro travado em sincronia caso o pai mude o nicho
+  useEffect(() => {
+    if (lockedNicho && lockedNicho !== activeFilter) {
+      setActiveFilter(lockedNicho);
+      setResults([]);
+      setSearched(false);
+    }
+  }, [lockedNicho]); // eslint-disable-line
 
   useEffect(() => {
     const load = async () => {
