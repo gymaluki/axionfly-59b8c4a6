@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import LegalLayout from "@/components/LegalLayout";
 
 export default function Legal() {

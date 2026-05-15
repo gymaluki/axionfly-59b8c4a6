@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, type Easing } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const ease: Easing = [0.16, 1, 0.3, 1];
 

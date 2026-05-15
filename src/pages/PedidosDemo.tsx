@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import WhatsAppOrderSystem from "@/components/WhatsAppOrderSystem";
 
 const PedidosDemo = () => {
