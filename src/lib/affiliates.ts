@@ -56,7 +56,7 @@ export const AFFILIATES: Record<string, Affiliate> = {
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=Y36tx3VC",
   },
   yan: {
-    slug: "y",
+    slug: "kx",
     name: "Yan",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=QmFRRS9a",
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=QmFRRS9a",
