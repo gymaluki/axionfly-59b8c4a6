@@ -121,10 +121,10 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
       <SidebarFooter className="border-t border-white/5 bg-[#05050a] p-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <DropdownMenu>
+            <DropdownMenu>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
                     <DropdownMenuTrigger asChild>
                       <SidebarMenuButton size="lg" className="w-full h-12 rounded-xl hover:bg-white/5 transition-colors">
                         <div className="relative">
@@ -144,23 +144,23 @@ const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, 
                         {!collapsed && <ChevronUp className="w-4 h-4 text-[#475569] shrink-0" />}
                       </SidebarMenuButton>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent side="top" align="start" className="w-56 bg-[#0d0d14] border-white/10 text-white">
-                      <DropdownMenuItem onClick={() => onNavigate("perfil")} className="hover:bg-white/5 focus:bg-white/5 py-2.5">
-                        <UserCircle className="w-4 h-4 mr-3 text-primary" />
-                        Meu Perfil
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={onSignOut} className="text-red-400 hover:bg-red-400/10 focus:bg-red-400/10 py-2.5">
-                        <LogOut className="w-4 h-4 mr-3" />
-                        Sair da conta
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TooltipTrigger>
-                <TooltipContent side="right" className="bg-primary text-white border-none text-xs font-bold px-3 py-1.5">
-                  {userEmail}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                  </TooltipTrigger>
+                  <TooltipContent side="right" className="bg-primary text-white border-none text-xs font-bold px-3 py-1.5">
+                    {userEmail}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              <DropdownMenuContent side="top" align="start" className="w-56 bg-[#0d0d14] border-white/10 text-white">
+                <DropdownMenuItem onClick={() => onNavigate("perfil")} className="hover:bg-white/5 focus:bg-white/5 py-2.5">
+                  <UserCircle className="w-4 h-4 mr-3 text-primary" />
+                  Meu Perfil
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={onSignOut} className="text-red-400 hover:bg-red-400/10 focus:bg-red-400/10 py-2.5">
+                  <LogOut className="w-4 h-4 mr-3" />
+                  Sair da conta
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
