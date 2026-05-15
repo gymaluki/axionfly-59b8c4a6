@@ -1,32 +1,9 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Check,
-  Sparkles,
-  ExternalLink,
-  ArrowRight,
-  ArrowLeft,
-  RotateCcw,
-  Store,
-  Palette,
-  Type,
-  MapPin,
-  Phone,
-  Clock,
-  Eye,
-  Target,
-  MessageSquare,
-  FileText,
-  MousePointerClick,
-  Instagram,
-  Users,
-  Star,
-  TrendingUp,
-  Youtube,
-  Facebook as FacebookIcon,
-  Globe,
-  CreditCard,
-  Wallet,
+  Check, Sparkles, ExternalLink, ArrowRight, ArrowLeft, RotateCcw,
+  Store, Palette, Type, MapPin, Phone, Clock, Eye, MessageSquare,
+  MousePointerClick, Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +22,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import AIBuildersGrid from "@/components/AIBuildersGrid";
 import AIBuilderPicker from "@/components/AIBuilderPicker";
+import ProspeccaoView from "@/components/views/ProspeccaoView";
 import { ColorPalettePicker } from "@/components/sites/ColorPalettePicker";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
@@ -410,10 +388,11 @@ const simpleCtaOptions = [
   { value: "agendar",    label: "Agendar Horário" },
 ];
 
-const TOTAL_STEPS = 5; // 0:Nicho 1:Negócio 2:Visual 3:Contato 4:Revisão
+const TOTAL_STEPS = 6; // 0:Nicho 1:Leads 2:Negócio 3:Visual 4:Contato 5:Revisão
 
 const stepMeta = [
   { icon: Store,    label: "Nicho" },
+  { icon: Search,   label: "Leads" },
   { icon: Type,     label: "Negócio" },
   { icon: Palette,  label: "Visual" },
   { icon: MapPin,   label: "Contato" },
@@ -493,15 +472,16 @@ const SitesView = () => {
 
   const canAdvance = useMemo(() => {
     if (step === 0) return niche.length > 0;
-    if (step === 1) return projectName.trim().length > 0;
-    if (step === 2) return primaryColor.length > 0 && secondaryColor.length > 0;
+    if (step === 1) return true; // Leads é opcional
+    if (step === 2) return projectName.trim().length > 0;
+    if (step === 3) return primaryColor.length > 0 && secondaryColor.length > 0;
     return true;
   }, [step, niche, projectName, primaryColor, secondaryColor]);
 
   const validationMessage = useMemo(() => {
     if (step === 0 && niche.length === 0) return "Selecione o tipo de negócio";
-    if (step === 1 && projectName.trim().length === 0) return "Preencha o nome do projeto";
-    if (step === 2 && (!primaryColor || !secondaryColor)) return "Escolha as duas cores";
+    if (step === 2 && projectName.trim().length === 0) return "Preencha o nome do projeto";
+    if (step === 3 && (!primaryColor || !secondaryColor)) return "Escolha as duas cores";
     return "";
   }, [step, niche, projectName, primaryColor, secondaryColor]);
 
@@ -606,8 +586,25 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           </div>
         );
 
-      // ---------- ETAPA 2 — NEGÓCIO ----------
+      // ---------- ETAPA 2 — BUSCA DE LEADS ----------
       case 1:
+        return (
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <h3 className="text-2xl font-black text-foreground tracking-tight">Encontre seus clientes</h3>
+              <p className="text-sm text-[#94a3b8]">
+                Use a busca para achar negócios reais do seu nicho. Quando terminar, clique em <span className="text-primary font-semibold">Avançar</span> para criar o site.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/5 bg-[#0a0a14] p-2 md:p-4 -mx-2">
+              <ProspeccaoView />
+            </div>
+          </div>
+        );
+
+      // ---------- ETAPA 3 — NEGÓCIO ----------
+      case 2:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
@@ -665,8 +662,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           </div>
         );
 
-      // ---------- ETAPA 3 — VISUAL ----------
-      case 2:
+      // ---------- ETAPA 4 — VISUAL ----------
+      case 3:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
@@ -755,8 +752,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           </div>
         );
 
-      // ---------- ETAPA 4 — CONTATO ----------
-      case 3:
+      // ---------- ETAPA 5 — CONTATO ----------
+      case 4:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
@@ -837,8 +834,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           </div>
         );
 
-      // ---------- ETAPA 5 — REVISÃO ----------
-      case 4:
+      // ---------- ETAPA 6 — REVISÃO ----------
+      case 5:
         return (
           <div className="space-y-6">
             <div className="space-y-1">
@@ -908,7 +905,7 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           Criador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3B82F6] to-[#60A5FA]">Sites</span>
         </h2>
         <p className="text-[#6b7280] text-sm mt-1 font-medium">
-          Responda 4 etapas rápidas e gere seu site profissional com IA
+          Encontre clientes reais e gere seu site profissional com IA em poucos passos
         </p>
       </div>
 
