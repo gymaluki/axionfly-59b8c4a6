@@ -1,32 +1,9 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Check,
-  Sparkles,
-  ExternalLink,
-  ArrowRight,
-  ArrowLeft,
-  RotateCcw,
-  Store,
-  Palette,
-  Type,
-  MapPin,
-  Phone,
-  Clock,
-  Eye,
-  Target,
-  MessageSquare,
-  FileText,
-  MousePointerClick,
-  Instagram,
-  Users,
-  Star,
-  TrendingUp,
-  Youtube,
-  Facebook as FacebookIcon,
-  Globe,
-  CreditCard,
-  Wallet,
+  Check, Sparkles, ExternalLink, ArrowRight, ArrowLeft, RotateCcw,
+  Store, Palette, Type, MapPin, Phone, Clock, Eye, MessageSquare,
+  MousePointerClick, Search,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
