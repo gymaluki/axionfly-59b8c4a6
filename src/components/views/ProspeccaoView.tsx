@@ -525,15 +525,17 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
                   </span>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={handleClearNicho}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 hover:border-white/20 transition-all group"
-                style={{ fontSize: 12, color: "#6B7280", background: "transparent" }}
-              >
-                <RotateCcw size={12} className="group-hover:text-white transition-colors" />
-                <span className="group-hover:text-white transition-colors">Reiniciar pesquisa</span>
-              </button>
+              {!lockedNicho && (
+                <button
+                  type="button"
+                  onClick={handleClearNicho}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-white/10 hover:border-white/20 transition-all group"
+                  style={{ fontSize: 12, color: "#6B7280", background: "transparent" }}
+                >
+                  <RotateCcw size={12} className="group-hover:text-white transition-colors" />
+                  <span className="group-hover:text-white transition-colors">Reiniciar pesquisa</span>
+                </button>
+              )}
             </div>
 
             {/* MODOS DE BUSCA */}
