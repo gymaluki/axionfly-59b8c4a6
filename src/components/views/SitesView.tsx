@@ -415,7 +415,7 @@ const quizNichoToProspeccaoLabel: Record<string, string | undefined> = {
   petshop: "Pet Shops",
   mecanica: "Mecânicas",
   lavarapido: "Lava Jato",
-  assistencia: "Mecânicas",
+  assistencia: "Assistência Técnica",
   imobiliaria: "Imobiliárias",
   advogado: "Advogados",
   contabilidade: "Contadores",
@@ -424,6 +424,8 @@ const quizNichoToProspeccaoLabel: Record<string, string | undefined> = {
   floricultura: "Floricultura",
   papelaria: undefined,
   "marketing-digital": undefined,
+  hamburgueria: "Hamburguerias",
+  acaiteria: "Açaiteria",
 };
 
 const stepMeta = [
