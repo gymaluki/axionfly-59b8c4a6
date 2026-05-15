@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { TiltCard } from "@/components/ui/tilt-card";
 import { useNavigate } from "react-router-dom";
 import slideAcessar from "@/assets/carousel-acessar.webp";
 import slideVenda from "@/assets/carousel-venda-sem-gastar.webp";
