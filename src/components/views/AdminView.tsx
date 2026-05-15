@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History, Megaphone, Bug, Cloud, TrendingUp, DollarSign } from "lucide-react";
+import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, History, Megaphone, Bug, Cloud, TrendingUp, DollarSign, Sparkles, Code2, Zap } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import AffiliatesAdminPanel from "@/components/admin/AffiliatesAdminPanel";
 import SystemErrorsPanel from "@/components/admin/SystemErrorsPanel";
