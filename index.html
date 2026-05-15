@@ -10,6 +10,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://upload.wikimedia.org">
+    <link rel="preload" as="image" href="/src/assets/axionfly-logo.webp" fetchpriority="high">
+    <!-- Carregamento não-bloqueante da fonte Inter (apenas pesos usados) -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    >
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+    </noscript>
     <title>AxionFly — Criador de Sites com IA e Prospecção</title>
     <meta name="description" content="Crie sites com IA, prospecte leads e venda mais com a AxionFly." />
     <meta name="author" content="AxionFly" />
