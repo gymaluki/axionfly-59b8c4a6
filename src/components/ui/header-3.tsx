@@ -209,13 +209,13 @@ const productLinks: LinkItem[] = [
 	{
 		title: 'Criador de Sites',
 		href: '/auth',
-		description: 'Crie sites profissionais personalizados em minutos',
+		description: 'Crie sites via Quiz com IA e Landing Pages em minutos',
 		icon: Code2,
 	},
 	{
 		title: 'Busca de Leads',
 		href: '/auth',
-		description: 'Encontre leads qualificados com nome, telefone e nicho',
+		description: 'Encontre leads qualificados e empresas sem site no Brasil',
 		icon: MapPin,
 	},
 ];

@@ -187,11 +187,22 @@ function PricingCard({
             <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">70% OFF</span>
           </div>
         )}
-        <div className="flex items-baseline justify-center gap-1">
-          <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
-            R$ <PriceCounter price={price} />
-          </span>
-          <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <div className="flex items-baseline gap-1">
+            <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+              R$ <PriceCounter price={price} />
+            </span>
+            <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
+          </div>
+          {plan === "lifetime" && (
+            <div className="flex flex-col items-center gap-0.5 mt-1">
+              <span className="text-[11px] font-black text-primary/80 uppercase tracking-tighter">Ou parcelado em:</span>
+              <div className="flex gap-2">
+                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">6x de R$ 17,73</span>
+                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">12x de R$ 9,23</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

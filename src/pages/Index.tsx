@@ -222,14 +222,14 @@ const howItWorks = [
   {
     step: "Etapa - 2",
     icon: MousePointerClick,
-    title: "Crie Sites e Encontre Clientes",
-    desc: "Escolha o nicho, personalize o design e gere o site com IA. Use a busca de leads para encontrar negócios sem site na sua cidade.",
+    title: "Crie Sites via Quiz com IA",
+    desc: "Responda algumas perguntas rápidas sobre o negócio e a IA gera o site completo. Use a busca de leads para encontrar empresas sem site na sua cidade.",
   },
   {
     step: "Etapa - 3",
     icon: Globe,
-    title: "Apresente, Venda e Escale",
-    desc: "Entre em contato pelo WhatsApp, mostre o site pronto e feche o contrato. Acompanhe seus resultados e continue escalando.",
+    title: "Venda e Escale com Leads",
+    desc: "Use nossa busca para encontrar clientes reais, apresente o site pronto e feche o contrato. Acompanhe seus resultados e continue escalando.",
   },
 ];
 
