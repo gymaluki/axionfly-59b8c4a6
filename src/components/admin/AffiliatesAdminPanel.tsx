@@ -692,7 +692,7 @@ export default function AffiliatesAdminPanel() {
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </Dialog>
+      </AlertDialog>
     </div>
   );
 }
