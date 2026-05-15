@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, lazy, Suspense, useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Star, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
