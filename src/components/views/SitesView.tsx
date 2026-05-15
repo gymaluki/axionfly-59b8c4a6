@@ -1018,9 +1018,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
 };
 
 const ReviewItem = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex items-center justify-between py-2 px-3 rounded-lg bg-secondary/30 border border-border">
-    <span className="text-sm text-muted-foreground">{label}</span>
-    <span className="text-sm font-medium text-foreground text-right max-w-[60%] truncate">{value}</span>
+  <div className="review-row">
+    <span className="label">{label}</span>
+    <span className="value truncate">{value}</span>
   </div>
 );
 
