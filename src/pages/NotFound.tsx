@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { ShieldAlert, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
@@ -13,7 +14,14 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#05050A] text-white p-4">
+    <>
+      <Helmet>
+        <title>Página não encontrada — AxionFly</title>
+        <meta name="description" content="Ops! A página que você tentou acessar não existe na AxionFly." />
+        <meta property="og:title" content="Página não encontrada — AxionFly" />
+        <meta property="og:description" content="A página solicitada não foi encontrada na AxionFly." />
+      </Helmet>
+      <div className="flex min-h-screen items-center justify-center bg-[#05050A] text-white p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -54,6 +62,7 @@ const NotFound = () => {
         </div>
       </motion.div>
     </div>
+  </>
   );
 };
 

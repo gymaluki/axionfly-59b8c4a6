@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
@@ -254,7 +255,16 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <>
+      <Helmet>
+        <title>Entrar — AxionFly</title>
+        <meta name="description" content="Entre na sua conta AxionFly para criar sites com IA, prospectar leads e vender mais." />
+        <meta property="og:title" content="Entrar — AxionFly" />
+        <meta property="og:description" content="Entre na sua conta AxionFly." />
+        <meta property="og:url" content="https://axionfly.lovable.app/auth" />
+        <link rel="canonical" href="https://axionfly.lovable.app/auth" />
+      </Helmet>
+      <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -400,6 +410,7 @@ const Auth = () => {
         </div>
       </motion.div>
     </div>
+  </>
   );
 };
 
