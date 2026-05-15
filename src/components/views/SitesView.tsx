@@ -866,9 +866,8 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
           const isActive = i === step;
           const isDone = i < step;
           return (
-            <>
+            <React.Fragment key={`step-${i}`}>
               <button
-                key={`step-${i}`}
                 type="button"
                 onClick={() => { if (i <= step) setStep(i); }}
                 className="step-wrap"
@@ -880,9 +879,9 @@ ${template.buildPrompt(projectName.trim(), primaryColor, secondaryColor, feature
                 <span className="step-label">{s.label}</span>
               </button>
               {i < stepMeta.length - 1 && (
-                <div key={`conn-${i}`} className={cn("step-connector", i < step && "completed")} />
+                <div className={cn("step-connector", i < step && "completed")} />
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>
