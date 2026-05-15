@@ -109,8 +109,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AffiliateTracker />
-        <Suspense fallback={null}>
-          <Routes>
+        <AppErrorBoundary>
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
