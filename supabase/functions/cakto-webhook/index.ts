@@ -129,7 +129,7 @@ Deno.serve(async (req) => {
     let affiliateSlug: string | null = null;
     if (affiliateCode) {
       if (["Lghn3ieU", "LEGLH5Bd"].includes(affiliateCode)) {
-        affiliateSlug = "z";
+        affiliateSlug = "m";
       } else if (["A73MAj5S", "KzuwSFCx"].includes(affiliateCode)) {
         affiliateSlug = "u";
       } else if (["ZsdtBDJP", "TSVMgq3q"].includes(affiliateCode)) {
@@ -138,6 +138,19 @@ Deno.serve(async (req) => {
         affiliateSlug = "y";
       } else {
         affiliateSlug = affiliateCode.toLowerCase();
+      }
+    }
+
+    // Valida se o slug existe na tabela affiliates — senão, salva como null pra não quebrar a FK
+    if (affiliateSlug) {
+      const { data: affExists } = await supabase
+        .from("affiliates")
+        .select("slug")
+        .eq("slug", affiliateSlug)
+        .maybeSingle();
+      if (!affExists) {
+        console.warn(`Afiliado '${affiliateSlug}' (código Cakto: ${affiliateCode}) não cadastrado. Salvando sem afiliado.`);
+        affiliateSlug = null;
       }
     }
 
