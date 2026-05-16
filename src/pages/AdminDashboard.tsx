@@ -19,6 +19,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import WebhookManagerPanel from "@/components/admin/WebhookManagerPanel";
 
 interface Sale {
   id: string;
@@ -314,6 +315,15 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        {/* Painel do Webhook */}
+        <div className="pt-4">
+          <div className="mb-4">
+            <h2 className="text-2xl font-black tracking-tight">Gerenciar Webhook</h2>
+            <p className="text-xs text-muted-foreground">Trocar token, testar e ver histórico de eventos — tudo sem precisar pedir ajuda.</p>
+          </div>
+          <WebhookManagerPanel />
         </div>
 
       </div>
