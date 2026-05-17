@@ -75,13 +75,16 @@ Deno.serve(async (req) => {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Find user by email
-    const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
-    if (userError) throw userError;
-
-    const user = userData.users.find(
-      (u) => u.email?.toLowerCase() === email.toLowerCase()
-    );
+    // Find user by email (paginated — listUsers default returns only 50)
+    const emailLower = email.toLowerCase();
+    let user: { id: string; email?: string | null } | undefined;
+    for (let page = 1; page <= 50; page++) {
+      const { data: userData, error: userError } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
+      if (userError) throw userError;
+      user = userData.users.find((u) => u.email?.toLowerCase() === emailLower);
+      if (user) break;
+      if (!userData.users.length || userData.users.length < 1000) break;
+    }
 
     if (!user) {
       console.log(`User not found for email: ${email}. Saving as pending payment.`);

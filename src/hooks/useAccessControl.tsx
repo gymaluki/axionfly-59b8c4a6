@@ -43,12 +43,23 @@ export function useAccessControl(user: User | null) {
           console.error("Admin check error:", adminRes.error);
         }
 
-        const hasAccessResult = accessRes.data;
+        let hasAccessResult = accessRes.data;
         const adminData = adminRes.data;
+        const isAdminUser = adminData === true;
+
+        // Fallback: se o acesso está negado, tenta resgatar pagamento pendente
+        // (cobre usuários cujo webhook caiu em pending_payments por causa do
+        // bug antigo de paginação no listUsers).
+        if (hasAccessResult !== true && !isAdminUser) {
+          const claimRes = await supabase.rpc("claim_pending_access" as never);
+          if (claimRes.data === true) {
+            const recheck = await supabase.rpc("check_user_access", { check_user_id: userId });
+            hasAccessResult = recheck.data;
+          }
+        }
 
         if (!isMounted) return;
 
-        const isAdminUser = adminData === true;
         const accessGranted = hasAccessResult === true || isAdminUser;
 
         setIsAdmin(isAdminUser);

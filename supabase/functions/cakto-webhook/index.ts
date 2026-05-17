@@ -184,12 +184,15 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
-    if (userError) throw userError;
-
-    const user = userData.users.find(
-      (u) => u.email?.toLowerCase() === email.toLowerCase()
-    );
+    const emailLower = email.toLowerCase();
+    let user: { id: string; email?: string | null } | undefined;
+    for (let page = 1; page <= 50; page++) {
+      const { data: userData, error: userError } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
+      if (userError) throw userError;
+      user = userData.users.find((u) => u.email?.toLowerCase() === emailLower);
+      if (user) break;
+      if (!userData.users.length || userData.users.length < 1000) break;
+    }
 
     if (!user) {
       if (subscriptionStatus === "active") {
