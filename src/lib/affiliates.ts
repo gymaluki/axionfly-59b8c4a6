@@ -62,6 +62,13 @@ export const AFFILIATES: Record<string, Affiliate> = {
     quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=QmFRRS9a",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=jbK39AUb",
   },
+  castro: {
+    slug: "c",
+    name: "CASTRO",
+    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=YLp4CaSz",
+    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=YLp4CaSz",
+    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=NJbG8jzt",
+  },
 };
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
