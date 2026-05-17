@@ -82,7 +82,7 @@ const ExtensionPage = () => {
                       .then((blob) => {
                         const a = document.createElement("a");
                         a.href = URL.createObjectURL(blob);
-                        a.download = "HyperBuild-Pro-v6.0.zip";
+                        a.download = "HyperBuild-Pro-v6.9.0.zip";
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
