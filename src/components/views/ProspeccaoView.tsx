@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Loader2, ExternalLink, Download, MessageCircle, MapPin, Search,
   Scissors, Pizza, Sandwich, Sparkles, Stethoscope, Building2,
@@ -105,26 +105,32 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
     }
   }, [lockedNicho]); // eslint-disable-line
 
+  const hydratedRef = useRef(false);
+  const userInteractedRef = useRef(false);
+
   useEffect(() => {
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) { hydratedRef.current = true; return; }
       const saved = localStorage.getItem(`prospeccao-view-state-${user.id}`);
-      if (!saved) return;
-      try {
-        const s = JSON.parse(saved);
-        setCidade(s.cidade || "");
-        setEstado(s.estado || "");
-        setActiveFilter(s.activeFilter || "");
-        setSearchMode(s.searchMode || "automatic");
-        setResults(s.results || []);
-        setSearched(s.searched || false);
-      } catch {}
+      if (saved && !userInteractedRef.current) {
+        try {
+          const s = JSON.parse(saved);
+          setCidade(s.cidade || "");
+          setEstado(s.estado || "");
+          if (!lockedNicho) setActiveFilter(s.activeFilter || "");
+          setSearchMode(s.searchMode || "automatic");
+          setResults(s.results || []);
+          setSearched(s.searched || false);
+        } catch {}
+      }
+      hydratedRef.current = true;
     };
     load();
   }, []);
 
   useEffect(() => {
+    if (!hydratedRef.current) return;
     const save = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -278,6 +284,7 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
   const activeNicho = nichos.find(n => n.label === activeFilter);
 
   const handleSelectNicho = (label: string) => {
+    userInteractedRef.current = true;
     if (activeFilter === label) return;
     setActiveFilter(label);
     setResults([]);
@@ -285,6 +292,7 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
   };
 
   const handleClearNicho = () => {
+    userInteractedRef.current = true;
     setActiveFilter("");
     setResults([]);
     setSearched(false);
