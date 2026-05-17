@@ -1,0 +1,1 @@
+UPDATE public.affiliates SET slug = 'c' WHERE slug = 'axfly';
