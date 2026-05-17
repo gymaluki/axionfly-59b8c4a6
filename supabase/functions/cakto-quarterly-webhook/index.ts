@@ -162,13 +162,16 @@ Deno.serve(async (req) => {
     }
 
 
-    // Localiza usuário pelo email
-    const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
-    if (userError) throw userError;
-
-    const user = userData.users.find(
-      (u) => u.email?.toLowerCase() === email.toLowerCase()
-    );
+    // Localiza usuário pelo email (paginado — listUsers padrão retorna só 50)
+    const emailLower = email.toLowerCase();
+    let user: { id: string; email?: string | null } | undefined;
+    for (let page = 1; page <= 50; page++) {
+      const { data: userData, error: userError } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
+      if (userError) throw userError;
+      user = userData.users.find((u) => u.email?.toLowerCase() === emailLower);
+      if (user) break;
+      if (!userData.users.length || userData.users.length < 1000) break;
+    }
 
     // Sem cadastro ainda → salva como pending_payment com 90 dias de validade
     if (!user) {
