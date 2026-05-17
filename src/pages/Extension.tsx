@@ -58,6 +58,19 @@ const ExtensionPage = () => {
             </p>
           </div>
 
+          {/* Aviso de bug de token */}
+          <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-sm font-bold text-yellow-300">
+                Aviso: Bug temporário nos tokens
+              </p>
+              <p className="text-sm text-yellow-200/80">
+                Identificamos um problema na geração de tokens que pode exibir "Sem licenças disponíveis" mesmo para usuários ativos. Nossa equipe já está corrigindo e a normalidade será restabelecida em breve. Se precisar de urgência, entre em contato pelo suporte.
+              </p>
+            </div>
+          </div>
+
           <div className="grid gap-6">
             {/* Step 1: Download */}
             <Card className="glass border-primary/20">
