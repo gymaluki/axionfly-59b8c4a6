@@ -284,6 +284,7 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
   const activeNicho = nichos.find(n => n.label === activeFilter);
 
   const handleSelectNicho = (label: string) => {
+    userInteractedRef.current = true;
     if (activeFilter === label) return;
     setActiveFilter(label);
     setResults([]);
@@ -291,6 +292,7 @@ const ProspeccaoView = ({ lockedNicho }: ProspeccaoViewProps = {}) => {
   };
 
   const handleClearNicho = () => {
+    userInteractedRef.current = true;
     setActiveFilter("");
     setResults([]);
     setSearched(false);
