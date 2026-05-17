@@ -1,7 +1,7 @@
 import { Header } from "@/components/ui/header-3";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Download, Key, Copy, Check } from "lucide-react";
+import { Download, Key, Copy, Check, AlertTriangle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -56,6 +56,19 @@ const ExtensionPage = () => {
             <p className="text-muted-foreground text-lg">
               Siga os passos abaixo para instalar a extensão e liberar a criação ilimitada de sites.
             </p>
+          </div>
+
+          {/* Aviso de bug de token */}
+          <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-sm font-bold text-yellow-300">
+                Aviso: Bug temporário nos tokens
+              </p>
+              <p className="text-sm text-yellow-200/80">
+                Identificamos um problema na geração de tokens que pode exibir "Sem licenças disponíveis" mesmo para usuários ativos. Nossa equipe já está corrigindo e a normalidade será restabelecida em breve. Se precisar de urgência, entre em contato pelo suporte.
+              </p>
+            </div>
           </div>
 
           <div className="grid gap-6">
