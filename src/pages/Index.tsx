@@ -735,7 +735,7 @@ const Index = () => {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
                 </span>
                 <span className="text-[11px] md:text-xs font-black uppercase tracking-[0.18em] text-red-400">
-                  Últimas vagas com 70% OFF
+                  Restam apenas 4 vagas disponíveis
                 </span>
               </motion.div>
 
