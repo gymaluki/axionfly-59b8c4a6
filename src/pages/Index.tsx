@@ -576,7 +576,7 @@ const Index = () => {
               <Button 
                 variant="outline" 
                 size="xl" 
-                className="rounded-full font-black uppercase tracking-[0.2em] px-12 border-2 hover:bg-primary/10 group"
+                className="rounded-full font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-sm px-6 sm:px-12 border-2 hover:bg-primary/10 group max-w-full whitespace-normal sm:whitespace-nowrap"
                 onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
               >
                 QUERO COMEÇAR AGORA →

@@ -117,7 +117,7 @@ export default function FeaturesCarousel() {
         <Button 
           variant="outline" 
           size="xl" 
-          className="rounded-full font-black uppercase tracking-[0.2em] px-12 h-16 border-2 hover:bg-primary/10"
+          className="rounded-full font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-xs px-6 sm:px-12 h-14 sm:h-16 border-2 hover:bg-primary/10 max-w-full whitespace-normal sm:whitespace-nowrap"
           onClick={() => navigate('/auth')}
         >
           Ver todos os conteúdos →
