@@ -167,17 +167,17 @@ function PricingCard({
       </div>
 
       <div className="mb-8 text-center">
-        <div className="flex flex-col items-center justify-center gap-1 mb-2">
+        <div className="flex flex-col items-center justify-center gap-2 mb-3">
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="bg-red-500/15 text-red-400 text-[10px] font-black px-2 py-0.5 rounded-full border border-red-500/30 uppercase tracking-wider">
-              Restam 4 vagas
+            <span className="bg-red-500/20 text-red-300 text-[11px] font-black px-3 py-1 rounded-full border-2 border-red-500/40 uppercase tracking-wider shadow-[0_0_12px_rgba(239,68,68,0.2)]">
+              🔥 Só 4 vagas restantes
             </span>
-            <div className="flex items-center gap-1 bg-black/20 px-2 py-0.5 rounded-full border border-white/5">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" style={{ animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
+            <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full border border-yellow-500/30">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500" />
               </span>
-              <span className="text-[9px] font-bold text-white/70 uppercase">Acesso está acabando</span>
+              <span className="text-[10px] font-black text-yellow-300 uppercase">Preço dobra em breve</span>
             </div>
           </div>
         </div>
