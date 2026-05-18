@@ -304,6 +304,7 @@ import { captureAffiliateFromUrl } from "@/lib/affiliates";
 
 const Index = () => {
   const navigate = useNavigate();
+  const vagasRestantes = useVagasRestantes(4);
 
   useEffect(() => {
     captureAffiliateFromUrl();
