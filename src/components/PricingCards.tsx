@@ -277,7 +277,7 @@ export default function PricingCards() {
   const plans: PricingCardProps[] = [
     {
       planName: "Plano Mensal",
-      description: "Acesso total à plataforma (Promoção de Aniversário)",
+      description: "Acesso total à plataforma (Restam apenas 4 vagas)",
       price: "R$ 67,90",
       comparePrice: "R$ 226,33",
       priceDescription: "/ mês",
