@@ -339,16 +339,16 @@ const Index = () => {
               transition={{ repeat: Infinity, duration: 2 }}
               className="text-white text-sm md:text-lg shrink-0"
             >
-              🎉
+              🔥
             </motion.span>
             <div className="text-white text-[10px] md:text-[13px] font-black uppercase tracking-[0.1em] md:tracking-[0.15em] flex items-center gap-2 md:gap-4 whitespace-nowrap overflow-hidden">
               <span className="hidden lg:inline opacity-70">—</span>
-              <span className="hidden sm:inline">Aniversário 1 Ano AxionFly: 70% de Desconto em toda a plataforma</span>
-              <span className="sm:hidden">1 Ano AxionFly · 70% OFF</span>
+              <span className="hidden sm:inline">Atenção: restam apenas 4 vagas para garantir acesso à AxionFly</span>
+              <span className="sm:hidden">Restam 4 vagas · AxionFly</span>
               <span className="opacity-70 hidden sm:inline">—</span>
               <div className="flex items-center gap-2 bg-black/20 px-3 py-1 rounded-full border border-white/10">
-                <span className="text-[9px] opacity-70 hidden xs:inline">TERMINA EM:</span>
-                <CountdownTimer />
+                <span className="text-[9px] opacity-70 hidden xs:inline">VAGAS:</span>
+                <span className="text-[11px] md:text-[12px] font-black">4 RESTANTES</span>
               </div>
             </div>
             <motion.span
@@ -356,7 +356,7 @@ const Index = () => {
               transition={{ repeat: Infinity, duration: 2 }}
               className="text-white text-sm md:text-lg shrink-0"
             >
-              🎉
+              🔥
             </motion.span>
           </div>
         </div>
