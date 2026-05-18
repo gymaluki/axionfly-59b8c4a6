@@ -331,30 +331,33 @@ const Index = () => {
       />
 
       <div className="relative z-10">
-        {/* Elegant Anniversary Banner */}
-        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-primary via-blue-600 to-primary h-9 md:h-11 flex items-center text-center z-[60] shadow-[0_4px_20px_rgba(37,99,235,0.3)]">
-          <div className="container mx-auto px-3 flex items-center justify-center gap-2 md:gap-6 overflow-hidden">
+        {/* Urgency Banner — highly visible */}
+        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 h-12 md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
+          <div className="container mx-auto px-3 flex items-center justify-center gap-2 md:gap-4 overflow-hidden">
             <motion.span
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="text-white text-sm md:text-lg shrink-0"
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ repeat: Infinity, duration: 0.8 }}
+              className="text-white text-lg md:text-2xl shrink-0"
             >
               🔥
             </motion.span>
-            <div className="text-white text-[10px] md:text-[13px] font-black uppercase tracking-[0.1em] md:tracking-[0.15em] flex items-center gap-2 md:gap-4 whitespace-nowrap overflow-hidden">
-              <span className="hidden lg:inline opacity-70">—</span>
-              <span className="hidden sm:inline">Atenção: restam apenas 4 vagas para garantir acesso à AxionFly</span>
-              <span className="sm:hidden">Restam 4 vagas · AxionFly</span>
-              <span className="opacity-70 hidden sm:inline">—</span>
-              <div className="flex items-center gap-2 bg-black/20 px-3 py-1 rounded-full border border-white/10">
-                <span className="text-[9px] opacity-70 hidden xs:inline">VAGAS:</span>
-                <span className="text-[11px] md:text-[12px] font-black">4 RESTANTES</span>
+            <div className="text-white text-[11px] md:text-sm font-black uppercase tracking-[0.12em] md:tracking-[0.18em] flex items-center gap-2 md:gap-3 whitespace-nowrap overflow-hidden">
+              <span className="hidden md:inline text-yellow-200">ATENÇÃO:</span>
+              <span className="hidden sm:inline">Após esgotar as vagas, o preço dobra</span>
+              <span className="sm:hidden">Vagas acabando — preço dobra</span>
+              <span className="text-yellow-300 hidden sm:inline">—</span>
+              <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full border border-yellow-400/40">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400" />
+                </span>
+                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">4 LUGARES</span>
               </div>
             </div>
             <motion.span
-              animate={{ rotate: [0, -10, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="text-white text-sm md:text-lg shrink-0"
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ repeat: Infinity, duration: 0.8 }}
+              className="text-white text-lg md:text-2xl shrink-0"
             >
               🔥
             </motion.span>
