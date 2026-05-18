@@ -204,13 +204,14 @@ Deno.serve(async (req) => {
 
     // Calcula nova data de expiração (acumula em renovação)
     let newExpiresAt: string | null = null;
-    if (subscriptionStatus === "active") {
-      const { data: existingSub } = await supabase
-        .from("subscriptions")
-        .select("expires_at")
-        .eq("user_id", user.id)
-        .maybeSingle();
+    const { data: existingSub } = await supabase
+      .from("subscriptions")
+      .select("expires_at, status")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    const wasActive = existingSub?.status === "active";
 
+    if (subscriptionStatus === "active") {
       const currentExpiry = existingSub?.expires_at ? new Date(existingSub.expires_at).getTime() : 0;
       const base = currentExpiry > Date.now() ? currentExpiry : Date.now();
       newExpiresAt = new Date(base + NINETY_DAYS_MS).toISOString();
@@ -232,6 +233,11 @@ Deno.serve(async (req) => {
       );
 
     if (subError) throw subError;
+
+    if (subscriptionStatus === "active" && !wasActive) {
+      const { error: vagaError } = await supabase.rpc("decrement_vaga");
+      if (vagaError) console.error("Erro decrementando vaga:", vagaError);
+    }
 
     console.log(`Cakto quarterly: assinatura ${subscriptionStatus} para ${email} (expira em ${newExpiresAt})`);
 
