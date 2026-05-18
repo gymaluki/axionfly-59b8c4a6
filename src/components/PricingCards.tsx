@@ -290,7 +290,7 @@ export default function PricingCards() {
     },
     {
       planName: "Plano Vitalício",
-      description: "Pague uma única vez (Oferta Limitada 1 Ano)",
+      description: "Pague uma única vez (Acesso vitalício)",
       price: "R$ 97,90",
       comparePrice: "R$ 195,80",
       priceDescription: "/ custo único",
