@@ -169,6 +169,15 @@
     0% { background-position: 0% center; }
     100% { background-position: 200% center; }
   }
+
+  .animate-pulse-border {
+    animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 4px 30px rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 4px 40px rgba(239, 68, 68, 0.8); }
+  }
 }
 
 a[href*="lovable.app"], 
