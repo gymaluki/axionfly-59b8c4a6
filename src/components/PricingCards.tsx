@@ -171,7 +171,7 @@ function PricingCard({
         <div className="flex flex-col items-center justify-center gap-2 mb-3">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="bg-red-500/20 text-red-300 text-[11px] font-black px-3 py-1 rounded-full border-2 border-red-500/40 uppercase tracking-wider shadow-[0_0_12px_rgba(239,68,68,0.2)]">
-              🔥 Só 4 vagas restantes
+              🔥 Só {vagas} {vagas === 1 ? "vaga restante" : "vagas restantes"}
             </span>
             <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full border border-yellow-500/30">
               <span className="relative flex h-2 w-2">
