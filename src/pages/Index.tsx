@@ -731,14 +731,14 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-black/40 backdrop-blur-sm border border-red-500/30 mb-8"
+                className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-red-500/15 backdrop-blur-sm border-2 border-red-500/50 mb-8 shadow-[0_0_20px_rgba(239,68,68,0.25)]"
               >
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" style={{ animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
                 </span>
-                <span className="text-[11px] md:text-xs font-black uppercase tracking-[0.18em] text-red-400">
-                  Restam apenas 4 vagas disponíveis
+                <span className="text-xs md:text-sm font-black uppercase tracking-[0.15em] text-red-300">
+                  Restam apenas 4 lugares — depois o preço dobra
                 </span>
               </motion.div>
 
