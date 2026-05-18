@@ -21,7 +21,7 @@ export function useVagasRestantes(fallback = 4) {
     fetchVagas();
 
     const channel = supabase
-      .channel("vagas_config_changes")
+      .channel(`vagas_config_changes_${Math.random().toString(36).slice(2)}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "vagas_config" },
