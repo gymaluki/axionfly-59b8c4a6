@@ -117,6 +117,7 @@ function PricingCard({
 }: PricingCardProps) {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
+  const vagas = useVagasRestantes(4);
 
   const handleClick = async () => {
     // Salva o plano escolhido no localStorage
