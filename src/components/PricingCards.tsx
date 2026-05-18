@@ -199,8 +199,8 @@ function PricingCard({
             <div className="flex flex-col items-center gap-0.5 mt-1">
               <span className="text-[11px] font-black text-primary/80 uppercase tracking-tighter">Ou parcelado em:</span>
               <div className="flex gap-2">
-                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">6x de R$ 17,73</span>
-                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">12x de R$ 9,23</span>
+                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">6x de R$ 16,32</span>
+                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">12x de R$ 8,16</span>
               </div>
             </div>
           )}
@@ -290,7 +290,7 @@ export default function PricingCards() {
     },
     {
       planName: "Plano Vitalício",
-      description: "Pague uma única vez (Oferta Limitada 1 Ano)",
+      description: "Pague uma única vez (Acesso vitalício)",
       price: "R$ 97,90",
       comparePrice: "R$ 195,80",
       priceDescription: "/ custo único",
