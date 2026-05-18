@@ -58,18 +58,6 @@ const ExtensionPage = () => {
             </p>
           </div>
 
-          {/* Aviso de novos tokens */}
-          <div className="rounded-xl border border-green-500/30 bg-green-500/10 p-4 flex items-start gap-3">
-            <Check className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="text-sm font-bold text-green-300">
-                Tokens novos disponíveis!
-              </p>
-              <p className="text-sm text-green-200/80">
-                Acabamos de liberar um novo lote de tokens. Se você ainda não tem o seu, gere agora abaixo e ative sua extensão normalmente.
-              </p>
-            </div>
-          </div>
 
           <div className="grid gap-6">
             {/* Step 1: Download */}
