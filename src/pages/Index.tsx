@@ -365,9 +365,9 @@ const Index = () => {
         </div>
 
         {/* Header with offset to avoid covering the banner */}
-        <Header className="top-9 md:top-11" />
+        <Header className="top-12 md:top-14" />
 
-        <div className="pt-[100px] md:pt-[128px]">
+        <div className="pt-[108px] md:pt-[140px]">
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
