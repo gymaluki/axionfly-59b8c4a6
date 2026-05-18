@@ -1,5 +1,5 @@
 import { motion, type Easing } from "framer-motion";
-import { Check, Sparkles, Infinity as InfinityIcon, Zap, Rocket, ExternalLink, AlertTriangle } from "lucide-react";
+import { Check, Sparkles, Infinity as InfinityIcon, Zap, Rocket, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import lovableLogo from "@/assets/lovable-logo.webp";
 import hyperbuildLogo from "@/assets/hyperbuild-logo.webp";
