@@ -262,6 +262,7 @@ function PricingCard({
 }
 
 export default function PricingCards() {
+  const vagas = useVagasRestantes(4);
   const sharedFeatures = [
     "Criador de Sites com IA (20+ nichos)",
     "Extensão Lovable (Sites Infinitos)",
@@ -279,7 +280,7 @@ export default function PricingCards() {
   const plans: PricingCardProps[] = [
     {
       planName: "Plano Mensal",
-      description: "Acesso total à plataforma (Restam apenas 4 vagas)",
+      description: `Acesso total à plataforma (${vagas === 1 ? "Resta apenas 1 vaga" : `Restam apenas ${vagas} vagas`})`,
       price: "R$ 67,90",
       comparePrice: "R$ 135,80",
       priceDescription: "/ mês",
