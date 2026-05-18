@@ -153,6 +153,14 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Verifica se a assinatura já estava ativa antes (para não decrementar vaga duplicado)
+    const { data: prevSub } = await supabase
+      .from("subscriptions")
+      .select("status")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    const wasActive = prevSub?.status === "active";
+
     // Upsert subscription
     const { error: subError } = await supabase
       .from("subscriptions")
@@ -168,6 +176,12 @@ Deno.serve(async (req) => {
       );
 
     if (subError) throw subError;
+
+    // Decrementa vaga restante se virou ativo agora
+    if (subscriptionStatus === "active" && !wasActive) {
+      const { error: vagaError } = await supabase.rpc("decrement_vaga");
+      if (vagaError) console.error("Erro decrementando vaga:", vagaError);
+    }
 
     console.log(`LIFETIME subscription ${subscriptionStatus} for user ${email} (event: ${statusLower})`);
 
