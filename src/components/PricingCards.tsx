@@ -185,7 +185,7 @@ function PricingCard({
         {comparePrice && (
           <div className="mb-2 flex flex-col items-center gap-1.5 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
-            <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">70% OFF</span>
+            <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">50% OFF</span>
           </div>
         )}
         <div className="flex flex-col items-center justify-center gap-1">
@@ -279,23 +279,23 @@ export default function PricingCards() {
       planName: "Plano Mensal",
       description: "Acesso total à plataforma (Restam apenas 4 vagas)",
       price: "R$ 67,90",
-      comparePrice: "R$ 226,33",
+      comparePrice: "R$ 135,80",
       priceDescription: "/ mês",
       features: sharedFeatures,
-      buttonText: "Aproveitar 70% OFF",
+      buttonText: "Aproveitar 50% OFF",
       plan: "monthly",
       isHighlight: false,
-      savingsBadge: "70% OFF",
+      savingsBadge: "50% OFF",
       index: 1,
     },
     {
       planName: "Plano Vitalício",
       description: "Pague uma única vez (Oferta Limitada 1 Ano)",
       price: "R$ 97,90",
-      comparePrice: "R$ 326,33",
+      comparePrice: "R$ 195,80",
       priceDescription: "/ custo único",
       features: sharedFeatures,
-      buttonText: "Garantir Vitalício com 70% OFF",
+      buttonText: "Garantir Vitalício com 50% OFF",
       plan: "lifetime",
       isHighlight: true,
       index: 2,
