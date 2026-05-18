@@ -192,7 +192,7 @@ export function HeroSection() {
           </div>
 
           {/* RIGHT — floating mockups */}
-          <div className="relative h-[420px] sm:h-[480px] lg:h-[560px] flex items-center justify-center">
+          <div className="relative h-[420px] sm:h-[480px] lg:h-[560px] flex items-center justify-center overflow-hidden lg:overflow-visible">
             {/* Glow */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.35),transparent_60%)] blur-3xl pointer-events-none" />
 
