@@ -740,7 +740,7 @@ const Index = () => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
                 </span>
                 <span className="text-xs md:text-sm font-black uppercase tracking-[0.15em] text-red-300">
-                  Restam apenas 4 lugares — depois o preço dobra
+                  Restam apenas {vagasRestantes} {vagasRestantes === 1 ? "lugar" : "lugares"} — depois o preço dobra
                 </span>
               </motion.div>
 
