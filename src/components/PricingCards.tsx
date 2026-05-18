@@ -169,14 +169,15 @@ function PricingCard({
       <div className="mb-8 text-center">
         <div className="flex flex-col items-center justify-center gap-1 mb-2">
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="bg-primary/10 text-primary text-[10px] font-black px-2 py-0.5 rounded-full border border-primary/20 uppercase tracking-wider">
-              Promoção de Aniversário
+            <span className="bg-red-500/15 text-red-400 text-[10px] font-black px-2 py-0.5 rounded-full border border-red-500/30 uppercase tracking-wider">
+              Restam 4 vagas
             </span>
             <div className="flex items-center gap-1 bg-black/20 px-2 py-0.5 rounded-full border border-white/5">
-              <span className="text-[9px] font-bold text-white/50 uppercase">Expira em:</span>
-              <div className="text-[10px] font-black text-white">
-                <CountdownTimer />
-              </div>
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" style={{ animation: "ping 1.5s cubic-bezier(0,0,0.2,1) infinite" }} />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500" />
+              </span>
+              <span className="text-[9px] font-bold text-white/70 uppercase">Acesso está acabando</span>
             </div>
           </div>
         </div>
