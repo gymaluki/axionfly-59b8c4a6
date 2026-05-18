@@ -162,6 +162,14 @@ Deno.serve(async (req) => {
       subscriptionStatus = "inactive";
     }
 
+    // Verifica se já estava ativo antes (para não decrementar vaga duplicado)
+    const { data: prevSub } = await supabase
+      .from("subscriptions")
+      .select("status")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    const wasActive = prevSub?.status === "active";
+
     // Upsert subscription
     const { error: subError } = await supabase
       .from("subscriptions")
@@ -177,6 +185,11 @@ Deno.serve(async (req) => {
       );
 
     if (subError) throw subError;
+
+    if (subscriptionStatus === "active" && !wasActive) {
+      const { error: vagaError } = await supabase.rpc("decrement_vaga");
+      if (vagaError) console.error("Erro decrementando vaga:", vagaError);
+    }
 
     console.log(`Subscription ${subscriptionStatus} for user ${email} (event: ${statusLower})`);
 

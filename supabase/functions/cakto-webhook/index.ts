@@ -213,6 +213,13 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
     }
 
+    const { data: prevSub } = await supabase
+      .from("subscriptions")
+      .select("status")
+      .eq("user_id", user.id)
+      .maybeSingle();
+    const wasActive = prevSub?.status === "active";
+
     await supabase
       .from("subscriptions")
       .upsert(
@@ -226,6 +233,10 @@ Deno.serve(async (req) => {
         },
         { onConflict: "user_id" }
       );
+
+    if (subscriptionStatus === "active" && !wasActive) {
+      await supabase.rpc("decrement_vaga");
+    }
 
     return new Response(JSON.stringify({ success: true }), { status: 200, headers: corsHeaders });
   } catch (error) {

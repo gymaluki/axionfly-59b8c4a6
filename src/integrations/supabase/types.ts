@@ -584,6 +584,30 @@ export type Database = {
         }
         Relationships: []
       }
+      vagas_config: {
+        Row: {
+          id: string
+          initial_slots: number
+          remaining_slots: number
+          singleton: boolean
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          initial_slots?: number
+          remaining_slots?: number
+          singleton?: boolean
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          initial_slots?: number
+          remaining_slots?: number
+          singleton?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       videos: {
         Row: {
           created_at: string
@@ -631,6 +655,7 @@ export type Database = {
         }[]
       }
       claim_pending_access: { Args: never; Returns: boolean }
+      decrement_vaga: { Args: never; Returns: number }
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
     }
     Enums: {

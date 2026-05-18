@@ -19,6 +19,7 @@ const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
+import { useVagasRestantes } from "@/hooks/useVagasRestantes";
 
 // Lazy load heavy visual components
 const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
@@ -303,6 +304,7 @@ import { captureAffiliateFromUrl } from "@/lib/affiliates";
 
 const Index = () => {
   const navigate = useNavigate();
+  const vagasRestantes = useVagasRestantes(4);
 
   useEffect(() => {
     captureAffiliateFromUrl();
@@ -351,7 +353,7 @@ const Index = () => {
                   <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400" />
                 </span>
-                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">4 vagas restantes para ter acesso</span>
+                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">{vagasRestantes} {vagasRestantes === 1 ? "vaga restante" : "vagas restantes"} para ter acesso</span>
               </div>
             </div>
             <motion.span
@@ -738,7 +740,7 @@ const Index = () => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
                 </span>
                 <span className="text-xs md:text-sm font-black uppercase tracking-[0.15em] text-red-300">
-                  Restam apenas 4 lugares — depois o preço dobra
+                  Restam apenas {vagasRestantes} {vagasRestantes === 1 ? "lugar" : "lugares"} — depois o preço dobra
                 </span>
               </motion.div>
 
