@@ -332,21 +332,21 @@ const Index = () => {
 
       <div className="relative z-10">
         {/* Urgency Banner — highly visible */}
-        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 h-12 md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
-          <div className="container mx-auto px-3 flex items-center justify-center gap-2 md:gap-4 overflow-hidden">
+        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 min-h-[48px] md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
+          <div className="container mx-auto px-2 md:px-3 py-1.5 md:py-0 flex items-center justify-center gap-1.5 md:gap-4">
             <motion.span
               animate={{ scale: [1, 1.3, 1] }}
               transition={{ repeat: Infinity, duration: 0.8 }}
-              className="text-white text-lg md:text-2xl shrink-0"
+              className="text-white text-base md:text-2xl shrink-0 self-center"
             >
               🔥
             </motion.span>
-            <div className="text-white text-[11px] md:text-sm font-black uppercase tracking-[0.12em] md:tracking-[0.18em] flex items-center gap-2 md:gap-3 whitespace-nowrap overflow-hidden">
+            <div className="text-white text-[10px] md:text-sm font-black uppercase tracking-[0.1em] md:tracking-[0.18em] flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 md:gap-3 leading-tight">
               <span className="hidden md:inline text-yellow-200">ATENÇÃO:</span>
               <span className="hidden sm:inline">Após esgotar as vagas, o preço dobra</span>
               <span className="sm:hidden">Vagas acabando — preço dobra</span>
               <span className="text-yellow-300 hidden sm:inline">—</span>
-              <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full border border-yellow-400/40">
+              <div className="flex items-center gap-1.5 bg-black/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-yellow-400/40 shrink-0">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400" />
@@ -357,7 +357,7 @@ const Index = () => {
             <motion.span
               animate={{ scale: [1, 1.3, 1] }}
               transition={{ repeat: Infinity, duration: 0.8 }}
-              className="text-white text-lg md:text-2xl shrink-0"
+              className="text-white text-base md:text-2xl shrink-0 self-center"
             >
               🔥
             </motion.span>
