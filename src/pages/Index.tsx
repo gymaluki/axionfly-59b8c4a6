@@ -351,7 +351,7 @@ const Index = () => {
                   <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400" />
                 </span>
-                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">4 LUGARES</span>
+                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">4 VAGAS RESTANTES</span>
               </div>
             </div>
             <motion.span
