@@ -19,20 +19,22 @@ Deno.serve(async (req) => {
       throw new Error("Missing Supabase environment variables");
     }
 
-    // Validação de token é OPCIONAL — só valida se o secret estiver configurado.
-    // Se não estiver, aceita a requisição (a Cakto chama direto sem assinatura).
-    if (CAKTO_WEBHOOK_TOKEN) {
-      const url = new URL(req.url);
-      const token = url.searchParams.get("token");
-      if (token !== CAKTO_WEBHOOK_TOKEN) {
-        console.warn("Cakto webhook: token inválido");
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-    } else {
-      console.log("Cakto webhook: rodando sem validação de token (CAKTO_WEBHOOK_TOKEN não configurado)");
+    // Validação de token OBRIGATÓRIA — bloqueia chamadas não autenticadas.
+    if (!CAKTO_WEBHOOK_TOKEN) {
+      console.error("Cakto webhook: CAKTO_WEBHOOK_TOKEN não configurado — bloqueando requisição");
+      return new Response(JSON.stringify({ error: "Webhook not configured" }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const url = new URL(req.url);
+    const token = url.searchParams.get("token");
+    if (token !== CAKTO_WEBHOOK_TOKEN) {
+      console.warn("Cakto webhook: token inválido");
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const raw = await req.text();
