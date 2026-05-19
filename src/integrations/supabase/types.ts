@@ -656,6 +656,17 @@ export type Database = {
       }
       claim_pending_access: { Args: never; Returns: boolean }
       decrement_vaga: { Args: never; Returns: number }
+      get_affiliate_by_slug: {
+        Args: { _slug: string }
+        Returns: {
+          id: string
+          lifetime_url: string
+          monthly_url: string
+          name: string
+          quarterly_url: string
+          slug: string
+        }[]
+      }
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
     }
     Enums: {
