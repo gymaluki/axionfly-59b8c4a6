@@ -116,15 +116,84 @@ Deno.serve(async (req) => {
     const quarterlyAmount = parseFloat(data?.amount || data?.total_amount || data?.price || body?.amount || "0");
     const MIN_VALID_AMOUNT = 30;
     if (subscriptionStatus === "active" && quarterlyAmount > 0 && quarterlyAmount < MIN_VALID_AMOUNT) {
+      const attackerIp =
+        req.headers.get("x-forwarded-for") ||
+        req.headers.get("cf-connecting-ip") ||
+        req.headers.get("x-real-ip") ||
+        "desconhecido";
+      const attackerUA = req.headers.get("user-agent") || "desconhecido";
+      const detectedAt = new Date().toISOString();
+
       console.error(
         `[FRAUDE BLOQUEADA] Cakto quarterly: valor R$${quarterlyAmount} abaixo do mínimo (R$${MIN_VALID_AMOUNT}). ` +
-        `Email: ${email}, transaction: ${transactionId}, payload: ${JSON.stringify(body)}`
+        `Email: ${email}, transaction: ${transactionId}, IP: ${attackerIp}, payload: ${JSON.stringify(body)}`
       );
-      return new Response(
-        JSON.stringify({ error: "Amount below minimum threshold", amount: quarterlyAmount }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
+
+      try {
+        const supabaseAlert = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+        await supabaseAlert.from("system_errors").insert({
+          level: "error",
+          source: "fraud_attempt_cakto_quarterly",
+          message: `🚨 TENTATIVA DE FRAUDE BLOQUEADA — Cakto Trimestral (R$ ${quarterlyAmount})`,
+          user_email: email,
+          user_agent: attackerUA,
+          url: req.url,
+          context: {
+            attacker_ip: attackerIp,
+            attempted_amount: quarterlyAmount,
+            minimum_required: MIN_VALID_AMOUNT,
+            transaction_id: transactionId,
+            payload: body,
+            detected_at: detectedAt,
+          },
+        });
+      } catch (e) {
+        console.error("Falha ao registrar tentativa de fraude:", e);
+      }
+
+      const alerta = [
+        "═══════════════════════════════════════════════════════════════",
+        "🚨 ATENÇÃO — TENTATIVA DE FRAUDE DETECTADA E BLOQUEADA 🚨",
+        "═══════════════════════════════════════════════════════════════",
+        "",
+        "VOCÊ ACABA DE TENTAR FRAUDAR A PLATAFORMA AXIONFLY.",
+        "",
+        "Foi identificado que você criou um produto na Cakto com valor",
+        `irrisório de R$ ${quarterlyAmount.toFixed(2)} tentando obter acesso indevido`,
+        `à assinatura (valor mínimo legítimo: R$ ${MIN_VALID_AMOUNT.toFixed(2)}).`,
+        "",
+        "── O QUE FOI CAPTURADO DE VOCÊ ──",
+        `• Endereço IP:        ${attackerIp}`,
+        `• Navegador/Agente:   ${attackerUA}`,
+        `• E-mail utilizado:   ${email}`,
+        `• ID da transação:    ${transactionId || "N/A"}`,
+        `• Valor da tentativa: R$ ${quarterlyAmount.toFixed(2)}`,
+        `• Data/Hora (UTC):    ${detectedAt}`,
+        "",
+        "── CONSEQUÊNCIAS ──",
+        "1. Sua tentativa foi REGISTRADA permanentemente em nosso sistema.",
+        "2. Seu IP, e-mail e dispositivo foram MARCADOS e ficarão sob",
+        "   monitoramento contínuo.",
+        "3. O acesso NÃO foi e NÃO será liberado.",
+        "4. Tentativa de fraude eletrônica é crime previsto no Art. 171-A",
+        "   do Código Penal Brasileiro (Lei 14.155/2021), com pena de",
+        "   RECLUSÃO de 4 a 8 anos e multa.",
+        "5. Caso novas tentativas sejam identificadas, todos os dados",
+        "   coletados serão encaminhados às autoridades competentes",
+        "   (Polícia Civil — Delegacia de Crimes Cibernéticos) e à Cakto",
+        "   para abertura de boletim de ocorrência e investigação.",
+        "",
+        "Pare AGORA enquanto ainda é tempo.",
+        "Se quiser acesso legítimo, adquira o plano em axionfly.site",
+        "═══════════════════════════════════════════════════════════════",
+      ].join("\n");
+
+      return new Response(alerta, {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "text/plain; charset=utf-8" },
+      });
     }
+
 
     const NINETY_DAYS_MS = 90 * 24 * 60 * 60 * 1000;
     // Captura o afiliado — a Cakto pode enviar no campo affiliate_id ou via parâmetro custom
