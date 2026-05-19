@@ -112,6 +112,20 @@ Deno.serve(async (req) => {
       });
     }
 
+    // PROTEÇÃO ANTIFRAUDE: valor mínimo para ativar plano trimestral.
+    const quarterlyAmount = parseFloat(data?.amount || data?.total_amount || data?.price || body?.amount || "0");
+    const MIN_VALID_AMOUNT = 30;
+    if (subscriptionStatus === "active" && quarterlyAmount > 0 && quarterlyAmount < MIN_VALID_AMOUNT) {
+      console.error(
+        `[FRAUDE BLOQUEADA] Cakto quarterly: valor R$${quarterlyAmount} abaixo do mínimo (R$${MIN_VALID_AMOUNT}). ` +
+        `Email: ${email}, transaction: ${transactionId}, payload: ${JSON.stringify(body)}`
+      );
+      return new Response(
+        JSON.stringify({ error: "Amount below minimum threshold", amount: quarterlyAmount }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const NINETY_DAYS_MS = 90 * 24 * 60 * 60 * 1000;
     // Captura o afiliado — a Cakto pode enviar no campo affiliate_id ou via parâmetro custom
     const affiliateCode: string | null = 

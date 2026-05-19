@@ -122,6 +122,21 @@ Deno.serve(async (req) => {
       subscriptionStatus = "inactive";
     }
 
+    // PROTEÇÃO ANTIFRAUDE: valor mínimo aceito para ativar assinatura.
+    // O plano mais barato é R$67,90 — qualquer valor abaixo de R$30 é fraude
+    // (atacante criando produto fake na Cakto por valor irrisório).
+    const MIN_VALID_AMOUNT = 30;
+    if (subscriptionStatus === "active" && amount > 0 && amount < MIN_VALID_AMOUNT) {
+      console.error(
+        `[FRAUDE BLOQUEADA] Cakto webhook: valor R$${amount} abaixo do mínimo (R$${MIN_VALID_AMOUNT}). ` +
+        `Email: ${email}, transaction: ${transactionId}, payload: ${JSON.stringify(body)}`
+      );
+      return new Response(
+        JSON.stringify({ error: "Amount below minimum threshold", amount }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // Mapeia o código de afiliado da Cakto para o nosso slug interno se necessário
