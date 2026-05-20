@@ -66,6 +66,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
+import FloatingSupport from "./components/FloatingSupport";
 import { captureAffiliateFromUrl } from "@/lib/affiliates";
 import { useEffect } from "react";
 
@@ -141,6 +142,7 @@ const App = () => (
           </Routes>
         </Suspense>
         </AppErrorBoundary>
+        <FloatingSupport />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
