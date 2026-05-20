@@ -58,8 +58,51 @@ const ExtensionPage = () => {
             </p>
           </div>
 
+          {/* Card de novidades 6.9.4 */}
+          <Card className="glass border-primary/40 bg-primary/5">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    Atualização 6.9.4
+                    <span className="text-xs font-bold uppercase bg-primary text-primary-foreground px-2 py-0.5 rounded-full">Novo</span>
+                  </CardTitle>
+                  <CardDescription>Confira as novidades desta versão.</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4 text-sm">
+              <div>
+                <h4 className="font-bold text-foreground mb-1">🔄 Sistema de transferência automática</h4>
+                <p className="text-muted-foreground">
+                  Agora você pode migrar de dispositivo sem precisar falar com o suporte. Logou em outro dispositivo? É só deslogar no antigo e travar no novo automaticamente.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold text-foreground mb-1">📦 Download do projeto</h4>
+                <p className="text-muted-foreground">
+                  Quer tirar seu projeto da Lovable? Clique no ícone de download ao lado do botão de enviar e baixe seu projeto compactado em .zip.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold text-foreground mb-1">🧼 Remoção de marca d'água aprimorada</h4>
+                <p className="text-muted-foreground">
+                  A remoção da marca d'água agora apaga tudo por completo, sem deixar o "X" da Lovable na tela.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold text-foreground mb-1">⚡ Otimização geral</h4>
+                <p className="text-muted-foreground">
+                  Otimizamos o backend e o frontend para deixar a extensão muito mais leve e fluida.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-          <div className="grid gap-6">
+
             {/* Step 1: Download */}
             <Card className="glass border-primary/20">
               <CardHeader>
