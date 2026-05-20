@@ -102,7 +102,7 @@ const ExtensionPage = () => {
             </CardContent>
           </Card>
 
-
+          <div className="grid gap-6">
             {/* Step 1: Download */}
             <Card className="glass border-primary/20">
               <CardHeader>
