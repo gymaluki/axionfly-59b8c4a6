@@ -118,7 +118,7 @@ const ExtensionPage = () => {
                 <Button
                   className="w-full gap-2 h-12 text-lg font-bold"
                   onClick={() => {
-                    fetch("/hyperbuild-pro.zip")
+                    fetch("/HyperBuild-Pro-v6.9.4.zip")
                       .then((res) => {
                         if (!res.ok) throw new Error(`Falha no download: ${res.status}`);
                         return res.blob();
@@ -126,7 +126,7 @@ const ExtensionPage = () => {
                       .then((blob) => {
                         const a = document.createElement("a");
                         a.href = URL.createObjectURL(blob);
-                        a.download = "HyperBuild-Pro-v6.9.0.zip";
+                        a.download = "HyperBuild-Pro-v6.9.4.zip";
                         document.body.appendChild(a);
                         a.click();
                         document.body.removeChild(a);
