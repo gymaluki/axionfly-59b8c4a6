@@ -142,6 +142,7 @@ const App = () => (
           </Routes>
         </Suspense>
         </AppErrorBoundary>
+        <FloatingSupport />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
