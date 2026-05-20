@@ -279,16 +279,16 @@ export default function PricingCards() {
 
   const plans: PricingCardProps[] = [
     {
-      planName: "Plano Mensal",
-      description: `Acesso total à plataforma (${vagas === 1 ? "Resta apenas 1 vaga" : `Restam apenas ${vagas} vagas`})`,
-      price: "R$ 67,90",
-      comparePrice: "R$ 135,80",
-      priceDescription: "/ mês",
+      planName: "Plano Anual",
+      description: `1 ano de AxionFly (${vagas === 1 ? "Resta apenas 1 vaga" : `Restam apenas ${vagas} vagas`})`,
+      price: "R$ 89,10",
+      comparePrice: "R$ 297,00",
+      priceDescription: "/ ano",
       features: sharedFeatures,
-      buttonText: "Aproveitar 50% OFF",
+      buttonText: "Aproveitar 70% OFF",
       plan: "monthly",
       isHighlight: false,
-      savingsBadge: "50% OFF",
+      savingsBadge: "70% OFF",
       index: 1,
     },
     {
