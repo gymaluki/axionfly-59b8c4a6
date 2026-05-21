@@ -17,7 +17,7 @@ const PricingCards = lazy(() => import("@/components/PricingCards"));
 const LovablePartnership = lazy(() => import("@/components/LovablePartnership"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
-const HyperbuildHighlight = lazy(() => import("@/components/HyperbuildHighlight"));
+
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
@@ -497,10 +497,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ HYPERBUILD HIGHLIGHT ═══════════ */}
-        <Suspense fallback={<div className="min-h-[500px]" />}>
-          <HyperbuildHighlight />
-        </Suspense>
 
         {/* ═══════════ ETAPAS ═══════════ */}
         <section id="etapas" className="container mx-auto px-4 pt-20 pb-0 md:pt-32 md:pb-0 relative">
