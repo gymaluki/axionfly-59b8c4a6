@@ -767,9 +767,9 @@ const Index = () => {
         </section>
 
         {/* ═══════════ FOOTER ═══════════ */}
-        <footer className="bg-[#050709] relative z-10" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          {/* Newsletter / Final hook */}
-          <div className="container mx-auto px-4 py-12 md:py-16" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <footer className="bg-[#05050a] relative z-10">
+          {/* Newsletter */}
+          <div className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
             <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="text-center md:text-left">
                 <h3 className="text-xl md:text-2xl font-black text-foreground mb-1">
@@ -781,7 +781,7 @@ const Index = () => {
               </div>
               <form
                 onSubmit={(e) => e.preventDefault()}
-                className="flex w-full md:w-auto items-center gap-2 bg-[#0D1221] rounded-full p-1.5 border border-primary/15"
+                className="flex w-full md:w-auto items-center gap-2 bg-[#0D1221] rounded-full p-1.5 border border-white/10"
               >
                 <Mail className="w-4 h-4 text-muted-foreground ml-3 shrink-0" />
                 <input
@@ -797,8 +797,8 @@ const Index = () => {
           </div>
 
           {/* Main footer columns */}
-          <div className="container mx-auto px-4 py-12 md:py-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+          <div className="container mx-auto px-4 py-10 md:py-14">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
               {/* Brand */}
               <div className="col-span-2 md:col-span-1 space-y-4">
                 <div className="flex items-center gap-2.5">
@@ -855,8 +855,8 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Trust badges */}
-            <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            {/* Bottom line */}
+            <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 pt-8">
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
                 <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                   <Lock className="w-3.5 h-3.5 text-primary" /> SSL Seguro
