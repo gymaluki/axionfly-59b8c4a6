@@ -302,10 +302,30 @@ Deno.serve(async (req) => {
 
     const { data: prevSub } = await supabase
       .from("subscriptions")
-      .select("status")
+      .select("status, transaction_id, plan")
       .eq("user_id", user.id)
       .maybeSingle();
     const wasActive = prevSub?.status === "active";
+
+    // FIX PIX: se chega um evento "inactive" (expired/cancelled) mas é de uma
+    // transação ANTIGA diferente da que está ativa, ignora — senão o PIX que
+    // expirou derruba a assinatura paga (caso comum: usuário gera PIX, não paga,
+    // gera outro e paga; o primeiro expira depois e cancelava o acesso).
+    if (
+      subscriptionStatus === "inactive" &&
+      wasActive &&
+      prevSub?.transaction_id &&
+      String(transactionId || "") &&
+      String(prevSub.transaction_id) !== String(transactionId)
+    ) {
+      console.log(
+        `Cakto: ignorando '${status}' de transação antiga (${transactionId}) — assinatura ativa atual é ${prevSub.transaction_id}`
+      );
+      return new Response(
+        JSON.stringify({ ok: true, ignored: true, reason: "stale_transaction" }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     await supabase
       .from("subscriptions")
