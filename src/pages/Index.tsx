@@ -8,6 +8,7 @@ import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
+import { CurtainFooter } from "@/components/ui/curtain-footer";
 
 import axionflyLogo from "@/assets/axionfly-logo.webp";
 
