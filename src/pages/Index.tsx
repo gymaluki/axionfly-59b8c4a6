@@ -599,10 +599,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ PARALLAX SCROLL — destaque Aulas Premium ═══════════ */}
-        <Suspense fallback={<div className="min-h-[100vh]" />}>
-          <ParallaxScroll />
-        </Suspense>
 
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section className="py-12 md:py-16">
