@@ -258,16 +258,16 @@ export default function PricingCards() {
   const vagas = useVagasRestantes(4);
   const sharedFeatures = [
     "Criador de Sites com IA (20+ nichos)",
-    "Extensão Lovable (Sites Infinitos)",
-    "Prospecção automática Brasil via Google Maps",
-    "Parceria Hyperbuild Pro (Grátis)",
-    "Gerador de contrato automático",
-    "Script de vendas pronto para WhatsApp",
-    "Dashboard de acompanhamento de lucros",
-    "Parceria oficial com Lovable",
-    "Suporte prioritário",
-    "6 estilos de design exclusivos",
-    "Todas as atualizações futuras incluídas",
+    "Extensão Lovable — Sites Ilimitados",
+    "Prospecção Automática Brasil via Google Maps",
+    "Hyperbuild Pro Grátis",
+    "Gerador de Contrato Automático",
+    "Script de Vendas Pronto para WhatsApp",
+    "Dashboard de Acompanhamento de Lucros",
+    "Parceria Oficial com Lovable",
+    "Suporte Prioritário",
+    "6 Estilos de Design Exclusivos",
+    "Todas as Atualizações Futuras Incluídas",
   ];
 
   const plans: PricingCardProps[] = [
