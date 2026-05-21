@@ -175,10 +175,10 @@ export default function HyperbuildHighlight() {
                       "drop-shadow(0 0 40px rgba(168, 85, 247, 0.35)) drop-shadow(0 15px 35px rgba(0,0,0,0.5)) contrast(1.05) saturate(1.1)",
                     background: "transparent",
                     border: "none",
-                    borderRadius: 0,
+                    borderRadius: 1,
                   }}
                 />
-              </h2>
+              </div>
             </div>
           </motion.div>
         </div>
