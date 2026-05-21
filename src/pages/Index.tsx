@@ -607,6 +607,11 @@ const Index = () => {
           </Suspense>
         </section>
 
+        {/* ═══════════ IMMERSIVE SCROLL GALLERY ═══════════ */}
+        <Suspense fallback={<div className="min-h-[100vh]" />}>
+          <ImmersiveScrollGallery />
+        </Suspense>
+
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
         <section className="container mx-auto px-4 py-20 md:py-32 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05)_0%,transparent_70%)] pointer-events-none" />
