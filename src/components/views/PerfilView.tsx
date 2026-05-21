@@ -36,6 +36,8 @@ const PerfilView = () => {
   const [caktoClientId, setCaktoClientId] = useState("");
   const [caktoClientSecret, setCaktoClientSecret] = useState("");
   const [caktoProductImageUrl, setCaktoProductImageUrl] = useState("");
+  const [hasCaktoCredentials, setHasCaktoCredentials] = useState(false);
+  const [caktoCredentialsUpdatedAt, setCaktoCredentialsUpdatedAt] = useState<string | null>(null);
   const [savingName, setSavingName] = useState(false);
   const [savingCakto, setSavingCakto] = useState(false);
 
@@ -52,17 +54,19 @@ const PerfilView = () => {
   useEffect(() => {
     if (!user) return;
 
-    supabase
-      .from("profiles")
-      .select("display_name, cakto_client_id, cakto_client_secret, cakto_product_image_url")
-      .eq("user_id", user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        setDisplayName(data?.display_name ?? "");
-        setCaktoClientId(data?.cakto_client_id ?? "");
-        setCaktoClientSecret(data?.cakto_client_secret ?? "");
-        setCaktoProductImageUrl(data?.cakto_product_image_url ?? "");
-      });
+    supabase.functions.invoke("manage-cakto-credentials", { method: "GET" }).then(({ data, error }) => {
+      if (error) {
+        console.error("Erro ao carregar integração Cakto:", error);
+        return;
+      }
+
+      setDisplayName(data?.display_name ?? "");
+      setCaktoProductImageUrl(data?.cakto_product_image_url ?? "");
+      setHasCaktoCredentials(Boolean(data?.has_credentials));
+      setCaktoCredentialsUpdatedAt(data?.credentials_updated_at ?? null);
+      setCaktoClientId("");
+      setCaktoClientSecret("");
+    });
 
     const loadAll = async () => {
       setLoadingData(true);
@@ -111,20 +115,24 @@ const PerfilView = () => {
   const handleSaveCakto = async () => {
     if (!user) return;
     setSavingCakto(true);
-    const { error } = await supabase
-      .from("profiles")
-      .update({ 
-        cakto_client_id: caktoClientId.trim() || null,
-        cakto_client_secret: caktoClientSecret.trim() || null,
-        cakto_product_image_url: caktoProductImageUrl.trim() || null
-      })
-      .eq("user_id", user.id);
+    const { error } = await supabase.functions.invoke("manage-cakto-credentials", {
+      body: {
+        client_id: caktoClientId,
+        client_secret: caktoClientSecret,
+        cakto_product_image_url: caktoProductImageUrl,
+      },
+    });
     setSavingCakto(false);
     if (error) {
       toast.error("Erro ao salvar credenciais Cakto");
       return;
     }
-    toast.success("Credenciais Cakto atualizadas!");
+
+    setHasCaktoCredentials(true);
+    setCaktoCredentialsUpdatedAt(new Date().toISOString());
+    setCaktoClientId("");
+    setCaktoClientSecret("");
+    toast.success("Credenciais Cakto atualizadas com segurança!");
   };
 
   const handleChangePassword = async (e: React.FormEvent) => {
