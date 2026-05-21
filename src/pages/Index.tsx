@@ -398,8 +398,11 @@ const Index = () => {
         </div>
 
         {/* ═══════════ FUNCIONALIDADES ═══════════ */}
-        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
+        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+          <div aria-hidden className="floating-orb animate-float-slow bg-primary/40 w-[420px] h-[420px] -top-24 -left-24" />
+          <div aria-hidden className="floating-orb animate-float-slow bg-blue-500/30 w-[360px] h-[360px] top-1/2 -right-20" style={{ animationDelay: "1.5s" }} />
           <SectionPill>Funcionalidades Premium</SectionPill>
+
 
           <div className="text-center mb-24">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
