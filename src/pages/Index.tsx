@@ -407,7 +407,7 @@ const Index = () => {
           <div className="text-center mb-24">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Tudo o que você precisa <br />
-              para <span className="gradient-text shimmer-heading">escalar seu negócio</span>
+              para <span className="gradient-text">escalar seu negócio</span>
             </h2>
             <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
@@ -522,7 +522,7 @@ const Index = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Venda seu primeiro site <br />
-              em <span className="gradient-text shimmer-heading">3 passos simples</span>
+              em <span className="gradient-text">3 passos simples</span>
             </h2>
             <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Não reinventamos a roda, apenas automatizamos o que funciona. Siga o método e veja os resultados.
@@ -660,7 +660,7 @@ const Index = () => {
                 Perguntas Frequentes
               </span>
               <h2 className="text-3xl md:text-[40px] font-black text-foreground tracking-tight leading-[1.1]">
-                Tudo que você precisa saber <span className="gradient-text shimmer-heading">antes de começar</span>
+                Tudo que você precisa saber <span className="gradient-text">antes de começar</span>
               </h2>
               <p className="text-[#94a3b8] text-base leading-relaxed">
                 Reunimos as 6 dúvidas mais comuns dos novos usuários. Ainda ficou com alguma pergunta? Fale com a gente.
