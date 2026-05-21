@@ -14,7 +14,7 @@ const logoUrl = (domain: string) => `https://logo.clearbit.com/${domain}`;
 const fallbackFavicon = (domain: string) => `https://icons.duckduckgo.com/ip3/${domain}.ico`;
 
 const builders: Builder[] = [
-  { name: "Lovable", url: "https://lovable.dev", description: "Apps full-stack com IA — nossa recomendação", domain: "lovable.dev", bg: "from-pink-500/30 to-purple-500/30", recommended: true },
+  { name: "Lovable", url: "https://lovable.dev", description: "Apps full-stack com IA — nossa recomendação", domain: "lovable.dev", bg: "from-primary/30 to-blue-400/30", recommended: true },
 ];
 
 export const AIBuildersGrid = () => {
