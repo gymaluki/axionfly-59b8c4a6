@@ -17,7 +17,7 @@ const PricingCards = lazy(() => import("@/components/PricingCards"));
 const LovablePartnership = lazy(() => import("@/components/LovablePartnership"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
-const ImmersiveScrollGallery = lazy(() => import("@/components/ui/immersive-scroll-gallery"));
+const ParallaxScroll = lazy(() => import("@/components/ui/parallax-scroll").then(m => ({ default: m.ParallaxScroll })));
 
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
