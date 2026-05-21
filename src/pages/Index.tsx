@@ -17,6 +17,7 @@ const PricingCards = lazy(() => import("@/components/PricingCards"));
 const LovablePartnership = lazy(() => import("@/components/LovablePartnership"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
+const ImmersiveScrollGallery = lazy(() => import("@/components/ui/immersive-scroll-gallery"));
 
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
@@ -605,6 +606,11 @@ const Index = () => {
             <FeaturesCarousel />
           </Suspense>
         </section>
+
+        {/* ═══════════ IMMERSIVE SCROLL GALLERY ═══════════ */}
+        <Suspense fallback={<div className="min-h-[100vh]" />}>
+          <ImmersiveScrollGallery />
+        </Suspense>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
         <section className="container mx-auto px-4 py-20 md:py-32 relative">
