@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cakto-signature, x-signature',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cakto-signature, x-signature, x-webhook-token',
 };
 
 Deno.serve(async (req) => {
@@ -28,7 +28,7 @@ Deno.serve(async (req) => {
       });
     }
     const url = new URL(req.url);
-    const token = url.searchParams.get("token");
+    const token = req.headers.get("x-webhook-token") ?? url.searchParams.get("token");
     if (token !== CAKTO_WEBHOOK_TOKEN) {
       console.warn("Cakto webhook: token inválido");
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
