@@ -103,7 +103,7 @@ export function captureAffiliateFromUrl(): void {
     const allKnown = [...new Set([...knownSlugs, ...knownKeys])];
 
     if (!allKnown.includes(finalSlug)) {
-      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "kx", "zk"];
+      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "kx", "zk", "nv"];
       finalSlug = "";
 
       for (const p of possibleParams) {
