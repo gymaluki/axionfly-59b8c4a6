@@ -12,9 +12,20 @@ export function ParallaxScroll() {
   const parallaxRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
     const root = parallaxRef.current;
     if (!root) return;
+
+    // Respect reduced motion + skip on small screens to avoid jank/conflicts
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (prefersReduced || isMobile) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Normalize scroll so ScrollTrigger plays nice with native + other libs
+    ScrollTrigger.normalizeScroll(true);
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
     const triggerElement = root.querySelector("[data-parallax-layers]") as HTMLElement | null;
     if (!triggerElement) return;
 
@@ -25,6 +36,7 @@ export function ParallaxScroll() {
           start: "top top",
           end: "bottom top",
           scrub: 0.6,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -44,7 +56,17 @@ export function ParallaxScroll() {
       });
     }, root);
 
-    return () => ctx.revert();
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    const ro = new ResizeObserver(() => ScrollTrigger.refresh());
+    ro.observe(root);
+
+    return () => {
+      window.removeEventListener("load", onLoad);
+      ro.disconnect();
+      ctx.revert();
+      ScrollTrigger.normalizeScroll(false);
+    };
   }, []);
 
   return (
