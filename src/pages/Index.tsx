@@ -17,7 +17,7 @@ const PricingCards = lazy(() => import("@/components/PricingCards"));
 const LovablePartnership = lazy(() => import("@/components/LovablePartnership"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
-const HyperbuildHighlight = lazy(() => import("@/components/HyperbuildHighlight"));
+
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
