@@ -500,9 +500,24 @@ const PerfilView = () => {
               <h3 className="text-lg font-bold text-foreground">Cakto API</h3>
               <p className="text-sm text-muted-foreground">
                 Insira suas credenciais da Cakto para que possamos automatizar a criação de seus produtos.
-                Você encontra essas chaves no menu de API dentro do seu painel Cakto.
+                Elas serão guardadas em uma área protegida do backend e não ficam mais visíveis no seu perfil.
               </p>
             </div>
+
+            {hasCaktoCredentials ? (
+              <div className="p-4 rounded-xl bg-primary/5 border border-primary/10 space-y-1">
+                <p className="text-sm font-semibold text-foreground">Credenciais já configuradas</p>
+                <p className="text-xs text-muted-foreground">
+                  Por segurança, o segredo atual não é exibido aqui.
+                  {caktoCredentialsUpdatedAt
+                    ? ` Última atualização: ${formatDate(caktoCredentialsUpdatedAt)}.`
+                    : ""}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Preencha novamente os campos abaixo somente se quiser substituir as credenciais atuais.
+                </p>
+              </div>
+            ) : null}
             
             <div className="space-y-4 pt-2">
               <div className="space-y-2">
@@ -510,7 +525,7 @@ const PerfilView = () => {
                 <Input
                   value={caktoClientId}
                   onChange={(e) => setCaktoClientId(e.target.value)}
-                  placeholder="Seu Client ID"
+                  placeholder={hasCaktoCredentials ? "Novo Client ID" : "Seu Client ID"}
                   className="bg-secondary/50"
                 />
               </div>
@@ -520,7 +535,7 @@ const PerfilView = () => {
                   type="password"
                   value={caktoClientSecret}
                   onChange={(e) => setCaktoClientSecret(e.target.value)}
-                  placeholder="Seu Client Secret"
+                  placeholder={hasCaktoCredentials ? "Novo Client Secret" : "Seu Client Secret"}
                   className="bg-secondary/50"
                 />
               </div>
@@ -536,7 +551,7 @@ const PerfilView = () => {
               </div>
               <Button onClick={handleSaveCakto} variant="neon" disabled={savingCakto} className="w-full sm:w-auto">
                 {savingCakto ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                Salvar Credenciais
+                {hasCaktoCredentials ? "Atualizar Credenciais" : "Salvar Credenciais"}
               </Button>
             </div>
             
