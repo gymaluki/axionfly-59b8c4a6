@@ -524,9 +524,9 @@ const Index = () => {
 
             <div className="grid md:grid-cols-3 gap-12">
               {[
-                { step: "01", icon: Zap, title: "Ative sua Ferramenta", desc: "Assine a AxionFly e conecte sua IA em segundos. Sua base de operações está pronta.", color: "blue" },
-                { step: "02", icon: Code2, title: "Crie e Encontre", desc: "Escolha o nicho, gere o site com IA e busque leads qualificados na sua região automaticamente.", color: "blue" },
-                { step: "03", icon: TrendingUp, title: "Venda e Escale", desc: "Aborde pelo WhatsApp com script validado e feche contratos de <span class='text-primary'>R$ 500 a R$ 3.000</span>.", color: "blue" }
+                { step: "01", icon: Zap, title: "Ative sua Ferramenta", desc: "Assine a AxionFly e acesse a plataforma em segundos. Sua base de operações está pronta para começar.", color: "blue" },
+                { step: "02", icon: Code2, title: "Responda o Quiz e Crie o Site", desc: "Escolha o nicho e responda algumas perguntas rápidas no quiz — a IA monta o site profissional completo em poucos minutos.", color: "blue" },
+                { step: "03", icon: TrendingUp, title: "Encontre o Cliente e Venda", desc: "Use a busca automática de leads na sua região, envie o site pronto pelo WhatsApp com script validado e feche contratos de <span class='text-primary'>R$ 500 a R$ 3.000</span>.", color: "blue" }
               ].map(({ step, icon: Icon, title, desc }, i) => (
                 <motion.div
                   key={step}
