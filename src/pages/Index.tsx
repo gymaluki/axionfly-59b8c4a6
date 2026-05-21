@@ -344,16 +344,12 @@ const Index = () => {
               🔥
             </motion.span>
             <div className="text-white text-[10px] md:text-sm font-black uppercase tracking-[0.1em] md:tracking-[0.18em] flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 md:gap-3 leading-tight">
-              <span className="hidden md:inline text-yellow-200">ATENÇÃO:</span>
-              <span className="hidden sm:inline">Após esgotar as vagas, o preço dobra</span>
-              <span className="sm:hidden">Vagas acabando — preço dobra</span>
+              <span className="hidden md:inline text-yellow-200">PROMOÇÃO RELÂMPAGO:</span>
+              <span>70% OFF na plataforma</span>
               <span className="text-yellow-300 hidden sm:inline">—</span>
               <div className="flex items-center gap-1.5 bg-black/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-yellow-400/40 shrink-0">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400" />
-                </span>
-                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">{vagasRestantes} {vagasRestantes === 1 ? "vaga restante" : "vagas restantes"} para ter acesso</span>
+                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">Termina em</span>
+                <CountdownTimer />
               </div>
             </div>
             <motion.span
@@ -740,7 +736,7 @@ const Index = () => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
                 </span>
                 <span className="text-xs md:text-sm font-black uppercase tracking-[0.15em] text-red-300">
-                  Restam apenas {vagasRestantes} {vagasRestantes === 1 ? "lugar" : "lugares"} — depois o preço dobra
+                  Promoção relâmpago — 70% OFF por tempo limitado
                 </span>
               </motion.div>
 
