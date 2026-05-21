@@ -599,6 +599,11 @@ const Index = () => {
           </div>
         </section>
 
+        {/* ═══════════ PARALLAX SCROLL — destaque Aulas Premium ═══════════ */}
+        <Suspense fallback={<div className="min-h-[100vh]" />}>
+          <ParallaxScroll />
+        </Suspense>
+
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section className="py-12 md:py-16">
           <SectionPill>Conheça Área de Membros</SectionPill>
@@ -606,11 +611,6 @@ const Index = () => {
             <FeaturesCarousel />
           </Suspense>
         </section>
-
-        {/* ═══════════ IMMERSIVE SCROLL GALLERY ═══════════ */}
-        <Suspense fallback={<div className="min-h-[100vh]" />}>
-          <ImmersiveScrollGallery />
-        </Suspense>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
         <section className="container mx-auto px-4 py-20 md:py-32 relative">
