@@ -172,22 +172,15 @@ function PricingCard({
         <div className="flex flex-col items-center justify-center gap-2 mb-3">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="bg-red-500/20 text-red-300 text-[11px] font-black px-3 py-1 rounded-full border-2 border-red-500/40 uppercase tracking-wider shadow-[0_0_12px_rgba(239,68,68,0.2)]">
-              🔥 Só {vagas} {vagas === 1 ? "vaga restante" : "vagas restantes"}
+              ⚡ Promoção relâmpago — 70% OFF
             </span>
-            <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-full border border-yellow-500/30">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500" />
-              </span>
-              <span className="text-[10px] font-black text-yellow-300 uppercase">Preço dobra em breve</span>
-            </div>
           </div>
         </div>
 
         {comparePrice && (
           <div className="mb-2 flex flex-col items-center gap-1.5 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
-            <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">50% OFF</span>
+            <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">70% OFF</span>
           </div>
         )}
         <div className="flex flex-col items-center justify-center gap-1">
@@ -279,11 +272,11 @@ export default function PricingCards() {
 
   const plans: PricingCardProps[] = [
     {
-      planName: "Plano Anual",
-      description: `1 ano de AxionFly (${vagas === 1 ? "Resta apenas 1 vaga" : `Restam apenas ${vagas} vagas`})`,
-      price: "R$ 89,10",
-      comparePrice: "R$ 297,00",
-      priceDescription: "/ ano",
+      planName: "Plano Mensal",
+      description: "Acesso completo ao AxionFly por mês",
+      price: "R$ 67,90",
+      comparePrice: "R$ 226,33",
+      priceDescription: "/ mês",
       features: sharedFeatures,
       buttonText: "Aproveitar 70% OFF",
       plan: "monthly",
@@ -295,12 +288,13 @@ export default function PricingCards() {
       planName: "Plano Vitalício",
       description: "Pague uma única vez (Acesso vitalício)",
       price: "R$ 97,90",
-      comparePrice: "R$ 195,80",
+      comparePrice: "R$ 326,33",
       priceDescription: "/ custo único",
       features: sharedFeatures,
-      buttonText: "Garantir Vitalício com 50% OFF",
+      buttonText: "Garantir Vitalício com 70% OFF",
       plan: "lifetime",
       isHighlight: true,
+      savingsBadge: "70% OFF",
       index: 2,
     },
   ];
