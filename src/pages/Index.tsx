@@ -8,6 +8,7 @@ import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
+import { CurtainFooter } from "@/components/ui/curtain-footer";
 
 import axionflyLogo from "@/assets/axionfly-logo.webp";
 
@@ -786,8 +787,9 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* ═══════════ FOOTER ═══════════ */}
-        <footer className="bg-[#05050a] relative z-10">
+        {/* ═══════════ FOOTER (curtain reveal) ═══════════ */}
+        <CurtainFooter>
+        <footer className="bg-[#05050a] relative">
           {/* Newsletter */}
           <div className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
             <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -894,6 +896,8 @@ const Index = () => {
             </div>
           </div>
         </footer>
+        </CurtainFooter>
+
       </div>
     </div>
   </div>
