@@ -83,14 +83,25 @@ Deno.serve(async (req) => {
       ? body.cakto_product_image_url.trim()
       : "";
 
-    if (!clientIdSchema.test(clientId)) {
+    const { data: existingCredentials, error: existingCredentialsError } = await admin
+      .from("user_cakto_credentials")
+      .select("client_id, client_secret")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (existingCredentialsError) throw existingCredentialsError;
+
+    const nextClientId = clientId || existingCredentials?.client_id || "";
+    const nextClientSecret = clientSecret || existingCredentials?.client_secret || "";
+
+    if (!clientIdSchema.test(nextClientId)) {
       return new Response(JSON.stringify({ error: "Client ID inválido." }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    if (clientSecret.length < 8 || clientSecret.length > 500) {
+    if (nextClientSecret.length < 8 || nextClientSecret.length > 500) {
       return new Response(JSON.stringify({ error: "Client Secret inválido." }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -118,8 +129,8 @@ Deno.serve(async (req) => {
       .upsert(
         {
           user_id: user.id,
-          client_id: clientId,
-          client_secret: clientSecret,
+          client_id: nextClientId,
+          client_secret: nextClientSecret,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "user_id" },
