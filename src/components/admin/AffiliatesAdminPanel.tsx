@@ -37,14 +37,12 @@ interface Affiliate {
   name: string;
   email: string | null;
   monthly_url: string | null;
-  quarterly_url: string | null;
   lifetime_url: string | null;
 }
 
 const PUBLIC_BASE = "https://www.axionfly.site";
 const CAKTO_PRODUCTS = {
   monthly: "6u886t8_849513",
-  quarterly: "uqn993t",
   lifetime: "wcv2cko_849541",
 };
 
@@ -72,7 +70,7 @@ function validateCaktoUrl(url: string, expectedProduct: string): { ok: boolean; 
 }
 
 const EMPTY: Affiliate = {
-  slug: "", name: "", email: "", monthly_url: "", quarterly_url: "", lifetime_url: "",
+  slug: "", name: "", email: "", monthly_url: "", lifetime_url: "",
 };
 
 export default function AffiliatesAdminPanel() {
@@ -126,8 +124,6 @@ export default function AffiliatesAdminPanel() {
     affiliates.forEach((a) => {
       const m = validateCaktoUrl(a.monthly_url || "", CAKTO_PRODUCTS.monthly);
       if (!m.ok) issues.push({ level: "error", msg: `${a.name} (/${a.slug}) — Mensal: ${m.reason}` });
-      const q = validateCaktoUrl(a.quarterly_url || "", CAKTO_PRODUCTS.quarterly);
-      if (!q.ok) issues.push({ level: "error", msg: `${a.name} (/${a.slug}) — Trimestral: ${q.reason}` });
       const l = validateCaktoUrl(a.lifetime_url || "", CAKTO_PRODUCTS.lifetime);
       if (!l.ok) issues.push({ level: "error", msg: `${a.name} (/${a.slug}) — Vitalício: ${l.reason}` });
     });
@@ -135,7 +131,7 @@ export default function AffiliatesAdminPanel() {
     // códigos affiliate compartilhados
     const codeMap: Record<string, string[]> = {};
     affiliates.forEach((a) => {
-      ["monthly_url", "quarterly_url", "lifetime_url"].forEach((k) => {
+      ["monthly_url", "lifetime_url"].forEach((k) => {
         const code = extractAffiliateCode((a as any)[k]);
         if (code) {
           codeMap[code] = codeMap[code] || [];
@@ -205,7 +201,6 @@ export default function AffiliatesAdminPanel() {
     }
     const checks = [
       validateCaktoUrl(e.monthly_url || "", CAKTO_PRODUCTS.monthly),
-      validateCaktoUrl(e.quarterly_url || "", CAKTO_PRODUCTS.quarterly),
       validateCaktoUrl(e.lifetime_url || "", CAKTO_PRODUCTS.lifetime),
     ];
     const bad = checks.find((c) => !c.ok);
@@ -220,7 +215,6 @@ export default function AffiliatesAdminPanel() {
         name: e.name.trim(),
         email: e.email?.trim() || null,
         monthly_url: e.monthly_url?.trim() || null,
-        quarterly_url: e.quarterly_url?.trim() || null,
         lifetime_url: e.lifetime_url?.trim() || null,
       };
       if (isNew) {
@@ -387,7 +381,6 @@ export default function AffiliatesAdminPanel() {
                     const affSales = sales.filter((s) => s.affiliate_slug === a.slug && (s.status === "paid" || s.status === "active"));
                     const codes = [
                       extractAffiliateCode(a.monthly_url),
-                      extractAffiliateCode(a.quarterly_url),
                       extractAffiliateCode(a.lifetime_url),
                     ].filter(Boolean) as string[];
                     const uniqueCodes = [...new Set(codes)];
@@ -537,7 +530,7 @@ export default function AffiliatesAdminPanel() {
                         <TableCell className="text-xs font-bold">{sale.email}</TableCell>
                         <TableCell className="text-xs">
                           <Badge variant="outline" className="text-[10px] uppercase">
-                            {sale.plan === "lifetime" ? "Vitalício" : sale.plan === "quarterly" ? "Trimestral" : "Mensal"}
+                            {sale.plan === "lifetime" ? "Vitalício" : "Mensal"}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-xs font-bold">R$ {Number(sale.amount || 0).toFixed(2)}</TableCell>
@@ -637,14 +630,6 @@ export default function AffiliatesAdminPanel() {
                 value={editing.monthly_url || ""}
                 onChange={(e) => setEditing({ ...editing, monthly_url: e.target.value })}
                 placeholder={`https://pay.cakto.com.br/${CAKTO_PRODUCTS.monthly}?affiliate=...`}
-              />
-            </div>
-            <div>
-              <Label className="text-xs">Link Trimestral (Cakto)</Label>
-              <Input
-                value={editing.quarterly_url || ""}
-                onChange={(e) => setEditing({ ...editing, quarterly_url: e.target.value })}
-                placeholder={`https://pay.cakto.com.br/${CAKTO_PRODUCTS.quarterly}?affiliate=...`}
               />
             </div>
             <div>

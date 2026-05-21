@@ -1,13 +1,12 @@
 // Sistema de afiliados — captura ?aff=slug na URL, persiste em localStorage
 // e resolve os links da Cakto com o código de afiliado correto de cada parceiro.
 
-export type PlanKey = "monthly" | "quarterly" | "lifetime";
+export type PlanKey = "monthly" | "lifetime";
 
 export interface Affiliate {
   slug: string;          // usado em ?aff=
   name: string;          // nome do afiliado
   monthlyUrl: string;    // link Cakto plano mensal (com ?affiliate=...)
-  quarterlyUrl: string;  // link Cakto plano trimestral (com ?affiliate=...)
   lifetimeUrl: string;   // link Cakto plano vitalício (com ?affiliate=...)
 }
 
@@ -17,63 +16,54 @@ export const AFFILIATES: Record<string, Affiliate> = {
     slug: "o",
     name: "O",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=ZsdtBDJP",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
   },
   u: {
     slug: "u",
     name: "U",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=A73MAj5S",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=A73MAj5S",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=KzuwSFCx",
   },
   pedro: {
     slug: "e",
     name: "E",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=RSTFakbs",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=RSTFakbs",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
   },
   diogo: {
     slug: "d",
     name: "D",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=RSTFakbs",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=RSTFakbs",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
   },
   matheus: {
     slug: "zk",
     name: "Matheus",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=Lghn3ieU",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=Lghn3ieU",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=LEGLH5Bd",
   },
   jv: {
     slug: "jv",
     name: "JV",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ivzz5ooZ",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=ivzz5ooZ",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=Y36tx3VC",
   },
   yan: {
     slug: "kx",
     name: "Yan",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=QmFRRS9a",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=QmFRRS9a",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=jbK39AUb",
   },
   castro: {
     slug: "c",
     name: "CASTRO",
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=YLp4CaSz",
-    quarterlyUrl: "https://pay.cakto.com.br/uqn993t?affiliate=YLp4CaSz",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=NJbG8jzt",
   },
 };
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
 const DEFAULT_MONTHLY = "https://pay.cakto.com.br/6u886t8_849513";
-const DEFAULT_QUARTERLY = "https://pay.cakto.com.br/uqn993t";
 const DEFAULT_LIFETIME = "https://pay.cakto.com.br/wcv2cko_849541";
 
 export const STORAGE_KEY = "affiliate_ref";
@@ -92,18 +82,15 @@ export function captureAffiliateFromUrl(): void {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
-    const pathname = window.location.pathname.replace(/^\/|\/$/g, ""); // remove slashes
-    
-    // 1. Tenta pegar do pathname (ex: /n)
-    let finalSlug = pathname.split("/")[0]; // Pega apenas a primeira parte do path
-    
-    // Lista de slugs conhecidos para evitar capturar caminhos do sistema
+    const pathname = window.location.pathname.replace(/^\/|\/$/g, "");
+
+    let finalSlug = pathname.split("/")[0];
+
     const knownSlugs = Object.values(AFFILIATES).map(a => a.slug);
     const knownKeys = Object.keys(AFFILIATES);
     const allKnown = [...new Set([...knownSlugs, ...knownKeys])];
 
     if (!allKnown.includes(finalSlug)) {
-      // 2. Se não for um slug conhecido no path, tenta nos query params
       const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "kx", "zk"];
       finalSlug = "";
 
@@ -117,9 +104,9 @@ export function captureAffiliateFromUrl(): void {
     }
 
     if (!finalSlug) return;
-    
+
     const affiliate = Object.values(AFFILIATES).find(a => a.slug === finalSlug) || AFFILIATES[finalSlug];
-    
+
     if (!affiliate) return;
 
     const data: StoredAffiliate = {
@@ -132,7 +119,6 @@ export function captureAffiliateFromUrl(): void {
   }
 }
 
-/** Retorna o afiliado ativo (se houver e ainda não expirou). */
 export function getActiveAffiliate(): Affiliate | null {
   if (typeof window === "undefined") return null;
   try {
@@ -143,27 +129,19 @@ export function getActiveAffiliate(): Affiliate | null {
       localStorage.removeItem(STORAGE_KEY);
       return null;
     }
-    // Busca o afiliado pelo slug
     return Object.values(AFFILIATES).find(a => a.slug === data.slug) || null;
   } catch {
     return null;
   }
 }
 
-/**
- * Resolve o link de checkout final.
- * Se houver afiliado ativo, devolve o link Cakto dele (com ?affiliate=...).
- * Caso contrário, devolve o link padrão.
- */
 export function resolveCheckoutUrl(plan: PlanKey, affiliateSlug?: string | null): string {
-  // Se passou slug explicitamente, usa ele. Senão, tenta pegar do localStorage.
-  const aff = affiliateSlug 
+  const aff = affiliateSlug
     ? (Object.values(AFFILIATES).find(a => a.slug === affiliateSlug) || AFFILIATES[affiliateSlug])
     : getActiveAffiliate();
-  
+
   let baseUrl = "";
   if (plan === "monthly") baseUrl = aff ? aff.monthlyUrl : DEFAULT_MONTHLY;
-  else if (plan === "quarterly") baseUrl = aff ? aff.quarterlyUrl : DEFAULT_QUARTERLY;
   else baseUrl = aff ? aff.lifetimeUrl : DEFAULT_LIFETIME;
 
   return baseUrl;

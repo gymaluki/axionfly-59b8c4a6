@@ -91,7 +91,7 @@ interface PricingCardProps {
   features: string[];
   isHighlight?: boolean;
   buttonText: string;
-  plan: "monthly" | "quarterly" | "lifetime";
+  plan: "monthly" | "lifetime";
   index: number;
   savingsBadge?: string;
   comparePrice?: string;

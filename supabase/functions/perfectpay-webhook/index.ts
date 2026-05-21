@@ -151,24 +151,49 @@ Deno.serve(async (req) => {
       "refunded",
     ];
 
-    let subscriptionStatus: string;
+    let subscriptionStatus: string | null;
 
     if (activeStatuses.includes(statusLower)) {
       subscriptionStatus = "active";
     } else if (inactiveStatuses.includes(statusLower)) {
       subscriptionStatus = "inactive";
     } else {
-      console.log(`Unknown status: ${statusLower}, defaulting to inactive`);
-      subscriptionStatus = "inactive";
+      // FIX: status desconhecido (ex: "pending", "waiting_payment") NÃO deve
+      // desativar nada — apenas ignora. Antes caía em "inactive" e derrubava
+      // o acesso quando chegava um PIX gerado mas não pago.
+      console.log(`Perfect Pay: status desconhecido (${statusLower}) — ignorando.`);
+      return new Response(
+        JSON.stringify({ ok: true, ignored: true, status: statusLower }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // Verifica se já estava ativo antes (para não decrementar vaga duplicado)
     const { data: prevSub } = await supabase
       .from("subscriptions")
-      .select("status")
+      .select("status, transaction_id")
       .eq("user_id", user.id)
       .maybeSingle();
     const wasActive = prevSub?.status === "active";
+
+    // FIX PIX: se chega "expired/cancelled" de uma transação ANTIGA diferente
+    // da que está ativa, ignora — o PIX velho expirando não pode derrubar a
+    // assinatura paga em outra transação.
+    if (
+      subscriptionStatus === "inactive" &&
+      wasActive &&
+      prevSub?.transaction_id &&
+      String(transactionId || "") &&
+      String(prevSub.transaction_id) !== String(transactionId)
+    ) {
+      console.log(
+        `Perfect Pay: ignorando '${statusLower}' de transação antiga (${transactionId}) — assinatura ativa atual é ${prevSub.transaction_id}`
+      );
+      return new Response(
+        JSON.stringify({ ok: true, ignored: true, reason: "stale_transaction" }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     // Upsert subscription
     const { error: subError } = await supabase
