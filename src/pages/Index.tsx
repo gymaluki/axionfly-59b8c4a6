@@ -303,6 +303,18 @@ const CountdownTimer = () => {
 
 import { captureAffiliateFromUrl } from "@/lib/affiliates";
 
+// Barra de progresso de scroll com gradiente animado
+function ScrollProgressBar() {
+  const { scrollYProgress } = useFramerScroll();
+  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  return (
+    <motion.div
+      style={{ scaleX, transformOrigin: "0%" }}
+      className="fixed top-[48px] md:top-14 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 z-[59] shadow-[0_0_20px_rgba(59,130,246,0.8)]"
+    />
+  );
+}
+
 const Index = () => {
   const navigate = useNavigate();
   const vagasRestantes = useVagasRestantes(4);
