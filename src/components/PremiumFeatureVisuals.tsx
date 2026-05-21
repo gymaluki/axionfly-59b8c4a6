@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import hyperbuildExtension from "@/assets/hyperbuild-extension.png";
 
 const sharedStyles = `
   .pfv {
@@ -352,79 +353,41 @@ export function SitesBuilderVisual() {
   );
 }
 
-/* ============= CARD 2: Plano Infinito ============= */
+/* ============= CARD 2: Extensão HyperBuild ============= */
 export function ExtensionInfiniteVisual() {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    let v = 0;
-    let mounted = true;
-    let raf: number;
-    const tick = () => {
-      if (!mounted) return;
-      v += 37;
-      if (v >= 999) {
-        setCount(999);
-        setTimeout(() => { v = 0; setCount(0); raf = requestAnimationFrame(tick); }, 1800);
-        return;
-      }
-      setCount(v);
-      raf = requestAnimationFrame(() => setTimeout(tick, 40));
-    };
-    raf = requestAnimationFrame(tick);
-    return () => { mounted = false; cancelAnimationFrame(raf); };
-  }, []);
-
-  const showInf = count >= 999;
-
   return (
-    <div className="pfv">
+    <div className="pfv" style={{ background: "linear-gradient(135deg, #0a0512 0%, #050508 100%)" }}>
       <style>{sharedStyles}</style>
       <div className="pfv-grid-bg" />
-
-      <div className="pfv-browser">
-        <div className="pfv-chrome">
-          <div className="pfv-dots"><i /><i /><i /></div>
-          <div className="pfv-url">axionfly.site/planos</div>
-          <span className="pfv-pill green"><span className="d" />Ativo</span>
-        </div>
-
-        <div className="pfv-pl-body">
-          <div className="pfv-pl-card">
-            <div className="pfv-pl-head">
-              <span className="name">Plano Infinito</span>
-              <span className="pfv-pill">Premium</span>
-            </div>
-
-            <div className="pfv-row">
-              <span className="l">Créditos</span>
-              <span className="v"><em>{showInf ? "∞ Ilimitado" : count.toLocaleString("pt-BR")}</em></span>
-            </div>
-
-            <div className="pfv-divider" />
-
-            <div className="pfv-row">
-              <span className="l">Sites este mês</span>
-              <span className="v sm">542<span className="pfv-badge-up">+8%</span></span>
-            </div>
-
-            <div className="pfv-progress">
-              <div className="h">
-                <span className="l">Parceria Hyperbuild Pro</span>
-                <span className="p">100%</span>
-              </div>
-              <div className="bar"><i /></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="pfv-floating pfv-float-anim" style={{ bottom: -8, right: 10 }}>
-        <span className="lab">Créditos</span>
-        <span className="val"><em>Sem limite</em></span>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "16px",
+        }}
+      >
+        <img
+          src={hyperbuildExtension}
+          alt="Extensão HyperBuild Pro — créditos infinitos no Lovable"
+          loading="lazy"
+          style={{
+            maxHeight: "100%",
+            maxWidth: "100%",
+            width: "auto",
+            objectFit: "contain",
+            borderRadius: "14px",
+            boxShadow: "0 20px 60px -10px rgba(168, 85, 247, 0.45), 0 0 40px rgba(168, 85, 247, 0.2)",
+          }}
+        />
       </div>
     </div>
   );
 }
+
+
 
 /* ============= CARD 3: Contract Generator ============= */
 export function ContractGeneratorVisual() {
