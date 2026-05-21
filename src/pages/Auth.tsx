@@ -23,18 +23,29 @@ const Auth = () => {
   const paymentRedirect = useMemo(() => {
     const val = new URLSearchParams(location.search).get("redirect_payment");
     if (!val) return null;
-    
-    // Se for um link da Cakto, retornamos ele exatamente como está
-    if (val.includes("pay.cakto.com.br")) return val;
-    
+
     // Same-origin paths
     if (val.startsWith("/") && !val.startsWith("//")) return val;
-    
+
+    try {
+      const externalUrl = new URL(val);
+      const hostname = externalUrl.hostname.toLowerCase();
+
+      if (
+        externalUrl.protocol === "https:" &&
+        (hostname === "pay.cakto.com.br" || hostname.endsWith(".cakto.com.br"))
+      ) {
+        return externalUrl.toString();
+      }
+    } catch {
+      /* ignore */
+    }
+
     try {
       const u = new URL(val, window.location.origin);
       if (u.origin === window.location.origin) return u.pathname + u.search + u.hash;
     } catch { /* ignore */ }
-    
+
     return null;
   }, [location.search]);
 
