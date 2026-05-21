@@ -692,38 +692,11 @@ const Index = () => {
         {/* ═══════════ CTA FINAL ═══════════ */}
         <section className="container mx-auto px-4 pt-8 pb-24 md:pt-12 md:pb-32 relative">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative max-w-6xl mx-auto overflow-hidden"
-            style={{
-              borderRadius: "32px",
-              border: "1px solid rgba(37,99,235,0.25)",
-              background:
-                "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.18) 0%, transparent 60%), linear-gradient(180deg, #0D1221 0%, #080B14 100%)",
-            }}
-          >
-            {/* Animated orb */}
-            <motion.div
-              animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none"
-            />
-
-            {/* Grid lines decoration */}
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-[0.06] pointer-events-none"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(37,99,235,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.5) 1px, transparent 1px)",
-                backgroundSize: "48px 48px",
-                maskImage: "radial-gradient(ellipse at center, #000 30%, transparent 80%)",
-              }}
-            />
-
-            <div className="relative z-10 px-5 py-14 sm:px-8 sm:py-16 md:px-16 md:py-24 text-center">
+            className="relative max-w-6xl mx-auto overflow-hidden text-center py-14 sm:py-16 md:py-24"
               {/* Urgency pill */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
