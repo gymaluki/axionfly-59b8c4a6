@@ -129,11 +129,11 @@ export function HeroSection() {
               transition={{ duration: 0.6 }}
               className="flex justify-center lg:justify-start mb-6"
             >
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.2)]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2 md:px-4 md:py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.2)]">
                 <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
-                  <Zap className="size-3.5 text-primary fill-primary" />
+                  <Zap className="size-5 md:size-3.5 text-primary fill-primary" />
                 </motion.div>
-                <span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">
+                <span className="text-xs md:text-[11px] font-black uppercase tracking-[0.1em] text-primary">
                   +5.000 empreendedores já vendem com AxionFly
                 </span>
               </div>
