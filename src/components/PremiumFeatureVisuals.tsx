@@ -372,7 +372,7 @@ export function ExtensionInfiniteVisual() {
           position: "absolute",
           inset: "-20%",
           background:
-            "radial-gradient(circle at 70% 50%, rgba(168, 85, 247, 0.28), transparent 60%)",
+            "radial-gradient(circle at 70% 50%, rgba(37, 99, 235, 0.32), transparent 60%)",
           filter: "blur(40px)",
           pointerEvents: "none",
         }}
