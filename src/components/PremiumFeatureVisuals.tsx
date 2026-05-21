@@ -372,7 +372,7 @@ export function ExtensionInfiniteVisual() {
           position: "absolute",
           inset: "-20%",
           background:
-            "radial-gradient(circle at 70% 50%, rgba(168, 85, 247, 0.28), transparent 60%)",
+            "radial-gradient(circle at 70% 50%, rgba(37, 99, 235, 0.32), transparent 60%)",
           filter: "blur(40px)",
           pointerEvents: "none",
         }}
@@ -399,7 +399,7 @@ export function ExtensionInfiniteVisual() {
             border: "none",
             borderRadius: 0,
             boxShadow: "none",
-            filter: "drop-shadow(0 0 30px rgba(168, 85, 247, 0.45)) drop-shadow(0 10px 25px rgba(0,0,0,0.5)) contrast(1.1) saturate(1.15)",
+            filter: "drop-shadow(0 0 30px rgba(37, 99, 235, 0.55)) drop-shadow(0 10px 25px rgba(0,0,0,0.5)) contrast(1.1) saturate(1.15) hue-rotate(-25deg)",
           }}
         />
 
