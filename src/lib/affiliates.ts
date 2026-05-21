@@ -66,6 +66,12 @@ export const AFFILIATES: Record<string, Affiliate> = {
     monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=HFtxondu",
     lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=nrvnSdH5",
   },
+  johjoh: {
+    slug: "nv",
+    name: "JOHJOH",
+    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
+    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
+  },
 };
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
