@@ -356,9 +356,27 @@ export function SitesBuilderVisual() {
 /* ============= CARD 2: Extensão HyperBuild ============= */
 export function ExtensionInfiniteVisual() {
   return (
-    <div className="pfv" style={{ background: "linear-gradient(135deg, #0a0512 0%, #050508 100%)" }}>
+    <div
+      className="pfv"
+      style={{
+        background: "transparent",
+        border: "none",
+        boxShadow: "none",
+        overflow: "visible",
+      }}
+    >
       <style>{sharedStyles}</style>
-      <div className="pfv-grid-bg" />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: "-20%",
+          background:
+            "radial-gradient(circle at 70% 50%, rgba(168, 85, 247, 0.28), transparent 60%)",
+          filter: "blur(40px)",
+          pointerEvents: "none",
+        }}
+      />
       <div
         style={{
           position: "absolute",
@@ -366,7 +384,6 @@ export function ExtensionInfiniteVisual() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "16px",
         }}
       >
         <img
@@ -374,12 +391,15 @@ export function ExtensionInfiniteVisual() {
           alt="Extensão HyperBuild Pro — créditos infinitos no Lovable"
           loading="lazy"
           style={{
-            maxHeight: "100%",
-            maxWidth: "100%",
+            maxHeight: "115%",
+            maxWidth: "115%",
             width: "auto",
             objectFit: "contain",
-            borderRadius: "14px",
-            boxShadow: "0 20px 60px -10px rgba(168, 85, 247, 0.45), 0 0 40px rgba(168, 85, 247, 0.2)",
+            background: "transparent",
+            border: "none",
+            borderRadius: 0,
+            boxShadow: "none",
+            mixBlendMode: "screen",
           }}
         />
       </div>
