@@ -27,8 +27,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const url = new URL(req.url);
-    const token = req.headers.get("x-webhook-token") ?? url.searchParams.get("token");
+    const token = req.headers.get("x-webhook-token");
     if (token !== PERFECTPAY_WEBHOOK_TOKEN) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,

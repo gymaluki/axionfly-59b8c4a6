@@ -27,8 +27,7 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const url = new URL(req.url);
-    const token = req.headers.get("x-webhook-token") ?? url.searchParams.get("token");
+    const token = req.headers.get("x-webhook-token");
     if (token !== CAKTO_WEBHOOK_TOKEN) {
       console.warn("Cakto webhook: token inválido");
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
