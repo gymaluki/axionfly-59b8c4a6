@@ -336,8 +336,6 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
-          cakto_client_id: string | null
-          cakto_client_secret: string | null
           cakto_product_image_url: string | null
           created_at: string
           display_name: string | null
@@ -347,8 +345,6 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
-          cakto_client_id?: string | null
-          cakto_client_secret?: string | null
           cakto_product_image_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -358,8 +354,6 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
-          cakto_client_id?: string | null
-          cakto_client_secret?: string | null
           cakto_product_image_url?: string | null
           created_at?: string
           display_name?: string | null
@@ -516,6 +510,33 @@ export type Database = {
           user_agent?: string | null
           user_email?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_cakto_credentials: {
+        Row: {
+          client_id: string
+          client_secret: string
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          client_id: string
+          client_secret: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          client_id?: string
+          client_secret?: string
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
