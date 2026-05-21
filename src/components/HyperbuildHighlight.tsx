@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Infinity, Zap, ShieldCheck, ArrowRight, Check } from "lucide-react";
+import { Infinity as InfinityIcon, Zap, ShieldCheck, ArrowRight, Check } from "lucide-react";
 import hyperbuildExtension from "@/assets/hyperbuild-extension.png";
 
 const benefits = [
