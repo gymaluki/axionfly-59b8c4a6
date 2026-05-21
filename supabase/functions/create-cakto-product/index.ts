@@ -51,14 +51,14 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Buscar credenciais do usuário
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('cakto_client_id, cakto_client_secret')
+    // Buscar credenciais protegidas do usuário
+    const { data: credentials, error: credentialsError } = await supabase
+      .from('user_cakto_credentials')
+      .select('client_id, client_secret')
       .eq('user_id', user.id)
       .maybeSingle();
 
-    if (profileError || !profile?.cakto_client_id || !profile?.cakto_client_secret) {
+    if (credentialsError || !credentials?.client_id || !credentials?.client_secret) {
       return new Response(JSON.stringify({ error: 'Configure suas credenciais Cakto no perfil primeiro.' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -71,8 +71,8 @@ Deno.serve(async (req) => {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: profile.cakto_client_id,
-        client_secret: profile.cakto_client_secret,
+        client_id: credentials.client_id,
+        client_secret: credentials.client_secret,
       }),
     });
 
