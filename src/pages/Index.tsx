@@ -497,10 +497,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ HYPERBUILD HIGHLIGHT ═══════════ */}
-        <Suspense fallback={<div className="min-h-[500px]" />}>
-          <HyperbuildHighlight />
-        </Suspense>
 
         {/* ═══════════ ETAPAS ═══════════ */}
         <section id="etapas" className="container mx-auto px-4 pt-20 pb-0 md:pt-32 md:pb-0 relative">
