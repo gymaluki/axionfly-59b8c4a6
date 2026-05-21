@@ -19,6 +19,13 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Método não permitido." }), {
+      status: 405,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
   const reqId = crypto.randomUUID().slice(0, 8);
   console.log(`[signup ${reqId}] início — método=${req.method}`);
 
@@ -39,6 +46,14 @@ Deno.serve(async (req) => {
     }
 
     const normalizedEmailEarly = email.trim().toLowerCase();
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmailEarly);
+
+    if (!isValidEmail) {
+      return new Response(
+        JSON.stringify({ error: "Email ou senha inválidos." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
 
     // 🛡️ Bloqueio anti-bot: padrões usados em ataques de criação em massa
     const ABUSE_PATTERNS: RegExp[] = [
@@ -97,16 +112,11 @@ Deno.serve(async (req) => {
 
     if (createErr || !created.user) {
       console.error(`[signup ${reqId}] FALHA createUser:`, createErr?.status, createErr?.message, createErr);
-      const alreadyExists = createErr?.message?.toLowerCase().includes("already") || createErr?.message?.toLowerCase().includes("registered");
-      const status = alreadyExists ? 409 : 400;
       return new Response(
         JSON.stringify({
-          error: alreadyExists
-            ? "Este email já está cadastrado. Tente fazer login."
-            : (createErr?.message ?? "Falha ao criar conta."),
-          code: createErr?.status ?? "create_failed",
+          error: "Não foi possível concluir o cadastro. Se você já tiver conta, tente entrar.",
         }),
-        { status, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
 
@@ -145,7 +155,7 @@ Deno.serve(async (req) => {
   } catch (err: any) {
     console.error("Erro inesperado:", err);
     return new Response(
-      JSON.stringify({ error: err?.message ?? "Erro inesperado ao processar cadastro." }),
+      JSON.stringify({ error: "Erro inesperado ao processar cadastro." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   }
