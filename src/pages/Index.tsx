@@ -502,80 +502,95 @@ const Index = () => {
         <section id="etapas" className="container mx-auto px-4 pt-20 pb-0 md:pt-32 md:pb-0 relative">
           <SectionPill>Processo AxionFly</SectionPill>
           
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-24">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 md:mb-20">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Venda seu primeiro site <br />
-              em <span className="gradient-text">3 passos simples</span>
+              em <span className="gradient-text">4 passos simples</span>
             </h2>
             <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Não reinventamos a roda, apenas automatizamos o que funciona. Siga o método e veja os resultados.
             </p>
           </motion.div>
 
-          <div className="relative max-w-6xl mx-auto">
-            {/* Horizontal Line - Desktop */}
-            <div className="hidden md:block absolute top-[100px] left-[10%] right-[10%] h-0.5 bg-primary/10 -z-10">
-              <motion.div 
-                className="h-full bg-primary shadow-[0_0_15px_rgba(37,99,235,0.5)]"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
+          <div className="relative max-w-5xl mx-auto">
+            {/* Linha vertical central - Desktop */}
+            <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-primary/15 -z-10">
+              <motion.div
+                className="w-full bg-gradient-to-b from-primary to-primary/40 shadow-[0_0_15px_hsl(var(--primary)/0.4)]"
+                initial={{ height: 0 }}
+                whileInView={{ height: "100%" }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
+                transition={{ duration: 1.8, ease: "easeInOut" }}
               />
             </div>
 
-            <div className="grid md:grid-cols-3 gap-12">
+            <div className="space-y-8 md:space-y-12">
               {[
-                { step: "01", icon: Zap, title: "Ative sua Ferramenta", desc: "Assine a AxionFly e acesse a plataforma em segundos. Sua base de operações está pronta para começar.", color: "blue" },
-                { step: "02", icon: Code2, title: "Responda o Quiz e Crie o Site", desc: "Escolha o nicho e responda algumas perguntas rápidas no quiz — a IA monta o site profissional completo em poucos minutos.", color: "blue" },
-                { step: "03", icon: TrendingUp, title: "Encontre o Cliente e Venda", desc: "Use a busca automática de leads na sua região, envie o site pronto pelo WhatsApp com script validado e feche contratos de <span class='text-primary'>R$ 500 a R$ 3.000</span>.", color: "blue" }
-              ].map(({ step, icon: Icon, title, desc }, i) => (
-                <motion.div
-                  key={step}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
-                  variants={fadeUp}
-                  custom={i + 1}
-                  whileHover={{ y: -10 }}
-                  className="flex flex-col items-center text-center space-y-8 group"
-                >
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-full bg-background border-4 border-primary/20 flex items-center justify-center text-xl font-black text-primary relative z-10 group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all duration-500">
-                      {step}
-                      {/* Progressive fill background */}
-                      <motion.div 
-                        initial={{ height: 0 }}
-                        whileInView={{ height: "100%" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: i * 0.3 }}
-                        className="absolute inset-0 bg-primary/10 rounded-full -z-10"
-                      />
+                { step: "1", title: "Responda o Quiz", desc: "Escolha o nicho, conte sobre o cliente e o objetivo. Nossa IA compreende e planeja a estrutura ideal do site." },
+                { step: "2", title: "Visualize e Personalize", desc: "Personalize cores, fontes e estilo de design de forma simples para refletir a identidade da marca do seu cliente." },
+                { step: "3", title: "Gere com 1 Clique", desc: "Em instantes, o site profissional completo é gerado — interface, seções e estrutura responsiva inclusos." },
+                { step: "4", title: "Publique e Lucre", desc: "Publique online, envie pelo WhatsApp com o script pronto e feche contratos de R$ 500 a R$ 3.000." },
+              ].map(({ step, title, desc }, i) => {
+                const isLeft = i % 2 === 0;
+                return (
+                  <motion.div
+                    key={step}
+                    initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 0.6, ease, delay: i * 0.08 }}
+                    className="relative md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-6"
+                  >
+                    {/* Card esquerda */}
+                    <div className={cn("hidden md:block", !isLeft && "invisible")}>
+                      {isLeft && (
+                        <div className="group relative rounded-2xl border border-primary/25 bg-card/40 backdrop-blur-sm p-7 hover:border-primary/60 hover:bg-card/60 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.15)]">
+                          <h3 className="text-xl md:text-2xl font-black text-primary mb-3">{title}</h3>
+                          <p className="text-[#94a3b8] leading-relaxed">{desc}</p>
+                        </div>
+                      )}
                     </div>
-                    <div className="absolute -inset-2 bg-primary/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
 
-                  <div className="space-y-4 px-4 py-8 rounded-3xl bg-card/40 border border-primary/10 backdrop-blur-sm group-hover:border-primary/40 group-hover:bg-card/60 transition-all duration-500">
-                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500">
-                      <Icon className="w-8 h-8 text-primary" />
+                    {/* Círculo numerado central */}
+                    <div className="hidden md:flex w-14 h-14 rounded-full bg-primary/15 border-2 border-primary items-center justify-center text-primary font-black text-lg shadow-[0_0_20px_hsl(var(--primary)/0.4)] relative z-10">
+                      {step}
                     </div>
-                    <h3 className="text-2xl font-black text-foreground">{title}</h3>
-                    <p className="text-muted-foreground font-medium leading-relaxed" dangerouslySetInnerHTML={{ __html: desc }} />
-                  </div>
-                </motion.div>
-              ))}
+
+                    {/* Card direita */}
+                    <div className={cn("hidden md:block", isLeft && "invisible")}>
+                      {!isLeft && (
+                        <div className="group relative rounded-2xl border border-primary/25 bg-card/40 backdrop-blur-sm p-7 hover:border-primary/60 hover:bg-card/60 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.15)]">
+                          <h3 className="text-xl md:text-2xl font-black text-primary mb-3">{title}</h3>
+                          <p className="text-[#94a3b8] leading-relaxed">{desc}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Layout mobile */}
+                    <div className="md:hidden flex gap-4">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/15 border-2 border-primary flex items-center justify-center text-primary font-black shadow-[0_0_15px_hsl(var(--primary)/0.4)]">
+                        {step}
+                      </div>
+                      <div className="flex-1 rounded-2xl border border-primary/25 bg-card/40 backdrop-blur-sm p-5">
+                        <h3 className="text-lg font-black text-primary mb-2">{title}</h3>
+                        <p className="text-[#94a3b8] text-sm leading-relaxed">{desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
-            
-            {/* CTA bottom of Steps */}
-            <motion.div 
+
+            {/* CTA final */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mt-12 mb-0 text-center"
+              className="mt-16 mb-0 text-center"
             >
-              <Button 
-                variant="outline" 
-                size="xl" 
+              <Button
+                variant="outline"
+                size="xl"
                 className="rounded-full font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-sm px-6 sm:px-12 border-2 hover:bg-primary/10 group max-w-full whitespace-normal sm:whitespace-nowrap"
                 onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
               >
