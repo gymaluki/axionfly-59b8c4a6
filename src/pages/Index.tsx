@@ -551,12 +551,25 @@ const Index = () => {
                     onClick={() => setFeatureIndex(i)}
                     aria-label={`Ir para funcionalidade ${i + 1}`}
                     className={cn(
-                      "h-2 rounded-full transition-all duration-300",
+                      "h-2 rounded-full transition-all duration-500 overflow-hidden relative",
                       featureIndex === i
-                        ? "w-10 bg-primary shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                        ? "w-12 bg-primary/20 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
                         : "w-2 bg-primary/30 hover:bg-primary/60"
                     )}
-                  />
+                  >
+                    {featureIndex === i && !featuresPaused && (
+                      <motion.span
+                        key={`bar-${i}-${featureIndex}`}
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 5, ease: "linear" }}
+                        className="absolute inset-y-0 left-0 bg-primary shadow-[0_0_15px_rgba(37,99,235,0.6)] rounded-full"
+                      />
+                    )}
+                    {featureIndex === i && featuresPaused && (
+                      <span className="absolute inset-0 bg-primary rounded-full" />
+                    )}
+                  </button>
                 ))}
               </div>
 
