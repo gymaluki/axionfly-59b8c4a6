@@ -412,7 +412,7 @@ const Index = () => {
           </div>
 
           {/* Funcionalidades — layout flutuante alternado */}
-          <div className="relative max-w-6xl mx-auto">
+          <div className="relative">
             {/* Glows ambiente */}
             <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
             <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
@@ -503,7 +503,8 @@ const Index = () => {
                             </Suspense>
                           </div>
                         ) : visual === "dashboard" ? (
-                          <div className="scale-[0.9] origin-center"><DashboardMockup /></div>
+                          <DashboardMockup />
+
                         ) : visual === "builder" ? (
                           <SitesBuilderVisual />
                         ) : visual === "extension" ? (
