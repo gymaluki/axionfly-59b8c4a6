@@ -411,121 +411,107 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Funcionalidades — layout flutuante alternado */}
-          <div className="relative">
+          {/* Funcionalidades — bento grid de cards */}
+          <div className="relative max-w-6xl mx-auto">
             {/* Glows ambiente */}
             <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
             <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
 
-            <div className="relative space-y-20 md:space-y-28">
+            <div className="relative grid grid-cols-1 md:grid-cols-3 auto-rows-fr gap-5 md:gap-6">
               {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => {
-                const isReversed = i % 2 === 1;
+                // Bento spans: 1º card grande, demais variam
+                const spanClass =
+                  i === 0 ? "md:col-span-2" :
+                  i === 2 ? "md:col-span-2" :
+                  "md:col-span-1";
+
                 return (
-                  <motion.div
+                  <motion.article
                     key={title}
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.25 }}
-                    transition={{ duration: 0.7, ease }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.55, delay: i * 0.08, ease }}
+                    whileHover={{ y: -4 }}
                     className={cn(
-                      "group relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center",
-                      isReversed && "lg:[&>*:first-child]:order-2"
+                      "group relative flex flex-col overflow-hidden rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-sm",
+                      "hover:border-primary/60 hover:bg-card/60 transition-all duration-500",
+                      "hover:shadow-[0_0_40px_hsl(var(--primary)/0.18)]",
+                      spanClass
                     )}
                   >
-                    {/* Texto flutuante */}
-                    <motion.div
-                      initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, amount: 0.4 }}
-                      transition={{ duration: 0.6, delay: 0.1, ease }}
-                      className="space-y-5"
-                    >
-                      <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/[0.08] px-3.5 py-1.5 backdrop-blur-sm">
-                        <Icon className="w-3.5 h-3.5 text-primary" />
-                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">{tag}</span>
+                    {/* Glow interno no hover */}
+                    <div aria-hidden className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                    {/* Header: tag + título + descrição */}
+                    <div className="relative p-6 md:p-7 space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.08] px-3 py-1 backdrop-blur-sm">
+                          <Icon className="w-3.5 h-3.5 text-primary" />
+                          <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">{tag}</span>
+                        </div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-primary/70 hidden md:inline">
+                          0{i + 1}
+                        </span>
                       </div>
-                      <h3 className="text-2xl md:text-[34px] font-black text-foreground tracking-tight leading-[1.15]">
+
+                      <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight leading-[1.2]">
                         {title}
                       </h3>
-                      <p className="text-[15px] md:text-base text-[#94a3b8] leading-[1.7] max-w-lg">
+                      <p className="text-sm text-[#94a3b8] leading-[1.65]">
                         {desc}
                       </p>
+
                       {bullets && (
-                        <ul className="space-y-2.5 pt-1">
-                          {bullets.map((item: string) => (
-                            <li key={item} className="flex items-center gap-3 text-sm text-slate-300">
-                              <div className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center">
-                                <svg className="w-2.5 h-2.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <ul className="space-y-2 pt-1">
+                          {bullets.slice(0, 3).map((item: string) => (
+                            <li key={item} className="flex items-start gap-2.5 text-xs text-slate-300">
+                              <div className="mt-0.5 flex-shrink-0 w-3.5 h-3.5 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center">
+                                <svg className="w-2 h-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                 </svg>
                               </div>
-                              {item}
+                              <span className="leading-[1.5]">{item}</span>
                             </li>
                           ))}
                         </ul>
                       )}
-                    </motion.div>
+                    </div>
 
-                    {/* Visual flutuante (sem moldura) */}
-                    <motion.div
-                      initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, amount: 0.4 }}
-                      transition={{ duration: 0.7, delay: 0.15, ease }}
-                      className="relative"
-                    >
-                      {/* Glow por trás do visual */}
-                      <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/15 blur-[80px] rounded-full scale-75 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
-
-                      <motion.div
-                        animate={{ y: [0, -8, 0] }}
-                        transition={{ duration: 6 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
-                        className="relative transition-transform duration-700 group-hover:scale-[1.03]"
-                      >
-                        {visual === "globe" ? (
-                          <div className="w-full max-w-[300px] mx-auto aspect-square relative">
-                            <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
-                              <GlobeCdn className="w-full" speed={0.006} />
-                              <motion.div
-                                animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                                className="absolute top-1/4 left-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
-                              >
-                                <p className="text-[9px] font-bold text-foreground">Restaurante • SP</p>
-                              </motion.div>
-                              <motion.div
-                                animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                                className="absolute bottom-1/3 right-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
-                              >
-                                <p className="text-[9px] font-bold text-foreground">Barbearia • RJ</p>
-                              </motion.div>
-                            </Suspense>
-                          </div>
-                        ) : visual === "dashboard" ? (
-                          <DashboardMockup />
-
-                        ) : visual === "builder" ? (
-                          <SitesBuilderVisual />
-                        ) : visual === "extension" ? (
-                          <ExtensionInfiniteVisual />
-                        ) : visual === "contract" ? (
-                          <ContractGeneratorVisual />
-                        ) : (
-                          <div className="aspect-video flex items-center justify-center">
-                            <Icon className="w-24 h-24 text-primary/20" />
-                          </div>
-                        )}
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
+                    {/* Visual no rodapé do card */}
+                    <div className="relative mt-auto px-4 pb-4 md:px-5 md:pb-5">
+                      <div className="relative rounded-xl overflow-hidden border border-primary/15 bg-background/40 aspect-[16/9] flex items-center justify-center">
+                        <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/10 blur-[60px] opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{ duration: 5 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}
+                          className="relative w-full h-full flex items-center justify-center transition-transform duration-700 group-hover:scale-[1.04]"
+                        >
+                          {visual === "globe" ? (
+                            <div className="w-full h-full max-w-[200px] mx-auto aspect-square relative">
+                              <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
+                                <GlobeCdn className="w-full" speed={0.006} />
+                              </Suspense>
+                            </div>
+                          ) : visual === "dashboard" ? (
+                            <div className="scale-[0.6] origin-center w-full"><DashboardMockup /></div>
+                          ) : visual === "builder" ? (
+                            <div className="scale-[0.75] origin-center"><SitesBuilderVisual /></div>
+                          ) : visual === "extension" ? (
+                            <div className="scale-[0.75] origin-center"><ExtensionInfiniteVisual /></div>
+                          ) : visual === "contract" ? (
+                            <div className="scale-[0.75] origin-center"><ContractGeneratorVisual /></div>
+                          ) : (
+                            <Icon className="w-16 h-16 text-primary/30" />
+                          )}
+                        </motion.div>
+                      </div>
+                    </div>
+                  </motion.article>
                 );
               })}
             </div>
           </div>
-
-
-
         </section>
 
 
