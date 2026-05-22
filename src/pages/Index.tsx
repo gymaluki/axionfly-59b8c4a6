@@ -573,10 +573,11 @@ const Index = () => {
 
             <div className="relative grid grid-cols-1 md:grid-cols-3 auto-rows-fr gap-5 md:gap-6">
               {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => {
-                // Bento: cards grandes em posições estratégicas
+                // Bento: spans somam 9 (3 linhas de 3 colunas)
                 const spanClass =
                   i === 0 ? "md:col-span-2" :
                   i === 2 ? "md:col-span-2" :
+                  i === 4 ? "md:col-span-3" :
                   "md:col-span-1";
 
                 return (
