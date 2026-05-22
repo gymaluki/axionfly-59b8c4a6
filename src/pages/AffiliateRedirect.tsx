@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { AFFILIATES, resolveCheckoutUrl } from "@/lib/affiliates";
+import { normalizeAffiliateSlug } from "@/lib/affiliates";
 
 const STORAGE_KEY = "affiliate_ref";
 const TTL_DAYS = 30;
@@ -11,11 +11,9 @@ export default function AffiliateRedirect({ slug: propsSlug }: { slug?: string }
   const navigate = useNavigate();
 
   useEffect(() => {
-    const key = (slug || "").toLowerCase().trim();
-    const affiliate = Object.values(AFFILIATES).find(a => a.slug === key) || AFFILIATES[key];
-    
-    if (key && affiliate) {
-      const affiliateSlug = affiliate.slug;
+    const affiliateSlug = normalizeAffiliateSlug(slug);
+
+    if (affiliateSlug) {
       try {
         localStorage.setItem(
           STORAGE_KEY,
