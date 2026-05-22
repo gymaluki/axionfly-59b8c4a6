@@ -421,8 +421,9 @@ const Index = () => {
             <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
             <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
 
-            {/* Glass card */}
-            <div className="relative bg-white/[0.02] border border-white/[0.08] rounded-3xl overflow-hidden backdrop-blur-xl">
+            {/* Sem moldura — conteúdo flutuante */}
+            <div className="relative">
+
               <div className="overflow-hidden">
                 <motion.div
                   className="flex"
@@ -441,7 +442,7 @@ const Index = () => {
                   {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
                     <div
                       key={title}
-                      className="min-w-full p-8 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+                      className="min-w-full px-2 md:px-8 py-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                     >
                       {/* Text Content */}
                       <motion.div
