@@ -584,17 +584,20 @@ const Index = () => {
                     </motion.div>
                   </div>
                 ))}
-              </motion.div>
+                </motion.div>
+              </div>
             </div>
+            {/* fim moldura */}
 
             {/* Controles */}
-            <div className="mt-12 flex items-center justify-center gap-6">
+            <div className="mt-10 flex items-center justify-center gap-6">
               <button
                 onClick={goPrev}
                 aria-label="Funcionalidade anterior"
-                className="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md"
+                className="group relative w-14 h-14 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md hover:scale-110"
               >
-                <ChevronLeft className="w-5 h-5 text-primary" />
+                <span className="absolute inset-0 rounded-full bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ChevronLeft className="w-5 h-5 text-primary relative z-10 group-hover:-translate-x-0.5 transition-transform" />
               </button>
 
               <div className="flex items-center gap-2">
@@ -606,8 +609,8 @@ const Index = () => {
                     className={cn(
                       "h-2 rounded-full transition-all duration-500 overflow-hidden relative",
                       featureIndex === i
-                        ? "w-12 bg-primary/20 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                        : "w-2 bg-primary/30 hover:bg-primary/60"
+                        ? "w-14 bg-primary/20 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                        : "w-2 bg-primary/30 hover:bg-primary/60 hover:w-4"
                     )}
                   >
                     {featureIndex === i && !featuresPaused && (
@@ -629,19 +632,14 @@ const Index = () => {
               <button
                 onClick={goNext}
                 aria-label="Próxima funcionalidade"
-                className="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md"
+                className="group relative w-14 h-14 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md hover:scale-110"
               >
-                <ChevronRight className="w-5 h-5 text-primary" />
+                <span className="absolute inset-0 rounded-full bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
+                <ChevronRight className="w-5 h-5 text-primary relative z-10 group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
-
-            {/* Contador */}
-            <div className="mt-4 text-center">
-              <span className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground/60">
-                {String(featureIndex + 1).padStart(2, "0")} / {String(featuresTotal).padStart(2, "0")}
-              </span>
-            </div>
           </div>
+
         </section>
 
 
