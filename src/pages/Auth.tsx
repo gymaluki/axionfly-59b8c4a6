@@ -61,7 +61,7 @@ const Auth = () => {
 
   const handleFinalRedirect = async (session: any) => {
     const selectedPlan = getSelectedPlan();
-    const activeAffiliate = getActiveAffiliate();
+    const activeAffiliate = await getActiveAffiliate();
 
     // Se já tem assinatura ativa, vai direto pro dashboard (NUNCA pro checkout)
     let hasActiveAccess = false;
@@ -91,7 +91,7 @@ const Auth = () => {
     // Só redireciona para checkout em fluxo de cadastro novo (não login)
     // E apenas se o usuário NÃO tiver acesso ativo (segurança extra)
     if (selectedPlan && !isLogin && !hasActiveAccess) {
-      const checkoutUrl = resolveCheckoutUrl(selectedPlan, activeAffiliate?.slug);
+      const checkoutUrl = await resolveCheckoutUrl(selectedPlan, activeAffiliate?.slug);
       toast.success("Conta pronta! Redirecionando para o pagamento...");
       setTimeout(() => clearAffiliateData(), 1000);
       window.location.href = checkoutUrl;
