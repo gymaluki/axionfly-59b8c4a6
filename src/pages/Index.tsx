@@ -419,7 +419,7 @@ const Index = () => {
 
             <div className="relative grid grid-cols-1 md:grid-cols-3 auto-rows-fr gap-5 md:gap-6">
               {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => {
-                // Bento spans: 1º card grande, demais variam
+                // Bento: cards grandes em posições estratégicas
                 const spanClass =
                   i === 0 ? "md:col-span-2" :
                   i === 2 ? "md:col-span-2" :
@@ -444,7 +444,7 @@ const Index = () => {
                     <div aria-hidden className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                     {/* Header: tag + título + descrição */}
-                    <div className="relative p-6 md:p-7 space-y-4">
+                    <div className="relative p-6 md:p-7 space-y-4 flex-1">
                       <div className="flex items-center justify-between">
                         <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.08] px-3 py-1 backdrop-blur-sm">
                           <Icon className="w-3.5 h-3.5 text-primary" />
@@ -478,33 +478,22 @@ const Index = () => {
                       )}
                     </div>
 
-                    {/* Visual no rodapé do card */}
-                    <div className="relative mt-auto px-4 pb-4 md:px-5 md:pb-5">
-                      <div className="relative rounded-xl overflow-hidden border border-primary/15 bg-background/40 aspect-[16/9] flex items-center justify-center">
-                        <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/10 blur-[60px] opacity-50 group-hover:opacity-80 transition-opacity duration-700" />
-                        <motion.div
-                          animate={{ y: [0, -4, 0] }}
-                          transition={{ duration: 5 + i * 0.4, repeat: Infinity, ease: "easeInOut" }}
-                          className="relative w-full h-full flex items-center justify-center transition-transform duration-700 group-hover:scale-[1.04]"
-                        >
-                          {visual === "globe" ? (
-                            <div className="w-full h-full max-w-[200px] mx-auto aspect-square relative">
-                              <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
-                                <GlobeCdn className="w-full" speed={0.006} />
-                              </Suspense>
-                            </div>
-                          ) : visual === "dashboard" ? (
-                            <div className="scale-[0.6] origin-center w-full"><DashboardMockup /></div>
-                          ) : visual === "builder" ? (
-                            <div className="scale-[0.75] origin-center"><SitesBuilderVisual /></div>
-                          ) : visual === "extension" ? (
-                            <div className="scale-[0.75] origin-center"><ExtensionInfiniteVisual /></div>
-                          ) : visual === "contract" ? (
-                            <div className="scale-[0.75] origin-center"><ContractGeneratorVisual /></div>
-                          ) : (
-                            <Icon className="w-16 h-16 text-primary/30" />
-                          )}
-                        </motion.div>
+                    {/* Visual no rodapé — mini visual customizado por tipo */}
+                    <div className="relative px-5 pb-5">
+                      <div className="relative h-[160px] rounded-xl overflow-hidden border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-background/40">
+                        <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/10 blur-[50px] opacity-40 group-hover:opacity-70 transition-opacity duration-700" />
+
+                        {/* Grid bg */}
+                        <div
+                          aria-hidden
+                          className="absolute inset-0 opacity-[0.06]"
+                          style={{
+                            backgroundImage: `linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)`,
+                            backgroundSize: "20px 20px",
+                          }}
+                        />
+
+                        <FeatureMiniVisual visual={visual} Icon={Icon} index={i} />
                       </div>
                     </div>
                   </motion.article>
