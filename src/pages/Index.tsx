@@ -412,20 +412,27 @@ const Index = () => {
           </div>
 
           {/* Horizontal feature slider */}
-          <div className="relative">
+          <div
+            className="relative"
+            onMouseEnter={() => setFeaturesPaused(true)}
+            onMouseLeave={() => setFeaturesPaused(false)}
+          >
             <div className="overflow-hidden">
               <motion.div
                 className="flex"
                 animate={{ x: `-${featureIndex * 100}%` }}
-                transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                transition={{ type: "spring", stiffness: 70, damping: 22, mass: 0.9 }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.15}
+                onDragStart={() => setFeaturesPaused(true)}
                 onDragEnd={(_, info) => {
                   if (info.offset.x < -80) goNext();
                   else if (info.offset.x > 80) goPrev();
+                  setFeaturesPaused(false);
                 }}
               >
+
                 {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
                   <div
                     key={title}
