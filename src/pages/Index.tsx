@@ -598,57 +598,68 @@ const Index = () => {
                     {/* Glow interno no hover */}
                     <div aria-hidden className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-                    {/* Header: tag + título + descrição */}
-                    <div className="relative p-6 md:p-7 space-y-4 flex-1">
-                      <div className="flex items-center justify-between">
-                        <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.08] px-3 py-1 backdrop-blur-sm">
-                          <Icon className="w-3.5 h-3.5 text-primary" />
-                          <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">{tag}</span>
+                    <div className={cn(
+                      "relative flex-1 flex flex-col",
+                      i === 4 && "md:grid md:grid-cols-2 md:items-center md:gap-2"
+                    )}>
+                      {/* Header: tag + título + descrição */}
+                      <div className="relative p-6 md:p-7 space-y-4 flex-1">
+                        <div className="flex items-center justify-between">
+                          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.08] px-3 py-1 backdrop-blur-sm">
+                            <Icon className="w-3.5 h-3.5 text-primary" />
+                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">{tag}</span>
+                          </div>
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-primary/70 hidden md:inline">
+                            0{i + 1}
+                          </span>
                         </div>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-primary/70 hidden md:inline">
-                          0{i + 1}
-                        </span>
+
+                        <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight leading-[1.2]">
+                          {title}
+                        </h3>
+                        <p className="text-sm text-[#94a3b8] leading-[1.65]">
+                          {desc}
+                        </p>
+
+                        {bullets && (
+                          <ul className="space-y-2 pt-1">
+                            {bullets.slice(0, 3).map((item: string) => (
+                              <li key={item} className="flex items-start gap-2.5 text-xs text-slate-300">
+                                <div className="mt-0.5 flex-shrink-0 w-3.5 h-3.5 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center">
+                                  <svg className="w-2 h-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                </div>
+                                <span className="leading-[1.5]">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
 
-                      <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight leading-[1.2]">
-                        {title}
-                      </h3>
-                      <p className="text-sm text-[#94a3b8] leading-[1.65]">
-                        {desc}
-                      </p>
+                      {/* Visual — mini visual customizado por tipo */}
+                      <div className={cn(
+                        "relative px-5 pb-5",
+                        i === 4 && "md:pt-5 md:pl-0"
+                      )}>
+                        <div className={cn(
+                          "relative rounded-xl overflow-hidden border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-background/40",
+                          i === 4 ? "h-[200px]" : "h-[160px]"
+                        )}>
+                          <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/10 blur-[50px] opacity-40 group-hover:opacity-70 transition-opacity duration-700" />
 
-                      {bullets && (
-                        <ul className="space-y-2 pt-1">
-                          {bullets.slice(0, 3).map((item: string) => (
-                            <li key={item} className="flex items-start gap-2.5 text-xs text-slate-300">
-                              <div className="mt-0.5 flex-shrink-0 w-3.5 h-3.5 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center">
-                                <svg className="w-2 h-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                </svg>
-                              </div>
-                              <span className="leading-[1.5]">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
+                          {/* Grid bg */}
+                          <div
+                            aria-hidden
+                            className="absolute inset-0 opacity-[0.06]"
+                            style={{
+                              backgroundImage: `linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)`,
+                              backgroundSize: "20px 20px",
+                            }}
+                          />
 
-                    {/* Visual no rodapé — mini visual customizado por tipo */}
-                    <div className="relative px-5 pb-5">
-                      <div className="relative h-[160px] rounded-xl overflow-hidden border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-background/40">
-                        <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/10 blur-[50px] opacity-40 group-hover:opacity-70 transition-opacity duration-700" />
-
-                        {/* Grid bg */}
-                        <div
-                          aria-hidden
-                          className="absolute inset-0 opacity-[0.06]"
-                          style={{
-                            backgroundImage: `linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)`,
-                            backgroundSize: "20px 20px",
-                          }}
-                        />
-
-                        <FeatureMiniVisual visual={visual} Icon={Icon} index={i} />
+                          <FeatureMiniVisual visual={visual} Icon={Icon} index={i} />
+                        </div>
                       </div>
                     </div>
                   </motion.article>
