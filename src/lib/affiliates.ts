@@ -32,6 +32,15 @@ export const STORAGE_KEY = "affiliate_ref";
 export const PLAN_STORAGE_KEY = "selected_plan";
 const TTL_DAYS = 30;
 const AFFILIATE_CACHE_KEY = "affiliate_cache_v1";
+const AFFILIATE_SLUG_ALIASES: Record<string, string> = {
+  zk: "m",
+  kx: "y",
+};
+
+export function normalizeAffiliateSlug(slug?: string | null): string {
+  const normalized = (slug || "").trim().toLowerCase();
+  return AFFILIATE_SLUG_ALIASES[normalized] || normalized;
+}
 
 function mapDbAffiliate(row: DbAffiliateRow): Affiliate {
   return {
@@ -65,7 +74,7 @@ function writeAffiliateCache(affiliate: Affiliate) {
 }
 
 async function fetchAffiliateBySlug(slug: string): Promise<Affiliate | null> {
-  const normalized = slug.trim().toLowerCase();
+  const normalized = normalizeAffiliateSlug(slug);
   if (!normalized) return null;
 
   const cached = readAffiliateCache()[normalized];
@@ -88,9 +97,9 @@ export async function captureAffiliateFromUrl(): Promise<void> {
     const params = new URLSearchParams(window.location.search);
     const pathname = window.location.pathname.replace(/^\/|\/$/g, "");
 
-    let finalSlug = params.get("aff")?.trim().toLowerCase() || "";
+    let finalSlug = normalizeAffiliateSlug(params.get("aff"));
     if (!finalSlug) {
-      const firstPathSegment = pathname.split("/")[0]?.trim().toLowerCase();
+      const firstPathSegment = normalizeAffiliateSlug(pathname.split("/")[0]);
       if (firstPathSegment && firstPathSegment !== "auth") {
         finalSlug = firstPathSegment;
       }
@@ -122,7 +131,7 @@ export function getStoredAffiliateSlug(): string | null {
       localStorage.removeItem(STORAGE_KEY);
       return null;
     }
-    return data.slug;
+    return normalizeAffiliateSlug(data.slug);
   } catch {
     return null;
   }
