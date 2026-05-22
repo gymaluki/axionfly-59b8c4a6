@@ -348,7 +348,7 @@ const Index = () => {
       />
 
       <ScrollProgressBar />
-      <div className="relative z-10">
+      <div className="relative z-10 bg-[#05050a] min-h-screen">
         {/* Urgency Banner — highly visible */}
         <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 min-h-[48px] md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
           <div className="container mx-auto px-2 md:px-3 py-1.5 md:py-0 flex items-center justify-center gap-1.5 md:gap-4">
