@@ -307,9 +307,19 @@ const Index = () => {
   const navigate = useNavigate();
   const vagasRestantes = useVagasRestantes(4);
   const [featureIndex, setFeatureIndex] = useState(0);
+  const [featuresPaused, setFeaturesPaused] = useState(false);
   const featuresTotal = features.length;
   const goPrev = () => setFeatureIndex((i) => (i - 1 + featuresTotal) % featuresTotal);
   const goNext = () => setFeatureIndex((i) => (i + 1) % featuresTotal);
+
+  // Autoplay do slider de funcionalidades
+  useEffect(() => {
+    if (featuresPaused) return;
+    const id = setInterval(() => {
+      setFeatureIndex((i) => (i + 1) % featuresTotal);
+    }, 5000);
+    return () => clearInterval(id);
+  }, [featuresPaused, featuresTotal]);
 
   useEffect(() => {
     captureAffiliateFromUrl();
@@ -402,20 +412,27 @@ const Index = () => {
           </div>
 
           {/* Horizontal feature slider */}
-          <div className="relative">
+          <div
+            className="relative"
+            onMouseEnter={() => setFeaturesPaused(true)}
+            onMouseLeave={() => setFeaturesPaused(false)}
+          >
             <div className="overflow-hidden">
               <motion.div
                 className="flex"
                 animate={{ x: `-${featureIndex * 100}%` }}
-                transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                transition={{ type: "spring", stiffness: 70, damping: 22, mass: 0.9 }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.15}
+                onDragStart={() => setFeaturesPaused(true)}
                 onDragEnd={(_, info) => {
                   if (info.offset.x < -80) goNext();
                   else if (info.offset.x > 80) goPrev();
+                  setFeaturesPaused(false);
                 }}
               >
+
                 {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
                   <div
                     key={title}
@@ -534,12 +551,25 @@ const Index = () => {
                     onClick={() => setFeatureIndex(i)}
                     aria-label={`Ir para funcionalidade ${i + 1}`}
                     className={cn(
-                      "h-2 rounded-full transition-all duration-300",
+                      "h-2 rounded-full transition-all duration-500 overflow-hidden relative",
                       featureIndex === i
-                        ? "w-10 bg-primary shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                        ? "w-12 bg-primary/20 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
                         : "w-2 bg-primary/30 hover:bg-primary/60"
                     )}
-                  />
+                  >
+                    {featureIndex === i && !featuresPaused && (
+                      <motion.span
+                        key={`bar-${i}-${featureIndex}`}
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 5, ease: "linear" }}
+                        className="absolute inset-y-0 left-0 bg-primary shadow-[0_0_15px_rgba(37,99,235,0.6)] rounded-full"
+                      />
+                    )}
+                    {featureIndex === i && featuresPaused && (
+                      <span className="absolute inset-0 bg-primary rounded-full" />
+                    )}
+                  </button>
                 ))}
               </div>
 
