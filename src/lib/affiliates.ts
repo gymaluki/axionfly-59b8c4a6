@@ -1,66 +1,28 @@
 // Sistema de afiliados — captura ?aff=slug na URL, persiste em localStorage
 // e resolve os links da Cakto com o código de afiliado correto de cada parceiro.
 
+import { supabase } from "@/integrations/supabase/client";
+
 export type PlanKey = "monthly" | "lifetime";
 
 export interface Affiliate {
-  slug: string;          // usado em ?aff=
-  name: string;          // nome do afiliado
-  monthlyUrl: string;    // link Cakto plano mensal (com ?affiliate=...)
-  lifetimeUrl: string;   // link Cakto plano vitalício (com ?affiliate=...)
+  slug: string;
+  name: string;
+  monthlyUrl: string;
+  lifetimeUrl: string;
 }
 
-// Registro central de afiliados. Para adicionar um novo, basta acrescentar aqui.
-export const AFFILIATES: Record<string, Affiliate> = {
-  jonathan: {
-    slug: "o",
-    name: "O",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ZsdtBDJP",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=TSVMgq3q",
-  },
-  u: {
-    slug: "u",
-    name: "U",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=A73MAj5S",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=KzuwSFCx",
-  },
-  pedro: {
-    slug: "e",
-    name: "E",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=RSTFakbs",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
-  },
-  diogo: {
-    slug: "d",
-    name: "D",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=RSTFakbs",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=eQQiRkDL",
-  },
-  matheus: {
-    slug: "zk",
-    name: "Matheus",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=Lghn3ieU",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=LEGLH5Bd",
-  },
-  jv: {
-    slug: "jv",
-    name: "JV",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=ivzz5ooZ",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=Y36tx3VC",
-  },
-  yan: {
-    slug: "kx",
-    name: "Yan",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=QmFRRS9a",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=jbK39AUb",
-  },
-  castro: {
-    slug: "c",
-    name: "CASTRO",
-    monthlyUrl: "https://pay.cakto.com.br/6u886t8_849513?affiliate=YLp4CaSz",
-    lifetimeUrl: "https://pay.cakto.com.br/wcv2cko_849541?affiliate=NJbG8jzt",
-  },
-};
+interface StoredAffiliate {
+  slug: string;
+  expiresAt: number;
+}
+
+interface DbAffiliateRow {
+  slug: string;
+  name: string;
+  monthly_url: string;
+  lifetime_url: string;
+}
 
 // Links padrão (sem afiliado) — caem direto pra conta principal da Cakto.
 const DEFAULT_MONTHLY = "https://pay.cakto.com.br/6u886t8_849513";
@@ -69,43 +31,74 @@ const DEFAULT_LIFETIME = "https://pay.cakto.com.br/wcv2cko_849541";
 export const STORAGE_KEY = "affiliate_ref";
 export const PLAN_STORAGE_KEY = "selected_plan";
 const TTL_DAYS = 30;
+const AFFILIATE_CACHE_KEY = "affiliate_cache_v1";
 
-interface StoredAffiliate {
-  slug: string;
-  expiresAt: number;
+function mapDbAffiliate(row: DbAffiliateRow): Affiliate {
+  return {
+    slug: row.slug,
+    name: row.name,
+    monthlyUrl: row.monthly_url,
+    lifetimeUrl: row.lifetime_url,
+  };
+}
+
+function readAffiliateCache(): Record<string, Affiliate> {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = localStorage.getItem(AFFILIATE_CACHE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) as Record<string, Affiliate>;
+  } catch {
+    return {};
+  }
+}
+
+function writeAffiliateCache(affiliate: Affiliate) {
+  if (typeof window === "undefined") return;
+  try {
+    const current = readAffiliateCache();
+    current[affiliate.slug] = affiliate;
+    localStorage.setItem(AFFILIATE_CACHE_KEY, JSON.stringify(current));
+  } catch {
+    // ignore
+  }
+}
+
+async function fetchAffiliateBySlug(slug: string): Promise<Affiliate | null> {
+  const normalized = slug.trim().toLowerCase();
+  if (!normalized) return null;
+
+  const cached = readAffiliateCache()[normalized];
+  if (cached) return cached;
+
+  const { data, error } = await supabase.rpc("get_affiliate_by_slug", { _slug: normalized });
+  if (error || !data?.length) return null;
+
+  const affiliate = mapDbAffiliate(data[0]);
+  writeAffiliateCache(affiliate);
+  return affiliate;
 }
 
 /**
  * Lê ?aff= da URL ou o pathname e, se for um slug válido, salva em localStorage por 30 dias.
  */
-export function captureAffiliateFromUrl(): void {
+export async function captureAffiliateFromUrl(): Promise<void> {
   if (typeof window === "undefined") return;
   try {
     const params = new URLSearchParams(window.location.search);
     const pathname = window.location.pathname.replace(/^\/|\/$/g, "");
 
-    let finalSlug = pathname.split("/")[0];
-
-    const knownSlugs = Object.values(AFFILIATES).map(a => a.slug);
-    const knownKeys = Object.keys(AFFILIATES);
-    const allKnown = [...new Set([...knownSlugs, ...knownKeys])];
-
-    if (!allKnown.includes(finalSlug)) {
-      const possibleParams = ["aff", "ref", "d", "e", "o", "u", "jv", "kx", "zk"];
-      finalSlug = "";
-
-      for (const p of possibleParams) {
-        const val = params.get(p);
-        if (val !== null) {
-          finalSlug = val.trim().toLowerCase() || p;
-          break;
-        }
+    let finalSlug = params.get("aff")?.trim().toLowerCase() || "";
+    if (!finalSlug) {
+      const firstPathSegment = pathname.split("/")[0]?.trim().toLowerCase();
+      if (firstPathSegment && firstPathSegment !== "auth") {
+        finalSlug = firstPathSegment;
       }
     }
 
     if (!finalSlug) return;
 
-    const affiliate = Object.values(AFFILIATES).find(a => a.slug === finalSlug) || AFFILIATES[finalSlug];
+    const affiliate = await fetchAffiliateBySlug(finalSlug);
 
     if (!affiliate) return;
 
@@ -119,7 +112,7 @@ export function captureAffiliateFromUrl(): void {
   }
 }
 
-export function getActiveAffiliate(): Affiliate | null {
+export function getStoredAffiliateSlug(): string | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -129,22 +122,24 @@ export function getActiveAffiliate(): Affiliate | null {
       localStorage.removeItem(STORAGE_KEY);
       return null;
     }
-    return Object.values(AFFILIATES).find(a => a.slug === data.slug) || null;
+    return data.slug;
   } catch {
     return null;
   }
 }
 
-export function resolveCheckoutUrl(plan: PlanKey, affiliateSlug?: string | null): string {
-  const aff = affiliateSlug
-    ? (Object.values(AFFILIATES).find(a => a.slug === affiliateSlug) || AFFILIATES[affiliateSlug])
-    : getActiveAffiliate();
+export async function getActiveAffiliate(): Promise<Affiliate | null> {
+  const slug = getStoredAffiliateSlug();
+  if (!slug) return null;
+  return fetchAffiliateBySlug(slug);
+}
 
-  let baseUrl = "";
-  if (plan === "monthly") baseUrl = aff ? aff.monthlyUrl : DEFAULT_MONTHLY;
-  else baseUrl = aff ? aff.lifetimeUrl : DEFAULT_LIFETIME;
+export async function resolveCheckoutUrl(plan: PlanKey, affiliateSlug?: string | null): Promise<string> {
+  const slug = affiliateSlug || getStoredAffiliateSlug();
+  const aff = slug ? await fetchAffiliateBySlug(slug) : null;
 
-  return baseUrl;
+  if (plan === "monthly") return aff?.monthlyUrl || DEFAULT_MONTHLY;
+  return aff?.lifetimeUrl || DEFAULT_LIFETIME;
 }
 
 export function setSelectedPlan(plan: PlanKey): void {
