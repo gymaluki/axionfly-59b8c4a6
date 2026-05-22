@@ -18,7 +18,6 @@ const LovablePartnership = lazy(() => import("@/components/LovablePartnership"))
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 
-
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
@@ -304,18 +303,6 @@ const CountdownTimer = () => {
 
 import { captureAffiliateFromUrl } from "@/lib/affiliates";
 
-// Barra de progresso de scroll com gradiente animado
-function ScrollProgressBar() {
-  const { scrollYProgress } = useFramerScroll();
-  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  return (
-    <motion.div
-      style={{ scaleX, transformOrigin: "0%" }}
-      className="fixed top-[48px] md:top-14 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 z-[59] shadow-[0_0_20px_rgba(59,130,246,0.8)]"
-    />
-  );
-}
-
 const Index = () => {
   const navigate = useNavigate();
   const vagasRestantes = useVagasRestantes(4);
@@ -346,7 +333,6 @@ const Index = () => {
         }}
       />
 
-      <ScrollProgressBar />
       <div className="relative z-10">
         {/* Urgency Banner — highly visible */}
         <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 min-h-[48px] md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
@@ -398,11 +384,8 @@ const Index = () => {
         </div>
 
         {/* ═══════════ FUNCIONALIDADES ═══════════ */}
-        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
-          <div aria-hidden className="floating-orb animate-float-slow bg-primary/40 w-[420px] h-[420px] -top-24 -left-24" />
-          <div aria-hidden className="floating-orb animate-float-slow bg-blue-500/30 w-[360px] h-[360px] top-1/2 -right-20" style={{ animationDelay: "1.5s" }} />
+        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
           <SectionPill>Funcionalidades Premium</SectionPill>
-
 
           <div className="text-center mb-24">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
@@ -601,7 +584,6 @@ const Index = () => {
             </motion.div>
           </div>
         </section>
-
 
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section className="py-12 md:py-16">

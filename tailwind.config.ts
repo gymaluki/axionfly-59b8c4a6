@@ -65,44 +65,26 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        "float-slow": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-18px)" },
-        },
-        "aurora-shift": {
-          "0%, 100%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-        },
-        "shimmer-text": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 0 0 hsl(var(--primary) / 0.45)" },
-          "50%": { boxShadow: "0 0 40px 8px hsl(var(--primary) / 0.25)" },
-        },
-        "tilt-soft": {
-          "0%, 100%": { transform: "rotate(-0.5deg)" },
-          "50%": { transform: "rotate(0.5deg)" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float-slow": "float-slow 7s ease-in-out infinite",
-        "aurora-shift": "aurora-shift 14s ease-in-out infinite",
-        "shimmer-text": "shimmer-text 6s linear infinite",
-        "pulse-glow": "pulse-glow 3.2s ease-in-out infinite",
-        "tilt-soft": "tilt-soft 6s ease-in-out infinite",
       },
-
     },
   },
   plugins: [require("tailwindcss-animate")],
