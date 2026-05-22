@@ -411,118 +411,112 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Bento Grid de Funcionalidades */}
-          <div className="relative">
+          {/* Funcionalidades — layout flutuante alternado */}
+          <div className="relative max-w-6xl mx-auto">
             {/* Glows ambiente */}
-            <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-primary/15 rounded-full blur-[120px]" />
-            <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
+            <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
+            <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
 
-            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative space-y-20 md:space-y-28">
               {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => {
-                const isHero = i === 0;
+                const isReversed = i % 2 === 1;
                 return (
                   <motion.div
                     key={title}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.6, delay: i * 0.08, ease }}
+                    viewport={{ once: true, amount: 0.25 }}
+                    transition={{ duration: 0.7, ease }}
                     className={cn(
-                      "group relative rounded-3xl border border-white/10 bg-card/40 backdrop-blur-sm overflow-hidden",
-                      "hover:border-primary/40 transition-all duration-500",
-                      "hover:shadow-[0_0_60px_-15px_rgba(37,99,235,0.4)]",
-                      isHero && "md:col-span-2"
+                      "group relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center",
+                      isReversed && "lg:[&>*:first-child]:order-2"
                     )}
                   >
-                    {/* Glow no hover */}
-                    <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/10 group-hover:to-transparent transition-all duration-700" />
+                    {/* Texto flutuante */}
+                    <motion.div
+                      initial={{ opacity: 0, x: isReversed ? 30 : -30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.4 }}
+                      transition={{ duration: 0.6, delay: 0.1, ease }}
+                      className="space-y-5"
+                    >
+                      <div className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/[0.08] px-3.5 py-1.5 backdrop-blur-sm">
+                        <Icon className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">{tag}</span>
+                      </div>
+                      <h3 className="text-2xl md:text-[34px] font-black text-foreground tracking-tight leading-[1.15]">
+                        {title}
+                      </h3>
+                      <p className="text-[15px] md:text-base text-[#94a3b8] leading-[1.7] max-w-lg">
+                        {desc}
+                      </p>
+                      {bullets && (
+                        <ul className="space-y-2.5 pt-1">
+                          {bullets.map((item: string) => (
+                            <li key={item} className="flex items-center gap-3 text-sm text-slate-300">
+                              <div className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center">
+                                <svg className="w-2.5 h-2.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                              </div>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </motion.div>
 
-                    <div className={cn(
-                      "relative flex flex-col",
-                      isHero ? "lg:flex-row lg:items-center" : ""
-                    )}>
-                      {/* Header (texto) */}
-                      <div className={cn(
-                        "p-8 md:p-10 space-y-4",
-                        isHero ? "lg:flex-1 lg:pr-0" : ""
-                      )}>
-                        <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1">
-                          <Icon className="w-3.5 h-3.5 text-primary" />
-                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-primary">{tag}</span>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-black text-foreground tracking-tight leading-tight">
-                          {title}
-                        </h3>
-                        <p className="text-[15px] text-[#94a3b8] leading-[1.65] max-w-md">
-                          {desc}
-                        </p>
-                        {isHero && bullets && (
-                          <ul className="space-y-2 pt-2">
-                            {bullets.map((item: string) => (
-                              <li key={item} className="flex items-center gap-2.5 text-sm text-slate-300">
-                                <div className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
-                                  <svg className="w-2.5 h-2.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                  </svg>
-                                </div>
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
+                    {/* Visual flutuante (sem moldura) */}
+                    <motion.div
+                      initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.4 }}
+                      transition={{ duration: 0.7, delay: 0.15, ease }}
+                      className="relative"
+                    >
+                      {/* Glow por trás do visual */}
+                      <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/15 blur-[80px] rounded-full scale-75 opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+
+                      <motion.div
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 6 + i * 0.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="relative transition-transform duration-700 group-hover:scale-[1.03]"
+                      >
+                        {visual === "globe" ? (
+                          <div className="w-full max-w-[300px] mx-auto aspect-square relative">
+                            <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
+                              <GlobeCdn className="w-full" speed={0.006} />
+                              <motion.div
+                                animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 3, repeat: Infinity }}
+                                className="absolute top-1/4 left-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
+                              >
+                                <p className="text-[9px] font-bold text-foreground">Restaurante • SP</p>
+                              </motion.div>
+                              <motion.div
+                                animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
+                                transition={{ duration: 4, repeat: Infinity }}
+                                className="absolute bottom-1/3 right-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
+                              >
+                                <p className="text-[9px] font-bold text-foreground">Barbearia • RJ</p>
+                              </motion.div>
+                            </Suspense>
+                          </div>
+                        ) : visual === "dashboard" ? (
+                          <div className="scale-[0.9] origin-center"><DashboardMockup /></div>
+                        ) : visual === "builder" ? (
+                          <SitesBuilderVisual />
+                        ) : visual === "extension" ? (
+                          <ExtensionInfiniteVisual />
+                        ) : visual === "contract" ? (
+                          <ContractGeneratorVisual />
+                        ) : (
+                          <div className="aspect-video flex items-center justify-center">
+                            <Icon className="w-24 h-24 text-primary/20" />
+                          </div>
                         )}
-                      </div>
-
-                      {/* Visual mockup integrado */}
-                      <div className={cn(
-                        "relative w-full overflow-hidden",
-                        isHero ? "lg:flex-1 lg:max-w-[55%] p-6 md:p-8" : "px-6 pb-8 md:px-8 md:pb-10"
-                      )}>
-                        <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent pointer-events-none" />
-                        <div className="relative w-full transition-transform duration-700 group-hover:scale-[1.02]">
-                          {visual === "globe" ? (
-                            <div className="w-full max-w-[260px] mx-auto aspect-square relative">
-                              <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
-                                <GlobeCdn className="w-full" speed={0.006} />
-                                <motion.div
-                                  animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
-                                  transition={{ duration: 3, repeat: Infinity }}
-                                  className="absolute top-1/4 left-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
-                                >
-                                  <p className="text-[9px] font-bold text-foreground">Restaurante • SP</p>
-                                </motion.div>
-                                <motion.div
-                                  animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
-                                  transition={{ duration: 4, repeat: Infinity }}
-                                  className="absolute bottom-1/3 right-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
-                                >
-                                  <p className="text-[9px] font-bold text-foreground">Barbearia • RJ</p>
-                                </motion.div>
-                              </Suspense>
-                            </div>
-                          ) : visual === "dashboard" ? (
-                            <div className="scale-[0.85] origin-center">
-                              <DashboardMockup />
-                            </div>
-                          ) : visual === "builder" ? (
-                            <div className={isHero ? "" : "scale-[0.95] origin-center"}>
-                              <SitesBuilderVisual />
-                            </div>
-                          ) : visual === "extension" ? (
-                            <div className="scale-[0.95] origin-center">
-                              <ExtensionInfiniteVisual />
-                            </div>
-                          ) : visual === "contract" ? (
-                            <div className="scale-[0.95] origin-center">
-                              <ContractGeneratorVisual />
-                            </div>
-                          ) : (
-                            <div className="aspect-video rounded-2xl border border-white/10 bg-[#0a0a0b] flex items-center justify-center">
-                              <Icon className="w-24 h-24 text-primary/20" />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+                      </motion.div>
+                    </motion.div>
                   </motion.div>
                 );
               })}
