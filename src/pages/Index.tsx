@@ -545,10 +545,9 @@ const Index = () => {
 
             <div className="space-y-8 md:space-y-12">
               {[
-                { step: "1", title: "Responda o Quiz", desc: "Escolha o nicho, conte sobre o cliente e o objetivo. Nossa IA compreende e planeja a estrutura ideal do site." },
-                { step: "2", title: "Visualize e Personalize", desc: "Personalize cores, fontes e estilo de design de forma simples para refletir a identidade da marca do seu cliente." },
-                { step: "3", title: "Gere com 1 Clique", desc: "Em instantes, o site profissional completo é gerado — interface, seções e estrutura responsiva inclusos." },
-                { step: "4", title: "Publique e Lucre", desc: "Publique online, envie pelo WhatsApp com o script pronto e feche contratos de R$ 500 a R$ 3.000." },
+                { step: "1", title: "Ative sua Ferramenta", desc: "Assine a AxionFly e acesse a plataforma em segundos. Sua base de operações está pronta para começar." },
+                { step: "2", title: "Responda o Quiz e Crie o Site", desc: "Escolha o nicho e responda algumas perguntas rápidas no quiz — a IA monta o site profissional completo em poucos minutos." },
+                { step: "3", title: "Encontre o Cliente e Venda", desc: "Use a busca automática de leads na sua região, envie o site pronto pelo WhatsApp com script validado e feche contratos de R$ 500 a R$ 3.000." },
               ].map(({ step, title, desc }, i) => {
                 const isLeft = i % 2 === 0;
                 return (
