@@ -27,6 +27,14 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+    const raw = await req.text();
+    let body: any = {};
+    try {
+      body = JSON.parse(raw);
+    } catch {
+      console.error("Cakto webhook: payload não é JSON válido", raw);
+    }
+
     const url = new URL(req.url);
     const token =
       req.headers.get("x-webhook-token") ||
@@ -43,14 +51,6 @@ Deno.serve(async (req) => {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
-    }
-
-    const raw = await req.text();
-    let body: any = {};
-    try {
-      body = JSON.parse(raw);
-    } catch {
-      console.error("Cakto webhook: payload não é JSON válido", raw);
     }
 
     console.log("Cakto webhook recebido:", JSON.stringify(body));
