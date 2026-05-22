@@ -8,7 +8,6 @@ import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
-import { CurtainFooter } from "@/components/ui/curtain-footer";
 
 import axionflyLogo from "@/assets/axionfly-logo.webp";
 
@@ -336,7 +335,7 @@ const Index = () => {
         <link rel="canonical" href="https://axionfly.lovable.app/" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Preciso saber programar, fazer design ou entender de tecnologia?","acceptedAnswer":{"@type":"Answer","text":"Absolutamente não. A AxionFly foi construída para quem nunca abriu uma linha de código na vida. Você seleciona o nicho do cliente, ajusta cores e estilo — a IA cuida de todo o resto. Em menos de 10 minutos o site está pronto, com design profissional, responsivo e pronto para ser entregue."}},{"@type":"Question","name":"Os sites gerados têm qualidade real — ou é aquele visual genérico de IA?","acceptedAnswer":{"@type":"Answer","text":"São 6 estilos exclusivos de design, com tipografia, cores e estrutura visual pensadas por profissionais — não templates genéricos. O site gerado é indistinguível de um projeto feito por uma agência. Nenhum cliente vai olhar para o resultado e achar que veio de uma IA."}},{"@type":"Question","name":"Quanto vou conseguir cobrar de cada cliente? Vale a pena financeiramente?","acceptedAnswer":{"@type":"Answer","text":"O mercado de sites para negócios locais pratica entre R$ 500 e R$ 3.000 por projeto. Com a AxionFly você entrega em 10 minutos o que uma agência demora dias. Sua margem de lucro é quase total — sem freelancer, sem ferramenta extra, sem dor de cabeça."}},{"@type":"Question","name":"Como vou encontrar clientes? Não tenho carteira de contatos nem experiência em vendas.","acceptedAnswer":{"@type":"Answer","text":"A AxionFly tem uma ferramenta de Prospecção Automática integrada: você seleciona a cidade e o nicho e o sistema busca negócios que ainda não têm site, te entregando nome, telefone e endereço prontos para o contato. Com o script de vendas incluso, você sabe exatamente o que falar no WhatsApp."}},{"@type":"Question","name":"E se o cliente quiser algo diferente do que a IA gerou?","acceptedAnswer":{"@type":"Answer","text":"O site gerado pela IA é só o começo — você tem controle total sobre cada detalhe, a qualquer momento. Fotos, textos, nome do negócio, cores, seções inteiras — tudo pode ser alterado livremente, quantas vezes quiser. Não existe nada travado ou definitivo."}},{"@type":"Question","name":"O que é a Extensão Lovable e por que faz diferença pra mim?","acceptedAnswer":{"@type":"Answer","text":"A Extensão Lovable Infinito elimina o limite de créditos das ferramentas de IA. É uma parceria exclusiva da AxionFly com o Hyperbuild Pro que te permite criar sites sem limite de créditos, sem interrupções, sem custo extra. Você escala seu negócio sem travar."}}]})}</script>
       </Helmet>
-      <div className="relative w-full overflow-x-hidden max-w-[100vw]">
+      <div className="min-h-screen bg-[#05050a] overflow-x-hidden relative max-w-[100vw]">
       {/* Grid Background */}
       <div
         aria-hidden="true"
@@ -348,7 +347,7 @@ const Index = () => {
       />
 
       <ScrollProgressBar />
-      <div className="relative z-10 bg-[#05050a] min-h-screen">
+      <div className="relative z-10">
         {/* Urgency Banner — highly visible */}
         <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 min-h-[48px] md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
           <div className="container mx-auto px-2 md:px-3 py-1.5 md:py-0 flex items-center justify-center gap-1.5 md:gap-4">
@@ -787,119 +786,116 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* footer renderizado fora do wrapper z-10 para o efeito curtain */}
+        {/* ═══════════ FOOTER ═══════════ */}
+        <footer className="bg-[#05050a] relative z-10">
+          {/* Newsletter */}
+          <div className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
+            <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="text-center md:text-left">
+                <h3 className="text-xl md:text-2xl font-black text-foreground mb-1">
+                  Receba dicas de venda toda semana
+                </h3>
+                <p className="text-sm text-[#94a3b8]">
+                  Estratégias práticas para fechar mais contratos. Sem spam.
+                </p>
+              </div>
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                className="flex w-full md:w-auto items-center gap-2 bg-[#0D1221] rounded-full p-1.5 border border-white/10"
+              >
+                <Mail className="w-4 h-4 text-muted-foreground ml-3 shrink-0" />
+                <input
+                  type="email"
+                  placeholder="seu@email.com"
+                  className="flex-1 md:w-64 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground/60 px-1"
+                />
+                <Button size="sm" variant="neon" className="rounded-full font-black uppercase tracking-wider text-[11px] h-10 px-5 shrink-0">
+                  Assinar
+                </Button>
+              </form>
+            </div>
+          </div>
+
+          {/* Main footer columns */}
+          <div className="container mx-auto px-4 py-10 md:py-14">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
+              {/* Brand */}
+              <div className="col-span-2 md:col-span-1 space-y-4">
+                <div className="flex items-center gap-2.5">
+                  <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
+                  <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
+                </div>
+                <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
+                  A plataforma completa para criar e vender sites com IA — do primeiro lead ao contrato fechado.
+                </p>
+                <div className="flex items-center gap-3 pt-2">
+                  <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                    <Instagram className="w-4 h-4" />
+                  </a>
+                  <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                    <Youtube className="w-4 h-4" />
+                  </a>
+                  <a href="#" aria-label="WhatsApp" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                    <Phone className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Plataforma */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Plataforma</h4>
+                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                  <li><a href="#funcionalidades" className="hover:text-primary transition-colors">Funcionalidades</a></li>
+                  <li><a href="#etapas" className="hover:text-primary transition-colors">Como funciona</a></li>
+                  <li><a href="#pricing" className="hover:text-primary transition-colors">Planos</a></li>
+                  <li><a href="#parcerias" className="hover:text-primary transition-colors">Parcerias</a></li>
+                </ul>
+              </div>
+
+              {/* Empresa */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Empresa</h4>
+                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                  <li><a href="#feedbacks" className="hover:text-primary transition-colors">Depoimentos</a></li>
+                  <li><a href="#faq" className="hover:text-primary transition-colors">Perguntas</a></li>
+                  <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+                  <li><a href="#" className="hover:text-primary transition-colors">Contato</a></li>
+                </ul>
+              </div>
+
+              {/* Legal */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Legal</h4>
+                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                  <li><Link to="/termos" className="hover:text-primary transition-colors">Termos de Uso</Link></li>
+                  <li><Link to="/privacidade" className="hover:text-primary transition-colors">Privacidade</Link></li>
+                  <li><Link to="/legal" className="hover:text-primary transition-colors">Avisos Legais</Link></li>
+                  <li><Link to="/cookies" className="hover:text-primary transition-colors">Cookies</Link></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom line */}
+            <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 pt-8">
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <Lock className="w-3.5 h-3.5 text-primary" /> SSL Seguro
+                </div>
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Pagamento Protegido
+                </div>
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <Clock className="w-3.5 h-3.5 text-primary" /> Suporte 24/7
+                </div>
+              </div>
+              <p className="text-xs text-[#64748b] text-center md:text-right">
+                © 2025 AxionFly. Todos os direitos reservados.
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
-
-    <CurtainFooter>
-      <footer className="bg-[#05050a] relative">
-        {/* Newsletter */}
-        <div className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left">
-              <h3 className="text-xl md:text-2xl font-black text-foreground mb-1">
-                Receba dicas de venda toda semana
-              </h3>
-              <p className="text-sm text-[#94a3b8]">
-                Estratégias práticas para fechar mais contratos. Sem spam.
-              </p>
-            </div>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex w-full md:w-auto items-center gap-2 bg-[#0D1221] rounded-full p-1.5 border border-white/10"
-            >
-              <Mail className="w-4 h-4 text-muted-foreground ml-3 shrink-0" />
-              <input
-                type="email"
-                placeholder="seu@email.com"
-                className="flex-1 md:w-64 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground/60 px-1"
-              />
-              <Button size="sm" variant="neon" className="rounded-full font-black uppercase tracking-wider text-[11px] h-10 px-5 shrink-0">
-                Assinar
-              </Button>
-            </form>
-          </div>
-        </div>
-
-        {/* Main footer columns */}
-        <div className="container mx-auto px-4 py-10 md:py-14">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
-            {/* Brand */}
-            <div className="col-span-2 md:col-span-1 space-y-4">
-              <div className="flex items-center gap-2.5">
-                <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
-                <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
-              </div>
-              <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
-                A plataforma completa para criar e vender sites com IA — do primeiro lead ao contrato fechado.
-              </p>
-              <div className="flex items-center gap-3 pt-2">
-                <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
-                  <Instagram className="w-4 h-4" />
-                </a>
-                <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
-                  <Youtube className="w-4 h-4" />
-                </a>
-                <a href="#" aria-label="WhatsApp" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
-                  <Phone className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-
-            {/* Plataforma */}
-            <div>
-              <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Plataforma</h4>
-              <ul className="space-y-2.5 text-sm text-[#94a3b8]">
-                <li><a href="#funcionalidades" className="hover:text-primary transition-colors">Funcionalidades</a></li>
-                <li><a href="#etapas" className="hover:text-primary transition-colors">Como funciona</a></li>
-                <li><a href="#pricing" className="hover:text-primary transition-colors">Planos</a></li>
-                <li><a href="#parcerias" className="hover:text-primary transition-colors">Parcerias</a></li>
-              </ul>
-            </div>
-
-            {/* Empresa */}
-            <div>
-              <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Empresa</h4>
-              <ul className="space-y-2.5 text-sm text-[#94a3b8]">
-                <li><a href="#feedbacks" className="hover:text-primary transition-colors">Depoimentos</a></li>
-                <li><a href="#faq" className="hover:text-primary transition-colors">Perguntas</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Contato</a></li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Legal</h4>
-              <ul className="space-y-2.5 text-sm text-[#94a3b8]">
-                <li><Link to="/termos" className="hover:text-primary transition-colors">Termos de Uso</Link></li>
-                <li><Link to="/privacidade" className="hover:text-primary transition-colors">Privacidade</Link></li>
-                <li><Link to="/legal" className="hover:text-primary transition-colors">Avisos Legais</Link></li>
-                <li><Link to="/cookies" className="hover:text-primary transition-colors">Cookies</Link></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom line */}
-          <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 pt-8">
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                <Lock className="w-3.5 h-3.5 text-primary" /> SSL Seguro
-              </div>
-              <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Pagamento Protegido
-              </div>
-              <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                <Clock className="w-3.5 h-3.5 text-primary" /> Suporte 24/7
-              </div>
-            </div>
-            <p className="text-xs text-[#64748b] text-center md:text-right">
-              © 2025 AxionFly. Todos os direitos reservados.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </CurtainFooter>
   </div>
   </>
   );
