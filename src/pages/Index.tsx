@@ -787,118 +787,119 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* ═══════════ FOOTER (curtain reveal) ═══════════ */}
-        <footer className="bg-[#05050a] relative">
-          {/* Newsletter */}
-          <div className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
-            <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="text-center md:text-left">
-                <h3 className="text-xl md:text-2xl font-black text-foreground mb-1">
-                  Receba dicas de venda toda semana
-                </h3>
-                <p className="text-sm text-[#94a3b8]">
-                  Estratégias práticas para fechar mais contratos. Sem spam.
-                </p>
-              </div>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="flex w-full md:w-auto items-center gap-2 bg-[#0D1221] rounded-full p-1.5 border border-white/10"
-              >
-                <Mail className="w-4 h-4 text-muted-foreground ml-3 shrink-0" />
-                <input
-                  type="email"
-                  placeholder="seu@email.com"
-                  className="flex-1 md:w-64 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground/60 px-1"
-                />
-                <Button size="sm" variant="neon" className="rounded-full font-black uppercase tracking-wider text-[11px] h-10 px-5 shrink-0">
-                  Assinar
-                </Button>
-              </form>
-            </div>
-          </div>
-
-          {/* Main footer columns */}
-          <div className="container mx-auto px-4 py-10 md:py-14">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
-              {/* Brand */}
-              <div className="col-span-2 md:col-span-1 space-y-4">
-                <div className="flex items-center gap-2.5">
-                  <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
-                  <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
-                </div>
-                <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
-                  A plataforma completa para criar e vender sites com IA — do primeiro lead ao contrato fechado.
-                </p>
-                <div className="flex items-center gap-3 pt-2">
-                  <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
-                    <Instagram className="w-4 h-4" />
-                  </a>
-                  <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
-                    <Youtube className="w-4 h-4" />
-                  </a>
-                  <a href="#" aria-label="WhatsApp" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
-                    <Phone className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Plataforma */}
-              <div>
-                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Plataforma</h4>
-                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
-                  <li><a href="#funcionalidades" className="hover:text-primary transition-colors">Funcionalidades</a></li>
-                  <li><a href="#etapas" className="hover:text-primary transition-colors">Como funciona</a></li>
-                  <li><a href="#pricing" className="hover:text-primary transition-colors">Planos</a></li>
-                  <li><a href="#parcerias" className="hover:text-primary transition-colors">Parcerias</a></li>
-                </ul>
-              </div>
-
-              {/* Empresa */}
-              <div>
-                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Empresa</h4>
-                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
-                  <li><a href="#feedbacks" className="hover:text-primary transition-colors">Depoimentos</a></li>
-                  <li><a href="#faq" className="hover:text-primary transition-colors">Perguntas</a></li>
-                  <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
-                  <li><a href="#" className="hover:text-primary transition-colors">Contato</a></li>
-                </ul>
-              </div>
-
-              {/* Legal */}
-              <div>
-                <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Legal</h4>
-                <ul className="space-y-2.5 text-sm text-[#94a3b8]">
-                  <li><Link to="/termos" className="hover:text-primary transition-colors">Termos de Uso</Link></li>
-                  <li><Link to="/privacidade" className="hover:text-primary transition-colors">Privacidade</Link></li>
-                  <li><Link to="/legal" className="hover:text-primary transition-colors">Avisos Legais</Link></li>
-                  <li><Link to="/cookies" className="hover:text-primary transition-colors">Cookies</Link></li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Bottom line */}
-            <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 pt-8">
-              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                  <Lock className="w-3.5 h-3.5 text-primary" /> SSL Seguro
-                </div>
-                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                  <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Pagamento Protegido
-                </div>
-                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
-                  <Clock className="w-3.5 h-3.5 text-primary" /> Suporte 24/7
-                </div>
-              </div>
-              <p className="text-xs text-[#64748b] text-center md:text-right">
-                © 2025 AxionFly. Todos os direitos reservados.
-              </p>
-            </div>
-          </div>
-        </footer>
-        </CurtainFooter>
-
+        {/* footer renderizado fora do wrapper z-10 para o efeito curtain */}
       </div>
     </div>
+
+    <CurtainFooter>
+      <footer className="bg-[#05050a] relative">
+        {/* Newsletter */}
+        <div className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <h3 className="text-xl md:text-2xl font-black text-foreground mb-1">
+                Receba dicas de venda toda semana
+              </h3>
+              <p className="text-sm text-[#94a3b8]">
+                Estratégias práticas para fechar mais contratos. Sem spam.
+              </p>
+            </div>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="flex w-full md:w-auto items-center gap-2 bg-[#0D1221] rounded-full p-1.5 border border-white/10"
+            >
+              <Mail className="w-4 h-4 text-muted-foreground ml-3 shrink-0" />
+              <input
+                type="email"
+                placeholder="seu@email.com"
+                className="flex-1 md:w-64 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground/60 px-1"
+              />
+              <Button size="sm" variant="neon" className="rounded-full font-black uppercase tracking-wider text-[11px] h-10 px-5 shrink-0">
+                Assinar
+              </Button>
+            </form>
+          </div>
+        </div>
+
+        {/* Main footer columns */}
+        <div className="container mx-auto px-4 py-10 md:py-14">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
+            {/* Brand */}
+            <div className="col-span-2 md:col-span-1 space-y-4">
+              <div className="flex items-center gap-2.5">
+                <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
+                <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
+              </div>
+              <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
+                A plataforma completa para criar e vender sites com IA — do primeiro lead ao contrato fechado.
+              </p>
+              <div className="flex items-center gap-3 pt-2">
+                <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                  <Youtube className="w-4 h-4" />
+                </a>
+                <a href="#" aria-label="WhatsApp" className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-[#94a3b8] hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+                  <Phone className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Plataforma */}
+            <div>
+              <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Plataforma</h4>
+              <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                <li><a href="#funcionalidades" className="hover:text-primary transition-colors">Funcionalidades</a></li>
+                <li><a href="#etapas" className="hover:text-primary transition-colors">Como funciona</a></li>
+                <li><a href="#pricing" className="hover:text-primary transition-colors">Planos</a></li>
+                <li><a href="#parcerias" className="hover:text-primary transition-colors">Parcerias</a></li>
+              </ul>
+            </div>
+
+            {/* Empresa */}
+            <div>
+              <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Empresa</h4>
+              <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                <li><a href="#feedbacks" className="hover:text-primary transition-colors">Depoimentos</a></li>
+                <li><a href="#faq" className="hover:text-primary transition-colors">Perguntas</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Contato</a></li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground mb-4">Legal</h4>
+              <ul className="space-y-2.5 text-sm text-[#94a3b8]">
+                <li><Link to="/termos" className="hover:text-primary transition-colors">Termos de Uso</Link></li>
+                <li><Link to="/privacidade" className="hover:text-primary transition-colors">Privacidade</Link></li>
+                <li><Link to="/legal" className="hover:text-primary transition-colors">Avisos Legais</Link></li>
+                <li><Link to="/cookies" className="hover:text-primary transition-colors">Cookies</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom line */}
+          <div className="flex flex-wrap items-center justify-center md:justify-between gap-6 pt-8">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+              <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                <Lock className="w-3.5 h-3.5 text-primary" /> SSL Seguro
+              </div>
+              <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Pagamento Protegido
+              </div>
+              <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                <Clock className="w-3.5 h-3.5 text-primary" /> Suporte 24/7
+              </div>
+            </div>
+            <p className="text-xs text-[#64748b] text-center md:text-right">
+              © 2025 AxionFly. Todos os direitos reservados.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </CurtainFooter>
   </div>
   </>
   );
