@@ -411,182 +411,124 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Horizontal feature slider — Glass minimalista */}
-          <div
-            className="relative"
-            onMouseEnter={() => setFeaturesPaused(true)}
-            onMouseLeave={() => setFeaturesPaused(false)}
-          >
-            {/* Glows de fundo */}
-            <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
+          {/* Bento Grid de Funcionalidades */}
+          <div className="relative">
+            {/* Glows ambiente */}
+            <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-primary/15 rounded-full blur-[120px]" />
             <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
 
-            {/* Sem moldura — conteúdo flutuante */}
-            <div className="relative">
+            <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6">
+              {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => {
+                const isHero = i === 0;
+                return (
+                  <motion.div
+                    key={title}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.6, delay: i * 0.08, ease }}
+                    className={cn(
+                      "group relative rounded-3xl border border-white/10 bg-card/40 backdrop-blur-sm overflow-hidden",
+                      "hover:border-primary/40 transition-all duration-500",
+                      "hover:shadow-[0_0_60px_-15px_rgba(37,99,235,0.4)]",
+                      isHero && "md:col-span-2"
+                    )}
+                  >
+                    {/* Glow no hover */}
+                    <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/10 group-hover:to-transparent transition-all duration-700" />
 
-              <div className="overflow-hidden">
-                <motion.div
-                  className="flex"
-                  animate={{ x: `-${featureIndex * 100}%` }}
-                  transition={{ type: "spring", stiffness: 70, damping: 22, mass: 0.9 }}
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.15}
-                  onDragStart={() => setFeaturesPaused(true)}
-                  onDragEnd={(_, info) => {
-                    if (info.offset.x < -80) goNext();
-                    else if (info.offset.x > 80) goPrev();
-                    setFeaturesPaused(false);
-                  }}
-                >
-                  {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
-                    <div
-                      key={title}
-                      className="min-w-full px-2 md:px-8 py-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-                    >
-                      {/* Text Content */}
-                      <motion.div
-                        key={`text-${featureIndex}-${i}`}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={featureIndex === i ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 0 }}
-                        transition={{ duration: 0.5, ease }}
-                        className={cn(
-                          "flex flex-col space-y-8",
-                          i % 2 === 1 ? "lg:order-2" : ""
-                        )}
-                      >
-                        <div>
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-[0.15em] bg-primary/10 text-primary border border-primary/20 mb-6 uppercase">
-                            <span className="relative flex h-1.5 w-1.5 mr-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
-                            </span>
-                            Funcionalidade {String(i + 1).padStart(2, "0")}/{String(featuresTotal).padStart(2, "0")}
-                          </span>
-                          <h3 className="text-3xl lg:text-5xl font-black text-foreground tracking-tight leading-[1.05]">
-                            {title.split(" ").slice(0, -2).join(" ")}{" "}
-                            <span className="text-primary">{title.split(" ").slice(-2).join(" ")}</span>
-                          </h3>
-                          <p className="mt-4 text-[17px] text-[#94a3b8] leading-[1.65] max-w-md">
-                            {desc}
-                          </p>
+                    <div className={cn(
+                      "relative flex flex-col",
+                      isHero ? "lg:flex-row lg:items-center" : ""
+                    )}>
+                      {/* Header (texto) */}
+                      <div className={cn(
+                        "p-8 md:p-10 space-y-4",
+                        isHero ? "lg:flex-1 lg:pr-0" : ""
+                      )}>
+                        <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1">
+                          <Icon className="w-3.5 h-3.5 text-primary" />
+                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-primary">{tag}</span>
                         </div>
+                        <h3 className="text-2xl md:text-3xl font-black text-foreground tracking-tight leading-tight">
+                          {title}
+                        </h3>
+                        <p className="text-[15px] text-[#94a3b8] leading-[1.65] max-w-md">
+                          {desc}
+                        </p>
+                        {isHero && bullets && (
+                          <ul className="space-y-2 pt-2">
+                            {bullets.map((item: string) => (
+                              <li key={item} className="flex items-center gap-2.5 text-sm text-slate-300">
+                                <div className="flex-shrink-0 w-4 h-4 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+                                  <svg className="w-2.5 h-2.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                </div>
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
 
-                        <ul className="space-y-4">
-                          {bullets?.map((item) => (
-                            <li key={item} className="flex items-center gap-3 group/item">
-                              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
-                                <svg className="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                </svg>
-                              </div>
-                              <span className="text-slate-300 font-medium transition-colors group-hover/item:text-foreground">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-
-                      {/* Visual Content */}
-                      <motion.div
-                        key={`visual-${featureIndex}-${i}`}
-                        initial={{ opacity: 0, scale: 0.97 }}
-                        animate={featureIndex === i ? { opacity: 1, scale: 1 } : { opacity: 0.3, scale: 0.97 }}
-                        transition={{ duration: 0.5, ease }}
-                        className={cn("relative w-full", i % 2 === 1 ? "lg:order-1" : "")}
-                      >
-                        <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-full opacity-50 pointer-events-none" />
-                        <div className="relative">
+                      {/* Visual mockup integrado */}
+                      <div className={cn(
+                        "relative w-full overflow-hidden",
+                        isHero ? "lg:flex-1 lg:max-w-[55%] p-6 md:p-8" : "px-6 pb-8 md:px-8 md:pb-10"
+                      )}>
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent pointer-events-none" />
+                        <div className="relative w-full transition-transform duration-700 group-hover:scale-[1.02]">
                           {visual === "globe" ? (
-                            <div className="w-full max-w-[320px] md:max-w-md mx-auto aspect-square relative">
+                            <div className="w-full max-w-[260px] mx-auto aspect-square relative">
                               <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
                                 <GlobeCdn className="w-full" speed={0.006} />
                                 <motion.div
                                   animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
                                   transition={{ duration: 3, repeat: Infinity }}
-                                  className="absolute top-1/4 left-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                                  className="absolute top-1/4 left-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
                                 >
-                                  <p className="text-[10px] font-bold text-foreground">Restaurante • São Paulo • Sem site</p>
+                                  <p className="text-[9px] font-bold text-foreground">Restaurante • SP</p>
                                 </motion.div>
                                 <motion.div
                                   animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
                                   transition={{ duration: 4, repeat: Infinity }}
-                                  className="absolute bottom-1/3 right-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                                  className="absolute bottom-1/3 right-1/4 p-2 rounded-lg glass border-primary/30 shadow-xl z-20"
                                 >
-                                  <p className="text-[10px] font-bold text-foreground">Barbearia • Rio de Janeiro • Sem site</p>
+                                  <p className="text-[9px] font-bold text-foreground">Barbearia • RJ</p>
                                 </motion.div>
                               </Suspense>
                             </div>
                           ) : visual === "dashboard" ? (
-                            <div className="scale-90 lg:scale-100">
+                            <div className="scale-[0.85] origin-center">
                               <DashboardMockup />
                             </div>
                           ) : visual === "builder" ? (
-                            <SitesBuilderVisual />
+                            <div className={isHero ? "" : "scale-[0.95] origin-center"}>
+                              <SitesBuilderVisual />
+                            </div>
                           ) : visual === "extension" ? (
-                            <ExtensionInfiniteVisual />
+                            <div className="scale-[0.95] origin-center">
+                              <ExtensionInfiniteVisual />
+                            </div>
                           ) : visual === "contract" ? (
-                            <ContractGeneratorVisual />
+                            <div className="scale-[0.95] origin-center">
+                              <ContractGeneratorVisual />
+                            </div>
                           ) : (
-                            <div className="aspect-video rounded-2xl border border-white/10 bg-[#0a0a0b] overflow-hidden flex items-center justify-center relative group">
-                              <Icon className="w-32 h-32 text-primary/20" />
+                            <div className="aspect-video rounded-2xl border border-white/10 bg-[#0a0a0b] flex items-center justify-center">
+                              <Icon className="w-24 h-24 text-primary/20" />
                             </div>
                           )}
                         </div>
-                      </motion.div>
+                      </div>
                     </div>
-                  ))}
-                </motion.div>
-              </div>
-            </div>
-
-            {/* Controles flutuantes sobrepostos */}
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-6 md:gap-8 z-20">
-              <button
-                onClick={goPrev}
-                aria-label="Funcionalidade anterior"
-                className="p-3 rounded-full border border-white/10 bg-black/60 text-foreground/50 hover:text-foreground hover:border-primary/50 hover:bg-primary/10 backdrop-blur-md transition-all"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-3">
-                {features.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setFeatureIndex(i)}
-                    aria-label={`Ir para funcionalidade ${i + 1}`}
-                    className={cn(
-                      "h-1 rounded-full transition-all duration-500 overflow-hidden relative",
-                      featureIndex === i
-                        ? "w-10 bg-primary/30"
-                        : "w-2 bg-white/20 hover:bg-white/40"
-                    )}
-                  >
-                    {featureIndex === i && !featuresPaused && (
-                      <motion.span
-                        key={`bar-${i}-${featureIndex}`}
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: 5, ease: "linear" }}
-                        className="absolute inset-y-0 left-0 bg-primary rounded-full"
-                      />
-                    )}
-                    {featureIndex === i && featuresPaused && (
-                      <span className="absolute inset-0 bg-primary rounded-full" />
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              <button
-                onClick={goNext}
-                aria-label="Próxima funcionalidade"
-                className="p-3 rounded-full border border-white/10 bg-black/60 text-foreground/50 hover:text-foreground hover:border-primary/50 hover:bg-primary/10 backdrop-blur-md transition-all"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
+
 
 
         </section>
