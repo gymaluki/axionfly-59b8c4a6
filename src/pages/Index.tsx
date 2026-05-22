@@ -705,7 +705,7 @@ const Index = () => {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 md:mb-20">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Venda seu primeiro site <br />
-              em <span className="gradient-text">4 passos simples</span>
+              em <span className="gradient-text">3 passos simples</span>
             </h2>
             <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
               Não reinventamos a roda, apenas automatizamos o que funciona. Siga o método e veja os resultados.
@@ -947,8 +947,8 @@ const Index = () => {
                 variant="neon"
                 size="xl"
                 className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(37,99,235,0.5)]"
-                onClick={() => {
-                  const checkoutUrl = resolveCheckoutUrl("lifetime");
+                onClick={async () => {
+                  const checkoutUrl = await resolveCheckoutUrl("lifetime");
                   navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
                 }}
               >
