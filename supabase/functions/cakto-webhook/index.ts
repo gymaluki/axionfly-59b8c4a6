@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cakto-signature, x-signature, x-webhook-token',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-cakto-signature, x-signature, x-webhook-token, cakto-signature, secret',
 };
 
 Deno.serve(async (req) => {
@@ -31,7 +31,10 @@ Deno.serve(async (req) => {
     const token =
       req.headers.get("x-webhook-token") ||
       req.headers.get("x-cakto-signature") ||
+      req.headers.get("cakto-signature") ||
       req.headers.get("x-signature") ||
+      req.headers.get("secret") ||
+      body?.secret ||
       url.searchParams.get("token") ||
       url.searchParams.get("secret");
     if (token !== CAKTO_WEBHOOK_TOKEN) {
@@ -91,6 +94,7 @@ Deno.serve(async (req) => {
     
     // Captura o afiliado — a Cakto pode enviar no campo affiliate_id ou via parâmetro custom
     const affiliateCode: string | null = 
+      data?.affiliate ||
       data?.affiliate_id || 
       data?.affiliate?.id || 
       data?.affiliate?.code || 
