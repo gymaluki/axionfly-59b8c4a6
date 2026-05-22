@@ -306,6 +306,10 @@ import { captureAffiliateFromUrl } from "@/lib/affiliates";
 const Index = () => {
   const navigate = useNavigate();
   const vagasRestantes = useVagasRestantes(4);
+  const [featureIndex, setFeatureIndex] = useState(0);
+  const featuresTotal = features.length;
+  const goPrev = () => setFeatureIndex((i) => (i - 1 + featuresTotal) % featuresTotal);
+  const goNext = () => setFeatureIndex((i) => (i + 1) % featuresTotal);
 
   useEffect(() => {
     captureAffiliateFromUrl();
