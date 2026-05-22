@@ -503,7 +503,8 @@ const Index = () => {
                             </Suspense>
                           </div>
                         ) : visual === "dashboard" ? (
-                          <div className="scale-[0.9] origin-center"><DashboardMockup /></div>
+                          <DashboardMockup />
+
                         ) : visual === "builder" ? (
                           <SitesBuilderVisual />
                         ) : visual === "extension" ? (
