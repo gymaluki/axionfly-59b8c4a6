@@ -93,10 +93,23 @@ function SectionPill({ children }: { children: React.ReactNode }) {
 function FeatureMiniVisual({ visual, Icon, index }: { visual: string; Icon: any; index: number }) {
   if (visual === "globe") {
     return (
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-[180px] h-[180px] relative -mb-12">
-          <Suspense fallback={<div className="w-full h-full animate-pulse bg-primary/5 rounded-full" />}>
-            <GlobeCdn className="w-full" speed={0.006} />
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        {/* Anéis de glow ao redor do globo */}
+        <motion.div
+          aria-hidden
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="absolute w-[280px] h-[280px] rounded-full border border-dashed border-primary/20"
+        />
+        <motion.div
+          aria-hidden
+          animate={{ scale: [1, 1.08, 1], opacity: [0.35, 0.6, 0.35] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute w-[230px] h-[230px] rounded-full bg-primary/20 blur-[60px]"
+        />
+        <div className="relative w-[230px] h-[230px] md:w-[260px] md:h-[260px] flex items-center justify-center">
+          <Suspense fallback={<div className="w-full h-full animate-pulse rounded-full bg-primary/5" />}>
+            <GlobeCdn className="w-full h-full" speed={0.006} />
           </Suspense>
         </div>
       </div>
@@ -643,8 +656,9 @@ const Index = () => {
                         i === 4 && "md:pt-5 md:pl-0"
                       )}>
                         <div className={cn(
-                          "relative rounded-xl overflow-hidden border border-primary/15 bg-gradient-to-br from-primary/[0.06] to-background/40",
-                          i === 4 ? "h-[200px]" : "h-[160px]"
+                          "relative rounded-xl overflow-hidden border border-primary/20 bg-gradient-to-br from-primary/[0.08] via-background/30 to-background/60",
+                          // Globo precisa de mais espaço pra respirar
+                          visual === "globe" ? "h-[240px] md:h-[260px]" : (i === 4 ? "h-[220px]" : "h-[180px]")
                         )}>
                           <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/10 blur-[50px] opacity-40 group-hover:opacity-70 transition-opacity duration-700" />
 
@@ -658,7 +672,19 @@ const Index = () => {
                             }}
                           />
 
+                          {/* Cantos decorativos */}
+                          <div aria-hidden className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40 rounded-tl-sm" />
+                          <div aria-hidden className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40 rounded-tr-sm" />
+                          <div aria-hidden className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-primary/40 rounded-bl-sm" />
+                          <div aria-hidden className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-primary/40 rounded-br-sm" />
+
                           <FeatureMiniVisual visual={visual} Icon={Icon} index={i} />
+
+                          {/* Brilho varrendo no hover */}
+                          <div
+                            aria-hidden
+                            className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1400ms] ease-out bg-gradient-to-r from-transparent via-primary/10 to-transparent"
+                          />
                         </div>
                       </div>
                     </div>
