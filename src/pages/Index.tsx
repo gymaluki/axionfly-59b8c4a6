@@ -401,105 +401,167 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="space-y-32 md:space-y-48">
-            {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
-              <div key={title} className={cn(
-                "flex flex-col gap-12 items-center",
-                i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              )}>
-                {/* Text Content */}
-                <motion.div 
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
-                  variants={i % 2 === 0 ? slideFromLeft : slideFromRight}
-                  className="flex-1 space-y-6"
-                >
-                  <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.1)]">
-                    <span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">{tag}</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                      <Icon className="w-7 h-7 text-primary" />
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-black text-foreground">{title}</h3>
-                  </div>
-                  
-                  <p className="text-[#64748b] text-[16px] leading-[1.7] font-normal">
-                    {desc}
-                  </p>
-                  
-                  <ul className="space-y-4">
-                    {bullets?.map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-foreground/80 font-bold">
-                        <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                          <Zap className="w-3 h-3 text-primary" />
-                        </div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-
-                {/* Visual Content */}
-                <motion.div 
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
-                  variants={i % 2 === 0 ? slideFromRight : slideFromLeft}
-                  className="flex-1 w-full"
-                >
-                  <div className="relative">
-                    <div className="absolute -inset-10 bg-primary/10 blur-[100px] rounded-full opacity-50 pointer-events-none" />
-                    
-                    {visual === "globe" ? (
-                      <div className="w-full max-w-[280px] md:max-w-md mx-auto aspect-square relative">
-                        <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
-                          <GlobeCdn className="w-full" speed={0.006} />
-                          {/* Tooltips */}
-                          <motion.div 
-                            animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
-                            transition={{ duration: 3, repeat: Infinity }}
-                            className="absolute top-1/4 left-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
-                          >
-                            <p className="text-[10px] font-bold text-foreground">Restaurante • São Paulo • Sem site</p>
-                          </motion.div>
-                          <motion.div 
-                            animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
-                            transition={{ duration: 4, repeat: Infinity }}
-                            className="absolute bottom-1/3 right-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
-                          >
-                            <p className="text-[10px] font-bold text-foreground">Barbearia • Rio de Janeiro • Sem site</p>
-                          </motion.div>
-                        </Suspense>
-                      </div>
-                    ) : visual === "dashboard" ? (
-                      <div className="scale-90 lg:scale-100">
-                        <DashboardMockup />
-                      </div>
-                    ) : visual === "builder" ? (
-                      <SitesBuilderVisual />
-                    ) : visual === "extension" ? (
-                      <ExtensionInfiniteVisual />
-                    ) : visual === "contract" ? (
-                      <ContractGeneratorVisual />
-                    ) : (
-                      <div className="aspect-video rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
-                        <Icon className="w-32 h-32 text-primary/20 group-hover:scale-110 group-hover:text-primary/30 transition-all duration-500" />
-                        <div className="absolute bottom-8 left-8 right-8 p-6 rounded-xl glass border-primary/10">
-                          <h4 className="font-black text-foreground mb-1">{title}</h4>
-                          <p className="text-xs text-muted-foreground">{desc.substring(0, 60)}...</p>
-                        </div>
-                      </div>
+          {/* Horizontal feature slider */}
+          <div className="relative">
+            <div className="overflow-hidden">
+              <motion.div
+                className="flex"
+                animate={{ x: `-${featureIndex * 100}%` }}
+                transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.15}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -80) goNext();
+                  else if (info.offset.x > 80) goPrev();
+                }}
+              >
+                {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
+                  <div
+                    key={title}
+                    className={cn(
+                      "min-w-full px-2 md:px-8 flex flex-col gap-12 items-center",
+                      i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
                     )}
+                  >
+                    {/* Text Content */}
+                    <motion.div
+                      key={`text-${featureIndex}-${i}`}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={featureIndex === i ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 0 }}
+                      transition={{ duration: 0.5, ease }}
+                      className="flex-1 space-y-6"
+                    >
+                      <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.1)]">
+                        <span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">{tag}</span>
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                          <Icon className="w-7 h-7 text-primary" />
+                        </div>
+                        <h3 className="text-2xl md:text-3xl font-black text-foreground">{title}</h3>
+                      </div>
+
+                      <p className="text-[#64748b] text-[16px] leading-[1.7] font-normal">
+                        {desc}
+                      </p>
+
+                      <ul className="space-y-4">
+                        {bullets?.map((item) => (
+                          <li key={item} className="flex items-center gap-3 text-foreground/80 font-bold">
+                            <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                              <Zap className="w-3 h-3 text-primary" />
+                            </div>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+
+                    {/* Visual Content */}
+                    <motion.div
+                      key={`visual-${featureIndex}-${i}`}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={featureIndex === i ? { opacity: 1, scale: 1 } : { opacity: 0.3, scale: 0.95 }}
+                      transition={{ duration: 0.5, ease }}
+                      className="flex-1 w-full"
+                    >
+                      <div className="relative">
+                        <div className="absolute -inset-10 bg-primary/10 blur-[100px] rounded-full opacity-50 pointer-events-none" />
+
+                        {visual === "globe" ? (
+                          <div className="w-full max-w-[280px] md:max-w-md mx-auto aspect-square relative">
+                            <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
+                              <GlobeCdn className="w-full" speed={0.006} />
+                              <motion.div
+                                animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 3, repeat: Infinity }}
+                                className="absolute top-1/4 left-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                              >
+                                <p className="text-[10px] font-bold text-foreground">Restaurante • São Paulo • Sem site</p>
+                              </motion.div>
+                              <motion.div
+                                animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
+                                transition={{ duration: 4, repeat: Infinity }}
+                                className="absolute bottom-1/3 right-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                              >
+                                <p className="text-[10px] font-bold text-foreground">Barbearia • Rio de Janeiro • Sem site</p>
+                              </motion.div>
+                            </Suspense>
+                          </div>
+                        ) : visual === "dashboard" ? (
+                          <div className="scale-90 lg:scale-100">
+                            <DashboardMockup />
+                          </div>
+                        ) : visual === "builder" ? (
+                          <SitesBuilderVisual />
+                        ) : visual === "extension" ? (
+                          <ExtensionInfiniteVisual />
+                        ) : visual === "contract" ? (
+                          <ContractGeneratorVisual />
+                        ) : (
+                          <div className="aspect-video rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
+                            <Icon className="w-32 h-32 text-primary/20 group-hover:scale-110 group-hover:text-primary/30 transition-all duration-500" />
+                            <div className="absolute bottom-8 left-8 right-8 p-6 rounded-xl glass border-primary/10">
+                              <h4 className="font-black text-foreground mb-1">{title}</h4>
+                              <p className="text-xs text-muted-foreground">{desc.substring(0, 60)}...</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
                   </div>
-                </motion.div>
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Controles */}
+            <div className="mt-12 flex items-center justify-center gap-6">
+              <button
+                onClick={goPrev}
+                aria-label="Funcionalidade anterior"
+                className="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md"
+              >
+                <ChevronLeft className="w-5 h-5 text-primary" />
+              </button>
+
+              <div className="flex items-center gap-2">
+                {features.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setFeatureIndex(i)}
+                    aria-label={`Ir para funcionalidade ${i + 1}`}
+                    className={cn(
+                      "h-2 rounded-full transition-all duration-300",
+                      featureIndex === i
+                        ? "w-10 bg-primary shadow-[0_0_15px_rgba(37,99,235,0.6)]"
+                        : "w-2 bg-primary/30 hover:bg-primary/60"
+                    )}
+                  />
+                ))}
               </div>
-            ))}
+
+              <button
+                onClick={goNext}
+                aria-label="Próxima funcionalidade"
+                className="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md"
+              >
+                <ChevronRight className="w-5 h-5 text-primary" />
+              </button>
+            </div>
+
+            {/* Contador */}
+            <div className="mt-4 text-center">
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground/60">
+                {String(featureIndex + 1).padStart(2, "0")} / {String(featuresTotal).padStart(2, "0")}
+              </span>
+            </div>
           </div>
         </section>
+
+
 
 
         {/* ═══════════ ETAPAS ═══════════ */}
