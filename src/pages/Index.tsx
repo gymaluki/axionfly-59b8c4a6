@@ -307,9 +307,19 @@ const Index = () => {
   const navigate = useNavigate();
   const vagasRestantes = useVagasRestantes(4);
   const [featureIndex, setFeatureIndex] = useState(0);
+  const [featuresPaused, setFeaturesPaused] = useState(false);
   const featuresTotal = features.length;
   const goPrev = () => setFeatureIndex((i) => (i - 1 + featuresTotal) % featuresTotal);
   const goNext = () => setFeatureIndex((i) => (i + 1) % featuresTotal);
+
+  // Autoplay do slider de funcionalidades
+  useEffect(() => {
+    if (featuresPaused) return;
+    const id = setInterval(() => {
+      setFeatureIndex((i) => (i + 1) % featuresTotal);
+    }, 5000);
+    return () => clearInterval(id);
+  }, [featuresPaused, featuresTotal]);
 
   useEffect(() => {
     captureAffiliateFromUrl();
