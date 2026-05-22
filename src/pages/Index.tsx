@@ -411,47 +411,18 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Horizontal feature slider */}
+          {/* Horizontal feature slider — Glass minimalista */}
           <div
             className="relative"
             onMouseEnter={() => setFeaturesPaused(true)}
             onMouseLeave={() => setFeaturesPaused(false)}
           >
-            {/* Glow ambiente que muda com o slide */}
-            <motion.div
-              key={`amb-${featureIndex}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center"
-              aria-hidden
-            >
-              <div className="w-[80%] h-[60%] rounded-full bg-primary/20 blur-[140px]" />
-            </motion.div>
+            {/* Glows de fundo */}
+            <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-[120px]" />
+            <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
 
-            {/* Moldura do palco */}
-            <div className="relative rounded-[28px] border border-primary/15 bg-gradient-to-b from-card/40 via-card/20 to-card/40 backdrop-blur-sm p-4 md:p-8 lg:p-12 overflow-hidden">
-              {/* cantos decorativos */}
-              <span aria-hidden className="pointer-events-none absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-primary/40 rounded-tl-[28px]" />
-              <span aria-hidden className="pointer-events-none absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-primary/40 rounded-tr-[28px]" />
-              <span aria-hidden className="pointer-events-none absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-primary/40 rounded-bl-[28px]" />
-              <span aria-hidden className="pointer-events-none absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-primary/40 rounded-br-[28px]" />
-
-              {/* contador grande no topo direito */}
-              <div className="hidden md:flex absolute top-6 right-8 items-baseline gap-2 z-10">
-                <span className="text-[11px] font-black uppercase tracking-[0.3em] text-primary/70">Funcionalidade</span>
-                <motion.span
-                  key={`n-${featureIndex}`}
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="text-3xl font-black text-foreground tabular-nums"
-                >
-                  {String(featureIndex + 1).padStart(2, "0")}
-                </motion.span>
-                <span className="text-sm text-muted-foreground/60 font-bold">/ {String(featuresTotal).padStart(2, "0")}</span>
-              </div>
-
+            {/* Glass card */}
+            <div className="relative bg-white/[0.02] border border-white/[0.08] rounded-3xl overflow-hidden backdrop-blur-xl">
               <div className="overflow-hidden">
                 <motion.div
                   className="flex"
@@ -467,150 +438,127 @@ const Index = () => {
                     setFeaturesPaused(false);
                   }}
                 >
-
-                {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
-                  <div
-                    key={title}
-                    className={cn(
-                      "min-w-full px-2 md:px-6 flex flex-col gap-12 items-center relative",
-                      i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-                    )}
-                  >
-                    {/* Número gigante de fundo (editorial) */}
-                    <motion.span
-                      aria-hidden
-                      key={`bignum-${featureIndex}-${i}`}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={featureIndex === i ? { opacity: 0.06, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.8, ease }}
-                      className="pointer-events-none absolute -top-10 left-0 text-[200px] md:text-[280px] leading-none font-black text-primary select-none tabular-nums"
+                  {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
+                    <div
+                      key={title}
+                      className="min-w-full p-8 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                     >
-                      {String(i + 1).padStart(2, "0")}
-                    </motion.span>
-
-                    {/* Text Content */}
-                    <motion.div
-                      key={`text-${featureIndex}-${i}`}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={featureIndex === i ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 0 }}
-                      transition={{ duration: 0.5, ease }}
-                      className="flex-1 space-y-6 relative z-10"
-                    >
-                      <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.1)]">
-                        <motion.span
-                          animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.3, 1] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                          className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(37,99,235,0.8)]"
-                        />
-                        <span className="text-[11px] font-black uppercase tracking-[0.1em] text-primary">{tag}</span>
-                      </div>
-
-                      <div className="flex items-center gap-4">
-                        <div className="relative w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden group">
-                          <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                          <Icon className="w-7 h-7 text-primary relative z-10" />
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-black text-foreground leading-tight">{title}</h3>
-                      </div>
-
-                      <p className="text-[#94a3b8] text-[16px] leading-[1.7] font-normal max-w-xl">
-                        {desc}
-                      </p>
-
-                      <ul className="space-y-4">
-                        {bullets?.map((item) => (
-                          <li key={item} className="flex items-center gap-3 text-foreground/90 font-semibold text-[15px]">
-                            <div className="w-5 h-5 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
-                              <Zap className="w-3 h-3 text-primary" />
-                            </div>
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </motion.div>
-
-                    {/* Visual Content */}
-                    <motion.div
-                      key={`visual-${featureIndex}-${i}`}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={featureIndex === i ? { opacity: 1, scale: 1 } : { opacity: 0.3, scale: 0.95 }}
-                      transition={{ duration: 0.5, ease }}
-                      className="flex-1 w-full relative z-10"
-                    >
-                      <div className="relative">
-                        <div className="absolute -inset-10 bg-primary/15 blur-[100px] rounded-full opacity-60 pointer-events-none" />
-
-                        {visual === "globe" ? (
-                          <div className="w-full max-w-[280px] md:max-w-md mx-auto aspect-square relative">
-                            <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
-                              <GlobeCdn className="w-full" speed={0.006} />
-                              <motion.div
-                                animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                                className="absolute top-1/4 left-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
-                              >
-                                <p className="text-[10px] font-bold text-foreground">Restaurante • São Paulo • Sem site</p>
-                              </motion.div>
-                              <motion.div
-                                animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                                className="absolute bottom-1/3 right-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
-                              >
-                                <p className="text-[10px] font-bold text-foreground">Barbearia • Rio de Janeiro • Sem site</p>
-                              </motion.div>
-                            </Suspense>
-                          </div>
-                        ) : visual === "dashboard" ? (
-                          <div className="scale-90 lg:scale-100">
-                            <DashboardMockup />
-                          </div>
-                        ) : visual === "builder" ? (
-                          <SitesBuilderVisual />
-                        ) : visual === "extension" ? (
-                          <ExtensionInfiniteVisual />
-                        ) : visual === "contract" ? (
-                          <ContractGeneratorVisual />
-                        ) : (
-                          <div className="aspect-video rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-sm overflow-hidden flex items-center justify-center relative group">
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
-                            <Icon className="w-32 h-32 text-primary/20 group-hover:scale-110 group-hover:text-primary/30 transition-all duration-500" />
-                            <div className="absolute bottom-8 left-8 right-8 p-6 rounded-xl glass border-primary/10">
-                              <h4 className="font-black text-foreground mb-1">{title}</h4>
-                              <p className="text-xs text-muted-foreground">{desc.substring(0, 60)}...</p>
-                            </div>
-                          </div>
+                      {/* Text Content */}
+                      <motion.div
+                        key={`text-${featureIndex}-${i}`}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={featureIndex === i ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 0 }}
+                        transition={{ duration: 0.5, ease }}
+                        className={cn(
+                          "flex flex-col space-y-8",
+                          i % 2 === 1 ? "lg:order-2" : ""
                         )}
-                      </div>
-                    </motion.div>
-                  </div>
-                ))}
+                      >
+                        <div>
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold tracking-[0.15em] bg-primary/10 text-primary border border-primary/20 mb-6 uppercase">
+                            <span className="relative flex h-1.5 w-1.5 mr-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
+                            </span>
+                            Funcionalidade {String(i + 1).padStart(2, "0")}/{String(featuresTotal).padStart(2, "0")}
+                          </span>
+                          <h3 className="text-3xl lg:text-5xl font-black text-foreground tracking-tight leading-[1.05]">
+                            {title.split(" ").slice(0, -2).join(" ")}{" "}
+                            <span className="text-primary">{title.split(" ").slice(-2).join(" ")}</span>
+                          </h3>
+                          <p className="mt-4 text-[17px] text-[#94a3b8] leading-[1.65] max-w-md">
+                            {desc}
+                          </p>
+                        </div>
+
+                        <ul className="space-y-4">
+                          {bullets?.map((item) => (
+                            <li key={item} className="flex items-center gap-3 group/item">
+                              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+                                <svg className="w-3 h-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                              </div>
+                              <span className="text-slate-300 font-medium transition-colors group-hover/item:text-foreground">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+
+                      {/* Visual Content */}
+                      <motion.div
+                        key={`visual-${featureIndex}-${i}`}
+                        initial={{ opacity: 0, scale: 0.97 }}
+                        animate={featureIndex === i ? { opacity: 1, scale: 1 } : { opacity: 0.3, scale: 0.97 }}
+                        transition={{ duration: 0.5, ease }}
+                        className={cn("relative w-full", i % 2 === 1 ? "lg:order-1" : "")}
+                      >
+                        <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-full opacity-50 pointer-events-none" />
+                        <div className="relative">
+                          {visual === "globe" ? (
+                            <div className="w-full max-w-[320px] md:max-w-md mx-auto aspect-square relative">
+                              <Suspense fallback={<div className="w-full aspect-square animate-pulse bg-primary/5 rounded-full" />}>
+                                <GlobeCdn className="w-full" speed={0.006} />
+                                <motion.div
+                                  animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.5, 1, 0.5] }}
+                                  transition={{ duration: 3, repeat: Infinity }}
+                                  className="absolute top-1/4 left-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                                >
+                                  <p className="text-[10px] font-bold text-foreground">Restaurante • São Paulo • Sem site</p>
+                                </motion.div>
+                                <motion.div
+                                  animate={{ scale: [1.1, 0.9, 1.1], opacity: [1, 0.5, 1] }}
+                                  transition={{ duration: 4, repeat: Infinity }}
+                                  className="absolute bottom-1/3 right-1/4 p-3 rounded-xl glass border-primary/30 shadow-xl z-20"
+                                >
+                                  <p className="text-[10px] font-bold text-foreground">Barbearia • Rio de Janeiro • Sem site</p>
+                                </motion.div>
+                              </Suspense>
+                            </div>
+                          ) : visual === "dashboard" ? (
+                            <div className="scale-90 lg:scale-100">
+                              <DashboardMockup />
+                            </div>
+                          ) : visual === "builder" ? (
+                            <SitesBuilderVisual />
+                          ) : visual === "extension" ? (
+                            <ExtensionInfiniteVisual />
+                          ) : visual === "contract" ? (
+                            <ContractGeneratorVisual />
+                          ) : (
+                            <div className="aspect-video rounded-2xl border border-white/10 bg-[#0a0a0b] overflow-hidden flex items-center justify-center relative group">
+                              <Icon className="w-32 h-32 text-primary/20" />
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    </div>
+                  ))}
                 </motion.div>
               </div>
             </div>
-            {/* fim moldura */}
 
-            {/* Controles */}
-            <div className="mt-10 flex items-center justify-center gap-6">
+            {/* Controles flutuantes sobrepostos */}
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-6 md:gap-8 z-20">
               <button
                 onClick={goPrev}
                 aria-label="Funcionalidade anterior"
-                className="group relative w-14 h-14 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md hover:scale-110"
+                className="p-3 rounded-full border border-white/10 bg-black/60 text-foreground/50 hover:text-foreground hover:border-primary/50 hover:bg-primary/10 backdrop-blur-md transition-all"
               >
-                <span className="absolute inset-0 rounded-full bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
-                <ChevronLeft className="w-5 h-5 text-primary relative z-10 group-hover:-translate-x-0.5 transition-transform" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 {features.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setFeatureIndex(i)}
                     aria-label={`Ir para funcionalidade ${i + 1}`}
                     className={cn(
-                      "h-2 rounded-full transition-all duration-500 overflow-hidden relative",
+                      "h-1 rounded-full transition-all duration-500 overflow-hidden relative",
                       featureIndex === i
-                        ? "w-14 bg-primary/20 shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                        : "w-2 bg-primary/30 hover:bg-primary/60 hover:w-4"
+                        ? "w-10 bg-primary/30"
+                        : "w-2 bg-white/20 hover:bg-white/40"
                     )}
                   >
                     {featureIndex === i && !featuresPaused && (
@@ -619,7 +567,7 @@ const Index = () => {
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 5, ease: "linear" }}
-                        className="absolute inset-y-0 left-0 bg-primary shadow-[0_0_15px_rgba(37,99,235,0.6)] rounded-full"
+                        className="absolute inset-y-0 left-0 bg-primary rounded-full"
                       />
                     )}
                     {featureIndex === i && featuresPaused && (
@@ -632,13 +580,13 @@ const Index = () => {
               <button
                 onClick={goNext}
                 aria-label="Próxima funcionalidade"
-                className="group relative w-14 h-14 rounded-full border border-primary/30 bg-primary/10 hover:bg-primary/20 hover:border-primary/60 flex items-center justify-center transition-all backdrop-blur-md hover:scale-110"
+                className="p-3 rounded-full border border-white/10 bg-black/60 text-foreground/50 hover:text-foreground hover:border-primary/50 hover:bg-primary/10 backdrop-blur-md transition-all"
               >
-                <span className="absolute inset-0 rounded-full bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
-                <ChevronRight className="w-5 h-5 text-primary relative z-10 group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>
+
 
         </section>
 
