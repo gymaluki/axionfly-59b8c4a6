@@ -947,8 +947,8 @@ const Index = () => {
                 variant="neon"
                 size="xl"
                 className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(37,99,235,0.5)]"
-                onClick={() => {
-                  const checkoutUrl = resolveCheckoutUrl("lifetime");
+                onClick={async () => {
+                  const checkoutUrl = await resolveCheckoutUrl("lifetime");
                   navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
                 }}
               >
