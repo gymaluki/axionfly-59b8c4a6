@@ -442,7 +442,7 @@ const Index = () => {
                   {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => (
                     <div
                       key={title}
-                      className="min-w-full p-8 lg:p-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+                      className="min-w-full px-2 md:px-8 py-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
                     >
                       {/* Text Content */}
                       <motion.div
