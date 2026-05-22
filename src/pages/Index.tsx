@@ -788,7 +788,6 @@ const Index = () => {
         </section>
 
         {/* ═══════════ FOOTER (curtain reveal) ═══════════ */}
-        <CurtainFooter>
         <footer className="bg-[#05050a] relative">
           {/* Newsletter */}
           <div className="container mx-auto px-4 pt-16 pb-12 md:pt-20 md:pb-16">
