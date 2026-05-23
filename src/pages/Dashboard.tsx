@@ -217,6 +217,7 @@ const Dashboard = () => {
                   {activeView === "contrato" && <ContratoScriptView />}
                   {activeView === "perfil" && <PerfilView />}
                   {activeView === "extensao-lovable" && <ExtensaoLovableView />}
+                  {activeView === "meu-grupo" && !!user.email && GRUPO_ALLOWED_EMAILS.includes(user.email.toLowerCase()) && <MeuGrupoView />}
                   {activeView === "admin" && isAdmin && <AdminView />}
                 </motion.div>
               </AnimatePresence>
