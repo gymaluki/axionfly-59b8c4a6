@@ -92,7 +92,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "extensao-lovable", "admin"];
+  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "extensao-lovable", "admin", "meu-grupo"];
   const paramView = searchParams.get("view") as View | null;
   const [activeView, setActiveView] = useState<View>(
     paramView && validViews.includes(paramView) ? paramView : "sites"
