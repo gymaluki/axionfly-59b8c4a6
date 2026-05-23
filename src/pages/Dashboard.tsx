@@ -82,6 +82,7 @@ const viewTitles: Record<View, string> = {
   contrato: "Contrato & Script",
   perfil: "Meu Perfil",
   "extensao-lovable": "Extensão Lovable",
+  "meu-grupo": "Seu Grupo",
   admin: "Painel Administrativo",
 };
 
