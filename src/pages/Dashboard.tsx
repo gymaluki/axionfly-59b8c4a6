@@ -190,6 +190,7 @@ const Dashboard = () => {
           userEmail={user.email}
           userName={userName}
           isAdmin={isAdmin}
+          showGrupo={!!user.email && GRUPO_ALLOWED_EMAILS.includes(user.email.toLowerCase())}
         />
 
         <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
