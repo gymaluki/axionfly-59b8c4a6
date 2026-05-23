@@ -11,6 +11,7 @@ import AdminView from "@/components/views/AdminView";
 import ContratoScriptView from "@/components/views/ContratoScriptView";
 import PerfilView from "@/components/views/PerfilView";
 import ExtensaoLovableView from "@/components/views/ExtensaoLovableView";
+import MeuGrupoView from "@/components/views/MeuGrupoView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,9 @@ import { supabase } from "@/integrations/supabase/client";
 import OnboardingTour from "@/components/OnboardingTour";
 import ExtensionUpdateNotice from "@/components/ExtensionUpdateNotice";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable";
+const GRUPO_ALLOWED_EMAILS = ["evair.lol@live.com"];
+
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable" | "meu-grupo";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
@@ -79,6 +82,7 @@ const viewTitles: Record<View, string> = {
   contrato: "Contrato & Script",
   perfil: "Meu Perfil",
   "extensao-lovable": "Extensão Lovable",
+  "meu-grupo": "Seu Grupo",
   admin: "Painel Administrativo",
 };
 
@@ -88,7 +92,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "extensao-lovable", "admin"];
+  const validViews: View[] = ["prospeccao", "sites", "vendas", "membros", "contrato", "perfil", "extensao-lovable", "admin", "meu-grupo"];
   const paramView = searchParams.get("view") as View | null;
   const [activeView, setActiveView] = useState<View>(
     paramView && validViews.includes(paramView) ? paramView : "sites"
@@ -186,6 +190,7 @@ const Dashboard = () => {
           userEmail={user.email}
           userName={userName}
           isAdmin={isAdmin}
+          showGrupo={!!user.email && GRUPO_ALLOWED_EMAILS.includes(user.email.toLowerCase())}
         />
 
         <div className="flex-1 flex flex-col relative z-10 overflow-hidden">
@@ -212,6 +217,7 @@ const Dashboard = () => {
                   {activeView === "contrato" && <ContratoScriptView />}
                   {activeView === "perfil" && <PerfilView />}
                   {activeView === "extensao-lovable" && <ExtensaoLovableView />}
+                  {activeView === "meu-grupo" && !!user.email && GRUPO_ALLOWED_EMAILS.includes(user.email.toLowerCase()) && <MeuGrupoView />}
                   {activeView === "admin" && isAdmin && <AdminView />}
                 </motion.div>
               </AnimatePresence>

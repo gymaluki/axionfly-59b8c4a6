@@ -1,4 +1,4 @@
-import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle, Sparkles, ExternalLink, Zap, LayoutDashboard, Rocket } from "lucide-react";
+import { MapPin, Code2, LogOut, ShoppingBag, User, ChevronUp, Shield, PlayCircle, FileText, UserCircle, Sparkles, ExternalLink, Zap, LayoutDashboard, Rocket, Users } from "lucide-react";
 import axionflyLogo from "@/assets/axionfly-logo.webp";
 import { cn } from "@/lib/utils";
 import {
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable";
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable" | "meu-grupo";
 
 interface DashboardSidebarProps {
   active: View;
@@ -32,6 +32,7 @@ interface DashboardSidebarProps {
   userEmail?: string;
   userName?: string;
   isAdmin?: boolean;
+  showGrupo?: boolean;
 }
 
 const navItems: { id: View; label: string; icon: React.ElementType }[] = [
@@ -43,13 +44,17 @@ const navItems: { id: View; label: string; icon: React.ElementType }[] = [
   { id: "perfil", label: "Meu Perfil", icon: UserCircle },
 ];
 
-const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, isAdmin }: DashboardSidebarProps) => {
+const DashboardSidebar = ({ active, onNavigate, onSignOut, userEmail, userName, isAdmin, showGrupo }: DashboardSidebarProps) => {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
 
-  const allNavItems = isAdmin
-    ? [...navItems, { id: "admin" as View, label: "Painel Admin", icon: Shield }]
-    : navItems;
+  let allNavItems = [...navItems];
+  if (showGrupo) {
+    allNavItems = [...allNavItems, { id: "meu-grupo" as View, label: "Seu Grupo", icon: Users }];
+  }
+  if (isAdmin) {
+    allNavItems = [...allNavItems, { id: "admin" as View, label: "Painel Admin", icon: Shield }];
+  }
 
   const displayName = userName || userEmail?.split("@")[0] || "Usuário";
   const initials = displayName.slice(0, 2).toUpperCase();
