@@ -27,7 +27,14 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const token = req.headers.get("x-webhook-token");
+    const normalizeValue = (value: unknown): string =>
+      value === null || value === undefined ? "" : String(value).trim().toLowerCase();
+    const url = new URL(req.url);
+    const token =
+      req.headers.get("x-webhook-token") ||
+      req.headers.get("secret") ||
+      url.searchParams.get("token") ||
+      url.searchParams.get("secret");
     if (token !== PERFECTPAY_WEBHOOK_TOKEN) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
@@ -61,8 +68,10 @@ Deno.serve(async (req) => {
     const email = body?.customer?.email || body?.email;
     const status = body?.sale_status_enum || body?.status;
     const transactionId = body?.sale_id || body?.transaction_id || body?.id;
+    const normalizedEmail = normalizeValue(email);
+    const normalizedTransactionId = normalizeValue(transactionId);
 
-    if (!email) {
+    if (!normalizedEmail) {
       return new Response(JSON.stringify({ error: "Missing customer email" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -75,7 +84,7 @@ Deno.serve(async (req) => {
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // Find user by email (paginated — listUsers default returns only 50)
-    const emailLower = email.toLowerCase();
+    const emailLower = normalizedEmail;
     let user: { id: string; email?: string | null } | undefined;
     for (let page = 1; page <= 50; page++) {
       const { data: userData, error: userError } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
@@ -97,10 +106,10 @@ Deno.serve(async (req) => {
           .from("pending_payments")
           .upsert(
             {
-              email: email.toLowerCase(),
+               email: emailLower,
               status: "active",
               payment_provider: "perfectpay",
-              transaction_id: String(transactionId || ""),
+               transaction_id: normalizedTransactionId,
               plan: "vitalicio",
             },
             { onConflict: "email" }
@@ -168,7 +177,7 @@ Deno.serve(async (req) => {
           user_id: user.id,
           status: subscriptionStatus,
           payment_provider: "perfectpay",
-          transaction_id: String(transactionId || ""),
+          transaction_id: normalizedTransactionId,
           plan: "vitalicio",
         },
         { onConflict: "user_id" }

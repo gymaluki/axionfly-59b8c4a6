@@ -1,5 +1,4 @@
-// Edge function: cadastra usuário e, se a senha digitada for a senha mestra,
-// libera automaticamente 1 mês de acesso (plano "monthly").
+// Edge function: cadastra usuário sem liberar acesso automático.
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const corsHeaders = {
@@ -7,12 +6,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
-
-const MASTER_PASSWORD = Deno.env.get("MASTER_PASSWORD") ?? "";
-const FREE_ACCESS_EMAILS = (Deno.env.get("FREE_ACCESS_EMAILS") ?? "")
-  .split(",")
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -97,11 +90,8 @@ Deno.serve(async (req) => {
     });
 
     const normalizedEmail = normalizedEmailEarly;
-    const isMaster =
-      (MASTER_PASSWORD.length > 0 && password === MASTER_PASSWORD) ||
-      FREE_ACCESS_EMAILS.includes(normalizedEmail);
 
-    console.log(`[signup ${reqId}] criando usuário — email=${normalizedEmail}, isMaster=${isMaster}`);
+    console.log(`[signup ${reqId}] criando usuário — email=${normalizedEmail}`);
 
     // Cria o usuário (já confirmado para login imediato)
     const { data: created, error: createErr } = await admin.auth.admin.createUser({
@@ -122,32 +112,10 @@ Deno.serve(async (req) => {
 
     console.log(`[signup ${reqId}] usuário criado — id=${created.user.id}, confirmed_at=${created.user.email_confirmed_at}`);
 
-    // Se usou a senha mestra, ativa 1 mês de acesso
-    if (isMaster) {
-      const { error: subErr } = await admin
-        .from("subscriptions")
-        .upsert(
-          {
-            user_id: created.user.id,
-            status: "active",
-            plan: "monthly",
-            payment_provider: "master_password",
-            transaction_id: `master-${Date.now()}`,
-          },
-          { onConflict: "user_id" },
-        );
-
-      if (subErr) {
-        console.error(`[signup ${reqId}] Erro ao ativar assinatura mensal:`, subErr);
-      } else {
-        console.log(`[signup ${reqId}] assinatura mensal ativada`);
-      }
-    }
-
     return new Response(
       JSON.stringify({
         success: true,
-        masterAccess: isMaster,
+        masterAccess: false,
         userId: created.user.id,
       }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },

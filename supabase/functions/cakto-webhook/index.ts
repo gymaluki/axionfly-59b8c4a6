@@ -36,6 +36,8 @@ Deno.serve(async (req) => {
     }
 
     const url = new URL(req.url);
+    const normalizeValue = (value: unknown): string =>
+      value === null || value === undefined ? "" : String(value).trim().toLowerCase();
     const token =
       req.headers.get("x-webhook-token") ||
       req.headers.get("x-cakto-signature") ||
@@ -64,6 +66,7 @@ Deno.serve(async (req) => {
       data?.buyer?.email ||
       data?.email ||
       body?.email;
+    const normalizedEmail = normalizeValue(email);
 
     const status: string = (
       data?.status ||
@@ -80,6 +83,7 @@ Deno.serve(async (req) => {
       data?.id ||
       body?.id ||
       "";
+    const normalizedTransactionId = normalizeValue(transactionId);
 
     const productName: string =
       data?.product?.name ||
@@ -105,7 +109,7 @@ Deno.serve(async (req) => {
     const isLifetime = /(vital|lifetime|único|unico|para sempre)/.test(productLower);
     const plan = isLifetime ? "lifetime" : "monthly";
 
-    if (!email) {
+    if (!normalizedEmail) {
       console.error("Cakto webhook: email do cliente ausente", body);
       return new Response(JSON.stringify({ error: "Missing customer email" }), {
         status: 400,
@@ -251,13 +255,13 @@ Deno.serve(async (req) => {
     }
 
     // Registra a venda na tabela platform_sales para o Dashboard
-    if (transactionId) {
+    if (normalizedTransactionId) {
       const { error: saleError } = await supabase
         .from("platform_sales")
         .upsert(
           {
-            transaction_id: String(transactionId),
-            email: email.toLowerCase(),
+            transaction_id: normalizedTransactionId,
+            email: normalizedEmail,
             amount,
             status: subscriptionStatus === "active" ? "paid" : status,
             payment_method: paymentMethod || "unknown",
@@ -280,7 +284,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const emailLower = email.toLowerCase();
+    const emailLower = normalizedEmail;
     let user: { id: string; email?: string | null } | undefined;
     for (let page = 1; page <= 50; page++) {
       const { data: userData, error: userError } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
@@ -296,10 +300,10 @@ Deno.serve(async (req) => {
           .from("pending_payments")
           .upsert(
             {
-              email: email.toLowerCase(),
+               email: emailLower,
               status: "active",
               payment_provider: "cakto",
-              transaction_id: String(transactionId || ""),
+               transaction_id: normalizedTransactionId,
               plan,
               affiliate_slug: affiliateSlug,
             },
@@ -324,8 +328,8 @@ Deno.serve(async (req) => {
       subscriptionStatus === "inactive" &&
       wasActive &&
       prevSub?.transaction_id &&
-      String(transactionId || "") &&
-      String(prevSub.transaction_id) !== String(transactionId)
+      normalizedTransactionId &&
+      normalizeValue(prevSub.transaction_id) !== normalizedTransactionId
     ) {
       console.log(
         `Cakto: ignorando '${status}' de transação antiga (${transactionId}) — assinatura ativa atual é ${prevSub.transaction_id}`
@@ -343,7 +347,7 @@ Deno.serve(async (req) => {
           user_id: user.id,
           status: subscriptionStatus,
           payment_provider: "cakto",
-          transaction_id: String(transactionId || ""),
+          transaction_id: normalizedTransactionId,
           plan,
           affiliate_slug: affiliateSlug,
         },
