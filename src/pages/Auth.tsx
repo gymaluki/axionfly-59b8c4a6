@@ -191,7 +191,7 @@ const Auth = () => {
       return;
     }
 
-    // Tenta cadastro via edge function (suporta senha mestra com 1 mês grátis)
+    // Tenta cadastro via edge function
     const { data: fnData, error: fnError } = await supabase.functions.invoke(
       "signup-with-master-password",
       { body: { email, password } },
@@ -205,19 +205,6 @@ const Auth = () => {
         : rawMsg || "Não foi possível criar sua conta agora. Tente novamente ou entre com o Google.";
       toast.error(friendly);
       setLoading(false);
-      return;
-    }
-
-    if (fnData?.masterAccess) {
-      // Já está confirmado — faz login direto
-      const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
-      if (signInErr) {
-        console.error("Master auto-login error:", signInErr);
-        toast.error("Conta criada, mas o login automático falhou. Tente entrar com o Google.");
-        setLoading(false);
-        return;
-      }
-      toast.success("Conta criada com 1 mês de acesso liberado!");
       return;
     }
 
