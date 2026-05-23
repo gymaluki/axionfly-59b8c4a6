@@ -11,6 +11,7 @@ import AdminView from "@/components/views/AdminView";
 import ContratoScriptView from "@/components/views/ContratoScriptView";
 import PerfilView from "@/components/views/PerfilView";
 import ExtensaoLovableView from "@/components/views/ExtensaoLovableView";
+import MeuGrupoView from "@/components/views/MeuGrupoView";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,7 +21,9 @@ import { supabase } from "@/integrations/supabase/client";
 import OnboardingTour from "@/components/OnboardingTour";
 import ExtensionUpdateNotice from "@/components/ExtensionUpdateNotice";
 
-type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable";
+const GRUPO_ALLOWED_EMAILS = ["evair.lol@live.com"];
+
+type View = "prospeccao" | "sites" | "vendas" | "membros" | "admin" | "contrato" | "perfil" | "extensao-lovable" | "meu-grupo";
 
 class DashboardViewErrorBoundary extends Component<
   { children: ReactNode },
