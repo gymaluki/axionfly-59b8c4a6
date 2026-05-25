@@ -19,16 +19,22 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          is_owner: boolean
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           email: string
           id?: string
+          is_owner?: boolean
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           email?: string
           id?: string
+          is_owner?: boolean
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -689,6 +695,7 @@ export type Database = {
         }[]
       }
       is_admin: { Args: { check_user_id: string }; Returns: boolean }
+      is_owner: { Args: { check_user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
