@@ -527,7 +527,7 @@ const Index = () => {
             </motion.span>
             <div className="text-white text-[10px] md:text-sm font-black uppercase tracking-[0.1em] md:tracking-[0.18em] flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 md:gap-3 leading-tight">
               <span className="hidden md:inline text-yellow-200">PROMOÇÃO RELÂMPAGO:</span>
-              <span>70% OFF na plataforma</span>
+              <span>50% OFF na plataforma</span>
               <span className="text-yellow-300 hidden sm:inline">—</span>
               <div className="flex items-center gap-1.5 bg-black/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-yellow-400/40 shrink-0">
                 <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">Termina em</span>
@@ -926,7 +926,7 @@ const Index = () => {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
               </span>
               <span className="text-xs md:text-sm font-black uppercase tracking-[0.15em] text-red-300">
-                Promoção relâmpago — 70% OFF por tempo limitado
+                Promoção relâmpago — 50% OFF por tempo limitado
               </span>
             </motion.div>
 
