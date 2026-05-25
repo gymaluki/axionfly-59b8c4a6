@@ -274,8 +274,8 @@ export default function PricingCards() {
     {
       planName: "Plano Mensal",
       description: "Acesso completo ao AxionFly por mês",
-      price: "R$ 67,90",
-      comparePrice: "R$ 226,33",
+      price: "R$ 147,90",
+      comparePrice: "R$ 295,80",
       priceDescription: "/ mês",
       features: sharedFeatures,
       buttonText: "Aproveitar 50% OFF",
