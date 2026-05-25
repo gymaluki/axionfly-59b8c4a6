@@ -287,8 +287,8 @@ export default function PricingCards() {
     {
       planName: "Plano Vitalício",
       description: "Pague uma única vez (Acesso vitalício)",
-      price: "R$ 97,90",
-      comparePrice: "R$ 326,33",
+      price: "R$ 179,90",
+      comparePrice: "R$ 359,80",
       priceDescription: "/ custo único",
       features: sharedFeatures,
       buttonText: "Garantir Vitalício com 50% OFF",
