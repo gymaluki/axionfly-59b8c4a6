@@ -13,7 +13,7 @@ import AffiliatesAdminPanel from "@/components/admin/AffiliatesAdminPanel";
 import SystemErrorsPanel from "@/components/admin/SystemErrorsPanel";
 import { Progress } from "@/components/ui/progress";
 
-const OWNER_EMAIL = "andreyhenriquev4@gmail.com";
+// Owner status is determined server-side via is_owner() RPC.
 
 interface Subscription {
   id: string;
@@ -90,11 +90,17 @@ const AdminView = () => {
   const [testingConnection, setTestingConnection] = useState(false);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [currentEmail, setCurrentEmail] = useState<string | null>(null);
+  const [isOwner, setIsOwner] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setCurrentEmail(data.user?.email ?? null));
+    supabase.auth.getUser().then(async ({ data }) => {
+      setCurrentEmail(data.user?.email ?? null);
+      if (data.user) {
+        const { data: ownerRes } = await supabase.rpc("is_owner" as never, { check_user_id: data.user.id } as never);
+        setIsOwner(ownerRes === true);
+      }
+    });
   }, []);
-  const isOwner = currentEmail?.toLowerCase() === OWNER_EMAIL;
 
   const fetchData = async () => {
     setLoading(true);
