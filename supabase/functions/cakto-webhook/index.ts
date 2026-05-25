@@ -120,7 +120,7 @@ Deno.serve(async (req) => {
     const activeStatuses = [
       "approved", "paid", "completed", "complete",
       "purchase_approved", "purchase_complete", "order_paid",
-      "subscription_created", "subscription_started", "subscription_renewed",
+      "subscription_started", "subscription_renewed",
       "active",
     ];
     const inactiveStatuses = [
@@ -137,7 +137,7 @@ Deno.serve(async (req) => {
       subscriptionStatus = "inactive";
     }
 
-    // PROTEÇÃO ANTIFRAUDE: valor mínimo aceito para ativar assinatura.
+    // Apenas eventos realmente pagos/ativos podem liberar acesso.
     // O plano mais barato é R$67,90 — qualquer valor abaixo de R$30 é fraude
     // (atacante criando produto fake na Cakto por valor irrisório).
     const MIN_VALID_AMOUNT = 30;
