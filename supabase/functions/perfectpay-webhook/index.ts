@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version, x-webhook-token',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version, x-webhook-token, x-perfectpay-signature, x-signature, secret',
 };
 
 Deno.serve(async (req) => {
@@ -29,10 +29,25 @@ Deno.serve(async (req) => {
     }
     const normalizeValue = (value: unknown): string =>
       value === null || value === undefined ? "" : String(value).trim().toLowerCase();
+    const raw = await req.text();
+    let body: any = {};
+    try {
+      body = raw ? JSON.parse(raw) : {};
+    } catch {
+      console.error("Perfect Pay webhook: payload não é JSON válido", raw);
+      return new Response(JSON.stringify({ error: "Invalid JSON payload" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const url = new URL(req.url);
     const token =
       req.headers.get("x-webhook-token") ||
+      req.headers.get("x-perfectpay-signature") ||
+      req.headers.get("x-signature") ||
       req.headers.get("secret") ||
+      body?.secret ||
       url.searchParams.get("token") ||
       url.searchParams.get("secret");
     if (token !== PERFECTPAY_WEBHOOK_TOKEN) {
@@ -41,8 +56,6 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    const body = await req.json();
     console.log("Perfect Pay webhook received:", JSON.stringify(body));
 
     // Encaminhar para UTMify (Weenbook)
@@ -65,10 +78,10 @@ Deno.serve(async (req) => {
       console.error("Erro ao encaminhar para UTMify:", utmifyErr);
     }
 
-    const email = body?.customer?.email || body?.email;
-    const status = body?.sale_status_enum || body?.status;
-    const transactionId = body?.sale_id || body?.transaction_id || body?.id;
-    const plan = body?.product?.name || body?.plan || "default";
+    const email = body?.customer?.email || body?.customer_email || body?.email;
+    const status = body?.sale_status_enum || body?.sale_status || body?.status;
+    const transactionId = body?.sale_id || body?.transaction_id || body?.code || body?.id;
+    const plan = body?.product?.name || body?.product_name || body?.plan || "monthly";
     const normalizedEmail = normalizeValue(email);
     const normalizedTransactionId = normalizeValue(transactionId);
 
@@ -99,7 +112,7 @@ Deno.serve(async (req) => {
 
       // Salvar pagamento pendente para ativar quando o usuário se cadastrar
       const statusLowerPending = (status || "").toLowerCase();
-      const activeStatusesPending = ["approved", "completed", "paid", "subscription_started", "subscription_renewed"];
+      const activeStatusesPending = ["approved", "completed", "paid", "subscription_started", "subscription_renewed", "active"];
 
       if (activeStatusesPending.includes(statusLowerPending)) {
         const { error: pendingError } = await supabase
