@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/dialog";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
-const DEFAULT_TOKEN = "WGf4zznFpWp3Th6DMLc2dGUkEXUfxBEgFs3K";
 
 interface SaleRow {
   id: string;
