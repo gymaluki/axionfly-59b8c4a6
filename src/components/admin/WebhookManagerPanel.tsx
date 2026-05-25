@@ -31,7 +31,7 @@ interface SaleRow {
 }
 
 export default function WebhookManagerPanel() {
-  const [token, setToken] = useState<string>(() => localStorage.getItem("cakto_webhook_token_preview") || DEFAULT_TOKEN);
+  const [token, setToken] = useState<string>(() => localStorage.getItem("cakto_webhook_token_preview") || "");
   const [copied, setCopied] = useState(false);
   const [testing, setTesting] = useState(false);
   const [testResult, setTestResult] = useState<{ ok: boolean; status: number; body: string } | null>(null);
