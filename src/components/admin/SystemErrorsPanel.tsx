@@ -23,7 +23,7 @@ interface SystemError {
   resolved: boolean;
 }
 
-const OWNER_EMAIL = "andreyhenriquev4@gmail.com";
+// Owner gate is enforced server-side via RLS + is_owner() RPC.
 
 export default function SystemErrorsPanel() {
   const [errors, setErrors] = useState<SystemError[]>([]);
@@ -31,10 +31,17 @@ export default function SystemErrorsPanel() {
   const [search, setSearch] = useState("");
   const [showResolved, setShowResolved] = useState(false);
   const [live, setLive] = useState(false);
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [isOwner, setIsOwner] = useState<boolean | null>(null);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => setUserEmail(data.user?.email ?? null));
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (!data.user) {
+        setIsOwner(false);
+        return;
+      }
+      const { data: ownerRes } = await supabase.rpc("is_owner" as never, { check_user_id: data.user.id } as never);
+      setIsOwner(ownerRes === true);
+    });
   }, []);
 
   const fetchErrors = async () => {
@@ -105,7 +112,7 @@ export default function SystemErrorsPanel() {
   };
 
   // Gate: only owner sees this content
-  if (userEmail && userEmail.toLowerCase() !== OWNER_EMAIL) {
+  if (isOwner === false) {
     return (
       <Card className="bg-card border-border">
         <CardContent className="p-8 text-center">
