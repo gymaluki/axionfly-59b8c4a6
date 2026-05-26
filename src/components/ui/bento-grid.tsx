@@ -37,9 +37,10 @@ function BentoGrid({ items, className }: BentoGridProps) {
           key={index}
           className={cn(
             "group relative p-8 md:p-10 rounded-2xl overflow-hidden transition-all duration-300",
-            "border border-white/[0.06] bg-[#0a0a0f] min-h-[220px]",
-            "hover:border-primary/40 hover:bg-[#0d0d14] hover:-translate-y-0.5",
-            "hover:shadow-[0_8px_40px_-12px_hsl(var(--primary)/0.35)]",
+            "border border-primary/15 min-h-[220px]",
+            "bg-[radial-gradient(120%_120%_at_0%_0%,hsl(var(--primary)/0.22)_0%,#0a0f1f_45%,#05070d_100%)]",
+            "hover:border-primary/50 hover:-translate-y-0.5",
+            "hover:shadow-[0_10px_50px_-12px_hsl(var(--primary)/0.55)]",
             colSpanMap[item.colSpan ?? 2] || "md:col-span-2",
           )}
         >
