@@ -30,6 +30,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { resolveCheckoutUrl, setSelectedPlan, clearAffiliateData } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
+import CheckoutModal from "@/components/CheckoutModal";
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -118,15 +119,20 @@ function PricingCard({
 }: PricingCardProps) {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const vagas = useVagasRestantes(4);
 
   const handleClick = async () => {
-    // Salva o plano escolhido no localStorage
     setSelectedPlan(plan);
-    
-    // Sempre redireciona para criar conta primeiro
-    toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
-    navigate("/auth?isSignup=true");
+    try {
+      const url = await resolveCheckoutUrl(plan);
+      setCheckoutUrl(url);
+      setCheckoutOpen(true);
+    } catch (err) {
+      console.error("Checkout error:", err);
+      toast.error("Não foi possível abrir o checkout. Tente novamente.");
+    }
   };
 
   const visibleFeatures = isExpanded ? features : features.slice(0, 5);
@@ -246,6 +252,13 @@ function PricingCard({
           <FaBarcode className="h-6 w-6" />
         </div>
       </div>
+
+      <CheckoutModal
+        open={checkoutOpen}
+        onOpenChange={setCheckoutOpen}
+        checkoutUrl={checkoutUrl}
+        planName={planName}
+      />
     </motion.div>
   );
 }
