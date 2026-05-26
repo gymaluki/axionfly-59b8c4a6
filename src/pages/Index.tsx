@@ -607,24 +607,12 @@ const Index = () => {
             <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
             <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
 
-            <ul className="grid grid-cols-1 grid-rows-none gap-4 md:grid-cols-12 md:grid-rows-3 lg:gap-4 xl:max-h-[40rem] xl:grid-rows-2">
-              {features.map((f, i) => {
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {features.map((f) => {
                 const Icon = f.icon;
-                const area =
-                  i === 0
-                    ? "md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]"
-                    : i === 1
-                    ? "md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]"
-                    : i === 2
-                    ? "md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]"
-                    : i === 3
-                    ? "md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]"
-                    : i === 4
-                    ? "md:[grid-area:3/1/4/7] xl:[grid-area:2/8/3/10]"
-                    : "md:[grid-area:3/7/4/13] xl:[grid-area:2/10/3/13]";
                 return (
-                  <li key={f.title} className={cn("min-h-[14rem] list-none", area)}>
-                    <div className="relative h-full rounded-[1.25rem] border border-primary/15 p-2 md:rounded-[1.5rem] md:p-3">
+                  <li key={f.title} className="list-none">
+                    <div className="relative h-full rounded-[1.25rem] border border-primary/15 p-2 md:rounded-[1.5rem] md:p-2.5">
                       <GlowingEffect
                         spread={40}
                         glow
@@ -633,19 +621,17 @@ const Index = () => {
                         inactiveZone={0.01}
                         borderWidth={3}
                       />
-                      <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] border-border bg-[radial-gradient(120%_120%_at_0%_0%,hsl(var(--primary)/0.18)_0%,#0a0f1f_45%,#05070d_100%)] p-6 shadow-sm md:p-6">
-                        <div className="relative flex flex-1 flex-col justify-between gap-3">
-                          <div className="w-fit rounded-lg border border-primary/25 bg-primary/10 p-2">
-                            <Icon className="h-5 w-5 text-primary" />
-                          </div>
-                          <div className="space-y-3">
-                            <h3 className="pt-0.5 text-xl/[1.375rem] font-black tracking-tight text-foreground md:text-2xl/[1.875rem]">
-                              {f.title}
-                            </h3>
-                            <p className="text-sm/[1.125rem] text-[#94a3b8] md:text-base/[1.375rem]">
-                              {f.desc}
-                            </p>
-                          </div>
+                      <div className="relative flex h-full min-h-[260px] flex-col gap-5 overflow-hidden rounded-xl border-[0.75px] border-border bg-[radial-gradient(120%_120%_at_0%_0%,hsl(var(--primary)/0.18)_0%,#0a0f1f_45%,#05070d_100%)] p-6">
+                        <div className="w-fit rounded-lg border border-primary/25 bg-primary/10 p-2">
+                          <Icon className="h-5 w-5 text-primary" />
+                        </div>
+                        <div className="space-y-2.5">
+                          <h3 className="text-xl font-black tracking-tight text-foreground leading-snug">
+                            {f.title}
+                          </h3>
+                          <p className="text-[14px] text-[#94a3b8] leading-[1.65]">
+                            {f.desc}
+                          </p>
                         </div>
                       </div>
                     </div>
