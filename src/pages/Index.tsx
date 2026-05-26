@@ -545,15 +545,14 @@ const Index = () => {
               <div className="space-y-6 px-4">
                 <div className="flex justify-center">
                   <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.15em] text-primary backdrop-blur-sm">
-                    Veja por dentro
+                    A plataforma por dentro
                   </span>
                 </div>
                 <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-[1.05]">
-                  Veja como é fácil <span className="gradient-text">criar um site e fechar um contrato</span> <br className="hidden md:block" />
-                  — do zero, em 10 minutos
+                  2 minutos pra <span className="gradient-text">entender tudo</span>.
                 </h2>
                 <p className="text-[#94a3b8] max-w-2xl mx-auto text-[16px] md:text-[18px] font-normal leading-[1.7]">
-                  Assista o tour completo da plataforma. Do celular ou do computador, tudo no mesmo lugar.
+                  Interface completa, passo a passo. Veja como criar um site, prospectar clientes e gerar contratos — tudo numa tela só.
                 </p>
               </div>
             }
