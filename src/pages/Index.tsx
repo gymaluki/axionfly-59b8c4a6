@@ -580,117 +580,33 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Funcionalidades — bento grid de cards */}
+          {/* Funcionalidades — bento grid de cards (texto) */}
           <div className="relative max-w-6xl mx-auto">
             {/* Glows ambiente */}
             <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
             <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
 
-            <div className="relative grid grid-cols-1 md:grid-cols-3 auto-rows-fr gap-5 md:gap-6">
-              {features.map(({ icon: Icon, title, desc, tag, visual, bullets }: any, i) => {
-                // Bento: spans somam 9 (3 linhas de 3 colunas)
-                const spanClass =
-                  i === 0 ? "md:col-span-2" :
-                  i === 2 ? "md:col-span-2" :
-                  i === 4 ? "md:col-span-3" :
-                  "md:col-span-1";
-
-                return (
-                  <motion.div
-                    key={title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.55, delay: i * 0.08, ease }}
-                    className={cn("group", spanClass)}
-                  >
-                    <GlowCard
-                      glowColor="navy"
-                      customSize
-                      className="w-full h-full !p-0 overflow-hidden"
-                    >
-                      <article className={cn(
-                        "relative flex flex-col overflow-hidden rounded-2xl h-full w-full bg-card/40 backdrop-blur-sm transition-all duration-500"
-                      )}>
-                        <div aria-hidden className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                        <div className={cn(
-                          "relative flex-1 flex flex-col",
-                          i === 4 && "md:grid md:grid-cols-2 md:items-center md:gap-2"
-                        )}>
-                          <div className="relative p-6 md:p-7 space-y-4 flex-1">
-                            <div className="flex items-center justify-between">
-                              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.08] px-3 py-1 backdrop-blur-sm">
-                                <Icon className="w-3.5 h-3.5 text-primary" />
-                                <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">{tag}</span>
-                              </div>
-                              <span className="text-[10px] font-bold uppercase tracking-widest text-primary/70 hidden md:inline">
-                                0{i + 1}
-                              </span>
-                            </div>
-
-                            <h3 className="text-xl md:text-2xl font-black text-foreground tracking-tight leading-[1.2]">
-                              {title}
-                            </h3>
-                            <p className="text-sm text-[#94a3b8] leading-[1.65]">
-                              {desc}
-                            </p>
-
-                            {bullets && (
-                              <ul className="space-y-2 pt-1">
-                                {bullets.slice(0, 3).map((item: string) => (
-                                  <li key={item} className="flex items-start gap-2.5 text-xs text-slate-300">
-                                    <div className="mt-0.5 flex-shrink-0 w-3.5 h-3.5 rounded-full bg-primary/15 border border-primary/40 flex items-center justify-center">
-                                      <svg className="w-2 h-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                      </svg>
-                                    </div>
-                                    <span className="leading-[1.5]">{item}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </div>
-
-                          <div className={cn(
-                            "relative px-5 pb-5",
-                            i === 4 && "md:pt-5 md:pl-0"
-                          )}>
-                            <div className={cn(
-                              "relative rounded-xl overflow-hidden border border-primary/20 bg-gradient-to-br from-primary/[0.08] via-background/30 to-background/60",
-                              visual === "globe" ? "h-[240px] md:h-[260px]" : (i === 4 ? "h-[220px]" : "h-[180px]")
-                            )}>
-                              <div aria-hidden className="pointer-events-none absolute inset-0 bg-primary/10 blur-[50px] opacity-40 group-hover:opacity-70 transition-opacity duration-700" />
-
-                              <div
-                                aria-hidden
-                                className="absolute inset-0 opacity-[0.06]"
-                                style={{
-                                  backgroundImage: `linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)`,
-                                  backgroundSize: "20px 20px",
-                                }}
-                              />
-
-                              <div aria-hidden className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40 rounded-tl-sm" />
-                              <div aria-hidden className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40 rounded-tr-sm" />
-                              <div aria-hidden className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-primary/40 rounded-bl-sm" />
-                              <div aria-hidden className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-primary/40 rounded-br-sm" />
-
-                              <FeatureMiniVisual visual={visual} Icon={Icon} index={i} />
-
-                              <div
-                                aria-hidden
-                                className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1400ms] ease-out bg-gradient-to-r from-transparent via-primary/10 to-transparent"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </article>
-                    </GlowCard>
-                  </motion.div>
-                );
-              })}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease }}
+              className="relative"
+            >
+              <BentoGrid
+                items={features.map(({ icon: Icon, title, desc, tag, bullets }: any, i: number) => ({
+                  title,
+                  description: desc,
+                  icon: <Icon className="w-4 h-4 text-primary" />,
+                  status: tag,
+                  bullets,
+                  tags: [`0${i + 1}`],
+                  cta: "Saiba mais →",
+                  colSpan: i === 0 || i === 2 ? 2 : 1,
+                  hasPersistentHover: i === 0,
+                }))}
+              />
+            </motion.div>
           </div>
         </section>
 
