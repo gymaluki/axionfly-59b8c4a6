@@ -649,18 +649,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-primary/15 bg-[radial-gradient(120%_120%_at_50%_0%,hsl(var(--primary)/0.18)_0%,#070b14_45%,#04060b_100%)] px-4 py-12 md:px-10 md:py-16">
-            {/* Grid background */}
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.18]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(hsl(var(--primary)/0.35) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)/0.35) 1px, transparent 1px)",
-                backgroundSize: "56px 56px",
-                maskImage:
-                  "radial-gradient(ellipse at center, black 40%, transparent 80%)",
-              }}
-            />
+          <div className="relative mx-auto max-w-6xl px-2 py-8 md:px-6 md:py-12">
             {/* Vertical center line (desktop) */}
             <div className="pointer-events-none absolute left-1/2 top-10 bottom-10 hidden w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/40 to-transparent md:block" />
 
