@@ -66,7 +66,7 @@ export function Header({ className }: { className?: string }) {
 			{/* Logo */}
 				<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center shrink-0">
 					<div className="p-1.5 flex items-center justify-center">
-						<img src={axionflyLogo} alt="AxionFly" width="240" height="48" decoding="async" className="h-10 md:h-12 w-auto" />
+						<img src={axionflyLogo} alt="AxionFly" width="200" height="40" decoding="async" className="h-8 md:h-9 w-auto" />
 					</div>
 				</a>
 
