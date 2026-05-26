@@ -139,12 +139,10 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-3xl px-6 pb-6 pt-16 sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
+      className={`relative flex w-full max-w-sm flex-col rounded-3xl px-6 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
         isHighlight 
-          ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] lg:scale-[1.05] z-10 bg-gradient-to-b from-primary/10 to-card" 
-          : savingsBadge 
-            ? "border-primary/40 shadow-[0_0_20px_rgba(37,99,235,0.1)] bg-card"
-            : "border-border/50 bg-card/50"
+          ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] z-10 bg-gradient-to-b from-primary/10 to-card" 
+          : "border-border/50 bg-card/50"
       }`}
     >
       {isHighlight && (
@@ -156,32 +154,18 @@ function PricingCard({
         </div>
       )}
 
-      {savingsBadge && !isHighlight && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-          <span className="shimmer-button inline-flex items-center gap-1.5 rounded-full bg-primary/80 px-6 py-1.5 text-xs font-black text-primary-foreground shadow-xl uppercase tracking-widest">
-            {savingsBadge}
-          </span>
-        </div>
-      )}
-
       <div className="mb-8 text-center space-y-2">
         <h3 className="text-2xl font-black text-foreground">{planName}</h3>
         <p className="text-sm font-medium text-muted-foreground">{description}</p>
       </div>
 
       <div className="mb-8 text-center">
-        <div className="flex flex-col items-center justify-center gap-2 mb-3">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="bg-red-500/20 text-red-300 text-[11px] font-black px-3 py-1 rounded-full border-2 border-red-500/40 uppercase tracking-wider shadow-[0_0_12px_rgba(239,68,68,0.2)]">
-              ⚡ Promoção relâmpago — 50% OFF
-            </span>
-          </div>
-        </div>
-
         {comparePrice && (
-          <div className="mb-2 flex flex-col items-center gap-1.5 justify-center">
+          <div className="mb-3 flex flex-col items-center gap-2 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
-            <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">50% OFF</span>
+            <span className="text-red-300 font-black text-[11px] bg-red-500/15 px-3 py-1 rounded-full border border-red-500/40 uppercase tracking-wider">
+              ⚡ 50% OFF — termina em <CountdownTimer />
+            </span>
           </div>
         )}
         <div className="flex flex-col items-center justify-center gap-1">
@@ -336,30 +320,13 @@ export default function PricingCards() {
         </p>
       </motion.div>
 
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-6 mb-20 px-4 md:px-0 w-full overflow-x-auto pb-8 snap-x snap-mandatory lg:overflow-visible no-scrollbar">
+      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-6 px-4 md:px-0 w-full overflow-x-auto pb-4 snap-x snap-mandatory lg:overflow-visible no-scrollbar">
         {plans.map((plan) => (
           <div key={plan.planName} className="w-full max-w-sm shrink-0 snap-center lg:w-1/3">
             <PricingCard {...plan} />
           </div>
         ))}
       </div>
-
-      {/* Guarantee Bar */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="max-w-4xl mx-auto p-6 rounded-2xl border border-primary/20 bg-primary/5 flex flex-wrap items-center justify-center gap-8 md:gap-12"
-      >
-        <div className="flex items-center gap-3">
-          <Zap className="w-6 h-6 text-primary" />
-          <span className="text-sm font-black uppercase tracking-widest text-foreground">Acesso Imediato</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <Check className="w-6 h-6 text-primary" />
-          <span className="text-sm font-black uppercase tracking-widest text-foreground">Suporte 24/7</span>
-        </div>
-      </motion.div>
     </section>
   );
 }

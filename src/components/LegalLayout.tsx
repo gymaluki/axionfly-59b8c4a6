@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ChevronRight } from "lucide-react";
-import logo from "@/assets/axionfly-logo.webp";
+import logo from "@/assets/axionfly-logo-x.png";
 
 interface LegalSection {
   id: string;

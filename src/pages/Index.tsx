@@ -12,7 +12,7 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { BentoGrid } from "@/components/ui/bento-grid";
 
-import axionflyLogo from "@/assets/axionfly-logo.webp";
+import axionflyLogo from "@/assets/axionfly-logo-x.png";
 
 
 // Below-the-fold heavy components: lazy for faster initial paint
@@ -544,13 +544,7 @@ const Index = () => {
 
         <div className="pt-[108px] md:pt-[140px]">
 
-        {/* ═══════════ HERO ═══════════ */}
-        <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
-          <div className="absolute inset-0 z-0" />
-          <div className="relative z-10">
-            <HeroSection />
-          </div>
-        </div>
+        {/* HERO removido a pedido */}
 
         {/* ═══════════ FUNCIONALIDADES ═══════════ */}
         <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">

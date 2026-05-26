@@ -10,17 +10,17 @@ export default function ActiveUsersBar() {
   const percent = Math.min(100, Math.round((ativos / TOTAL) * 100));
 
   return (
-    <section className="container mx-auto px-4 pt-4 pb-16 md:pt-6 md:pb-24">
+    <section className="container mx-auto px-4 pt-2 pb-12 md:pt-4 md:pb-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="max-w-3xl mx-auto rounded-2xl border border-white/10 bg-[#0a0a0e]/80 backdrop-blur-sm p-6 md:p-8 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.6)]"
+        className="max-w-3xl mx-auto rounded-2xl border border-primary/20 bg-[#0a0a0e]/80 backdrop-blur-sm p-6 md:p-8 shadow-[0_8px_40px_-12px_rgba(37,99,235,0.25)]"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2 text-foreground">
-            <AlertTriangle className="w-4 h-4 text-emerald-400" />
+            <AlertTriangle className="w-4 h-4 text-primary" />
             <span className="text-sm md:text-base font-medium">Usuários ativos</span>
           </div>
           <div className="text-sm md:text-base font-black text-foreground tabular-nums">
@@ -34,7 +34,7 @@ export default function ActiveUsersBar() {
             whileInView={{ width: `${percent}%` }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.4)]"
+            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary to-primary/70 shadow-[0_0_20px_rgba(37,99,235,0.5)]"
           />
         </div>
 
