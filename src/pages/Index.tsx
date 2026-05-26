@@ -635,7 +635,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
-        <section className="container mx-auto px-4 py-20 md:py-32 relative">
+        <section className="container mx-auto px-4 py-10 md:py-14 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05)_0%,transparent_70%)] pointer-events-none" />
           <motion.div
             initial="hidden"
@@ -671,7 +671,7 @@ const Index = () => {
         </Suspense>
 
         {/* ═══════════ FAQ ═══════════ */}
-        <section id="faq" className="container mx-auto px-4 py-24 md:py-32 relative">
+        <section id="faq" className="container mx-auto px-4 py-16 md:py-20 relative">
           {/* ambient glow */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.04] blur-[140px] rounded-full pointer-events-none" />
 
