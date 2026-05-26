@@ -146,7 +146,7 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex h-full w-full flex-col rounded-3xl px-6 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
+      className={`relative flex h-full min-h-[920px] w-full flex-col rounded-3xl px-6 pb-6 pt-12 sm:min-h-[940px] sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
         isHighlight 
           ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] z-10 bg-gradient-to-b from-primary/10 to-card" 
           : "border-border/50 bg-card/50"
@@ -161,12 +161,12 @@ function PricingCard({
         </div>
       )}
 
-      <div className="mb-8 text-center space-y-2">
+      <div className="mb-8 min-h-[72px] text-center space-y-2">
         <h3 className="text-2xl font-black text-foreground">{planName}</h3>
         <p className="text-sm font-medium text-muted-foreground">{description}</p>
       </div>
 
-      <div className="mb-8 text-center">
+      <div className="mb-8 min-h-[142px] text-center">
         {comparePrice && (
           <div className="mb-3 flex flex-col items-center gap-2 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
@@ -206,7 +206,7 @@ function PricingCard({
         </div>
       </div>
 
-      <div className="flex-1 mb-8">
+      <div className="mb-8 flex-1">
         <ul className="space-y-4">
           <AnimatePresence>
             {visibleFeatures.map((feature, idx) => (
@@ -237,7 +237,7 @@ function PricingCard({
         )}
       </div>
 
-      <div className="space-y-4">
+      <div className="mt-auto space-y-4">
         <Button 
           variant={isHighlight ? "neon" : "outline"} 
           size="xl" 
@@ -331,9 +331,9 @@ export default function PricingCards() {
         </p>
       </motion.div>
 
-      <div className="flex flex-col lg:flex-row items-stretch justify-center gap-6 lg:gap-8 px-4 md:px-0 w-full max-w-5xl mx-auto">
+      <div className="grid w-full max-w-5xl grid-cols-1 items-stretch gap-6 px-4 md:px-0 lg:grid-cols-2 lg:gap-8 mx-auto">
         {plans.map((plan) => (
-          <div key={plan.planName} className="w-full lg:w-1/2 lg:max-w-md flex">
+          <div key={plan.planName} className="flex h-full w-full">
             <PricingCard {...plan} />
           </div>
         ))}
