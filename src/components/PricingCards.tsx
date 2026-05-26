@@ -30,7 +30,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { resolveCheckoutUrl, setSelectedPlan, clearAffiliateData } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
-import CheckoutModal from "@/components/CheckoutModal";
+
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -119,20 +119,22 @@ function PricingCard({
 }: PricingCardProps) {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [fallbackUrl, setFallbackUrl] = useState<string | null>(null);
   const vagas = useVagasRestantes(4);
 
   const handleClick = async () => {
     setSelectedPlan(plan);
     try {
       const url = await resolveCheckoutUrl(plan);
-      setFallbackUrl(url);
+      if (url) {
+        window.location.href = url;
+        return;
+      }
     } catch (err) {
-      console.error("Checkout fallback url error:", err);
+      console.error("Checkout url error:", err);
     }
-    setCheckoutOpen(true);
+    toast.error("Não foi possível abrir o checkout. Tente novamente.");
   };
+
 
   const visibleFeatures = isExpanded ? features : features.slice(0, 5);
 
@@ -252,15 +254,8 @@ function PricingCard({
         </div>
       </div>
 
-      <CheckoutModal
-        open={checkoutOpen}
-        onOpenChange={setCheckoutOpen}
-        planName={planName}
-        planKey={plan}
-        priceLabel={plan === "lifetime" ? "R$ 179,90" : price}
-        priceHint={plan === "lifetime" ? "à vista" : priceDescription}
-        fallbackUrl={fallbackUrl}
-      />
+
+
     </motion.div>
   );
 }
