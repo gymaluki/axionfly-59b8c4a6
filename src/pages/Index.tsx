@@ -17,7 +17,7 @@ import axionflyLogo from "@/assets/axionfly-logo.webp";
 
 // Below-the-fold heavy components: lazy for faster initial paint
 const PricingCards = lazy(() => import("@/components/PricingCards"));
-const LovablePartnership = lazy(() => import("@/components/LovablePartnership"));
+const ActiveUsersBar = lazy(() => import("@/components/ActiveUsersBar"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 
