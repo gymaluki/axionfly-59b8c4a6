@@ -146,7 +146,7 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex h-full min-h-[920px] w-full flex-col rounded-3xl px-6 pb-6 pt-12 sm:min-h-[940px] sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
+      className={`relative flex h-full w-full flex-col rounded-3xl px-5 pb-5 pt-9 sm:px-6 sm:pb-6 sm:pt-10 transition-all duration-500 border-2 ${
         isHighlight 
           ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] z-10 bg-gradient-to-b from-primary/10 to-card" 
           : "border-border/50 bg-card/50"
