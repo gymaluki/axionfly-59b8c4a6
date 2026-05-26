@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
 import { AlertTriangle, RefreshCw } from "lucide-react";
-import { useVagasRestantes } from "@/hooks/useVagasRestantes";
 
 const TOTAL = 500;
+const ATIVOS = 493;
+const VAGAS = 7;
 
 export default function ActiveUsersBar() {
-  const vagas = useVagasRestantes(7);
-  const ativos = Math.max(0, TOTAL - vagas);
-  const percent = Math.min(100, Math.round((ativos / TOTAL) * 100));
+  const percent = Math.min(100, Math.round((ATIVOS / TOTAL) * 100));
 
   return (
     <section className="container mx-auto px-4 pt-2 pb-12 md:pt-4 md:pb-20">
@@ -24,7 +23,7 @@ export default function ActiveUsersBar() {
             <span className="text-sm md:text-base font-medium">Usuários ativos</span>
           </div>
           <div className="text-sm md:text-base font-black text-foreground tabular-nums">
-            {ativos} / {TOTAL}
+            {ATIVOS} / {TOTAL}
           </div>
         </div>
 
@@ -39,7 +38,7 @@ export default function ActiveUsersBar() {
         </div>
 
         <p className="text-center text-sm md:text-base text-[#94a3b8] mt-5">
-          Restam apenas <span className="font-black text-foreground">{vagas} acessos</span> disponíveis.
+          Restam apenas <span className="font-black text-foreground">{VAGAS} acessos</span> disponíveis.
         </p>
 
         <div className="flex items-center justify-center gap-2 mt-2 text-xs text-[#64748b]">
