@@ -321,6 +321,18 @@ const features = [
       "Visão clara do seu crescimento em um único painel"
     ]
   },
+  {
+    icon: TrendingUp,
+    title: "Avaliador de Preço de Sites",
+    desc: "Descubra exatamente quanto cobrar por cada site. Responda perguntas sobre nicho, recursos e perfil do cliente — a IA calcula o preço justo de mercado para você fechar com confiança.",
+    tag: "NOVO",
+    visual: "dashboard",
+    bullets: [
+      "Calcula o valor ideal do site com base no nicho",
+      "Considera recursos, complexidade e perfil do cliente",
+      "Sugere faixa de preço para você nunca cobrar de menos"
+    ]
+  },
 ];
 
 const stats = [
