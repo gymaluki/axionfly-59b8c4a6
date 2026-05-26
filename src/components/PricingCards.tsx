@@ -320,9 +320,9 @@ export default function PricingCards() {
         </p>
       </motion.div>
 
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-6 px-4 md:px-0 w-full overflow-x-auto pb-4 snap-x snap-mandatory lg:overflow-visible no-scrollbar">
+      <div className="flex flex-col lg:flex-row items-stretch justify-center gap-6 lg:gap-8 px-4 md:px-0 w-full max-w-5xl mx-auto">
         {plans.map((plan) => (
-          <div key={plan.planName} className="w-full max-w-sm shrink-0 snap-center lg:w-1/3">
+          <div key={plan.planName} className="w-full lg:w-1/2 lg:max-w-md flex">
             <PricingCard {...plan} />
           </div>
         ))}
