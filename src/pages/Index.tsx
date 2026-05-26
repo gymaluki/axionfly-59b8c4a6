@@ -510,39 +510,11 @@ const Index = () => {
       <div className="min-h-screen bg-[#03060f] overflow-x-hidden relative max-w-[100vw]">
       <ShaderBackground />
       <div className="relative z-10">
-        {/* Urgency Banner — highly visible */}
-        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 min-h-[48px] md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
-          <div className="container mx-auto px-2 md:px-3 py-1.5 md:py-0 flex items-center justify-center gap-1.5 md:gap-4">
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="text-white text-base md:text-2xl shrink-0 self-center"
-            >
-              🔥
-            </motion.span>
-            <div className="text-white text-[10px] md:text-sm font-black uppercase tracking-[0.1em] md:tracking-[0.18em] flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 md:gap-3 leading-tight">
-              <span className="hidden md:inline text-yellow-200">PROMOÇÃO RELÂMPAGO:</span>
-              <span>50% OFF na plataforma</span>
-              <span className="text-yellow-300 hidden sm:inline">—</span>
-              <div className="flex items-center gap-1.5 bg-black/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-yellow-400/40 shrink-0">
-                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">Termina em</span>
-                <CountdownTimer />
-              </div>
-            </div>
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="text-white text-base md:text-2xl shrink-0 self-center"
-            >
-              🔥
-            </motion.span>
-          </div>
-        </div>
+        {/* Header */}
+        <Header />
 
-        {/* Header with offset to avoid covering the banner */}
-        <Header className="top-12 md:top-14" />
+        <div className="pt-[80px] md:pt-[96px]">
 
-        <div className="pt-[108px] md:pt-[140px]">
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
