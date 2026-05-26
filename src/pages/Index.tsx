@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GlowCard } from "@/components/ui/spotlight-card";
+import { BentoGrid } from "@/components/ui/bento-grid";
 
 import axionflyLogo from "@/assets/axionfly-logo.webp";
 
