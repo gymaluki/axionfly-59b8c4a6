@@ -120,19 +120,18 @@ function PricingCard({
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+  const [fallbackUrl, setFallbackUrl] = useState<string | null>(null);
   const vagas = useVagasRestantes(4);
 
   const handleClick = async () => {
     setSelectedPlan(plan);
     try {
       const url = await resolveCheckoutUrl(plan);
-      setCheckoutUrl(url);
-      setCheckoutOpen(true);
+      setFallbackUrl(url);
     } catch (err) {
-      console.error("Checkout error:", err);
-      toast.error("Não foi possível abrir o checkout. Tente novamente.");
+      console.error("Checkout fallback url error:", err);
     }
+    setCheckoutOpen(true);
   };
 
   const visibleFeatures = isExpanded ? features : features.slice(0, 5);
