@@ -139,7 +139,7 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex w-full max-w-sm flex-col rounded-3xl px-6 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
+      className={`relative flex h-full w-full flex-col rounded-3xl px-6 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
         isHighlight 
           ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] z-10 bg-gradient-to-b from-primary/10 to-card" 
           : "border-border/50 bg-card/50"
@@ -320,9 +320,9 @@ export default function PricingCards() {
         </p>
       </motion.div>
 
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-6 px-4 md:px-0 w-full overflow-x-auto pb-4 snap-x snap-mandatory lg:overflow-visible no-scrollbar">
+      <div className="flex flex-col lg:flex-row items-stretch justify-center gap-6 lg:gap-8 px-4 md:px-0 w-full max-w-5xl mx-auto">
         {plans.map((plan) => (
-          <div key={plan.planName} className="w-full max-w-sm shrink-0 snap-center lg:w-1/3">
+          <div key={plan.planName} className="w-full lg:w-1/2 lg:max-w-md flex">
             <PricingCard {...plan} />
           </div>
         ))}

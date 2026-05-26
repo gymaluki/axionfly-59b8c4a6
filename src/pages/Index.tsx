@@ -510,39 +510,11 @@ const Index = () => {
       <div className="min-h-screen bg-[#03060f] overflow-x-hidden relative max-w-[100vw]">
       <ShaderBackground />
       <div className="relative z-10">
-        {/* Urgency Banner — highly visible */}
-        <div className="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-red-600 via-orange-600 to-red-600 min-h-[48px] md:h-14 flex items-center text-center z-[60] shadow-[0_4px_30px_rgba(239,68,68,0.5)] animate-pulse-border">
-          <div className="container mx-auto px-2 md:px-3 py-1.5 md:py-0 flex items-center justify-center gap-1.5 md:gap-4">
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="text-white text-base md:text-2xl shrink-0 self-center"
-            >
-              🔥
-            </motion.span>
-            <div className="text-white text-[10px] md:text-sm font-black uppercase tracking-[0.1em] md:tracking-[0.18em] flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2 md:gap-3 leading-tight">
-              <span className="hidden md:inline text-yellow-200">PROMOÇÃO RELÂMPAGO:</span>
-              <span>50% OFF na plataforma</span>
-              <span className="text-yellow-300 hidden sm:inline">—</span>
-              <div className="flex items-center gap-1.5 bg-black/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-yellow-400/40 shrink-0">
-                <span className="text-[10px] md:text-xs font-black text-yellow-200 uppercase">Termina em</span>
-                <CountdownTimer />
-              </div>
-            </div>
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ repeat: Infinity, duration: 0.8 }}
-              className="text-white text-base md:text-2xl shrink-0 self-center"
-            >
-              🔥
-            </motion.span>
-          </div>
-        </div>
+        {/* Header */}
+        <Header />
 
-        {/* Header with offset to avoid covering the banner */}
-        <Header className="top-12 md:top-14" />
+        <div className="pt-[80px] md:pt-[96px]">
 
-        <div className="pt-[108px] md:pt-[140px]">
 
         {/* ═══════════ HERO ═══════════ */}
         <div id="inicio" className="relative w-full min-h-[70vh] md:min-h-[90vh]">
@@ -551,47 +523,6 @@ const Index = () => {
             <HeroSection />
           </div>
         </div>
-
-        {/* ═══════════ FUNCIONALIDADES ═══════════ */}
-        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
-          <SectionPill>Funcionalidades Premium</SectionPill>
-
-          <div className="text-center mb-24">
-            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
-              Tudo o que você precisa <br />
-              para <span className="gradient-text">escalar seu negócio</span>
-            </h2>
-            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
-              Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
-            </p>
-          </div>
-
-          {/* Funcionalidades — bento grid de cards (texto) */}
-          <div className="relative max-w-6xl mx-auto">
-            {/* Glows ambiente */}
-            <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
-            <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, ease }}
-              className="relative"
-            >
-              <BentoGrid
-                items={features.map(({ icon: Icon, title, desc, tag }: any, i: number) => ({
-                  title,
-                  description: desc,
-                  icon: <Icon className="w-5 h-5 text-primary" />,
-                  status: tag,
-                  // Layout: 2 cards largos no topo + 3 cards no meio
-                  colSpan: i < 2 ? 3 : 2,
-                }))}
-              />
-            </motion.div>
-          </div>
-        </section>
 
         {/* ═══════════ DEMO SCROLL ANIMATION ═══════════ */}
         <section id="demo" className="relative">
@@ -614,7 +545,6 @@ const Index = () => {
             }
           >
             <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background">
-              {/* Substitua o src abaixo pelo vídeo demo (ex.: /demo.mp4) */}
               <video
                 className="w-full h-full object-cover rounded-2xl"
                 autoPlay
@@ -634,6 +564,46 @@ const Index = () => {
             </div>
           </ContainerScroll>
         </section>
+
+        {/* ═══════════ FUNCIONALIDADES ═══════════ */}
+        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
+          <SectionPill>Funcionalidades Premium</SectionPill>
+
+          <div className="text-center mb-24">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
+              Tudo o que você precisa <br />
+              para <span className="gradient-text">escalar seu negócio</span>
+            </h2>
+            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
+              Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
+            </p>
+          </div>
+
+          {/* Funcionalidades — bento grid de cards (texto) */}
+          <div className="relative max-w-6xl mx-auto">
+            <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
+            <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease }}
+              className="relative"
+            >
+              <BentoGrid
+                items={features.map(({ icon: Icon, title, desc, tag }: any, i: number) => ({
+                  title,
+                  description: desc,
+                  icon: <Icon className="w-5 h-5 text-primary" />,
+                  status: tag,
+                  colSpan: i < 2 ? 3 : 2,
+                }))}
+              />
+            </motion.div>
+          </div>
+        </section>
+
 
 
 
