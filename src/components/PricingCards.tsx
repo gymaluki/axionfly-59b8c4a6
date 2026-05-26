@@ -255,8 +255,11 @@ function PricingCard({
       <CheckoutModal
         open={checkoutOpen}
         onOpenChange={setCheckoutOpen}
-        checkoutUrl={checkoutUrl}
         planName={planName}
+        planKey={plan}
+        priceLabel={plan === "lifetime" ? "R$ 179,90" : price}
+        priceHint={plan === "lifetime" ? "à vista" : priceDescription}
+        fallbackUrl={fallbackUrl}
       />
     </motion.div>
   );
