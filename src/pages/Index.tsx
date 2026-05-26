@@ -12,7 +12,7 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { BentoGrid } from "@/components/ui/bento-grid";
 
-import axionflyLogo from "@/assets/axionfly-logo.webp";
+import axionflyLogo from "@/assets/axionfly-logo-x.png";
 
 
 // Below-the-fold heavy components: lazy for faster initial paint
