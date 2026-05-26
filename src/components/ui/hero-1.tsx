@@ -152,7 +152,7 @@ export function HeroSection() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="max-w-xl mx-auto lg:mx-0 text-[16px] md:text-[18px] text-[#94a3b8] font-normal leading-[1.7] mb-8"
+              className="max-w-xl mx-auto text-[16px] md:text-[18px] text-[#94a3b8] font-normal leading-[1.7] mb-8"
             >
               Escolha o plano ideal para você. Comece seu negócio{" "}
               <span className="text-foreground font-bold border-b-2 border-primary/40">com a liberdade</span> de crescer ainda mais.
