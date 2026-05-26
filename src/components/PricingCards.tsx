@@ -146,7 +146,7 @@ function PricingCard({
       variants={fadeUp}
       custom={index}
       whileHover={{ y: -10, transition: hoverTransition }}
-      className={`relative flex h-full min-h-[920px] w-full flex-col rounded-3xl px-6 pb-6 pt-12 sm:min-h-[940px] sm:px-8 sm:pb-8 sm:pt-12 transition-all duration-500 border-2 ${
+      className={`relative flex h-full w-full flex-col rounded-3xl px-5 pb-5 pt-9 sm:px-6 sm:pb-6 sm:pt-10 transition-all duration-500 border-2 ${
         isHighlight 
           ? "border-primary shadow-[0_0_40px_rgba(37,99,235,0.2)] z-10 bg-gradient-to-b from-primary/10 to-card" 
           : "border-border/50 bg-card/50"
@@ -161,12 +161,12 @@ function PricingCard({
         </div>
       )}
 
-      <div className="mb-8 min-h-[72px] text-center space-y-2">
-        <h3 className="text-2xl font-black text-foreground">{planName}</h3>
-        <p className="text-sm font-medium text-muted-foreground">{description}</p>
+      <div className="mb-5 min-h-[60px] text-center space-y-1.5">
+        <h3 className="text-xl sm:text-2xl font-black text-foreground">{planName}</h3>
+        <p className="text-[13px] font-medium text-muted-foreground">{description}</p>
       </div>
 
-      <div className="mb-8 min-h-[142px] text-center">
+      <div className="mb-5 min-h-[120px] text-center">
         {comparePrice && (
           <div className="mb-3 flex flex-col items-center gap-2 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
@@ -179,35 +179,35 @@ function PricingCard({
           {plan === "lifetime" ? (
             <>
               <div className="flex items-baseline gap-1">
-                <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+                <span className="text-[34px] sm:text-4xl font-black text-foreground tracking-tighter">
                   R$ 179,90
                 </span>
-                <span className="text-sm font-bold text-primary uppercase tracking-widest">à vista no Pix</span>
+                <span className="text-[11px] sm:text-xs font-bold text-primary uppercase tracking-widest">à vista no Pix</span>
               </div>
 
-              <div className="mt-3 flex flex-col items-center gap-1.5 w-full">
-                <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5">
-                  <span className="text-[11px] font-black uppercase tracking-wider text-primary">12x</span>
-                  <span className="text-base font-black text-foreground tabular-nums">R$ 14,99</span>
-                  <span className="text-[10px] font-bold text-primary/70 uppercase tracking-wider">sem juros</span>
+              <div className="mt-2 flex flex-col items-center gap-1 w-full">
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-primary">12x</span>
+                  <span className="text-sm font-black text-foreground tabular-nums">R$ 14,99</span>
+                  <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">sem juros</span>
                 </div>
-                <span className="text-[10px] font-bold text-primary/70 uppercase tracking-wider">ou 6x de R$ 29,98 no cartão</span>
+                <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">ou 6x de R$ 29,98 no cartão</span>
               </div>
             </>
 
           ) : (
             <div className="flex items-baseline gap-1">
-              <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+              <span className="text-[34px] sm:text-4xl font-black text-foreground tracking-tighter">
                 R$ <PriceCounter price={price} />
               </span>
-              <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
+              <span className="text-[11px] sm:text-xs font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
             </div>
           )}
         </div>
       </div>
 
-      <div className="mb-8 flex-1">
-        <ul className="space-y-4">
+      <div className="mb-5 flex-1">
+        <ul className="space-y-2.5">
           <AnimatePresence>
             {visibleFeatures.map((feature, idx) => (
               <motion.li
@@ -215,10 +215,10 @@ function PricingCard({
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                className="flex items-start gap-3 text-sm text-foreground/90 font-bold"
+                className="flex items-start gap-2.5 text-[13px] text-foreground/90 font-bold"
               >
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 mt-0.5">
-                  <Check className="h-3 w-3 text-primary stroke-[3px]" />
+                <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/20 mt-0.5">
+                  <Check className="h-2.5 w-2.5 text-primary stroke-[3px]" />
                 </div>
                 <span>{feature}</span>
               </motion.li>
@@ -229,29 +229,29 @@ function PricingCard({
         {features.length > 5 && (
           <button 
             onClick={() => setIsExpanded(!isExpanded)}
-            className="mt-6 flex items-center gap-2 text-xs font-black text-primary uppercase tracking-widest hover:opacity-80 transition-opacity"
+            className="mt-4 flex items-center gap-2 text-[11px] font-black text-primary uppercase tracking-widest hover:opacity-80 transition-opacity"
           >
             {isExpanded ? "Ver menos" : "Ver todos os recursos"}
-            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
           </button>
         )}
       </div>
 
-      <div className="mt-auto space-y-4">
+      <div className="mt-auto space-y-3">
         <Button 
           variant={isHighlight ? "neon" : "outline"} 
           size="xl" 
-          className={`w-full rounded-full font-black uppercase tracking-[0.2em] text-xs h-14 ${isHighlight ? "shimmer-button" : "border-2"}`} 
+          className={`w-full rounded-full font-black uppercase tracking-[0.2em] text-[11px] h-12 ${isHighlight ? "shimmer-button" : "border-2"}`} 
           onClick={handleClick}
         >
           {buttonText}
         </Button>
         
-        <div className="flex items-center justify-center gap-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-          <SiPix className="h-6 w-6" />
-          <FaCcMastercard className="h-7 w-7" />
-          <FaCcVisa className="h-7 w-7" />
-          <FaBarcode className="h-6 w-6" />
+        <div className="flex items-center justify-center gap-3 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+          <SiPix className="h-5 w-5" />
+          <FaCcMastercard className="h-6 w-6" />
+          <FaCcVisa className="h-6 w-6" />
+          <FaBarcode className="h-5 w-5" />
         </div>
       </div>
 
@@ -331,7 +331,7 @@ export default function PricingCards() {
         </p>
       </motion.div>
 
-      <div className="grid w-full max-w-5xl grid-cols-1 items-stretch gap-6 px-4 md:px-0 lg:grid-cols-2 lg:gap-8 mx-auto">
+      <div className="grid w-full max-w-4xl grid-cols-1 items-stretch gap-5 px-4 md:px-0 lg:grid-cols-2 lg:gap-6 mx-auto">
         {plans.map((plan) => (
           <div key={plan.planName} className="flex h-full w-full">
             <PricingCard {...plan} />
