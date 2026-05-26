@@ -8,6 +8,8 @@ import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { DashboardMockup } from "@/components/ui/dashboard-mockup";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { GlowCard } from "@/components/ui/spotlight-card";
 
 import axionflyLogo from "@/assets/axionfly-logo.webp";
 
