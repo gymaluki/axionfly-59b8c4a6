@@ -311,7 +311,7 @@ export default function PricingCards() {
   ];
 
   return (
-    <section id="pricing" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+    <section id="pricing" className="container mx-auto px-4 py-12 md:py-16 relative overflow-hidden">
       <div className="absolute inset-0 -z-10 pointer-events-none opacity-60">
         <PricingShaderCanvas />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#000_75%)]" />
