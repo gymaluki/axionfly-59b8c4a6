@@ -547,16 +547,17 @@ const Index = () => {
                   </span>
                 </div>
                 <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-[1.05]">
-                  A plataforma <span className="gradient-text">por dentro</span> <br className="hidden md:block" />
-                  no computador e no celular
+                  Veja como é fácil <span className="gradient-text">criar um site e fechar um contrato</span> <br className="hidden md:block" />
+                  — do zero, em 10 minutos
                 </h2>
                 <p className="text-[#94a3b8] max-w-2xl mx-auto text-[16px] md:text-[18px] font-normal leading-[1.7]">
-                  Role para baixo e veja a AxionFly ganhar vida — tour completo da interface em vídeo.
+                  Assista o tour completo da plataforma. Do celular ou do computador, tudo no mesmo lugar.
                 </p>
               </div>
             }
           >
-            <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background">
+            <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background overflow-hidden">
+              {/* Vídeo desktop */}
               <video
                 className="w-full h-full object-cover rounded-2xl"
                 autoPlay
@@ -567,11 +568,20 @@ const Index = () => {
               >
                 <source src="/demo.mp4" type="video/mp4" />
               </video>
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="text-center space-y-2 bg-background/40 backdrop-blur-sm px-6 py-3 rounded-2xl border border-primary/20">
-                  <p className="text-xs font-black uppercase tracking-[0.25em] text-primary">Vídeo demo</p>
-                  <p className="text-[11px] text-muted-foreground">Adicione seu vídeo em <code className="text-primary">/public/demo.mp4</code></p>
-                </div>
+
+              {/* Mockup celular sobreposto no canto */}
+              <div className="hidden md:block absolute bottom-4 right-4 lg:bottom-6 lg:right-6 w-[110px] lg:w-[140px] aspect-[9/19] rounded-[22px] border-[3px] border-[#1a1d2c] bg-[#05060d] shadow-[0_25px_60px_-10px_rgba(37,99,235,0.55)] overflow-hidden">
+                <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-2.5 rounded-full bg-black z-10" />
+                <video
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                >
+                  <source src="/demo-mobile.mp4" type="video/mp4" />
+                  <source src="/demo.mp4" type="video/mp4" />
+                </video>
               </div>
             </div>
           </ContainerScroll>
