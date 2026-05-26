@@ -773,9 +773,9 @@ const Index = () => {
           <PricingCards />
         </Suspense>
 
-        {/* ═══════════ PARCERIAS ═══════════ */}
-        <Suspense fallback={<div className="min-h-[400px]" />}>
-          <LovablePartnership />
+        {/* ═══════════ USUÁRIOS ATIVOS ═══════════ */}
+        <Suspense fallback={<div className="min-h-[160px]" />}>
+          <ActiveUsersBar />
         </Suspense>
 
         {/* ═══════════ FEEDBACKS ═══════════ */}
