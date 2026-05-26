@@ -252,6 +252,13 @@ function PricingCard({
           <FaBarcode className="h-6 w-6" />
         </div>
       </div>
+
+      <CheckoutModal
+        open={checkoutOpen}
+        onOpenChange={setCheckoutOpen}
+        checkoutUrl={checkoutUrl}
+        planName={planName}
+      />
     </motion.div>
   );
 }
