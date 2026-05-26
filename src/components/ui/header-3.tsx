@@ -75,13 +75,6 @@ export function Header({ className }: { className?: string }) {
 					<NavigationMenuList className="gap-2">
 						<NavigationMenuItem>
 							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
-								<a href="#inicio" onClick={(e) => { e.preventDefault(); document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }}>
-									Início
-								</a>
-							</NavigationMenuLink>
-						</NavigationMenuItem>
-						<NavigationMenuItem>
-							<NavigationMenuLink className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors px-4 py-2" asChild>
 								<a href="#etapas" onClick={(e) => { e.preventDefault(); document.getElementById('etapas')?.scrollIntoView({ behavior: 'smooth' }); }}>
 									Etapas
 								</a>
