@@ -30,7 +30,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { resolveCheckoutUrl, setSelectedPlan, clearAffiliateData } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
-import CheckoutModal from "@/components/CheckoutModal";
+
 
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
