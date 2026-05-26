@@ -24,6 +24,7 @@ const Testimonials = lazy(() => import("@/components/Testimonials"));
 import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
 import { resolveCheckoutUrl } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
+import { ShaderBackground } from "@/components/ui/shader-background";
 
 // Lazy load heavy visual components
 const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
