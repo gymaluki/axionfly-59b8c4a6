@@ -118,15 +118,20 @@ function PricingCard({
 }: PricingCardProps) {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const vagas = useVagasRestantes(4);
 
   const handleClick = async () => {
-    // Salva o plano escolhido no localStorage
     setSelectedPlan(plan);
-    
-    // Sempre redireciona para criar conta primeiro
-    toast.info("Crie sua conta primeiro para garantir o acesso ao plano!");
-    navigate("/auth?isSignup=true");
+    try {
+      const url = await resolveCheckoutUrl(plan);
+      setCheckoutUrl(url);
+      setCheckoutOpen(true);
+    } catch (err) {
+      console.error("Checkout error:", err);
+      toast.error("Não foi possível abrir o checkout. Tente novamente.");
+    }
   };
 
   const visibleFeatures = isExpanded ? features : features.slice(0, 5);
