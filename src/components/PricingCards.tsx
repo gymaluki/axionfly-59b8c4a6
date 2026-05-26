@@ -179,34 +179,34 @@ function PricingCard({
           {plan === "lifetime" ? (
             <>
               <div className="flex items-baseline gap-1">
-                <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+                <span className="text-[34px] sm:text-4xl font-black text-foreground tracking-tighter">
                   R$ 179,90
                 </span>
-                <span className="text-sm font-bold text-primary uppercase tracking-widest">à vista no Pix</span>
+                <span className="text-[11px] sm:text-xs font-bold text-primary uppercase tracking-widest">à vista no Pix</span>
               </div>
 
-              <div className="mt-3 flex flex-col items-center gap-1.5 w-full">
-                <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5">
-                  <span className="text-[11px] font-black uppercase tracking-wider text-primary">12x</span>
-                  <span className="text-base font-black text-foreground tabular-nums">R$ 14,99</span>
-                  <span className="text-[10px] font-bold text-primary/70 uppercase tracking-wider">sem juros</span>
+              <div className="mt-2 flex flex-col items-center gap-1 w-full">
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-primary">12x</span>
+                  <span className="text-sm font-black text-foreground tabular-nums">R$ 14,99</span>
+                  <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">sem juros</span>
                 </div>
-                <span className="text-[10px] font-bold text-primary/70 uppercase tracking-wider">ou 6x de R$ 29,98 no cartão</span>
+                <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">ou 6x de R$ 29,98 no cartão</span>
               </div>
             </>
 
           ) : (
             <div className="flex items-baseline gap-1">
-              <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+              <span className="text-[34px] sm:text-4xl font-black text-foreground tracking-tighter">
                 R$ <PriceCounter price={price} />
               </span>
-              <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
+              <span className="text-[11px] sm:text-xs font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
             </div>
           )}
         </div>
       </div>
 
-      <div className="mb-8 flex-1">
+      <div className="mb-5 flex-1">
         <ul className="space-y-4">
           <AnimatePresence>
             {visibleFeatures.map((feature, idx) => (
