@@ -328,8 +328,8 @@ export default function PricingCards() {
         className="mb-20 space-y-6 text-center"
       >
         <h2 className="text-3xl md:text-[44px] font-black tracking-tight text-foreground leading-[1.1]">
-          O plano ideal para <br />
-          seu <span className="gradient-text">próximo nível</span>
+          Quanto vale pular semanas de trabalho e <br className="hidden md:block" />
+          ir direto <span className="gradient-text">para o lucro?</span>
         </h2>
         <p className="mx-auto max-w-2xl text-[18px] md:text-[20px] text-[#94a3b8] font-normal leading-[1.7]">
           Sem taxas escondidas. Sem letras miúdas. Acesso imediato a todas as ferramentas após a confirmação.
