@@ -229,29 +229,29 @@ function PricingCard({
         {features.length > 5 && (
           <button 
             onClick={() => setIsExpanded(!isExpanded)}
-            className="mt-6 flex items-center gap-2 text-xs font-black text-primary uppercase tracking-widest hover:opacity-80 transition-opacity"
+            className="mt-4 flex items-center gap-2 text-[11px] font-black text-primary uppercase tracking-widest hover:opacity-80 transition-opacity"
           >
             {isExpanded ? "Ver menos" : "Ver todos os recursos"}
-            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+            <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
           </button>
         )}
       </div>
 
-      <div className="mt-auto space-y-4">
+      <div className="mt-auto space-y-3">
         <Button 
           variant={isHighlight ? "neon" : "outline"} 
           size="xl" 
-          className={`w-full rounded-full font-black uppercase tracking-[0.2em] text-xs h-14 ${isHighlight ? "shimmer-button" : "border-2"}`} 
+          className={`w-full rounded-full font-black uppercase tracking-[0.2em] text-[11px] h-12 ${isHighlight ? "shimmer-button" : "border-2"}`} 
           onClick={handleClick}
         >
           {buttonText}
         </Button>
         
-        <div className="flex items-center justify-center gap-4 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
-          <SiPix className="h-6 w-6" />
-          <FaCcMastercard className="h-7 w-7" />
-          <FaCcVisa className="h-7 w-7" />
-          <FaBarcode className="h-6 w-6" />
+        <div className="flex items-center justify-center gap-3 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300">
+          <SiPix className="h-5 w-5" />
+          <FaCcMastercard className="h-6 w-6" />
+          <FaCcVisa className="h-6 w-6" />
+          <FaBarcode className="h-5 w-5" />
         </div>
       </div>
 
