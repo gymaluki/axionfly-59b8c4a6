@@ -11,6 +11,7 @@ import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { BentoGrid } from "@/components/ui/bento-grid";
+import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 
 import axionflyLogo from "@/assets/axionfly-logo-x.png";
 
@@ -587,11 +588,11 @@ const Index = () => {
           </ContainerScroll>
         </section>
 
-        {/* ═══════════ FUNCIONALIDADES ═══════════ */}
-        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
+        {/* ═══════════ FUNCIONALIDADES (ORBITAL) ═══════════ */}
+        <section id="funcionalidades" className="container mx-auto px-4 py-12 md:py-16 relative">
           <SectionPill>Funcionalidades Premium</SectionPill>
 
-          <div className="text-center mb-24">
+          <div className="text-center mb-8">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
               Tudo o que você precisa <br />
               para <span className="gradient-text">escalar seu negócio</span>
@@ -601,133 +602,27 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Funcionalidades — bento grid de cards (texto) */}
           <div className="relative max-w-6xl mx-auto">
             <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
             <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, ease }}
-              className="relative"
-            >
-              <BentoGrid
-                items={features.map(({ icon: Icon, title, desc, tag }: any, i: number) => ({
-                  title,
-                  description: desc,
-                  icon: <Icon className="w-5 h-5 text-primary" />,
-                  status: tag,
-                  colSpan: i < 2 ? 3 : 2,
-                }))}
-              />
-            </motion.div>
-          </div>
-        </section>
-
-
-
-
-
-        {/* ═══════════ ETAPAS ═══════════ */}
-        <section id="etapas" className="container mx-auto px-4 pt-20 pb-0 md:pt-32 md:pb-0 relative">
-          <SectionPill>Chega de perder tempo</SectionPill>
-          
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 md:mb-20">
-            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
-              Você já perdeu tempo suficiente. <br />
-              Agora é hora de <span className="gradient-text">cobrar por isso.</span>
-            </h2>
-            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
-              Enquanto você aprende do zero, outros já estão fechando contratos. A AxionFly corta o caminho e te coloca direto no lucro.
-            </p>
-          </motion.div>
-
-          <div className="relative max-w-5xl mx-auto">
-            {/* Linha vertical central - Desktop */}
-            <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-primary/15 -z-10">
-              <motion.div
-                className="w-full bg-gradient-to-b from-primary to-primary/40 shadow-[0_0_15px_hsl(var(--primary)/0.4)]"
-                initial={{ height: 0 }}
-                whileInView={{ height: "100%" }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.8, ease: "easeInOut" }}
-              />
-            </div>
-
-            <div className="space-y-8 md:space-y-12">
-              {[
-                { step: "1", title: "Ative sua Ferramenta", desc: "Assine a AxionFly e acesse a plataforma em segundos. Sua base de operações está pronta para começar." },
-                { step: "2", title: "Responda o Quiz e Crie o Site", desc: "Escolha o nicho e responda algumas perguntas rápidas no quiz — a IA monta o site profissional completo em poucos minutos." },
-                { step: "3", title: "Encontre o Cliente e Venda", desc: "Use a busca automática de leads na sua região, envie o site pronto pelo WhatsApp com script validado e feche contratos de R$ 500 a R$ 3.000." },
-              ].map(({ step, title, desc }, i) => {
-                const isLeft = i % 2 === 0;
-                return (
-                  <motion.div
-                    key={step}
-                    initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 0.6, ease, delay: i * 0.08 }}
-                    className="relative md:grid md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-6"
-                  >
-                    {/* Card esquerda */}
-                    <div className={cn("hidden md:block", !isLeft && "invisible")}>
-                      {isLeft && (
-                        <div className="group relative rounded-2xl border border-primary/25 bg-card/40 backdrop-blur-sm p-7 hover:border-primary/60 hover:bg-card/60 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.15)]">
-                          <h3 className="text-xl md:text-2xl font-black text-primary mb-3">{title}</h3>
-                          <p className="text-[#94a3b8] leading-relaxed">{desc}</p>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Círculo numerado central */}
-                    <div className="hidden md:flex w-14 h-14 rounded-full bg-primary/15 border-2 border-primary items-center justify-center text-primary font-black text-lg shadow-[0_0_20px_hsl(var(--primary)/0.4)] relative z-10">
-                      {step}
-                    </div>
-
-                    {/* Card direita */}
-                    <div className={cn("hidden md:block", isLeft && "invisible")}>
-                      {!isLeft && (
-                        <div className="group relative rounded-2xl border border-primary/25 bg-card/40 backdrop-blur-sm p-7 hover:border-primary/60 hover:bg-card/60 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)/0.15)]">
-                          <h3 className="text-xl md:text-2xl font-black text-primary mb-3">{title}</h3>
-                          <p className="text-[#94a3b8] leading-relaxed">{desc}</p>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Layout mobile */}
-                    <div className="md:hidden flex gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/15 border-2 border-primary flex items-center justify-center text-primary font-black shadow-[0_0_15px_hsl(var(--primary)/0.4)]">
-                        {step}
-                      </div>
-                      <div className="flex-1 rounded-2xl border border-primary/25 bg-card/40 backdrop-blur-sm p-5">
-                        <h3 className="text-lg font-black text-primary mb-2">{title}</h3>
-                        <p className="text-[#94a3b8] text-sm leading-relaxed">{desc}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* CTA final */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-16 mb-0 text-center"
-            >
-              <Button
-                variant="outline"
-                size="xl"
-                className="rounded-full font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-sm px-6 sm:px-12 border-2 hover:bg-primary/10 group max-w-full whitespace-normal sm:whitespace-nowrap"
-                onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                QUERO COMEÇAR AGORA →
-              </Button>
-            </motion.div>
+            <RadialOrbitalTimeline
+              autoCycleMs={3500}
+              timelineData={features.map((f, i) => ({
+                id: i + 1,
+                title: f.title,
+                date: f.tag,
+                content: f.desc,
+                category: f.tag,
+                icon: f.icon,
+                relatedIds: [
+                  ((i + 1) % features.length) + 1,
+                  ((i + features.length - 1) % features.length) + 1,
+                ],
+                status: "completed" as const,
+                energy: 80 + ((i * 7) % 20),
+              }))}
+            />
           </div>
         </section>
 
@@ -740,7 +635,7 @@ const Index = () => {
         </section>
 
         {/* ═══════════ MÉTRICAS (Stats) ═══════════ */}
-        <section className="container mx-auto px-4 py-20 md:py-32 relative">
+        <section className="container mx-auto px-4 py-10 md:py-14 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05)_0%,transparent_70%)] pointer-events-none" />
           <motion.div
             initial="hidden"
@@ -776,7 +671,7 @@ const Index = () => {
         </Suspense>
 
         {/* ═══════════ FAQ ═══════════ */}
-        <section id="faq" className="container mx-auto px-4 py-24 md:py-32 relative">
+        <section id="faq" className="container mx-auto px-4 py-16 md:py-20 relative">
           {/* ambient glow */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/[0.04] blur-[140px] rounded-full pointer-events-none" />
 

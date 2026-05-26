@@ -120,19 +120,18 @@ function PricingCard({
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
+  const [fallbackUrl, setFallbackUrl] = useState<string | null>(null);
   const vagas = useVagasRestantes(4);
 
   const handleClick = async () => {
     setSelectedPlan(plan);
     try {
       const url = await resolveCheckoutUrl(plan);
-      setCheckoutUrl(url);
-      setCheckoutOpen(true);
+      setFallbackUrl(url);
     } catch (err) {
-      console.error("Checkout error:", err);
-      toast.error("Não foi possível abrir o checkout. Tente novamente.");
+      console.error("Checkout fallback url error:", err);
     }
+    setCheckoutOpen(true);
   };
 
   const visibleFeatures = isExpanded ? features : features.slice(0, 5);
@@ -256,8 +255,11 @@ function PricingCard({
       <CheckoutModal
         open={checkoutOpen}
         onOpenChange={setCheckoutOpen}
-        checkoutUrl={checkoutUrl}
         planName={planName}
+        planKey={plan}
+        priceLabel={plan === "lifetime" ? "R$ 179,90" : price}
+        priceHint={plan === "lifetime" ? "à vista" : priceDescription}
+        fallbackUrl={fallbackUrl}
       />
     </motion.div>
   );
@@ -309,27 +311,27 @@ export default function PricingCards() {
   ];
 
   return (
-    <section id="pricing" className="container mx-auto px-4 py-20 md:py-32 relative overflow-hidden">
+    <section id="pricing" className="container mx-auto px-4 py-12 md:py-16 relative overflow-hidden">
       <div className="absolute inset-0 -z-10 pointer-events-none opacity-60">
         <PricingShaderCanvas />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#000_75%)]" />
       </div>
-      <SectionPill>Investimento Inteligente</SectionPill>
-      
+      <SectionPill>Chega de perder tempo</SectionPill>
+
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="mb-20 space-y-6 text-center"
+        className="mb-16 space-y-6 text-center"
       >
         <h2 className="text-3xl md:text-[44px] font-black tracking-tight text-foreground leading-[1.1]">
-          Quanto vale pular semanas de trabalho e <br className="hidden md:block" />
-          ir direto <span className="gradient-text">para o lucro?</span>
+          Você já perdeu tempo suficiente. <br className="hidden md:block" />
+          Agora é hora de <span className="gradient-text">cobrar por isso.</span>
         </h2>
         <p className="mx-auto max-w-2xl text-[18px] md:text-[20px] text-[#94a3b8] font-normal leading-[1.7]">
-          Sem taxas escondidas. Sem letras miúdas. Acesso imediato a todas as ferramentas após a confirmação.
+          Enquanto você aprende do zero, outros já estão fechando contratos. A AxionFly corta o caminho e te coloca direto no lucro.
         </p>
       </motion.div>
 
