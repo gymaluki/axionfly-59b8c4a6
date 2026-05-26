@@ -316,22 +316,22 @@ export default function PricingCards() {
         <PricingShaderCanvas />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#000_75%)]" />
       </div>
-      <SectionPill>Investimento Inteligente</SectionPill>
-      
+      <SectionPill>Chega de perder tempo</SectionPill>
+
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeUp}
         custom={0}
-        className="mb-20 space-y-6 text-center"
+        className="mb-16 space-y-6 text-center"
       >
         <h2 className="text-3xl md:text-[44px] font-black tracking-tight text-foreground leading-[1.1]">
-          Quanto vale pular semanas de trabalho e <br className="hidden md:block" />
-          ir direto <span className="gradient-text">para o lucro?</span>
+          Você já perdeu tempo suficiente. <br className="hidden md:block" />
+          Agora é hora de <span className="gradient-text">cobrar por isso.</span>
         </h2>
         <p className="mx-auto max-w-2xl text-[18px] md:text-[20px] text-[#94a3b8] font-normal leading-[1.7]">
-          Sem taxas escondidas. Sem letras miúdas. Acesso imediato a todas as ferramentas após a confirmação.
+          Enquanto você aprende do zero, outros já estão fechando contratos. A AxionFly corta o caminho e te coloca direto no lucro.
         </p>
       </motion.div>
 
