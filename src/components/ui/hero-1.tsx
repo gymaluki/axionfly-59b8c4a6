@@ -120,14 +120,14 @@ export function HeroSection() {
   return (
     <section id="inicio" className="relative pt-20 pb-16 md:pt-28 md:pb-32 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-8 items-center">
+        <div className="flex justify-center">
           {/* LEFT — copy */}
-          <div className="text-center lg:text-left">
+          <div className="text-center max-w-3xl">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex justify-center lg:justify-start mb-6"
+              className="flex justify-center mb-6"
             >
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2 md:px-4 md:py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.2)]">
                 <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
@@ -152,7 +152,7 @@ export function HeroSection() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="max-w-xl mx-auto lg:mx-0 text-[16px] md:text-[18px] text-[#94a3b8] font-normal leading-[1.7] mb-8"
+              className="max-w-xl mx-auto text-[16px] md:text-[18px] text-[#94a3b8] font-normal leading-[1.7] mb-8"
             >
               Escolha o plano ideal para você. Comece seu negócio{" "}
               <span className="text-foreground font-bold border-b-2 border-primary/40">com a liberdade</span> de crescer ainda mais.
@@ -162,7 +162,7 @@ export function HeroSection() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.45 }}
-              className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 mb-10"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
             >
               <Button variant="neon" size="xl" className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-widest w-full sm:w-auto" onClick={() => navigate("/auth?isSignup=true")}>
                 <Zap className="size-5 mr-2 fill-current" />
@@ -188,59 +188,6 @@ export function HeroSection() {
                 <p className="text-[10px] font-bold uppercase tracking-widest text-primary">Contratos fechados</p>
                 <p className="text-xl font-black text-foreground tabular-nums">R$ 15.400 <span className="text-emerald-500 text-xs">+24%</span></p>
               </div>
-            </motion.div>
-          </div>
-
-          {/* RIGHT — floating mockups */}
-          <div className="relative h-[420px] sm:h-[480px] lg:h-[560px] flex items-center justify-center overflow-hidden lg:overflow-visible">
-            {/* Glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.35),transparent_60%)] blur-3xl pointer-events-none" />
-
-            {/* Orbital ring */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.4 }}
-              animate={{ opacity: 0.5, scale: 1, rotate: 360 }}
-              transition={{
-                opacity: { duration: 1, delay: 0.6 },
-                scale: { duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] },
-                rotate: { duration: 30, repeat: Infinity, ease: "linear" },
-              }}
-              className="absolute w-[110%] h-[70%] rounded-[50%] border border-primary/40 pointer-events-none"
-              style={{ borderStyle: "solid", boxShadow: "0 0 40px rgba(37,99,235,0.25) inset" }}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.4 }}
-              animate={{ opacity: 0.3, scale: 1, rotate: -360 }}
-              transition={{
-                opacity: { duration: 1, delay: 0.8 },
-                scale: { duration: 1, delay: 0.8 },
-                rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-              }}
-              className="absolute w-[95%] h-[55%] rounded-[50%] border border-primary/20 pointer-events-none"
-            />
-
-            {/* Laptop floating */}
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute left-0 right-12 top-1/2 -translate-y-1/2 w-[88%] max-w-[460px] z-10"
-            >
-              <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
-                <LaptopMockup />
-              </motion.div>
-            </motion.div>
-
-            {/* Phone floating */}
-            <motion.div
-              initial={{ opacity: 0, x: 80 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute right-0 sm:right-2 bottom-6 sm:bottom-10 z-20"
-            >
-              <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}>
-                <PhoneMockup />
-              </motion.div>
             </motion.div>
           </div>
         </div>
