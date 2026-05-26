@@ -161,12 +161,12 @@ function PricingCard({
         </div>
       )}
 
-      <div className="mb-8 min-h-[72px] text-center space-y-2">
-        <h3 className="text-2xl font-black text-foreground">{planName}</h3>
-        <p className="text-sm font-medium text-muted-foreground">{description}</p>
+      <div className="mb-5 min-h-[60px] text-center space-y-1.5">
+        <h3 className="text-xl sm:text-2xl font-black text-foreground">{planName}</h3>
+        <p className="text-[13px] font-medium text-muted-foreground">{description}</p>
       </div>
 
-      <div className="mb-8 min-h-[142px] text-center">
+      <div className="mb-5 min-h-[120px] text-center">
         {comparePrice && (
           <div className="mb-3 flex flex-col items-center gap-2 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
