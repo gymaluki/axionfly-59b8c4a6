@@ -524,47 +524,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* ═══════════ FUNCIONALIDADES ═══════════ */}
-        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
-          <SectionPill>Funcionalidades Premium</SectionPill>
-
-          <div className="text-center mb-24">
-            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
-              Tudo o que você precisa <br />
-              para <span className="gradient-text">escalar seu negócio</span>
-            </h2>
-            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
-              Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
-            </p>
-          </div>
-
-          {/* Funcionalidades — bento grid de cards (texto) */}
-          <div className="relative max-w-6xl mx-auto">
-            {/* Glows ambiente */}
-            <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
-            <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, ease }}
-              className="relative"
-            >
-              <BentoGrid
-                items={features.map(({ icon: Icon, title, desc, tag }: any, i: number) => ({
-                  title,
-                  description: desc,
-                  icon: <Icon className="w-5 h-5 text-primary" />,
-                  status: tag,
-                  // Layout: 2 cards largos no topo + 3 cards no meio
-                  colSpan: i < 2 ? 3 : 2,
-                }))}
-              />
-            </motion.div>
-          </div>
-        </section>
-
         {/* ═══════════ DEMO SCROLL ANIMATION ═══════════ */}
         <section id="demo" className="relative">
           <ContainerScroll
@@ -586,7 +545,6 @@ const Index = () => {
             }
           >
             <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background">
-              {/* Substitua o src abaixo pelo vídeo demo (ex.: /demo.mp4) */}
               <video
                 className="w-full h-full object-cover rounded-2xl"
                 autoPlay
@@ -606,6 +564,46 @@ const Index = () => {
             </div>
           </ContainerScroll>
         </section>
+
+        {/* ═══════════ FUNCIONALIDADES ═══════════ */}
+        <section id="funcionalidades" className="container mx-auto px-4 py-20 md:py-32 relative">
+          <SectionPill>Funcionalidades Premium</SectionPill>
+
+          <div className="text-center mb-24">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
+              Tudo o que você precisa <br />
+              para <span className="gradient-text">escalar seu negócio</span>
+            </h2>
+            <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
+              Da prospecção ao fechamento. Uma plataforma completa desenvolvida para transformar iniciantes em agências de sucesso.
+            </p>
+          </div>
+
+          {/* Funcionalidades — bento grid de cards (texto) */}
+          <div className="relative max-w-6xl mx-auto">
+            <div aria-hidden className="pointer-events-none absolute top-1/4 -left-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
+            <div aria-hidden className="pointer-events-none absolute bottom-1/4 -right-32 w-[420px] h-[420px] bg-primary/10 rounded-full blur-[140px]" />
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease }}
+              className="relative"
+            >
+              <BentoGrid
+                items={features.map(({ icon: Icon, title, desc, tag }: any, i: number) => ({
+                  title,
+                  description: desc,
+                  icon: <Icon className="w-5 h-5 text-primary" />,
+                  status: tag,
+                  colSpan: i < 2 ? 3 : 2,
+                }))}
+              />
+            </motion.div>
+          </div>
+        </section>
+
 
 
 
