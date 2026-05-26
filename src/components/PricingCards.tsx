@@ -188,10 +188,10 @@ function PricingCard({
               <div className="mt-2 flex flex-col items-center gap-1 w-full">
                 <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5">
                   <span className="text-[10px] font-black uppercase tracking-wider text-primary">12x</span>
-                  <span className="text-sm font-black text-foreground tabular-nums">R$ 14,99</span>
-                  <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">sem juros</span>
+                  <span className="text-sm font-black text-foreground tabular-nums">R$ 18,59</span>
+                  <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">no cartão</span>
                 </div>
-                <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">ou 6x de R$ 29,98 no cartão</span>
+                <span className="text-[9px] font-bold text-primary/70 uppercase tracking-wider">ou 6x de R$ 34,45 no cartão</span>
               </div>
             </>
 
