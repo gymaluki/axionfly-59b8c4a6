@@ -184,19 +184,30 @@ function PricingCard({
           </div>
         )}
         <div className="flex flex-col items-center justify-center gap-1">
-          <div className="flex items-baseline gap-1">
-            <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
-              R$ <PriceCounter price={price} />
-            </span>
-            <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
-          </div>
-          {plan === "lifetime" && (
-            <div className="flex flex-col items-center gap-0.5 mt-1">
-              <span className="text-[11px] font-black text-primary/80 uppercase tracking-tighter">Ou parcelado em:</span>
-              <div className="flex gap-2">
-                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">6x de R$ 29,98</span>
-                <span className="text-[12px] font-black text-foreground/90 bg-primary/5 px-2 py-0.5 rounded border border-primary/10">12x de R$ 14,99</span>
+          {plan === "lifetime" ? (
+            <>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-2xl sm:text-3xl font-black text-primary tracking-tight">12x</span>
+                <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+                  R$ 14,99
+                </span>
               </div>
+              <span className="text-[11px] font-bold text-primary uppercase tracking-widest mt-0.5">sem juros no cartão</span>
+
+              <div className="mt-3 flex flex-col items-center gap-1.5 w-full">
+                <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-primary">À vista no Pix</span>
+                  <span className="text-base font-black text-foreground tabular-nums">R$ 179,90</span>
+                </div>
+                <span className="text-[10px] font-bold text-primary/70 uppercase tracking-wider">ou 6x de R$ 29,98 no cartão</span>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-baseline gap-1">
+              <span className="text-4xl sm:text-5xl font-black text-foreground tracking-tighter">
+                R$ <PriceCounter price={price} />
+              </span>
+              <span className="text-sm font-bold text-primary uppercase tracking-widest">{priceDescription}</span>
             </div>
           )}
         </div>
