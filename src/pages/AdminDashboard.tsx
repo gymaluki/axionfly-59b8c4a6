@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import WebhookManagerPanel from "@/components/admin/WebhookManagerPanel";
+import LandingVideosPanel from "@/components/admin/LandingVideosPanel";
 
 interface Sale {
   id: string;
@@ -324,6 +325,15 @@ export default function AdminDashboard() {
             <p className="text-xs text-muted-foreground">Trocar token, testar e ver histórico de eventos — tudo sem precisar pedir ajuda.</p>
           </div>
           <WebhookManagerPanel />
+        </div>
+
+        {/* Vídeos da Landing */}
+        <div className="pt-4">
+          <div className="mb-4">
+            <h2 className="text-2xl font-black tracking-tight">Vídeos da Landing</h2>
+            <p className="text-xs text-muted-foreground">Atualize o vídeo do Computador e do Celular exibidos na home.</p>
+          </div>
+          <LandingVideosPanel />
         </div>
 
       </div>

@@ -22,7 +22,8 @@ const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
-import { ShaderBackground } from "@/components/ui/shader-background";
+import { LandingBackground } from "@/components/ui/landing-background";
+import { supabase } from "@/integrations/supabase/client";
 
 // Lazy load heavy visual components
 const GlobeCdn = lazy(() => import("@/components/ui/cobe-globe-cdn").then(m => ({ default: m.GlobeCdn })));
@@ -397,6 +398,21 @@ function StaticStat({ icon: Icon, value, label, prefix, suffix, index }: {
 
 function DemoShowcase() {
   const [mode, setMode] = useState<"desktop" | "mobile">("desktop");
+  const [desktopUrl, setDesktopUrl] = useState<string>("/demo.mp4");
+  const [mobileUrl, setMobileUrl] = useState<string>("/demo-mobile.mp4");
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("site_settings")
+        .select("key,value")
+        .in("key", ["demo_video_desktop_url", "demo_video_mobile_url"]);
+      data?.forEach((row: any) => {
+        if (row.key === "demo_video_desktop_url" && row.value) setDesktopUrl(row.value);
+        if (row.key === "demo_video_mobile_url" && row.value) setMobileUrl(row.value);
+      });
+    })();
+  }, []);
 
   const title = (
     <div className="space-y-6 px-4">
@@ -454,10 +470,10 @@ function DemoShowcase() {
           loop
           playsInline
           poster="/placeholder.svg"
-          key="mobile-video"
+          key={`mobile-${mobileUrl}`}
         >
-          <source src="/demo-mobile.mp4" type="video/mp4" />
-          <source src="/demo.mp4" type="video/mp4" />
+          <source src={mobileUrl} type="video/mp4" />
+          <source src={desktopUrl} type="video/mp4" />
         </video>
       </MobilePhoneScroll>
     );
@@ -472,9 +488,9 @@ function DemoShowcase() {
         loop
         playsInline
         poster="/placeholder.svg"
-        key="desktop-video"
+        key={`desktop-${desktopUrl}`}
       >
-        <source src="/demo.mp4" type="video/mp4" />
+        <source src={desktopUrl} type="video/mp4" />
       </video>
     </ContainerScroll>
   );
@@ -604,8 +620,8 @@ const Index = () => {
         <link rel="canonical" href="https://axionfly.lovable.app/" />
         <script type="application/ld+json">{JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Preciso saber programar, fazer design ou entender de tecnologia?","acceptedAnswer":{"@type":"Answer","text":"Absolutamente não. A AxionFly foi construída para quem nunca abriu uma linha de código na vida. Você seleciona o nicho do cliente, ajusta cores e estilo — a IA cuida de todo o resto. Em menos de 10 minutos o site está pronto, com design profissional, responsivo e pronto para ser entregue."}},{"@type":"Question","name":"Os sites gerados têm qualidade real — ou é aquele visual genérico de IA?","acceptedAnswer":{"@type":"Answer","text":"São 6 estilos exclusivos de design, com tipografia, cores e estrutura visual pensadas por profissionais — não templates genéricos. O site gerado é indistinguível de um projeto feito por uma agência. Nenhum cliente vai olhar para o resultado e achar que veio de uma IA."}},{"@type":"Question","name":"Quanto vou conseguir cobrar de cada cliente? Vale a pena financeiramente?","acceptedAnswer":{"@type":"Answer","text":"O mercado de sites para negócios locais pratica entre R$ 500 e R$ 3.000 por projeto. Com a AxionFly você entrega em 10 minutos o que uma agência demora dias. Sua margem de lucro é quase total — sem freelancer, sem ferramenta extra, sem dor de cabeça."}},{"@type":"Question","name":"Como vou encontrar clientes? Não tenho carteira de contatos nem experiência em vendas.","acceptedAnswer":{"@type":"Answer","text":"A AxionFly tem uma ferramenta de Prospecção Automática integrada: você seleciona a cidade e o nicho e o sistema busca negócios que ainda não têm site, te entregando nome, telefone e endereço prontos para o contato. Com o script de vendas incluso, você sabe exatamente o que falar no WhatsApp."}},{"@type":"Question","name":"E se o cliente quiser algo diferente do que a IA gerou?","acceptedAnswer":{"@type":"Answer","text":"O site gerado pela IA é só o começo — você tem controle total sobre cada detalhe, a qualquer momento. Fotos, textos, nome do negócio, cores, seções inteiras — tudo pode ser alterado livremente, quantas vezes quiser. Não existe nada travado ou definitivo."}},{"@type":"Question","name":"O que é a Extensão Lovable e por que faz diferença pra mim?","acceptedAnswer":{"@type":"Answer","text":"A Extensão Lovable Infinito elimina o limite de créditos das ferramentas de IA. É uma parceria exclusiva da AxionFly com o Hyperbuild Pro que te permite criar sites sem limite de créditos, sem interrupções, sem custo extra. Você escala seu negócio sem travar."}}]})}</script>
       </Helmet>
-      <div className="min-h-screen bg-[#03060f] overflow-x-hidden relative max-w-[100vw]">
-      <ShaderBackground />
+      <div className="min-h-screen bg-black overflow-x-hidden relative max-w-[100vw]">
+      <LandingBackground />
       <div className="relative z-10">
         {/* Header */}
         <Header />
