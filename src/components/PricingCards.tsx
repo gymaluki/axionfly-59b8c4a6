@@ -331,7 +331,7 @@ export default function PricingCards() {
         </p>
       </motion.div>
 
-      <div className="grid w-full max-w-5xl grid-cols-1 items-stretch gap-6 px-4 md:px-0 lg:grid-cols-2 lg:gap-8 mx-auto">
+      <div className="grid w-full max-w-4xl grid-cols-1 items-stretch gap-5 px-4 md:px-0 lg:grid-cols-2 lg:gap-6 mx-auto">
         {plans.map((plan) => (
           <div key={plan.planName} className="flex h-full w-full">
             <PricingCard {...plan} />
