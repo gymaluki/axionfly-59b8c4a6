@@ -120,9 +120,9 @@ export function HeroSection() {
   return (
     <section id="inicio" className="relative pt-20 pb-16 md:pt-28 md:pb-32 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-8 items-center">
+        <div className="flex justify-center">
           {/* LEFT — copy */}
-          <div className="text-center lg:text-left">
+          <div className="text-center max-w-3xl">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
