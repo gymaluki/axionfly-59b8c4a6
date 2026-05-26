@@ -17,7 +17,7 @@ import axionflyLogo from "@/assets/axionfly-logo.webp";
 
 // Below-the-fold heavy components: lazy for faster initial paint
 const PricingCards = lazy(() => import("@/components/PricingCards"));
-const LovablePartnership = lazy(() => import("@/components/LovablePartnership"));
+const ActiveUsersBar = lazy(() => import("@/components/ActiveUsersBar"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 
@@ -773,9 +773,9 @@ const Index = () => {
           <PricingCards />
         </Suspense>
 
-        {/* ═══════════ PARCERIAS ═══════════ */}
-        <Suspense fallback={<div className="min-h-[400px]" />}>
-          <LovablePartnership />
+        {/* ═══════════ USUÁRIOS ATIVOS ═══════════ */}
+        <Suspense fallback={<div className="min-h-[160px]" />}>
+          <ActiveUsersBar />
         </Suspense>
 
         {/* ═══════════ FEEDBACKS ═══════════ */}
@@ -845,82 +845,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* ═══════════ CTA FINAL ═══════════ */}
-        <section className="container mx-auto px-4 pt-8 pb-16 md:pt-12 md:pb-24 relative">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            {/* Urgency pill */}
-            <motion.div
-              initial={{ opacity: 1, scale: 1 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-red-500/15 backdrop-blur-sm border-2 border-red-500/50 mb-8 shadow-[0_0_20px_rgba(239,68,68,0.25)]"
-            >
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" style={{ animation: "ping 1s cubic-bezier(0,0,0.2,1) infinite" }} />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
-              </span>
-              <span className="text-xs md:text-sm font-black uppercase tracking-[0.15em] text-red-300">
-                Promoção relâmpago — 50% OFF por tempo limitado
-              </span>
-            </motion.div>
-
-            {/* Title */}
-            <h2 className="text-[28px] sm:text-4xl md:text-[56px] font-black text-foreground leading-[1.1] tracking-tight max-w-4xl mx-auto mb-5 break-words">
-              Comece agora e venda seu <br className="hidden md:block" />
-              <span className="gradient-text-animate">primeiro site ainda hoje</span>
-            </h2>
-
-            <p className="text-[#94a3b8] text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-              Junte-se aos +5.000 empreendedores faturando entre R$ 500 e R$ 3.000 por contrato.
-              Acesso imediato após confirmação.
-            </p>
-
-            {/* CTA buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-              <Button
-                variant="neon"
-                size="xl"
-                className="rounded-full shimmer-button px-10 h-14 text-base font-black uppercase tracking-[0.15em] w-full sm:w-auto shadow-[0_8px_40px_-8px_rgba(37,99,235,0.5)]"
-                onClick={async () => {
-                  const checkoutUrl = await resolveCheckoutUrl("lifetime");
-                  navigate(`/auth?redirect_payment=${encodeURIComponent(checkoutUrl)}`);
-                }}
-              >
-                <Zap className="mr-2 w-5 h-5 fill-current" />
-                Assinar agora
-              </Button>
-              <Button
-                variant="outline"
-                size="xl"
-                className="rounded-full px-10 h-14 text-base font-black uppercase tracking-[0.15em] border-2 w-full sm:w-auto hover:bg-primary/10"
-                onClick={() => document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" })}
-              >
-                Ver Planos <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </div>
-
-            {/* Trust microcredentials */}
-            <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-x-6 gap-y-3 max-w-3xl mx-auto pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-              {[
-                { icon: Lock, label: "Pagamento 100% seguro" },
-                { icon: Clock, label: "Setup em 5 minutos" },
-                { icon: ShieldCheck, label: "Suporte em português" },
-                { icon: Check, label: "Sem experiência necessária" },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center justify-center sm:justify-start gap-2 min-w-0">
-                  <Icon className="w-3.5 h-3.5 text-primary stroke-[2.5px] shrink-0" />
-                  <span className="text-[11px] md:text-xs font-bold text-muted-foreground text-center sm:text-left">{label}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </section>
+        {/* CTA final removido a pedido */}
 
         {/* ═══════════ FOOTER ═══════════ */}
         <footer className="bg-[#05050a] relative z-10">
@@ -957,9 +882,8 @@ const Index = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
               {/* Brand */}
               <div className="col-span-2 md:col-span-1 space-y-4">
-                <div className="flex items-center gap-2.5">
-                  <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
-                  <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
+                <div className="flex items-center">
+                  <img src={axionflyLogo} alt="AxionFly" width="320" height="80" loading="lazy" decoding="async" className="h-16 md:h-20 w-auto" />
                 </div>
                 <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
                   A plataforma completa para criar e vender sites com IA — do primeiro lead ao contrato fechado.
