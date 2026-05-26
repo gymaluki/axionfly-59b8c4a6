@@ -320,30 +320,13 @@ export default function PricingCards() {
         </p>
       </motion.div>
 
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-6 mb-20 px-4 md:px-0 w-full overflow-x-auto pb-8 snap-x snap-mandatory lg:overflow-visible no-scrollbar">
+      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-8 lg:gap-6 px-4 md:px-0 w-full overflow-x-auto pb-4 snap-x snap-mandatory lg:overflow-visible no-scrollbar">
         {plans.map((plan) => (
           <div key={plan.planName} className="w-full max-w-sm shrink-0 snap-center lg:w-1/3">
             <PricingCard {...plan} />
           </div>
         ))}
       </div>
-
-      {/* Guarantee Bar */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="max-w-4xl mx-auto p-6 rounded-2xl border border-primary/20 bg-primary/5 flex flex-wrap items-center justify-center gap-8 md:gap-12"
-      >
-        <div className="flex items-center gap-3">
-          <Zap className="w-6 h-6 text-primary" />
-          <span className="text-sm font-black uppercase tracking-widest text-foreground">Acesso Imediato</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <Check className="w-6 h-6 text-primary" />
-          <span className="text-sm font-black uppercase tracking-widest text-foreground">Suporte 24/7</span>
-        </div>
-      </motion.div>
     </section>
   );
 }
