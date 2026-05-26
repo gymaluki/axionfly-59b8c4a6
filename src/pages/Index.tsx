@@ -882,9 +882,8 @@ const Index = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-10">
               {/* Brand */}
               <div className="col-span-2 md:col-span-1 space-y-4">
-                <div className="flex items-center gap-2.5">
-                  <img src={axionflyLogo} alt="AxionFly" width="180" height="36" loading="lazy" decoding="async" className="h-9 w-auto" />
-                  <span className="text-lg font-black text-foreground tracking-tighter">AxionFly</span>
+                <div className="flex items-center">
+                  <img src={axionflyLogo} alt="AxionFly" width="320" height="80" loading="lazy" decoding="async" className="h-16 md:h-20 w-auto" />
                 </div>
                 <p className="text-sm text-[#94a3b8] leading-relaxed max-w-xs">
                   A plataforma completa para criar e vender sites com IA — do primeiro lead ao contrato fechado.
