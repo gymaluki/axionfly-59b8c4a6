@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus, Monitor, Smartphone } from "lucide-react";
 import { motion, useInView, useScroll as useFramerScroll, useTransform, type Easing, AnimatePresence } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { MobilePhoneScroll } from "@/components/ui/mobile-phone-scroll";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { GlowingEffect } from "@/components/ui/glowing-effect-card";
 
@@ -394,6 +395,93 @@ function StaticStat({ icon: Icon, value, label, prefix, suffix, index }: {
   );
 }
 
+function DemoShowcase() {
+  const [mode, setMode] = useState<"desktop" | "mobile">("desktop");
+
+  const title = (
+    <div className="space-y-6 px-4">
+      <div className="flex justify-center">
+        <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.15em] text-primary backdrop-blur-sm">
+          A plataforma por dentro
+        </span>
+      </div>
+      <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-[1.05]">
+        2 minutos pra <span className="gradient-text">entender tudo</span>.
+      </h2>
+      <p className="text-[#94a3b8] max-w-2xl mx-auto text-[16px] md:text-[18px] font-normal leading-[1.7]">
+        Interface completa, passo a passo. Veja como criar um site, prospectar clientes e gerar contratos — tudo numa tela só.
+      </p>
+
+      {/* Toggle Computador / Celular */}
+      <div className="flex justify-center pt-2">
+        <div className="inline-flex items-center gap-1 rounded-full border border-primary/25 bg-card/60 p-1 backdrop-blur-sm">
+          <button
+            type="button"
+            onClick={() => setMode("desktop")}
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
+              mode === "desktop"
+                ? "bg-primary text-primary-foreground shadow-[0_0_20px_hsl(var(--primary)/0.6)]"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Monitor className="h-4 w-4" />
+            Computador
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("mobile")}
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ${
+              mode === "mobile"
+                ? "bg-primary text-primary-foreground shadow-[0_0_20px_hsl(var(--primary)/0.6)]"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Smartphone className="h-4 w-4" />
+            Celular
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (mode === "mobile") {
+    return (
+      <MobilePhoneScroll titleComponent={title}>
+        <video
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/placeholder.svg"
+          key="mobile-video"
+        >
+          <source src="/demo-mobile.mp4" type="video/mp4" />
+          <source src="/demo.mp4" type="video/mp4" />
+        </video>
+      </MobilePhoneScroll>
+    );
+  }
+
+  return (
+    <ContainerScroll titleComponent={title}>
+      <video
+        className="w-full h-full object-cover rounded-2xl"
+        autoPlay
+        muted
+        loop
+        playsInline
+        poster="/placeholder.svg"
+        key="desktop-video"
+      >
+        <source src="/demo.mp4" type="video/mp4" />
+      </video>
+    </ContainerScroll>
+  );
+}
+
+
+
 const howItWorks = [
   {
     step: "Etapa - 1",
@@ -535,53 +623,9 @@ const Index = () => {
 
         {/* ═══════════ DEMO SCROLL ANIMATION ═══════════ */}
         <section id="demo" className="relative">
-          <ContainerScroll
-            titleComponent={
-              <div className="space-y-6 px-4">
-                <div className="flex justify-center">
-                  <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-5 py-1.5 text-[11px] font-black uppercase tracking-[0.15em] text-primary backdrop-blur-sm">
-                    A plataforma por dentro
-                  </span>
-                </div>
-                <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight leading-[1.05]">
-                  2 minutos pra <span className="gradient-text">entender tudo</span>.
-                </h2>
-                <p className="text-[#94a3b8] max-w-2xl mx-auto text-[16px] md:text-[18px] font-normal leading-[1.7]">
-                  Interface completa, passo a passo. Veja como criar um site, prospectar clientes e gerar contratos — tudo numa tela só.
-                </p>
-              </div>
-            }
-          >
-            <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background overflow-hidden">
-              {/* Vídeo desktop */}
-              <video
-                className="w-full h-full object-cover rounded-2xl"
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="/placeholder.svg"
-              >
-                <source src="/demo.mp4" type="video/mp4" />
-              </video>
-
-              {/* Mockup celular sobreposto no canto */}
-              <div className="hidden md:block absolute bottom-4 right-4 lg:bottom-6 lg:right-6 w-[110px] lg:w-[140px] aspect-[9/19] rounded-[22px] border-[3px] border-[#1a1d2c] bg-[#05060d] shadow-[0_25px_60px_-10px_rgba(37,99,235,0.55)] overflow-hidden">
-                <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-12 h-2.5 rounded-full bg-black z-10" />
-                <video
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                >
-                  <source src="/demo-mobile.mp4" type="video/mp4" />
-                  <source src="/demo.mp4" type="video/mp4" />
-                </video>
-              </div>
-            </div>
-          </ContainerScroll>
+          <DemoShowcase />
         </section>
+
 
         {/* ═══════════ FUNCIONALIDADES (ORBITAL) ═══════════ */}
         <section id="funcionalidades" className="container mx-auto px-4 py-12 md:py-16 relative">
