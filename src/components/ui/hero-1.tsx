@@ -190,59 +190,6 @@ export function HeroSection() {
               </div>
             </motion.div>
           </div>
-
-          {/* RIGHT — floating mockups */}
-          <div className="relative h-[420px] sm:h-[480px] lg:h-[560px] flex items-center justify-center overflow-hidden lg:overflow-visible">
-            {/* Glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.35),transparent_60%)] blur-3xl pointer-events-none" />
-
-            {/* Orbital ring */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.4 }}
-              animate={{ opacity: 0.5, scale: 1, rotate: 360 }}
-              transition={{
-                opacity: { duration: 1, delay: 0.6 },
-                scale: { duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] },
-                rotate: { duration: 30, repeat: Infinity, ease: "linear" },
-              }}
-              className="absolute w-[110%] h-[70%] rounded-[50%] border border-primary/40 pointer-events-none"
-              style={{ borderStyle: "solid", boxShadow: "0 0 40px rgba(37,99,235,0.25) inset" }}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.4 }}
-              animate={{ opacity: 0.3, scale: 1, rotate: -360 }}
-              transition={{
-                opacity: { duration: 1, delay: 0.8 },
-                scale: { duration: 1, delay: 0.8 },
-                rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-              }}
-              className="absolute w-[95%] h-[55%] rounded-[50%] border border-primary/20 pointer-events-none"
-            />
-
-            {/* Laptop floating */}
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute left-0 right-12 top-1/2 -translate-y-1/2 w-[88%] max-w-[460px] z-10"
-            >
-              <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}>
-                <LaptopMockup />
-              </motion.div>
-            </motion.div>
-
-            {/* Phone floating */}
-            <motion.div
-              initial={{ opacity: 0, x: 80 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute right-0 sm:right-2 bottom-6 sm:bottom-10 z-20"
-            >
-              <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}>
-                <PhoneMockup />
-              </motion.div>
-            </motion.div>
-          </div>
         </div>
 
         {/* Partners */}
