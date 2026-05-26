@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState, lazy, Suspense, useMemo } from "react";
+import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, ChevronLeft, ChevronRight, Check, Star, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
 import { motion, useInView, useScroll as useFramerScroll, useTransform, type Easing, AnimatePresence } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
-import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import { GlowCard } from "@/components/ui/spotlight-card";
-import { BentoGrid } from "@/components/ui/bento-grid";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { GlowingEffect } from "@/components/ui/glowing-effect-card";
 
@@ -23,8 +20,6 @@ const ActiveUsersBar = lazy(() => import("@/components/ActiveUsersBar"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 
-import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
-import { resolveCheckoutUrl } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
 import { ShaderBackground } from "@/components/ui/shader-background";
 
@@ -638,6 +633,42 @@ const Index = () => {
                 );
               })}
             </ul>
+          </div>
+        </section>
+
+        {/* ═══════════ ETAPAS ═══════════ */}
+        <section id="etapas" className="container mx-auto px-4 py-12 md:py-16 relative">
+          <SectionPill>Como funciona</SectionPill>
+
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
+              O caminho mais rápido para <span className="gradient-text">começar a vender</span>
+            </h2>
+            <p className="text-[#94a3b8] text-[18px] md:text-[20px] font-normal leading-[1.7]">
+              Da ativação ao fechamento, tudo acontece em uma sequência simples para você sair da teoria e ir direto para o lucro.
+            </p>
+          </div>
+
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-primary/15 bg-[radial-gradient(120%_120%_at_50%_0%,hsl(var(--primary)/0.12)_0%,#070b14_45%,#04060b_100%)] px-4 py-6 md:px-6 md:py-8">
+            <RadialOrbitalTimeline
+              timelineData={howItWorks.map((item, index) => ({
+                id: index + 1,
+                title: item.title,
+                date: item.step,
+                content: item.desc,
+                category: "Processo",
+                icon: item.icon,
+                relatedIds:
+                  index === 0
+                    ? [2]
+                    : index === howItWorks.length - 1
+                      ? [index]
+                      : [index, index + 2],
+                status: index === 0 ? "completed" : index === 1 ? "in-progress" : "pending",
+                energy: 78 + index * 8,
+              }))}
+              autoCycleMs={4200}
+            />
           </div>
         </section>
 
