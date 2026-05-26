@@ -3,19 +3,19 @@ import { MeshGradient } from "@paper-design/shaders-react";
 export function ShaderBackground() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      <div className="absolute inset-0 bg-[#03060f]" />
+      <div className="absolute inset-0 bg-[#0f0f12]" />
       <MeshGradient
-        className="absolute inset-0 w-full h-full opacity-70"
-        colors={["#03060f", "#0a1837", "#1e3a8a", "#0b2150", "#050912"]}
-        speed={0.25}
+        className="absolute inset-0 w-full h-full opacity-60"
+        colors={["#0f0f12", "#18181f", "#23232e", "#15151a", "#0c0c10"]}
+        speed={0.2}
       />
       <MeshGradient
-        className="absolute inset-0 w-full h-full opacity-40 mix-blend-screen"
-        colors={["#000814", "#0a2a6b", "#1e40af", "#000000"]}
-        speed={0.15}
+        className="absolute inset-0 w-full h-full opacity-30 mix-blend-screen"
+        colors={["#0a0a0e", "#14141c", "#1a1a24", "#08080a"]}
+        speed={0.12}
       />
       {/* Vinheta para escurecer bordas */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(3,6,15,0.85)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(15,15,18,0.9)_100%)]" />
     </div>
   );
 }
