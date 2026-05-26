@@ -207,7 +207,7 @@ function PricingCard({
       </div>
 
       <div className="mb-5 flex-1">
-        <ul className="space-y-4">
+        <ul className="space-y-2.5">
           <AnimatePresence>
             {visibleFeatures.map((feature, idx) => (
               <motion.li
@@ -215,10 +215,10 @@ function PricingCard({
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                className="flex items-start gap-3 text-sm text-foreground/90 font-bold"
+                className="flex items-start gap-2.5 text-[13px] text-foreground/90 font-bold"
               >
-                <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 mt-0.5">
-                  <Check className="h-3 w-3 text-primary stroke-[3px]" />
+                <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/20 mt-0.5">
+                  <Check className="h-2.5 w-2.5 text-primary stroke-[3px]" />
                 </div>
                 <span>{feature}</span>
               </motion.li>
