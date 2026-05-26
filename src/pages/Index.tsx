@@ -641,6 +641,63 @@ const Index = () => {
           </div>
         </section>
 
+        {/* ═══════════ ETAPAS ═══════════ */}
+        <section id="etapas" className="container mx-auto px-4 py-12 md:py-16 relative">
+          <SectionPill>Como funciona</SectionPill>
+
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
+              O caminho mais rápido para <span className="gradient-text">começar a vender</span>
+            </h2>
+            <p className="text-[#94a3b8] text-[18px] md:text-[20px] font-normal leading-[1.7]">
+              Da ativação ao fechamento, tudo acontece em uma sequência simples para você sair da teoria e ir direto para o lucro.
+            </p>
+          </div>
+
+          <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-3">
+            {howItWorks.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.step}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.25 }}
+                  variants={fadeUp}
+                  custom={index}
+                  className="relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-[1.5rem] border border-primary/15 bg-[radial-gradient(120%_120%_at_0%_0%,hsl(var(--primary)/0.14)_0%,#0a0f1f_45%,#05070d_100%)] p-6 md:p-7"
+                >
+                  <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+                  <div className="mb-8 flex items-center justify-between gap-4">
+                    <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[11px] font-black uppercase tracking-[0.14em] text-primary">
+                      {item.step}
+                    </span>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10">
+                      <Icon className="h-5 w-5 text-primary" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-black leading-tight text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="text-[15px] leading-[1.75] text-[#94a3b8]">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-auto pt-8">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                      <div className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent" />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
         {/* ═══════════ AULAS PREMIUM (Carousel) ═══════════ */}
         <section className="py-12 md:py-16">
           <SectionPill>Conheça Área de Membros</SectionPill>
