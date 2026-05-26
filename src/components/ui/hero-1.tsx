@@ -127,7 +127,7 @@ export function HeroSection() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex justify-center lg:justify-start mb-6"
+              className="flex justify-center mb-6"
             >
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-5 py-2 md:px-4 md:py-1.5 backdrop-blur-md shadow-[0_0_15px_rgba(37,99,235,0.2)]">
                 <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 2, repeat: Infinity }}>
