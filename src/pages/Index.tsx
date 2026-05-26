@@ -649,26 +649,53 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-primary/15 bg-[radial-gradient(120%_120%_at_50%_0%,hsl(var(--primary)/0.12)_0%,#070b14_45%,#04060b_100%)] px-4 py-6 md:px-6 md:py-8">
-            <RadialOrbitalTimeline
-              timelineData={howItWorks.map((item, index) => ({
-                id: index + 1,
-                title: item.title,
-                date: item.step,
-                content: item.desc,
-                category: "Processo",
-                icon: item.icon,
-                relatedIds:
-                  index === 0
-                    ? [2]
-                    : index === howItWorks.length - 1
-                      ? [index]
-                      : [index, index + 2],
-                status: index === 0 ? "completed" : index === 1 ? "in-progress" : "pending",
-                energy: 78 + index * 8,
-              }))}
-              autoCycleMs={4200}
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-primary/15 bg-[radial-gradient(120%_120%_at_50%_0%,hsl(var(--primary)/0.18)_0%,#070b14_45%,#04060b_100%)] px-4 py-12 md:px-10 md:py-16">
+            {/* Grid background */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.18]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(hsl(var(--primary)/0.35) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)/0.35) 1px, transparent 1px)",
+                backgroundSize: "56px 56px",
+                maskImage:
+                  "radial-gradient(ellipse at center, black 40%, transparent 80%)",
+              }}
             />
+            {/* Vertical center line (desktop) */}
+            <div className="pointer-events-none absolute left-1/2 top-10 bottom-10 hidden w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/40 to-transparent md:block" />
+
+            <div className="relative flex flex-col gap-8 md:gap-10">
+              {howItWorks.map((item, index) => {
+                const isLeft = index % 2 === 0;
+                return (
+                  <div
+                    key={index}
+                    className={`relative flex w-full md:w-1/2 ${
+                      isLeft ? "md:self-start md:pr-10" : "md:self-end md:pl-10"
+                    }`}
+                  >
+                    <div className="group relative w-full rounded-2xl border border-primary/25 bg-[#04060b]/80 p-6 md:p-8 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.45)] backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_60px_-10px_hsl(var(--primary)/0.7)]">
+                      {/* Number badge */}
+                      <div
+                        className={`absolute top-1/2 -translate-y-1/2 ${
+                          isLeft ? "right-0 translate-x-1/2" : "left-0 -translate-x-1/2"
+                        } z-10`}
+                      >
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-sm font-bold text-primary-foreground shadow-[0_0_24px_hsl(var(--primary)/0.8)] ring-4 ring-[#04060b]">
+                          {index + 1}
+                        </div>
+                      </div>
+                      <h3 className="mb-3 text-xl md:text-2xl font-bold text-primary">
+                        {item.title}
+                      </h3>
+                      <p className="text-[15px] md:text-base leading-relaxed text-[#94a3b8]">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 
