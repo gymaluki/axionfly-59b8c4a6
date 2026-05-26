@@ -56,6 +56,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
   const getSizeClasses = () => (customSize ? "" : sizeMap[size]);
 
   const getInlineStyles = (): React.CSSProperties => {
+    const isNavy = glowColor === "navy";
     const baseStyles: any = {
       "--base": base,
       "--spread": spread,
@@ -68,11 +69,16 @@ const GlowCard: React.FC<GlowCardProps> = ({
       "--border-size": "calc(var(--border, 2) * 1px)",
       "--spotlight-size": "calc(var(--size, 150) * 1px)",
       "--hue": "calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))",
+      "--saturation": isNavy ? "100" : "90",
+      "--lightness": isNavy ? "60" : "55",
+      "--bg-spot-opacity": isNavy ? "0.22" : "0.12",
+      "--border-spot-opacity": isNavy ? "1" : "1",
+      "--border-light-opacity": isNavy ? "0.6" : "1",
       backgroundImage: `radial-gradient(
         var(--spotlight-size) var(--spotlight-size) at
         calc(var(--x, 0) * 1px)
         calc(var(--y, 0) * 1px),
-        hsl(var(--hue, 221) calc(var(--saturation, 90) * 1%) calc(var(--lightness, 55) * 1%) / var(--bg-spot-opacity, 0.12)), transparent
+        hsl(var(--hue, 221) calc(var(--saturation, 90) * 1%) calc(var(--lightness, 55) * 1%) / var(--bg-spot-opacity, 1)), transparent
       )`,
       backgroundColor: "var(--backdrop, transparent)",
       backgroundSize:
