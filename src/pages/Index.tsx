@@ -632,15 +632,15 @@ const Index = () => {
 
         {/* ═══════════ ETAPAS ═══════════ */}
         <section id="etapas" className="container mx-auto px-4 pt-20 pb-0 md:pt-32 md:pb-0 relative">
-          <SectionPill>Processo AxionFly</SectionPill>
+          <SectionPill>Chega de perder tempo</SectionPill>
           
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeUp} custom={0} className="text-center mb-16 md:mb-20">
             <h2 className="text-3xl md:text-[44px] font-black text-foreground tracking-tight mb-6">
-              Venda seu primeiro site <br />
-              em <span className="gradient-text">3 passos simples</span>
+              Você já perdeu tempo suficiente. <br />
+              Agora é hora de <span className="gradient-text">cobrar por isso.</span>
             </h2>
             <p className="text-[#94a3b8] max-w-2xl mx-auto text-[18px] md:text-[20px] font-normal leading-[1.7]">
-              Não reinventamos a roda, apenas automatizamos o que funciona. Siga o método e veja os resultados.
+              Enquanto você aprende do zero, outros já estão fechando contratos. A AxionFly corta o caminho e te coloca direto no lucro.
             </p>
           </motion.div>
 
