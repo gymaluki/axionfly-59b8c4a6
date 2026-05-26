@@ -154,32 +154,18 @@ function PricingCard({
         </div>
       )}
 
-      {savingsBadge && !isHighlight && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-          <span className="shimmer-button inline-flex items-center gap-1.5 rounded-full bg-primary/80 px-6 py-1.5 text-xs font-black text-primary-foreground shadow-xl uppercase tracking-widest">
-            {savingsBadge}
-          </span>
-        </div>
-      )}
-
       <div className="mb-8 text-center space-y-2">
         <h3 className="text-2xl font-black text-foreground">{planName}</h3>
         <p className="text-sm font-medium text-muted-foreground">{description}</p>
       </div>
 
       <div className="mb-8 text-center">
-        <div className="flex flex-col items-center justify-center gap-2 mb-3">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="bg-red-500/20 text-red-300 text-[11px] font-black px-3 py-1 rounded-full border-2 border-red-500/40 uppercase tracking-wider shadow-[0_0_12px_rgba(239,68,68,0.2)]">
-              ⚡ Promoção relâmpago — 50% OFF
-            </span>
-          </div>
-        </div>
-
         {comparePrice && (
-          <div className="mb-2 flex flex-col items-center gap-1.5 justify-center">
+          <div className="mb-3 flex flex-col items-center gap-2 justify-center">
             <span className="text-sm text-muted-foreground/60 line-through">{comparePrice}</span>
-            <span className="text-primary font-black text-[11px] bg-primary/10 px-3 py-1 rounded-full border border-primary/20 uppercase tracking-wider">50% OFF</span>
+            <span className="text-red-300 font-black text-[11px] bg-red-500/15 px-3 py-1 rounded-full border border-red-500/40 uppercase tracking-wider">
+              ⚡ 50% OFF — termina em <CountdownTimer />
+            </span>
           </div>
         )}
         <div className="flex flex-col items-center justify-center gap-1">
