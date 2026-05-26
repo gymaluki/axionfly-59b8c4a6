@@ -2,15 +2,12 @@ import React, { useEffect, useRef, useState, lazy, Suspense, useMemo } from "rea
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, ChevronLeft, ChevronRight, Check, Star, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
+import { ArrowRight, MapPin, Code2, Sparkles, Zap, Users, TrendingUp, Globe, Search, MousePointerClick, BarChart3, FileText, MessageSquare, Infinity as LucideInfinity, ChevronDown, Check, Instagram, Phone, Youtube, HelpCircle, ShieldCheck, Clock, Lock, Mail, Plus } from "lucide-react";
 import { motion, useInView, useScroll as useFramerScroll, useTransform, type Easing, AnimatePresence } from "framer-motion";
 import { HeroSection } from "@/components/ui/hero-1";
 import { Header } from "@/components/ui/header-3";
 import { cn } from "@/lib/utils";
-import { DashboardMockup } from "@/components/ui/dashboard-mockup";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import { GlowCard } from "@/components/ui/spotlight-card";
-import { BentoGrid } from "@/components/ui/bento-grid";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { GlowingEffect } from "@/components/ui/glowing-effect-card";
 
@@ -23,8 +20,6 @@ const ActiveUsersBar = lazy(() => import("@/components/ActiveUsersBar"));
 const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 
-import { SitesBuilderVisual, ExtensionInfiniteVisual, ContractGeneratorVisual } from "@/components/PremiumFeatureVisuals";
-import { resolveCheckoutUrl } from "@/lib/affiliates";
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
 import { ShaderBackground } from "@/components/ui/shader-background";
 
