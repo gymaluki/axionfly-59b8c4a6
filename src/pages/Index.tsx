@@ -12,6 +12,7 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { BentoGrid } from "@/components/ui/bento-grid";
 import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
+import { GlowingEffect } from "@/components/ui/glowing-effect-card";
 
 import axionflyLogo from "@/assets/axionfly-logo-x.png";
 
