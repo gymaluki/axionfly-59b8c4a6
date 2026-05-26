@@ -595,16 +595,13 @@ const Index = () => {
               className="relative"
             >
               <BentoGrid
-                items={features.map(({ icon: Icon, title, desc, tag, bullets }: any, i: number) => ({
+                items={features.map(({ icon: Icon, title, desc, tag }: any, i: number) => ({
                   title,
                   description: desc,
-                  icon: <Icon className="w-4 h-4 text-primary" />,
+                  icon: <Icon className="w-5 h-5 text-primary" />,
                   status: tag,
-                  bullets,
-                  tags: [`0${i + 1}`],
-                  cta: "Saiba mais →",
-                  colSpan: i === 0 || i === 2 ? 2 : 1,
-                  hasPersistentHover: i === 0,
+                  // Layout: 2 cards largos no topo + 3 cards no meio
+                  colSpan: i < 2 ? 3 : 2,
                 }))}
               />
             </motion.div>
