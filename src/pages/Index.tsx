@@ -22,6 +22,7 @@ const FeaturesCarousel = lazy(() => import("@/components/FeaturesCarousel"));
 const Testimonials = lazy(() => import("@/components/Testimonials"));
 
 import { useVagasRestantes } from "@/hooks/useVagasRestantes";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { LandingBackground } from "@/components/ui/landing-background";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -399,7 +400,12 @@ function StaticStat({ icon: Icon, value, label, prefix, suffix, index }: {
 function DemoShowcase() {
   const [mode, setMode] = useState<"desktop" | "mobile">("desktop");
   const [desktopUrl, setDesktopUrl] = useState<string>("/demo.mp4");
-  const [mobileUrl, setMobileUrl] = useState<string>("/demo-mobile.mp4");
+  const [mobileUrl, setMobileUrl] = useState<string>("/landing-mobile-video.mp4");
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    setMode(isMobile ? "mobile" : "desktop");
+  }, [isMobile]);
 
   useEffect(() => {
     (async () => {
