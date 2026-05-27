@@ -723,12 +723,12 @@ const Index = () => {
                       isLeft ? "md:self-start md:pr-10" : "md:self-end md:pl-10"
                     }`}
                   >
-                    <div className="group relative w-full rounded-2xl border border-primary/25 bg-[#04060b]/80 p-6 md:p-8 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.45)] backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_60px_-10px_hsl(var(--primary)/0.7)]">
+                    <div className="group relative w-full rounded-2xl border border-primary/25 bg-[#04060b]/80 p-6 pt-12 md:p-8 md:pt-8 shadow-[0_0_40px_-12px_hsl(var(--primary)/0.45)] backdrop-blur-sm transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_60px_-10px_hsl(var(--primary)/0.7)]">
                       {/* Number badge */}
                       <div
-                        className={`absolute top-1/2 -translate-y-1/2 ${
-                          isLeft ? "right-0 translate-x-1/2" : "left-0 -translate-x-1/2"
-                        } z-10`}
+                        className={`absolute z-10 left-4 -top-5 md:left-auto md:-top-auto md:top-1/2 md:-translate-y-1/2 ${
+                          isLeft ? "md:right-0 md:translate-x-1/2 md:left-auto" : "md:left-0 md:-translate-x-1/2"
+                        }`}
                       >
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/70 text-sm font-bold text-primary-foreground shadow-[0_0_24px_hsl(var(--primary)/0.8)] ring-4 ring-[#04060b]">
                           {index + 1}

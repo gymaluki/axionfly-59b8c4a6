@@ -100,7 +100,7 @@ export default function FeaturesCarousel() {
               <img
                 src={slide.src}
                 alt={slide.title}
-                className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none group-hover:scale-105 transition-transform duration-700"
+                className="absolute inset-0 w-full h-full object-contain md:object-cover object-top pointer-events-none group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
                 draggable={false}
               />
