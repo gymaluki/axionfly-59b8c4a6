@@ -203,22 +203,29 @@ export function HeroSection() {
           <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#64748b]">
             Parceiros oficiais
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-primary" />
-              <span className="text-xl font-black tracking-tighter text-foreground">Lovable</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" className="w-6 h-6" />
-              <span className="text-xl font-bold tracking-tight text-foreground/80">Google Maps</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md bg-primary/20 flex items-center justify-center">
-                <Zap className="w-4 h-4 text-primary" />
-              </div>
-              <span className="text-xl font-black tracking-tighter text-foreground italic">HYPERBUILD PRO</span>
+          <div className="w-full max-w-3xl overflow-hidden relative [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
+            <div className="flex w-max gap-12 md:gap-16 animate-[marquee_25s_linear_infinite] grayscale opacity-70 hover:[animation-play-state:paused]">
+              {[0, 1].map((dup) => (
+                <div key={dup} className="flex items-center gap-12 md:gap-16 shrink-0">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-6 h-6 text-primary" />
+                    <span className="text-xl font-black tracking-tighter text-foreground whitespace-nowrap">Lovable</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Google_Maps_icon_%282020%29.svg" alt="Google Maps" className="w-6 h-6" />
+                    <span className="text-xl font-bold tracking-tight text-foreground/80 whitespace-nowrap">Google Maps</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-md bg-primary/20 flex items-center justify-center">
+                      <Zap className="w-4 h-4 text-primary" />
+                    </div>
+                    <span className="text-xl font-black tracking-tighter text-foreground italic whitespace-nowrap">HYPERBUILD PRO</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+
         </motion.div>
       </div>
 
