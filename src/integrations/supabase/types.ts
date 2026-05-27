@@ -17,21 +17,18 @@ export type Database = {
       admin_users: {
         Row: {
           created_at: string
-          email: string
           id: string
           is_owner: boolean
           user_id: string | null
         }
         Insert: {
           created_at?: string
-          email: string
           id?: string
           is_owner?: boolean
           user_id?: string | null
         }
         Update: {
           created_at?: string
-          email?: string
           id?: string
           is_owner?: boolean
           user_id?: string | null
