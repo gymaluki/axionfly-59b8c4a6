@@ -61,8 +61,8 @@ export default function AdminDashboard() {
       const { data: adminUser, error } = await supabase
         .from("admin_users")
         .select("*")
-        .eq("email", session.user.email)
-        .single();
+        .eq("user_id", session.user.id)
+        .maybeSingle();
 
       if (error || !adminUser) {
         toast.error("Acesso negado. Apenas administradores podem acessar esta página.");
