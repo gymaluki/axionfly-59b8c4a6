@@ -318,6 +318,9 @@ const AdminView = () => {
           </TabsTrigger>
           <TabsTrigger value="licenses">Licenças ({licenses.length})</TabsTrigger>
           <TabsTrigger value="logs">Auditoria</TabsTrigger>
+          <TabsTrigger value="landing-videos" className="gap-1.5 text-primary data-[state=active]:text-primary">
+            Vídeos Landing
+          </TabsTrigger>
           {isOwner && (
             <>
               <TabsTrigger value="cloud" className="gap-1.5 text-blue-400 data-[state=active]:text-blue-400">
@@ -332,6 +335,10 @@ const AdminView = () => {
 
         <TabsContent value="affiliates" className="mt-4">
           <AffiliatesAdminPanel />
+        </TabsContent>
+
+        <TabsContent value="landing-videos" className="mt-4">
+          <LandingVideosPanel />
         </TabsContent>
 
         {isOwner && (
