@@ -11,6 +11,7 @@ import { Users, Clock, CreditCard, AlertCircle, Search, RefreshCw, ShieldCheck, 
 import { toast } from "@/hooks/use-toast";
 import AffiliatesAdminPanel from "@/components/admin/AffiliatesAdminPanel";
 import SystemErrorsPanel from "@/components/admin/SystemErrorsPanel";
+import LandingVideosPanel from "@/components/admin/LandingVideosPanel";
 import { Progress } from "@/components/ui/progress";
 
 // Owner status is determined server-side via is_owner() RPC.
